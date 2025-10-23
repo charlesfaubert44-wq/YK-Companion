@@ -5,10 +5,6 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   :root {
     --season-primary: #0ea5e9;
     --season-secondary: #22c55e;
