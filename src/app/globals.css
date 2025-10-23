@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&family=Press+Start+2P&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  :root {
+    --season-primary: #0ea5e9;
+    --season-secondary: #22c55e;
+    --season-accent: #fbbf24;
+    --season-background: #0f172a;
+    --season-text: #ffffff;
+  }
+
+  body {
+    @apply text-white;
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, var(--season-background), #0f172a);
+    transition: background 1s ease-in-out;
+  }
+
+  /* Seasonal Body Backgrounds */
+  body.season-winter {
+    background: linear-gradient(to bottom, #0c1929, #0f172a, #1e293b);
+  }
+
+  body.season-spring {
+    background: linear-gradient(to bottom, #1e293b, #0f172a, #1c2a1f);
+  }
+
+  body.season-summer {
+    background: linear-gradient(to bottom, #1e3a2f, #1c2a1f, #14532d);
+  }
+
+  body.season-fall {
+    background: linear-gradient(to bottom, #1c1917, #0f172a, #292524);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Pixel Art Button Styles */
+  .pixel-btn {
+    @apply relative px-6 py-3 font-semibold text-white transition-all duration-200;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    box-shadow:
+      4px 4px 0px rgba(0, 0, 0, 0.3),
+      inset -2px -2px 0px rgba(0, 0, 0, 0.2),
+      inset 2px 2px 0px rgba(255, 255, 255, 0.2);
+    border: 2px solid #0284c7;
+    image-rendering: pixelated;
+    cursor: pointer;
+  }
+
+  .pixel-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow:
+      2px 2px 0px rgba(0, 0, 0, 0.3),
+      inset -2px -2px 0px rgba(0, 0, 0, 0.2),
+      inset 2px 2px 0px rgba(255, 255, 255, 0.2);
+  }
+
+  .pixel-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow:
+      0px 0px 0px rgba(0, 0, 0, 0.3),
+      inset -2px -2px 0px rgba(0, 0, 0, 0.3),
+      inset 2px 2px 0px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Pixel Card */
+  .pixel-card {
+    @apply relative bg-gradient-to-br from-yk-dark-700 to-yk-dark-800 rounded-lg overflow-hidden;
+    border: 3px solid #334155;
+    box-shadow:
+      6px 6px 0px rgba(0, 0, 0, 0.4),
+      inset -1px -1px 0px rgba(0, 0, 0, 0.3),
+      inset 1px 1px 0px rgba(255, 255, 255, 0.1);
+    image-rendering: pixelated;
+  }
+
+  .pixel-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow:
+      8px 8px 0px rgba(0, 0, 0, 0.4),
+      inset -1px -1px 0px rgba(0, 0, 0, 0.3),
+      inset 1px 1px 0px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Aurora Effect */
+  .aurora-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aurora-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(56, 189, 248, 0.15) 0%,
+      rgba(34, 197, 94, 0.1) 25%,
+      rgba(251, 191, 36, 0.05) 50%,
+      transparent 70%
+    );
+    animation: aurora 20s ease-in-out infinite;
+    pointer-events: none;
+    transition: opacity 1s ease-in-out;
+  }
+
+  /* Seasonal Aurora Effects */
+  .season-winter .aurora-bg::before {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(56, 189, 248, 0.2) 0%,
+      rgba(129, 140, 248, 0.15) 25%,
+      rgba(192, 132, 252, 0.1) 50%,
+      transparent 70%
+    );
+  }
+
+  .season-spring .aurora-bg::before {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(96, 165, 250, 0.15) 0%,
+      rgba(52, 211, 153, 0.12) 25%,
+      rgba(251, 191, 36, 0.08) 50%,
+      transparent 70%
+    );
+  }
+
+  .season-summer .aurora-bg::before {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(251, 191, 36, 0.2) 0%,
+      rgba(34, 197, 94, 0.15) 25%,
+      rgba(249, 115, 22, 0.1) 50%,
+      transparent 70%
+    );
+  }
+
+  .season-fall .aurora-bg::before {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(245, 158, 11, 0.18) 0%,
+      rgba(239, 68, 68, 0.12) 25%,
+      rgba(139, 92, 246, 0.08) 50%,
+      transparent 70%
+    );
+  }
+
+  /* Pixel Grid Background */
+  .pixel-grid {
+    background-image:
+      linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Glowing Text */
+  .glow-text {
+    text-shadow:
+      0 0 10px rgba(56, 189, 248, 0.5),
+      0 0 20px rgba(56, 189, 248, 0.3),
+      0 0 30px rgba(56, 189, 248, 0.2);
+  }
+
+  .glow-text-aurora {
+    text-shadow:
+      0 0 10px rgba(34, 197, 94, 0.5),
+      0 0 20px rgba(34, 197, 94, 0.3),
+      0 0 30px rgba(34, 197, 94, 0.2);
+  }
+
+  /* Pixel Font */
+  .pixel-font {
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Section Container */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+  }
+
+  /* Animated Gradient Border */
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, #0ea5e9, #22c55e, #fbbf24);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.6;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0ea5e9, #22c55e);
+  border-radius: 6px;
+  border: 2px solid #0f172a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #38bdf8, #4ade80);
+}
+
+/* Selection */
+::selection {
+  background: rgba(56, 189, 248, 0.3);
+  color: white;
+}

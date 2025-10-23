@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+    <title>YK-Companion | Yellowknife Guide</title>
+</head>
+<body class="text-white season-fall">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">
+                    <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
+                    <span class="logo-text">
+                        YK<span class="logo-dash">-</span>Companion
+                    </span>
+                </a>
+
+                <div class="nav-links">
+                    <a href="#living">Living Here</a>
+                    <a href="#moving">Moving Here</a>
+                    <a href="#visiting">Visiting</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <!-- Hero Content -->
+                <div class="hero-content">
+                    <div class="location-badge">
+                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        </svg>
+                        <span>Yellowknife, NWT</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        <span class="glow">Your Gateway</span>
+                        <br>
+                        <span class="gradient-text">to the North</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Discover Canada's Northern Capital - Where the aurora dances, communities thrive,
+                        and adventure awaits under the midnight sun.
+                    </p>
+
+                    <a href="#living" class="btn-primary">
+                        <span>Explore YK</span>
+                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-number">20K+</div>
+                            <div class="stat-label">Residents</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">240+</div>
+                            <div class="stat-label">Aurora Nights</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">24hr</div>
+                            <div class="stat-label">Summer Sun</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lake Scene -->
+                <div class="hero-scene">
+                    <div id="lakeScene" class="lake-scene"></div>
+                    <p class="scene-hint">
+                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                        <span id="lakeText">Preparing for winter freeze</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Living Here Section -->
+    <section id="living" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="glow">Life in</span> <span class="accent">Yellowknife</span>
+                </h2>
+                <p class="section-description">
+                    Experience northern living at its finest
+                </p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <h3 class="card-title">Community Life</h3>
+                    <p class="card-text">Tight-knit community with festivals and northern hospitality</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏢</div>
+                    <h3 class="card-title">Local Services</h3>
+                    <p class="card-text">Modern amenities, healthcare, and dining options</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❄️</div>
+                    <h3 class="card-title">Four Seasons</h3>
+                    <p class="card-text">Midnight sun in summer, aurora borealis in winter</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎣</div>
+                    <h3 class="card-title">Outdoor Living</h3>
+                    <p class="card-text">World-class fishing and Great Slave Lake</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Season Selector -->
+    <div id="seasonSelector" class="season-selector">
+        <p class="selector-label">Season Theme</p>
+        <div class="season-grid">
+            <button onclick="changeSeason('winter')" class="season-btn" data-season="winter">
+                <span class="season-emoji">❄️</span>
+                <span class="season-name">Winter</span>
+            </button>
+            <button onclick="changeSeason('spring')" class="season-btn" data-season="spring">
+                <span class="season-emoji">🌸</span>
+                <span class="season-name">Spring</span>
+            </button>
+            <button onclick="changeSeason('summer')" class="season-btn" data-season="summer">
+                <span class="season-emoji">☀️</span>
+                <span class="season-name">Summer</span>
+            </button>
+            <button onclick="changeSeason('fall')" class="season-btn active" data-season="fall">
+                <span class="season-emoji">🍂</span>
+                <span class="season-name">Fall</span>
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

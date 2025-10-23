@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+    <title>YK-Companion | Your Guide to Yellowknife, NWT</title>
+    <meta name="description" content="Discover Yellowknife - Whether you're living here, moving here, or visiting.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --season-primary: #0ea5e9;
+            --season-secondary: #22c55e;
+            --season-accent: #fbbf24;
+            --season-background: #0f172a;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            min-height: 100vh;
+            transition: background 1s ease-in-out;
+        }
+
+        body.season-winter {
+            background: linear-gradient(to bottom, #0c1929, #0f172a, #1e293b);
+        }
+
+        body.season-spring {
+            background: linear-gradient(to bottom, #1e293b, #0f172a, #1c2a1f);
+        }
+
+        body.season-summer {
+            background: linear-gradient(to bottom, #1e3a2f, #1c2a1f, #14532d);
+        }
+
+        body.season-fall {
+            background: linear-gradient(to bottom, #1c1917, #0f172a, #292524);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .pixel-btn {
+            position: relative;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.2s;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3), inset -2px -2px 0px rgba(0, 0, 0, 0.2), inset 2px 2px 0px rgba(255, 255, 255, 0.2);
+            border: 2px solid #0284c7;
+            cursor: pointer;
+            border-radius: 0.25rem;
+        }
+
+        .pixel-btn:active {
+            transform: translate(2px, 2px);
+        }
+
+        .pixel-card {
+            position: relative;
+            background: linear-gradient(to bottom right, #334155, #1e293b);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 3px solid #334155;
+            box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
+        }
+
+        .pixel-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.4);
+        }
+
+        .aurora-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .aurora-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.15) 0%, rgba(34, 197, 94, 0.1) 25%, rgba(251, 191, 36, 0.05) 50%, transparent 70%);
+            animation: aurora 20s ease-in-out infinite;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .season-winter .aurora-bg::before {
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.2) 0%, rgba(129, 140, 248, 0.15) 25%, rgba(192, 132, 252, 0.1) 50%, transparent 70%);
+        }
+
+        .season-summer .aurora-bg::before {
+            background: radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.2) 0%, rgba(34, 197, 94, 0.15) 25%, rgba(249, 115, 22, 0.1) 50%, transparent 70%);
+        }
+
+        .season-fall .aurora-bg::before {
+            background: radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.18) 0%, rgba(239, 68, 68, 0.12) 25%, rgba(139, 92, 246, 0.08) 50%, transparent 70%);
+        }
+
+        .pixel-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5), 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        @keyframes aurora {
+            0%, 100% { opacity: 0.5; transform: translateY(0px); }
+            50% { opacity: 0.8; transform: translateY(-10px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .animate-bounce {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0ea5e9, #22c55e);
+            border-radius: 6px;
+            border: 2px solid #0f172a;
+        }
+
+        ::selection {
+            background: rgba(56, 189, 248, 0.3);
+            color: white;
+        }
+
+        .pixel-grid {
+            background-image: linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        #snowContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: white;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .leaf {
+            position: absolute;
+            animation: fall linear infinite;
+        }
+    </style>
+</head>
+<body class="text-white season-fall">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="#" class="flex items-center space-x-2 group">
+                    <div class="relative">
+                        <svg class="w-8 h-8 text-green-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xl md:text-2xl font-bold pixel-font glow-text">
+                        YK<span class="text-green-400">-</span>Companion
+                    </span>
+                </a>
+
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#living" class="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white transition-all hover:bg-gray-700/50 rounded">Living Here</a>
+                    <a href="#moving" class="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white transition-all hover:bg-gray-700/50 rounded">Moving Here</a>
+                    <a href="#visiting" class="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white transition-all hover:bg-gray-700/50 rounded">Visiting</a>
+                    <button class="ml-4 pixel-btn text-sm">Get Started</button>
+                </div>
+
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-700/50">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-900/98 backdrop-blur-lg border-t-2 border-blue-500/20">
+            <div class="px-4 py-6 space-y-3">
+                <a href="#living" class="block px-4 py-3 text-base font-semibold text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-lg">Living Here</a>
+                <a href="#moving" class="block px-4 py-3 text-base font-semibold text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-lg">Moving Here</a>
+                <a href="#visiting" class="block px-4 py-3 text-base font-semibold text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-lg">Visiting</a>
+                <button class="w-full pixel-btn text-sm mt-4">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 aurora-bg pixel-grid">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="text-center lg:text-left space-y-6 animate-fade-in">
+                    <div class="inline-flex items-center space-x-2 bg-gray-800/50 backdrop-blur-sm px-4 py-2 rounded-full border border-blue-500/30">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="text-sm text-gray-300">Yellowknife, Northwest Territories</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                        <span class="glow-text">Your Gateway</span>
+                        <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-green-400 to-yellow-400">
+                            to the North
+                        </span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-gray-300 max-w-2xl">
+                        Discover Canada's Northern Capital - Where the aurora dances, communities thrive,
+                        and adventure awaits under the midnight sun.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#living" class="pixel-btn inline-flex items-center justify-center space-x-2">
+                            <span>Explore YK</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 max-w-md mx-auto lg:mx-0">
+                        <div class="text-center lg:text-left">
+                            <div class="text-2xl md:text-3xl font-bold text-blue-400 pixel-font">20K+</div>
+                            <div class="text-xs text-gray-400">Residents</div>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <div class="text-2xl md:text-3xl font-bold text-green-400 pixel-font">240+</div>
+                            <div class="text-xs text-gray-400">Aurora Nights</div>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <div class="text-2xl md:text-3xl font-bold text-yellow-400 pixel-font">24hr</div>
+                            <div class="text-xs text-gray-400">Daylight (Summer)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lake Scene -->
+                <div class="animate-fade-in">
+                    <div id="lakeScene" class="relative w-full h-64 md:h-80 overflow-hidden rounded-xl border-4 pixel-card cursor-pointer transition-all duration-1000" style="border-color: #f59e0b;">
+                        <!-- Scene will be generated by JS -->
+                    </div>
+                    <p id="lakeHint" class="text-center text-sm text-gray-400 mt-4">
+                        <svg class="w-4 h-4 inline mr-1 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                        <span id="lakeText">Preparing for winter freeze</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-blue-400 rounded-full flex justify-center pt-2">
+                <div class="w-1 h-3 bg-blue-400 rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Living Here Section -->
+    <section id="living" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                <span class="glow-text">Life in</span> <span class="text-green-400">Yellowknife</span>
+            </h2>
+            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                Experience northern living at its finest with modern amenities and authentic community spirit
+            </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="pixel-card p-6">
+                <div class="w-12 h-12 text-blue-400 mb-4 flex items-center justify-center bg-slate-900/50 rounded-lg">🏠</div>
+                <h3 class="text-xl font-bold mb-2">Community Life</h3>
+                <p class="text-gray-400 text-sm">Tight-knit community with festivals, markets, and northern hospitality</p>
+            </div>
+            <div class="pixel-card p-6">
+                <div class="w-12 h-12 text-green-400 mb-4 flex items-center justify-center bg-slate-900/50 rounded-lg">🏢</div>
+                <h3 class="text-xl font-bold mb-2">Local Services</h3>
+                <p class="text-gray-400 text-sm">Modern amenities, healthcare, shopping, and dining options</p>
+            </div>
+            <div class="pixel-card p-6">
+                <div class="w-12 h-12 text-yellow-400 mb-4 flex items-center justify-center bg-slate-900/50 rounded-lg">❄️</div>
+                <h3 class="text-xl font-bold mb-2">Four Seasons</h3>
+                <p class="text-gray-400 text-sm">Experience midnight sun in summer and aurora borealis in winter</p>
+            </div>
+            <div class="pixel-card p-6">
+                <div class="w-12 h-12 text-teal-400 mb-4 flex items-center justify-center bg-slate-900/50 rounded-lg">🎣</div>
+                <h3 class="text-xl font-bold mb-2">Outdoor Living</h3>
+                <p class="text-gray-400 text-sm">World-class fishing, hiking, houseboats on Great Slave Lake</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Season Selector -->
+    <div id="seasonSelector" class="fixed bottom-6 right-6 z-50">
+        <div class="bg-slate-900/95 backdrop-blur-lg border-2 border-white/10 rounded-xl p-3 shadow-2xl">
+            <p class="text-xs text-gray-400 mb-2 text-center font-semibold">Season Theme</p>
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="changeSeason('winter')" class="season-btn px-3 py-2 rounded-lg transition-all duration-300 bg-slate-800/50 hover:bg-slate-700/70 text-gray-300 hover:text-white" data-season="winter">
+                    <div class="flex flex-col items-center space-y-1">
+                        <span class="text-lg">❄️</span>
+                        <span class="text-[10px] font-semibold">Winter</span>
+                    </div>
+                </button>
+                <button onclick="changeSeason('spring')" class="season-btn px-3 py-2 rounded-lg transition-all duration-300 bg-slate-800/50 hover:bg-slate-700/70 text-gray-300 hover:text-white" data-season="spring">
+                    <div class="flex flex-col items-center space-y-1">
+                        <span class="text-lg">🌸</span>
+                        <span class="text-[10px] font-semibold">Spring</span>
+                    </div>
+                </button>
+                <button onclick="changeSeason('summer')" class="season-btn px-3 py-2 rounded-lg transition-all duration-300 bg-slate-800/50 hover:bg-slate-700/70 text-gray-300 hover:text-white" data-season="summer">
+                    <div class="flex flex-col items-center space-y-1">
+                        <span class="text-lg">☀️</span>
+                        <span class="text-[10px] font-semibold">Summer</span>
+                    </div>
+                </button>
+                <button onclick="changeSeason('fall')" class="season-btn px-3 py-2 rounded-lg transition-all duration-300 text-white shadow-lg scale-105" data-season="fall" style="background: linear-gradient(to bottom right, #f59e0b, #ef4444);">
+                    <div class="flex flex-col items-center space-y-1">
+                        <span class="text-lg">🍂</span>
+                        <span class="text-[10px] font-semibold">Fall</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSeason = 'fall';
+        let clickCount = 0;
+        let troutJumping = false;
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            detectSeason();
+            renderLakeScene();
+
+            // Mobile menu
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.toggle('hidden');
+            });
+
+            // Navbar scroll
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 20) {
+                    navbar.classList.add('bg-slate-900/95', 'backdrop-blur-md', 'shadow-lg', 'border-b-2', 'border-blue-500/20');
+                    navbar.classList.remove('bg-transparent');
+                } else {
+                    navbar.classList.remove('bg-slate-900/95', 'backdrop-blur-md', 'shadow-lg', 'border-b-2', 'border-blue-500/20');
+                    navbar.classList.add('bg-transparent');
+                }
+            });
+
+            // Lake scene click
+            document.getElementById('lakeScene').addEventListener('click', handleLakeClick);
+
+            // Auto trout jumps
+            setInterval(() => {
+                if ((currentSeason === 'summer' || currentSeason === 'spring') && Math.random() > 0.7) {
+                    jumpTrout();
+                }
+            }, 4000);
+        });
+
+        function detectSeason() {
+            const month = new Date().getMonth() + 1;
+            if ([11, 12, 1, 2, 3].includes(month)) currentSeason = 'winter';
+            else if ([4, 5].includes(month)) currentSeason = 'spring';
+            else if ([6, 7, 8].includes(month)) currentSeason = 'summer';
+            else currentSeason = 'fall';
+
+            updateSeasonUI();
+        }
+
+        function changeSeason(season) {
+            currentSeason = season;
+            updateSeasonUI();
+            renderLakeScene();
+        }
+
+        function updateSeasonUI() {
+            document.body.className = `text-white season-${currentSeason}`;
+
+            // Update season buttons
+            document.querySelectorAll('.season-btn').forEach(btn => {
+                const btnSeason = btn.getAttribute('data-season');
+                if (btnSeason === currentSeason) {
+                    btn.className = 'season-btn px-3 py-2 rounded-lg transition-all duration-300 text-white shadow-lg scale-105';
+                    if (currentSeason === 'winter') btn.style.background = 'linear-gradient(to bottom right, #38bdf8, #818cf8)';
+                    else if (currentSeason === 'spring') btn.style.background = 'linear-gradient(to bottom right, #60a5fa, #34d399)';
+                    else if (currentSeason === 'summer') btn.style.background = 'linear-gradient(to bottom right, #fbbf24, #f97316)';
+                    else btn.style.background = 'linear-gradient(to bottom right, #f59e0b, #ef4444)';
+                } else {
+                    btn.className = 'season-btn px-3 py-2 rounded-lg transition-all duration-300 bg-slate-800/50 hover:bg-slate-700/70 text-gray-300 hover:text-white';
+                    btn.style.background = '';
+                }
+            });
+
+            // Update lake hint text
+            const hints = {
+                winter: 'Frozen lake with cozy houseboat',
+                spring: 'Ice breakup season - click for trout!',
+                summer: 'Click the lake to see a trout jump!',
+                fall: 'Preparing for winter freeze'
+            };
+            document.getElementById('lakeText').textContent = hints[currentSeason];
+        }
+
+        function renderLakeScene() {
+            const scene = document.getElementById('lakeScene');
+            const colors = {
+                winter: {
+                    sky: 'from-slate-900 via-blue-950 to-indigo-900',
+                    lake: 'from-cyan-200/40 to-blue-300/50',
+                    border: '#38bdf8'
+                },
+                spring: {
+                    sky: 'from-slate-800 via-sky-900 to-blue-900',
+                    lake: 'from-blue-600/50 to-blue-700/60',
+                    border: '#60a5fa'
+                },
+                summer: {
+                    sky: 'from-amber-900 via-orange-900 to-yellow-900',
+                    lake: 'from-emerald-600/60 to-teal-700/70',
+                    border: '#fbbf24'
+                },
+                fall: {
+                    sky: 'from-orange-950 via-red-950 to-purple-950',
+                    lake: 'from-blue-800/50 to-indigo-900/60',
+                    border: '#f59e0b'
+                }
+            };
+
+            scene.style.borderColor = colors[currentSeason].border;
+
+            scene.innerHTML = `
+                <!-- Sky -->
+                <div class="absolute inset-0 bg-gradient-to-b ${colors[currentSeason].sky}">
+                    ${currentSeason === 'summer' ? `
+                        <div class="absolute top-8 right-1/4 w-24 h-24 bg-yellow-300/40 rounded-full blur-3xl animate-pulse"></div>
+                    ` : `
+                        <div class="absolute top-4 left-1/4 w-32 h-16 bg-blue-400/30 blur-2xl animate-float"></div>
+                        <div class="absolute top-8 right-1/4 w-40 h-20 bg-purple-400/30 blur-2xl animate-float" style="animation-delay: 0.4s;"></div>
+                    `}
+                </div>
+
+                ${currentSeason !== 'summer' ? `
+                    <div class="absolute top-4 left-8 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                    <div class="absolute top-8 left-20 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                    <div class="absolute top-6 right-16 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                ` : ''}
+
+                ${currentSeason === 'winter' ? '<div id="snowContainer"></div>' : ''}
+                ${currentSeason === 'fall' ? `
+                    <div class="absolute top-0 left-1/4 w-2 h-2 bg-orange-500 rounded animate-float"></div>
+                    <div class="absolute top-0 right-1/3 w-2 h-2 bg-red-600 rounded animate-float" style="animation-delay: 0.5s;"></div>
+                ` : ''}
+
+                <!-- Lake -->
+                <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-b ${colors[currentSeason].lake}">
+                    ${currentSeason === 'winter' ? `
+                        <div class="absolute top-1/4 left-1/4 w-32 h-0.5 bg-blue-100/30 transform rotate-12"></div>
+                        <div class="absolute top-1/3 right-1/3 w-24 h-0.5 bg-blue-100/30 transform -rotate-6"></div>
+                    ` : ''}
+                    <div class="absolute bottom-0 left-0 right-0 space-y-1 pb-2">
+                        <div class="h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
+                    </div>
+                </div>
+
+                <!-- Houseboat -->
+                <div class="absolute bottom-16 md:bottom-20 left-1/4 transform -translate-x-1/2 animate-float">
+                    ${currentSeason === 'winter' ? '<div class="absolute -top-1 left-0 right-0 h-2 bg-white rounded-t-sm opacity-80"></div>' : ''}
+                    <div class="w-16 h-3 bg-gradient-to-b from-red-600 to-red-700 border-2 border-red-900 transform -skew-x-12 mb-[-2px]"></div>
+                    <div class="w-16 h-10 bg-gradient-to-b from-amber-700 to-amber-800 border-2 border-gray-900 relative">
+                        <div class="absolute top-2 left-2 w-4 h-4 border border-amber-900" style="background-color: ${currentSeason === 'winter' ? 'rgba(251, 191, 36, 0.9)' : 'rgba(251, 191, 36, 0.7)'}"></div>
+                        <div class="absolute top-2 right-2 w-4 h-4 border border-amber-900" style="background-color: ${currentSeason === 'winter' ? 'rgba(251, 191, 36, 0.9)' : 'rgba(251, 191, 36, 0.7)'}"></div>
+                        ${currentSeason === 'winter' ? `
+                            <div class="absolute top-2 left-2 w-4 h-4 bg-yellow-300 blur-sm opacity-60"></div>
+                            <div class="absolute top-2 right-2 w-4 h-4 bg-yellow-300 blur-sm opacity-60"></div>
+                        ` : ''}
+                    </div>
+                    <div class="w-20 h-4 bg-gradient-to-b from-gray-600 to-gray-700 border-2 border-gray-800 rounded-b-lg -ml-2"></div>
+                </div>
+
+                <div id="trout" class="absolute bottom-12 right-1/3 transition-all duration-1000 opacity-0 rotate-12">
+                    <div class="w-12 h-6 bg-gradient-to-r from-teal-600 via-teal-500 to-teal-600 rounded-full border-2 border-teal-800">
+                        <div class="absolute top-1 left-2 w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
+                        <div class="absolute top-3 left-4 w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
+                    </div>
+                    <div class="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-teal-600 border-2 border-teal-800 transform rotate-45"></div>
+                </div>
+
+                <div class="absolute bottom-2 right-2 text-xs text-white/50 pixel-font">
+                    ${(currentSeason === 'summer' || currentSeason === 'spring') ? '<span id="clickCounter">Click!</span>' : currentSeason === 'winter' ? '❄️ Frozen' : '🍂 Chilly'}
+                </div>
+
+                <div class="absolute top-2 left-2 backdrop-blur-sm px-3 py-1 rounded-full border" style="background-color: rgba(0, 0, 0, 0.6); border-color: ${colors[currentSeason].border};">
+                    <p class="text-xs font-semibold" style="color: ${colors[currentSeason].border};">Great Slave Lake</p>
+                </div>
+            `;
+
+            if (currentSeason === 'winter') {
+                addSnowfall();
+            }
+        }
+
+        function addSnowfall() {
+            const container = document.getElementById('snowContainer');
+            if (!container) return;
+
+            for (let i = 0; i < 15; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.textContent = '❄';
+                snowflake.className = 'snowflake';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (5 + Math.random() * 5) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (8 + Math.random() * 4) + 'px';
+                container.appendChild(snowflake);
+            }
+        }
+
+        function handleLakeClick() {
+            if (currentSeason === 'summer' || currentSeason === 'spring') {
+                jumpTrout();
+                clickCount++;
+                const counter = document.getElementById('clickCounter');
+                if (counter) counter.textContent = `Click! ×${clickCount}`;
+            }
+        }
+
+        function jumpTrout() {
+            if (troutJumping) return;
+            troutJumping = true;
+
+            const trout = document.getElementById('trout');
+            if (trout) {
+                trout.style.transform = 'translateY(-5rem) rotate(-30deg)';
+                trout.style.opacity = '1';
+
+                setTimeout(() => {
+                    trout.style.transform = 'translateY(0) rotate(12deg)';
+                    trout.style.opacity = '0';
+                    troutJumping = false;
+                }, 1500);
+            }
+        }
+    </script>
+
+</body>
+</html>
