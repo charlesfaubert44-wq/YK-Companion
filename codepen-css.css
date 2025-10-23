@@ -1,0 +1,486 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --winter-primary: #38bdf8;
+    --spring-primary: #60a5fa;
+    --summer-primary: #fbbf24;
+    --fall-primary: #f59e0b;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: white;
+    min-height: 100vh;
+    transition: background 1s ease;
+    overflow-x: hidden;
+}
+
+body.season-winter {
+    background: linear-gradient(to bottom, #0c1929, #0f172a, #1e293b);
+}
+
+body.season-spring {
+    background: linear-gradient(to bottom, #1e293b, #0f172a, #1c2a1f);
+}
+
+body.season-summer {
+    background: linear-gradient(to bottom, #1e3a2f, #1c2a1f, #14532d);
+}
+
+body.season-fall {
+    background: linear-gradient(to bottom, #1c1917, #0f172a, #292524);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: white;
+}
+
+.logo-icon {
+    width: 2rem;
+    height: 2rem;
+    color: #4ade80;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.logo-text {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.25rem;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.logo-dash {
+    color: #4ade80;
+}
+
+.nav-links {
+    display: none;
+    gap: 0.5rem;
+}
+
+.nav-links a {
+    padding: 0.5rem 1rem;
+    color: #d1d5db;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: all 0.3s;
+}
+
+.nav-links a:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+    }
+}
+
+/* Hero */
+.hero {
+    padding: 6rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+    animation: aurora 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.hero-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 1024px) {
+    .hero-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.hero-content {
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .hero-content {
+        text-align: left;
+    }
+}
+
+.location-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(31, 41, 55, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+.glow {
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5), 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #38bdf8, #4ade80, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 1.125rem;
+    color: #d1d5db;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    border: 2px solid #0284c7;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+    margin-bottom: 2rem;
+}
+
+.btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 28rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .stats-grid {
+        margin: 0;
+    }
+}
+
+.stat {
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .stat {
+        text-align: left;
+    }
+}
+
+.stat-number {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    color: #38bdf8;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* Lake Scene */
+.lake-scene {
+    position: relative;
+    width: 100%;
+    height: 16rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 4px solid #f59e0b;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+@media (min-width: 768px) {
+    .lake-scene {
+        height: 20rem;
+    }
+}
+
+.lake-scene:active {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+.scene-hint {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+/* Section */
+.section {
+    padding: 4rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .section-title {
+        font-size: 3rem;
+    }
+}
+
+.accent {
+    color: #4ade80;
+}
+
+.section-description {
+    font-size: 1.125rem;
+    color: #d1d5db;
+}
+
+/* Cards */
+.cards-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .cards-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card {
+    background: linear-gradient(to bottom right, #334155, #1e293b);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 3px solid #334155;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4);
+    transition: all 0.3s;
+}
+
+.card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.4);
+}
+
+.card-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    line-height: 1.5;
+}
+
+/* Season Selector */
+.season-selector {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 50;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 0.75rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.selector-label {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.season-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.season-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    background: rgba(51, 65, 85, 0.5);
+    border: none;
+    border-radius: 0.5rem;
+    color: #d1d5db;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.season-btn:hover {
+    background: rgba(71, 85, 105, 0.7);
+    color: white;
+}
+
+.season-btn.active {
+    background: linear-gradient(to bottom right, #f59e0b, #ef4444);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.season-btn[data-season="winter"].active {
+    background: linear-gradient(to bottom right, #38bdf8, #818cf8);
+}
+
+.season-btn[data-season="spring"].active {
+    background: linear-gradient(to bottom right, #60a5fa, #34d399);
+}
+
+.season-btn[data-season="summer"].active {
+    background: linear-gradient(to bottom right, #fbbf24, #f97316);
+}
+
+.season-emoji {
+    font-size: 1.25rem;
+}
+
+.season-name {
+    font-size: 0.625rem;
+    font-weight: 600;
+}
+
+/* Utilities */
+.icon-sm {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Animations */
+@keyframes aurora {
+    0%, 100% { opacity: 0.5; transform: translateY(0); }
+    50% { opacity: 0.8; transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(100vh); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
