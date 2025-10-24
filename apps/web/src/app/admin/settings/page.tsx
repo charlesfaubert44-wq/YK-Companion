@@ -26,12 +26,27 @@ export default function AdminSettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      setDebugInfo('Fetching from site_settings table...');
-      console.log('Starting fetch from site_settings...');
+      setDebugInfo('Testing Supabase connection...');
+      console.log('Testing Supabase connection...');
 
-      // Add timeout to prevent hanging
+      // First, try a simple count query to test connection
+      const { count, error: countError } = await supabase
+        .from('site_settings')
+        .select('*', { count: 'exact', head: true });
+
+      console.log('Count result:', { count, countError });
+      setDebugInfo(`Connection test: ${count} rows available`);
+
+      if (countError) {
+        throw new Error(`Count failed: ${countError.message}`);
+      }
+
+      setDebugInfo('Fetching settings data...');
+      console.log('Fetching full settings data...');
+
+      // Now fetch the actual data with a 10-second timeout
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Query timeout after 5 seconds')), 5000)
+        setTimeout(() => reject(new Error('Query timeout after 10 seconds')), 10000)
       );
 
       const fetchPromise = supabase
