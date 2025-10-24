@@ -12,6 +12,7 @@ interface Setting {
 }
 
 export default function AdminSettingsPage() {
+  const supabase = createClient();
   const [settings, setSettings] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -25,8 +26,6 @@ export default function AdminSettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      setDebugInfo('Creating Supabase client...');
-      const supabase = createClient();
       setDebugInfo('Fetching from site_settings table...');
 
       const { data, error } = await supabase
