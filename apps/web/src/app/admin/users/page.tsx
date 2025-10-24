@@ -77,7 +77,7 @@ export default function AdminUsersPage() {
 
     if (profilesData && !profilesError) {
       // Flatten the permissions array (since it returns as array with one item)
-      const formattedUsers = profilesData.map(user => ({
+      const formattedUsers = profilesData.map((user: any) => ({
         ...user,
         permissions: Array.isArray(user.permissions) && user.permissions.length > 0
           ? user.permissions[0]
