@@ -180,6 +180,7 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
 // SPRING - Ice Breakup and Renewal
 export const SpringBanner = ({ temperature }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
 
   return (
     <div
@@ -296,14 +297,21 @@ export const SpringBanner = ({ temperature }: BannerProps) => {
         {/* Logo */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-center">
-            <h1
-              className="text-7xl font-black text-slate-800 transition-all duration-500"
-              style={{
-                textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
-                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              }}>
-              YK <span className="text-emerald-600">BUDDY</span>
-            </h1>
+            <div className="flex items-center justify-center gap-3">
+              <h1
+                className="text-7xl font-black text-slate-800 transition-all duration-500"
+                style={{
+                  textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                YK <span className="text-emerald-600">BUDDY</span>
+              </h1>
+              {isDev && (
+                <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
+                  DEV
+                </span>
+              )}
+            </div>
             <p className="text-slate-700 text-sm mt-3 opacity-90">
               Surviving the North, One Buddy at a Time
             </p>
