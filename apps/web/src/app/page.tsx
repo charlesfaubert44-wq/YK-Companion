@@ -9,6 +9,7 @@ import UserTypeSelector from '@/components/auth/UserTypeSelector';
 import YKBuddySeasonalBanner from '@/components/YKBuddySeasonalBanner';
 import LanguageSelector from '@/components/LanguageSelector';
 import PremiumSpotlight from '@/components/PremiumSpotlight';
+import PremiumSponsors from '@/components/sponsors/PremiumSponsors';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
 import Modal from '@/components/Modal';
 import AboutContent from '@/components/AboutContent';
@@ -166,6 +167,11 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* Premium Sponsors Section */}
+              <div className="mt-12 pt-8 border-t border-gray-700/30">
+                <PremiumSponsors position="home_middle" maxSponsors={3} layout="grid" showPlaceholder={true} />
+              </div>
+
               {/* Styled Footer */}
               <footer className="mt-12 pt-6 border-t border-gray-700/30">
                 <div className="text-center space-y-2">
@@ -282,6 +288,12 @@ export default function Home() {
                   </div>
                 </Link>
               </div>
+            </div>
+
+            {/* Premium Sponsors Section */}
+            <div className="mt-12 pt-8 border-t border-gray-700/30">
+              <h2 className="text-2xl font-bold text-white mb-6 text-center">Our Premium Sponsors</h2>
+              <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
             </div>
 
             {/* Styled Footer */}
