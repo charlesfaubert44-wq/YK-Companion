@@ -20,6 +20,8 @@ export default function AdminSettingsPage() {
 
   useEffect(() => {
     console.log('AdminSettingsPage mounted');
+    console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.log('Supabase client:', supabase);
     setDebugInfo('Component mounted, starting fetch...');
     fetchSettings();
   }, []);
