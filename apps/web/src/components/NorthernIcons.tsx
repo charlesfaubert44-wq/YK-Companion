@@ -4,13 +4,41 @@ interface IconProps {
   className?: string;
 }
 
-// Animated Bush Plane Icon
+// Animated Bush Plane Icon with Landscape
 export function BushPlaneIcon({ className = "" }: IconProps) {
   return (
-    <div className={`inline-block transition-all duration-500 hover:scale-110 hover:-translate-y-2 ${className}`}>
-      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-bounce-subtle">
-        {/* Bush Plane */}
-        <g className="hover:animate-wiggle">
+    <div className={`inline-block transition-all duration-500 hover:scale-110 ${className}`}>
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Background Square */}
+        <rect x="10" y="10" width="100" height="100" fill="#1E293B" rx="8"/>
+
+        {/* Sky Gradient */}
+        <defs>
+          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3"/>
+            <stop offset="100%" stopColor="#1E293B" stopOpacity="0.1"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="10" width="100" height="60" fill="url(#skyGradient)" rx="8"/>
+
+        {/* Mountains in background */}
+        <path d="M10 70 L30 45 L50 60 L70 40 L90 55 L110 65 L110 110 L10 110 Z" fill="#334155" opacity="0.6"/>
+        <path d="M20 75 L40 50 L60 65 L80 48 L100 60 L110 70 L110 110 L10 110 Z" fill="#475569" opacity="0.5"/>
+
+        {/* Trees/Forest */}
+        <path d="M15 85 L18 75 L21 85 Z" fill="#059669" opacity="0.7"/>
+        <path d="M25 90 L29 78 L33 90 Z" fill="#047857" opacity="0.7"/>
+        <path d="M85 88 L89 76 L93 88 Z" fill="#059669" opacity="0.7"/>
+        <path d="M95 92 L99 82 L103 92 Z" fill="#047857" opacity="0.7"/>
+
+        {/* Clouds */}
+        <ellipse cx="25" cy="25" rx="8" ry="4" fill="white" opacity="0.3" className="animate-float"/>
+        <ellipse cx="30" cy="23" rx="6" ry="3" fill="white" opacity="0.3" className="animate-float"/>
+        <ellipse cx="85" cy="30" rx="10" ry="5" fill="white" opacity="0.2" className="animate-float-delayed"/>
+        <ellipse cx="92" cy="28" rx="7" ry="4" fill="white" opacity="0.2" className="animate-float-delayed"/>
+
+        {/* Bush Plane (centered and larger) */}
+        <g className="hover:animate-wiggle" transform="translate(20, -5)">
           {/* Wings */}
           <path d="M15 40 L35 35 L35 45 L15 40 Z" fill="#64CCC5" stroke="#2DD4BF" strokeWidth="2"/>
           <path d="M45 35 L65 40 L45 45 Z" fill="#64CCC5" stroke="#2DD4BF" strokeWidth="2"/>
@@ -36,12 +64,40 @@ export function BushPlaneIcon({ className = "" }: IconProps) {
   );
 }
 
-// Animated Northern Cabin Icon
+// Animated Northern Cabin Icon with Forest Landscape
 export function NorthernCabinIcon({ className = "" }: IconProps) {
   return (
     <div className={`inline-block transition-all duration-500 hover:scale-110 ${className}`}>
-      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g>
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Background Square */}
+        <rect x="10" y="10" width="100" height="100" fill="#1E293B" rx="8"/>
+
+        {/* Sky with Northern Lights hint */}
+        <defs>
+          <linearGradient id="cabinSkyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#6366F1" stopOpacity="0.2"/>
+            <stop offset="50%" stopColor="#8B5CF6" stopOpacity="0.15"/>
+            <stop offset="100%" stopColor="#1E293B" stopOpacity="0.1"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="10" width="100" height="65" fill="url(#cabinSkyGradient)" rx="8"/>
+
+        {/* Background Forest - Far trees */}
+        <path d="M15 65 L20 50 L25 65 Z" fill="#064E3B" opacity="0.5"/>
+        <path d="M23 68 L28 53 L33 68 Z" fill="#065F46" opacity="0.5"/>
+        <path d="M30 67 L35 52 L40 67 Z" fill="#064E3B" opacity="0.5"/>
+        <path d="M70 66 L75 51 L80 66 Z" fill="#065F46" opacity="0.5"/>
+        <path d="M77 68 L82 53 L87 68 Z" fill="#064E3B" opacity="0.5"/>
+        <path d="M85 67 L90 52 L95 67 Z" fill="#065F46" opacity="0.5"/>
+        <path d="M92 69 L97 54 L102 69 Z" fill="#064E3B" opacity="0.5"/>
+
+        {/* Snow ground */}
+        <rect x="10" y="75" width="100" height="35" fill="#E0F2FE" opacity="0.3"/>
+        <ellipse cx="30" cy="75" rx="15" ry="3" fill="white" opacity="0.2"/>
+        <ellipse cx="80" cy="78" rx="20" ry="4" fill="white" opacity="0.2"/>
+
+        {/* Cabin (centered) */}
+        <g transform="translate(20, 15)">
           {/* Smoke from chimney */}
           <circle cx="55" cy="25" r="2" fill="#9CA3AF" opacity="0.6" className="animate-pulse"/>
           <circle cx="57" cy="22" r="1.5" fill="#9CA3AF" opacity="0.4" className="animate-pulse" style={{animationDelay: '0.2s'}}/>
@@ -60,29 +116,79 @@ export function NorthernCabinIcon({ className = "" }: IconProps) {
           <rect x="35" y="45" width="10" height="15" fill="#78350F" stroke="#451A03" strokeWidth="1.5" rx="1"/>
           <circle cx="42" cy="52" r="0.8" fill="#FCD34D"/>
 
-          {/* Windows */}
-          <rect x="28" y="40" width="5" height="5" fill="#BFDBFE" stroke="#3B82F6" strokeWidth="1"/>
-          <line x1="28" y1="42.5" x2="33" y2="42.5" stroke="#3B82F6" strokeWidth="0.5"/>
-          <line x1="30.5" y1="40" x2="30.5" y2="45" stroke="#3B82F6" strokeWidth="0.5"/>
+          {/* Windows with warm glow */}
+          <rect x="28" y="40" width="5" height="5" fill="#FCD34D" stroke="#F59E0B" strokeWidth="1" opacity="0.8"/>
+          <line x1="28" y1="42.5" x2="33" y2="42.5" stroke="#D97706" strokeWidth="0.5"/>
+          <line x1="30.5" y1="40" x2="30.5" y2="45" stroke="#D97706" strokeWidth="0.5"/>
 
-          <rect x="47" y="40" width="5" height="5" fill="#BFDBFE" stroke="#3B82F6" strokeWidth="1"/>
-          <line x1="47" y1="42.5" x2="52" y2="42.5" stroke="#3B82F6" strokeWidth="0.5"/>
-          <line x1="49.5" y1="40" x2="49.5" y2="45" stroke="#3B82F6" strokeWidth="0.5"/>
+          <rect x="47" y="40" width="5" height="5" fill="#FCD34D" stroke="#F59E0B" strokeWidth="1" opacity="0.8"/>
+          <line x1="47" y1="42.5" x2="52" y2="42.5" stroke="#D97706" strokeWidth="0.5"/>
+          <line x1="49.5" y1="40" x2="49.5" y2="45" stroke="#D97706" strokeWidth="0.5"/>
 
           {/* Snow on roof */}
-          <path d="M22 35 Q30 37 40 36 Q50 35 58 35" fill="white" opacity="0.8"/>
+          <path d="M22 35 Q30 37 40 36 Q50 35 58 35" fill="white" opacity="0.9"/>
         </g>
+
+        {/* Foreground trees */}
+        <path d="M12 85 L16 70 L20 85 Z" fill="#059669" opacity="0.8"/>
+        <path d="M100 88 L105 73 L110 88 Z" fill="#047857" opacity="0.8"/>
       </svg>
     </div>
   );
 }
 
-// Animated Old Truck Icon
+// Animated Old Truck Icon with Highway, Forest & River
 export function OldTruckIcon({ className = "" }: IconProps) {
   return (
-    <div className={`inline-block transition-all duration-500 hover:scale-110 hover:translate-x-2 ${className}`}>
-      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g>
+    <div className={`inline-block transition-all duration-500 hover:scale-110 ${className}`}>
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Background Square */}
+        <rect x="10" y="10" width="100" height="100" fill="#1E293B" rx="8"/>
+
+        {/* Sky */}
+        <defs>
+          <linearGradient id="truckSkyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#60A5FA" stopOpacity="0.3"/>
+            <stop offset="100%" stopColor="#1E293B" stopOpacity="0.1"/>
+          </linearGradient>
+          <linearGradient id="riverGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.6"/>
+            <stop offset="50%" stopColor="#60A5FA" stopOpacity="0.5"/>
+            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.6"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="10" width="100" height="50" fill="url(#truckSkyGradient)" rx="8"/>
+
+        {/* Distant mountains/hills */}
+        <path d="M10 60 L30 45 L50 55 L70 42 L90 50 L110 55 L110 110 L10 110 Z" fill="#334155" opacity="0.4"/>
+
+        {/* Forest background */}
+        <path d="M15 58 L19 48 L23 58 Z" fill="#065F46" opacity="0.6"/>
+        <path d="M22 60 L26 50 L30 60 Z" fill="#047857" opacity="0.6"/>
+        <path d="M28 59 L32 49 L36 59 Z" fill="#065F46" opacity="0.6"/>
+        <path d="M75 57 L79 47 L83 57 Z" fill="#047857" opacity="0.6"/>
+        <path d="M82 59 L86 49 L90 59 Z" fill="#065F46" opacity="0.6"/>
+        <path d="M88 58 L92 48 L96 58 Z" fill="#047857" opacity="0.6"/>
+        <path d="M95 60 L99 50 L103 60 Z" fill="#065F46" opacity="0.6"/>
+
+        {/* River flowing through landscape */}
+        <path d="M110 65 Q90 68 70 66 Q50 64 30 67 Q20 68 10 65 L10 75 Q20 73 30 75 Q50 77 70 75 Q90 73 110 75 Z"
+              fill="url(#riverGradient)" opacity="0.7"/>
+        <path d="M110 75 Q85 77 60 76 Q35 75 10 77" stroke="#93C5FD" strokeWidth="0.5" opacity="0.5"/>
+
+        {/* Highway road */}
+        <path d="M10 75 L110 85" stroke="#374151" strokeWidth="18" opacity="0.8"/>
+        <path d="M10 75 L110 85" stroke="#4B5563" strokeWidth="16" opacity="0.9"/>
+
+        {/* Road markings */}
+        <line x1="15" y1="77" x2="25" y2="78.5" stroke="#FCD34D" strokeWidth="1.5" strokeDasharray="4,6"/>
+        <line x1="35" y1="79.5" x2="45" y2="81" stroke="#FCD34D" strokeWidth="1.5" strokeDasharray="4,6"/>
+        <line x1="55" y1="82" x2="65" y2="83" stroke="#FCD34D" strokeWidth="1.5" strokeDasharray="4,6"/>
+        <line x1="75" y1="83.5" x2="85" y2="85" stroke="#FCD34D" strokeWidth="1.5" strokeDasharray="4,6"/>
+        <line x1="95" y1="85.5" x2="105" y2="86.5" stroke="#FCD34D" strokeWidth="1.5" strokeDasharray="4,6"/>
+
+        {/* Truck on highway */}
+        <g transform="translate(25, 20)">
           {/* Exhaust smoke */}
           <circle cx="28" cy="32" r="1.5" fill="#6B7280" opacity="0.5" className="animate-pulse"/>
           <circle cx="26" cy="30" r="1" fill="#6B7280" opacity="0.3" className="animate-pulse" style={{animationDelay: '0.3s'}}/>
@@ -110,10 +216,11 @@ export function OldTruckIcon({ className = "" }: IconProps) {
 
           {/* Headlight */}
           <circle cx="20" cy="44" r="1.5" fill="#FCD34D" opacity="0.8"/>
-
-          {/* Ground line */}
-          <line x1="15" y1="53" x2="65" y2="53" stroke="#4B5563" strokeWidth="1" strokeDasharray="2,2"/>
         </g>
+
+        {/* Foreground vegetation */}
+        <path d="M12 95 L15 88 L18 95 Z" fill="#059669" opacity="0.7"/>
+        <path d="M102 98 L106 90 L110 98 Z" fill="#047857" opacity="0.7"/>
       </svg>
     </div>
   );
@@ -137,6 +244,16 @@ export const customAnimationStyles = `
   to { transform: rotate(360deg); }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(10px) translateY(-5px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(-8px) translateY(-3px); }
+}
+
 .animate-bounce-subtle {
   animation: bounce-subtle 3s ease-in-out infinite;
 }
@@ -147,5 +264,13 @@ export const customAnimationStyles = `
 
 .animate-spin-slow {
   animation: spin-slow 4s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 7s ease-in-out infinite;
 }
 `;
