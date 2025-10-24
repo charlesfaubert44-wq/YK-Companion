@@ -302,17 +302,6 @@ export default function Home() {
                 <p className="text-sm text-gray-400">
                   {t('footer')}
                 </p>
-                <p className="text-xs text-gray-500">
-                  {t('frozen_shield')} •{' '}
-                  <a
-                    href="https://frozenshield.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-aurora-blue hover:text-aurora-green transition-colors underline decoration-dotted"
-                  >
-                    frozenshield.com
-                  </a>
-                </p>
               </div>
             </footer>
           </div>
