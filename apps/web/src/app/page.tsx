@@ -56,21 +56,21 @@ export default function Home() {
     const userTypeConfig = {
       visiting: {
         title: 'Welcome, Traveler!',
-        emoji: '🧳',
+        emoji: '✈️',
         description: 'Ready to explore Yellowknife?',
         primaryLink: '/visiting',
         primaryText: 'Plan Your Trip'
       },
       living: {
         title: 'Welcome Home!',
-        emoji: '🏠',
+        emoji: '�️',
         description: 'Discover what\'s happening in your city',
         primaryLink: '/living',
         primaryText: 'Explore Yellowknife'
       },
       moving: {
         title: 'Welcome to Your New Journey!',
-        emoji: '📦',
+        emoji: '�',
         description: 'Let\'s get you settled in Yellowknife',
         primaryLink: '/moving',
         primaryText: 'Continue Planning'
@@ -143,7 +143,7 @@ export default function Home() {
                   {profile.user_type !== 'visiting' && (
                     <Link href="/visiting" className="group">
                       <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green/50 transition-all">
-                        <span className="text-2xl mr-2">🧳</span>
+                        <span className="text-2xl mr-2">✈️</span>
                         <span className="text-gray-300 group-hover:text-aurora-green text-sm">Visiting</span>
                       </div>
                     </Link>
@@ -151,7 +151,7 @@ export default function Home() {
                   {profile.user_type !== 'living' && (
                     <Link href="/living" className="group">
                       <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-blue/50 transition-all">
-                        <span className="text-2xl mr-2">🏠</span>
+                        <span className="text-2xl mr-2">�️</span>
                         <span className="text-gray-300 group-hover:text-aurora-blue text-sm">Living</span>
                       </div>
                     </Link>
@@ -159,7 +159,7 @@ export default function Home() {
                   {profile.user_type !== 'moving' && (
                     <Link href="/moving" className="group">
                       <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-purple/50 transition-all">
-                        <span className="text-2xl mr-2">📦</span>
+                        <span className="text-2xl mr-2">�</span>
                         <span className="text-gray-300 group-hover:text-aurora-purple text-sm">Moving</span>
                       </div>
                     </Link>
