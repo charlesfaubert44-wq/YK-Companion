@@ -1,0 +1,21 @@
+{
+  "name": "@yk-trip-planner/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared utilities for Yellowknife Trip Planner",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.0"
+  },
+  "dependencies": {
+    "@yk-trip-planner/types": "*",
+    "date-fns": "^3.0.6"
+  }
+}
