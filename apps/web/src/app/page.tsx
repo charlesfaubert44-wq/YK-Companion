@@ -56,21 +56,21 @@ export default function Home() {
     const userTypeConfig = {
       visiting: {
         title: 'Welcome, Traveler!',
-        emoji: '✈️',
+        icon: <BushPlaneIcon className="transform group-hover:scale-110 transition-all duration-300" />,
         description: 'Ready to explore Yellowknife?',
         primaryLink: '/visiting',
         primaryText: 'Plan Your Trip'
       },
       living: {
         title: 'Welcome Home!',
-        emoji: '�️',
+        icon: <NorthernCabinIcon className="transform group-hover:scale-110 transition-all duration-300" />,
         description: 'Discover what\'s happening in your city',
         primaryLink: '/living',
         primaryText: 'Explore Yellowknife'
       },
       moving: {
         title: 'Welcome to Your New Journey!',
-        emoji: '�',
+        icon: <OldTruckIcon className="transform group-hover:scale-110 transition-all duration-300" />,
         description: 'Let\'s get you settled in Yellowknife',
         primaryLink: '/moving',
         primaryText: 'Continue Planning'
@@ -123,8 +123,8 @@ export default function Home() {
           <PremiumSpotlight position="home_top" />
 
           <div className="flex items-center justify-center px-4 py-12">
-            <div className="max-w-3xl w-full text-center">
-              <div className="text-8xl mb-6">{config.emoji}</div>
+            <div className="max-w-3xl w-full text-center group">
+              <div className="mb-6 flex justify-center">{config.icon}</div>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
                 {config.title}
               </h1>
@@ -142,25 +142,37 @@ export default function Home() {
                 <div className="flex justify-center gap-4 flex-wrap">
                   {profile.user_type !== 'visiting' && (
                     <Link href="/visiting" className="group">
-                      <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green/50 transition-all">
-                        <span className="text-2xl mr-2">✈️</span>
-                        <span className="text-gray-300 group-hover:text-aurora-green text-sm">Visiting</span>
+                      <div className="px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green/70 hover:bg-gray-800/80 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-aurora-green/20">
+                        <div className="flex items-center gap-2">
+                          <div className="scale-[0.4] origin-left -ml-2">
+                            <BushPlaneIcon />
+                          </div>
+                          <span className="text-gray-300 group-hover:text-aurora-green text-sm font-medium transition-colors">Visiting</span>
+                        </div>
                       </div>
                     </Link>
                   )}
                   {profile.user_type !== 'living' && (
                     <Link href="/living" className="group">
-                      <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-blue/50 transition-all">
-                        <span className="text-2xl mr-2">�️</span>
-                        <span className="text-gray-300 group-hover:text-aurora-blue text-sm">Living</span>
+                      <div className="px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-blue/70 hover:bg-gray-800/80 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-aurora-blue/20">
+                        <div className="flex items-center gap-2">
+                          <div className="scale-[0.4] origin-left -ml-2">
+                            <NorthernCabinIcon />
+                          </div>
+                          <span className="text-gray-300 group-hover:text-aurora-blue text-sm font-medium transition-colors">Living</span>
+                        </div>
                       </div>
                     </Link>
                   )}
                   {profile.user_type !== 'moving' && (
                     <Link href="/moving" className="group">
-                      <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-purple/50 transition-all">
-                        <span className="text-2xl mr-2">�</span>
-                        <span className="text-gray-300 group-hover:text-aurora-purple text-sm">Moving</span>
+                      <div className="px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-purple/70 hover:bg-gray-800/80 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-aurora-purple/20">
+                        <div className="flex items-center gap-2">
+                          <div className="scale-[0.4] origin-left -ml-2">
+                            <OldTruckIcon />
+                          </div>
+                          <span className="text-gray-300 group-hover:text-aurora-purple text-sm font-medium transition-colors">Moving</span>
+                        </div>
                       </div>
                     </Link>
                   )}
