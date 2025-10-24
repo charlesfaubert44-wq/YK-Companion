@@ -142,11 +142,9 @@ export default function Home() {
                 <div className="flex justify-center gap-4 flex-wrap">
                   {profile.user_type !== 'visiting' && (
                     <Link href="/visiting" className="group">
-                      <div className="px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green/70 hover:bg-gray-800/80 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-aurora-green/20">
-                        <div className="flex items-center gap-2">
-                          <div className="scale-[0.4] origin-left -ml-2">
-                            <BushPlaneIcon />
-                          </div>
+                      <div className="px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green hover:bg-gray-800/80 transition-all transform hover:scale-105">
+                        <div className="flex items-center gap-3">
+                          <span className="text-3xl">🧭</span>
                           <span className="text-gray-300 group-hover:text-aurora-green text-sm font-medium transition-colors">Visiting</span>
                         </div>
                       </div>
@@ -154,11 +152,9 @@ export default function Home() {
                   )}
                   {profile.user_type !== 'living' && (
                     <Link href="/living" className="group">
-                      <div className="px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-blue/70 hover:bg-gray-800/80 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-aurora-blue/20">
-                        <div className="flex items-center gap-2">
-                          <div className="scale-[0.4] origin-left -ml-2">
-                            <NorthernCabinIcon />
-                          </div>
+                      <div className="px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-blue hover:bg-gray-800/80 transition-all transform hover:scale-105">
+                        <div className="flex items-center gap-3">
+                          <span className="text-3xl">🏔️</span>
                           <span className="text-gray-300 group-hover:text-aurora-blue text-sm font-medium transition-colors">Living</span>
                         </div>
                       </div>
@@ -166,11 +162,9 @@ export default function Home() {
                   )}
                   {profile.user_type !== 'moving' && (
                     <Link href="/moving" className="group">
-                      <div className="px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-purple/70 hover:bg-gray-800/80 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-aurora-purple/20">
-                        <div className="flex items-center gap-2">
-                          <div className="scale-[0.4] origin-left -ml-2">
-                            <OldTruckIcon />
-                          </div>
+                      <div className="px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-purple hover:bg-gray-800/80 transition-all transform hover:scale-105">
+                        <div className="flex items-center gap-3">
+                          <span className="text-3xl">🎒</span>
                           <span className="text-gray-300 group-hover:text-aurora-purple text-sm font-medium transition-colors">Moving</span>
                         </div>
                       </div>
@@ -189,9 +183,6 @@ export default function Home() {
                 <div className="text-center space-y-2">
                   <p className="text-sm text-gray-400">
                     {t('footer')}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {t('frozen_shield')}
                   </p>
                 </div>
               </footer>
