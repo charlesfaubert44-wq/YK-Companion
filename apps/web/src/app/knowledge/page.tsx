@@ -258,18 +258,7 @@ export default function KnowledgePage() {
         <footer className="mt-16 pt-8 border-t border-gray-700/30">
           <div className="text-center space-y-2">
             <p className="text-sm text-gray-400">
-              🏔️ Built with ❤️ on Yellowknives Dene First Nation territory
-            </p>
-            <p className="text-xs text-gray-500">
-              Imagined by the Frozen Shield Team •{' '}
-              <a
-                href="https://frozenshield.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-aurora-blue hover:text-aurora-green transition-colors underline decoration-dotted"
-              >
-                frozenshield.com
-              </a>
+              Made with ❤️ in Yellowknife, Northwest Territories
             </p>
           </div>
         </footer>
