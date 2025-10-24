@@ -62,6 +62,7 @@ Thumbs.db
 .cache/
 temp/
 tmp/
+supabase/.temp/
 
 # Backup files
 *.old
