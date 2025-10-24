@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 
 interface PricingPlan {
@@ -21,6 +21,7 @@ interface PricingPlan {
 }
 
 export default function AdminPricingPlansPage() {
+  const supabase = createClient();
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [showNewPlanForm, setShowNewPlanForm] = useState(false);
   const [editingPlan, setEditingPlan] = useState<PricingPlan | null>(null);
