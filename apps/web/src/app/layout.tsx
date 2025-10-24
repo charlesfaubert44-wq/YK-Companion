@@ -4,7 +4,6 @@ import '../styles/globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import PWAInstaller from '@/components/PWAInstaller';
-import FloatingActionButton from '@/components/FloatingActionButton';
 
 const inter = Inter({ subsets: ['latin'] });
 const pressStart2P = Press_Start_2P({
@@ -49,7 +48,6 @@ export default function RootLayout({
           <AuthProvider>
             {children}
             <PWAInstaller />
-            <FloatingActionButton />
           </AuthProvider>
         </LanguageProvider>
       </body>

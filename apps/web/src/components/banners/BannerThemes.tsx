@@ -9,6 +9,7 @@ interface BannerProps {
 // WINTER - Robbie Craig Style: Aurora and Frozen Wilderness
 export const WinterBanner = ({ temperature }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
 
   return (
     <div
@@ -145,14 +146,21 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
         {/* Logo and slogan */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-center">
-            <h1
-              className="text-7xl font-black tracking-tight text-white transition-all duration-500"
-              style={{
-                textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
-                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              }}>
-              YK <span className="text-emerald-300">BUDDY</span>
-            </h1>
+            <div className="flex items-center justify-center gap-3">
+              <h1
+                className="text-7xl font-black tracking-tight text-white transition-all duration-500"
+                style={{
+                  textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                YK <span className="text-emerald-300">BUDDY</span>
+              </h1>
+              {isDev && (
+                <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
+                  DEV
+                </span>
+              )}
+            </div>
             <p
               className="text-cyan-100 text-sm mt-3 opacity-90 transition-opacity duration-300"
               style={{ opacity: isHovered ? 1 : 0.9 }}
