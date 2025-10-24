@@ -22,20 +22,35 @@ export default function AdminSettingsPage() {
   }, []);
 
   const fetchSettings = async () => {
-    const { data, error } = await supabase
-      .from('site_settings')
-      .select('*');
+    try {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('*');
 
-    if (data && !error) {
-      const settingsObj: Record<string, any> = {};
-      data.forEach((setting: any) => {
-        settingsObj[setting.key] = typeof setting.value === 'string'
-          ? JSON.parse(setting.value)
-          : setting.value;
-      });
-      setSettings(settingsObj);
+      console.log('Settings fetch result:', { data, error });
+
+      if (data && !error) {
+        const settingsObj: Record<string, any> = {};
+        data.forEach((setting: any) => {
+          try {
+            settingsObj[setting.key] = typeof setting.value === 'string'
+              ? JSON.parse(setting.value)
+              : setting.value;
+          } catch (parseError) {
+            console.error(`Error parsing setting ${setting.key}:`, parseError);
+            settingsObj[setting.key] = setting.value; // Use raw value if parse fails
+          }
+        });
+        console.log('Parsed settings:', settingsObj);
+        setSettings(settingsObj);
+      } else if (error) {
+        console.error('Error fetching settings:', error);
+      }
+    } catch (err) {
+      console.error('Unexpected error in fetchSettings:', err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const updateSetting = async (key: string, value: any) => {
