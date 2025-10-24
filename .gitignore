@@ -62,4 +62,9 @@ Thumbs.db
 temp/
 tmp/
 
+# Backup files
+*.old
+*.bak
+nul
+
 .vercel
