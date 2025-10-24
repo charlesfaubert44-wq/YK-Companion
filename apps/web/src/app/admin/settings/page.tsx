@@ -45,17 +45,11 @@ export default function AdminSettingsPage() {
       if (data && !error) {
         const settingsObj: Record<string, any> = {};
         data.forEach((setting: any) => {
-          try {
-            settingsObj[setting.key] = typeof setting.value === 'string'
-              ? JSON.parse(setting.value)
-              : setting.value;
-          } catch (parseError) {
-            console.error(`Error parsing setting ${setting.key}:`, parseError);
-            settingsObj[setting.key] = setting.value; // Use raw value if parse fails
-          }
+          // Values are stored as plain text, not JSON - use them directly
+          settingsObj[setting.key] = setting.value;
         });
         console.log('Parsed settings:', settingsObj);
-        setDebugInfo(`Successfully parsed ${Object.keys(settingsObj).length} settings`);
+        setDebugInfo(`Successfully loaded ${Object.keys(settingsObj).length} settings`);
         setSettings(settingsObj);
       } else if (error) {
         console.error('Error fetching settings:', error);
@@ -76,7 +70,7 @@ export default function AdminSettingsPage() {
       .from('site_settings')
       .upsert({
         key,
-        value: JSON.stringify(value),
+        value: value, // Store as plain text
         updated_at: new Date().toISOString()
       }, {
         onConflict: 'key'
@@ -99,7 +93,7 @@ export default function AdminSettingsPage() {
     // Update all settings in batch
     const updates = Object.keys(settings).map(key => ({
       key,
-      value: JSON.stringify(settings[key]),
+      value: settings[key], // Store as plain text
       updated_at: new Date().toISOString()
     }));
 
