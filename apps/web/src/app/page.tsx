@@ -119,6 +119,11 @@ export default function Home() {
             </nav>
           </div>
 
+          {/* Development Version Indicator */}
+          <div className="flex justify-center px-4 pb-4">
+            <p className="text-xs text-yellow-500 font-semibold">* Development Version *</p>
+          </div>
+
           {/* Premium Spotlight */}
           <PremiumSpotlight position="home_top" />
 
@@ -237,6 +242,11 @@ export default function Home() {
               {t('contact')}
             </button>
           </nav>
+        </div>
+
+        {/* Development Version Indicator */}
+        <div className="flex justify-center px-4 pb-4">
+          <p className="text-xs text-yellow-500 font-semibold">* Development Version *</p>
         </div>
 
         {/* Premium Spotlight */}
