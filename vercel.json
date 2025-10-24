@@ -1,0 +1,4 @@
+{
+  "buildCommand": "cd apps/web && npm install && npm run build",
+  "installCommand": "npm install --prefix ./apps/web && npm install react react-dom"
+}
