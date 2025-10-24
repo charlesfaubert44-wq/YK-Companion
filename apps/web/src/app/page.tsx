@@ -164,12 +164,12 @@ export default function Home() {
                   <p className="text-xs text-gray-500">
                     {t('frozen_shield')} •{' '}
                     <a
-                      href="https://frozenshield.com"
+                      href="https://frozenshield.ca"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-aurora-blue hover:text-aurora-green transition-colors underline decoration-dotted"
                     >
-                      frozenshield.com
+                      frozenshield.ca
                     </a>
                   </p>
                 </div>
