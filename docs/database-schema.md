@@ -1,257 +1,346 @@
-# Database Schema
+# Database Schema - YK Buddy
 
-This document outlines the database schema for the Yellowknife Trip Planner application.
+This document outlines the **current** database schema for YK Buddy (as of January 2025).
 
-## Tables
+**⚠️ NOTE:** This documentation reflects the actual production schema using Supabase. Outdated tables from previous versions have been archived.
 
-### users
-Stores user account information.
+---
+
+## Current Active Tables
+
+### 1. profiles
+Stores user profile information (linked to Supabase Auth).
 
 ```sql
-CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255) NOT NULL,
-  first_name VARCHAR(100) NOT NULL,
-  last_name VARCHAR(100) NOT NULL,
-  phone VARCHAR(20),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  email TEXT,
+  user_type TEXT CHECK (user_type IN ('visiting', 'living', 'moving')),
+  is_admin BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 ```
 
-### activities
-Stores information about available activities and attractions.
+**Purpose:** Extends Supabase Auth with user preferences
+
+**Row Level Security:**
+- Users can read their own profile
+- Users can update their own profile
+- Public read access for basic profile info
+
+---
+
+### 2. garage_sales
+Stores community garage sale listings.
 
 ```sql
-CREATE TABLE activities (
+CREATE TABLE garage_sales (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(255) NOT NULL,
-  slug VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+  user_id UUID REFERENCES auth.users(id),
+  title TEXT NOT NULL,
   description TEXT,
-  category VARCHAR(50) NOT NULL,
-  difficulty VARCHAR(20),
-  duration INTEGER, -- in minutes
-  price DECIMAL(10, 2),
-  latitude DECIMAL(10, 8),
-  longitude DECIMAL(11, 8),
-  address TEXT,
-  rating DECIMAL(3, 2) DEFAULT 0,
-  review_count INTEGER DEFAULT 0,
+  address TEXT NOT NULL,
+  latitude DOUBLE PRECISION,
+  longitude DOUBLE PRECISION,
+  start_date TIMESTAMP WITH TIME ZONE NOT NULL,
+  end_date TIMESTAMP WITH TIME ZONE NOT NULL,
+  contact_name TEXT,
+  contact_phone TEXT,
+  contact_email TEXT,
+  featured_items TEXT[],
+  is_active BOOLEAN DEFAULT true
+);
+```
+
+**Purpose:** Community garage sale directory with map integration
+
+**Features:**
+- Geolocation support for map display
+- Time-based filtering
+- Contact information for buyers
+- Active/inactive status
+
+**Indexes:**
+```sql
+CREATE INDEX idx_garage_sales_dates ON garage_sales(start_date, end_date);
+CREATE INDEX idx_garage_sales_active ON garage_sales(is_active);
+```
+
+---
+
+### 3. premium_sponsors
+Stores premium spotlight advertising placements.
+
+```sql
+CREATE TABLE premium_sponsors (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+
+  -- Sponsor details
+  name TEXT NOT NULL,
+  tagline TEXT,
+  link TEXT,
+
+  -- Positioning and scheduling
+  position TEXT NOT NULL CHECK (position IN ('home_top', 'home_middle', 'home_bottom', 'visiting', 'living', 'moving')),
+  start_date TIMESTAMP WITH TIME ZONE NOT NULL,
+  end_date TIMESTAMP WITH TIME ZONE NOT NULL,
   is_active BOOLEAN DEFAULT true,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
 
-### activity_seasons
-Maps activities to their available seasons.
-
-```sql
-CREATE TABLE activity_seasons (
-  activity_id UUID REFERENCES activities(id) ON DELETE CASCADE,
-  season VARCHAR(20) NOT NULL,
-  PRIMARY KEY (activity_id, season)
-);
-```
-
-### activity_images
-Stores images for activities.
-
-```sql
-CREATE TABLE activity_images (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  activity_id UUID REFERENCES activities(id) ON DELETE CASCADE,
-  url TEXT NOT NULL,
-  caption TEXT,
-  is_primary BOOLEAN DEFAULT false,
-  display_order INTEGER DEFAULT 0,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### accommodations
-Stores accommodation listings.
-
-```sql
-CREATE TABLE accommodations (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(255) NOT NULL,
-  type VARCHAR(50) NOT NULL,
-  description TEXT,
-  price_per_night DECIMAL(10, 2),
-  latitude DECIMAL(10, 8),
-  longitude DECIMAL(11, 8),
-  address TEXT,
-  rating DECIMAL(3, 2) DEFAULT 0,
-  review_count INTEGER DEFAULT 0,
-  is_available BOOLEAN DEFAULT true,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### itineraries
-Stores user-created trip itineraries.
-
-```sql
-CREATE TABLE itineraries (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  name VARCHAR(255) NOT NULL,
-  description TEXT,
-  start_date DATE NOT NULL,
-  end_date DATE NOT NULL,
-  estimated_cost DECIMAL(10, 2),
-  is_public BOOLEAN DEFAULT false,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### itinerary_items
-Stores individual items within an itinerary.
-
-```sql
-CREATE TABLE itinerary_items (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  itinerary_id UUID REFERENCES itineraries(id) ON DELETE CASCADE,
-  activity_id UUID REFERENCES activities(id) ON DELETE SET NULL,
-  date DATE NOT NULL,
-  start_time TIME,
-  end_time TIME,
-  notes TEXT,
-  display_order INTEGER DEFAULT 0,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### bookings
-Stores booking information for activities and accommodations.
-
-```sql
-CREATE TABLE bookings (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  activity_id UUID REFERENCES activities(id) ON DELETE SET NULL,
-  accommodation_id UUID REFERENCES accommodations(id) ON DELETE SET NULL,
-  booking_date DATE NOT NULL,
-  number_of_people INTEGER DEFAULT 1,
+  -- Pricing and payment
+  plan_type TEXT NOT NULL CHECK (plan_type IN ('basic', 'premium', 'enterprise')),
+  duration_days INTEGER NOT NULL,
   total_price DECIMAL(10, 2) NOT NULL,
-  status VARCHAR(20) DEFAULT 'pending',
-  payment_id VARCHAR(255),
-  special_requests TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  payment_status TEXT DEFAULT 'pending' CHECK (payment_status IN ('pending', 'paid', 'cancelled', 'refunded')),
+
+  -- Contact and metadata
+  contact_email TEXT,
+  contact_name TEXT,
+  notes TEXT
 );
 ```
 
-### reviews
-Stores user reviews for activities and accommodations.
+**Purpose:** Monetization through premium spotlight placements
+
+**Position Types:**
+- `home_top` - Top of homepage (highest visibility)
+- `home_middle` - Middle of homepage
+- `home_bottom` - Bottom of homepage
+- `visiting` - Visiting section
+- `living` - Living section
+- `moving` - Moving section
+
+**Payment Status:**
+- `pending` - Awaiting payment
+- `paid` - Payment received
+- `cancelled` - Booking cancelled
+- `refunded` - Payment refunded
+
+**Indexes:**
+```sql
+CREATE INDEX idx_premium_sponsors_active ON premium_sponsors(is_active, position, start_date, end_date);
+CREATE INDEX idx_premium_sponsors_dates ON premium_sponsors(start_date, end_date);
+```
+
+**Row Level Security:**
+- Public can view active sponsors
+- Authenticated admins can manage sponsors
+
+---
+
+### 4. premium_pricing_plans
+Configurable pricing structure for premium sponsors.
 
 ```sql
-CREATE TABLE reviews (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  activity_id UUID REFERENCES activities(id) ON DELETE CASCADE,
-  accommodation_id UUID REFERENCES accommodations(id) ON DELETE CASCADE,
-  rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
-  title VARCHAR(255),
-  comment TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT review_target CHECK (
-    (activity_id IS NOT NULL AND accommodation_id IS NULL) OR
-    (activity_id IS NULL AND accommodation_id IS NOT NULL)
-  )
+CREATE TABLE premium_pricing_plans (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
+
+  plan_name TEXT NOT NULL,
+  plan_type TEXT NOT NULL CHECK (plan_type IN ('basic', 'premium', 'enterprise')),
+  position TEXT NOT NULL CHECK (position IN ('home_top', 'home_middle', 'home_bottom', 'visiting', 'living', 'moving')),
+
+  -- Pricing structure
+  base_price_per_day DECIMAL(10, 2) NOT NULL,
+  min_duration_days INTEGER DEFAULT 7,
+  max_duration_days INTEGER DEFAULT 365,
+
+  -- Modifiers
+  position_multiplier DECIMAL(3, 2) DEFAULT 1.0,
+  volume_discount_7days DECIMAL(3, 2) DEFAULT 0.0,
+  volume_discount_30days DECIMAL(3, 2) DEFAULT 0.0,
+  volume_discount_90days DECIMAL(3, 2) DEFAULT 0.0,
+
+  is_active BOOLEAN DEFAULT true,
+  description TEXT
 );
 ```
 
-### weather_cache
-Caches weather data to reduce API calls.
+**Purpose:** Flexible pricing calculator for sponsors
 
-```sql
-CREATE TABLE weather_cache (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  date DATE NOT NULL,
-  temperature DECIMAL(5, 2),
-  feels_like DECIMAL(5, 2),
-  condition VARCHAR(100),
-  precipitation DECIMAL(5, 2),
-  wind_speed DECIMAL(5, 2),
-  humidity INTEGER,
-  cached_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE(date)
-);
+**Default Pricing (Examples):**
+| Position | Plan | Base Rate/Day | Multiplier |
+|----------|------|---------------|------------|
+| Home Top | Premium | $20 | 2.0x |
+| Home Middle | Basic | $10 | 1.5x |
+| Visiting | Premium | $18 | 1.7x |
+
+**Pricing Formula:**
+```javascript
+final_price = (base_price_per_day × duration_days × position_multiplier) × (1 - volume_discount)
 ```
 
-### aurora_forecast_cache
-Caches aurora forecast data.
+**Volume Discounts:**
+- 7+ days: 5-15% off
+- 30+ days: 15-25% off
+- 90+ days: 25-35% off
 
-```sql
-CREATE TABLE aurora_forecast_cache (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  date DATE NOT NULL,
-  kp_index DECIMAL(3, 1),
-  visibility VARCHAR(20),
-  cloud_cover INTEGER,
-  moon_phase VARCHAR(50),
-  best_viewing_time TIME,
-  cached_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE(date)
-);
-```
-
-## Indexes
-
-```sql
--- Performance indexes
-CREATE INDEX idx_activities_category ON activities(category);
-CREATE INDEX idx_activities_slug ON activities(slug);
-CREATE INDEX idx_bookings_user_id ON bookings(user_id);
-CREATE INDEX idx_bookings_status ON bookings(status);
-CREATE INDEX idx_itineraries_user_id ON itineraries(user_id);
-CREATE INDEX idx_reviews_activity_id ON reviews(activity_id);
-CREATE INDEX idx_reviews_accommodation_id ON reviews(accommodation_id);
-
--- Geospatial indexes for location-based queries
-CREATE INDEX idx_activities_location ON activities USING gist(point(longitude, latitude));
-CREATE INDEX idx_accommodations_location ON accommodations USING gist(point(longitude, latitude));
-```
+---
 
 ## Triggers
 
+### Update Timestamp Trigger
+Automatically updates `updated_at` on row modifications.
+
 ```sql
--- Update updated_at timestamp automatically
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.updated_at = CURRENT_TIMESTAMP;
-  RETURN NEW;
+    NEW.updated_at = TIMEZONE('utc'::text, NOW());
+    RETURN NEW;
 END;
 $$ language 'plpgsql';
 
-CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
+CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON profiles
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_activities_updated_at BEFORE UPDATE ON activities
+CREATE TRIGGER update_premium_sponsors_updated_at BEFORE UPDATE ON premium_sponsors
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_accommodations_updated_at BEFORE UPDATE ON accommodations
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER update_itineraries_updated_at BEFORE UPDATE ON itineraries
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER update_bookings_updated_at BEFORE UPDATE ON bookings
+CREATE TRIGGER update_premium_pricing_plans_updated_at BEFORE UPDATE ON premium_pricing_plans
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 ```
 
+---
+
 ## Migration Strategy
 
-Migrations will be managed using a migration tool (to be determined: node-pg-migrate, Knex.js, or Prisma).
+Migrations are managed using Supabase SQL migrations located in `supabase/migrations/`.
 
-Initial setup:
-1. Create database: `createdb yk_trip_planner`
-2. Run migrations: `npm run migrate`
-3. Seed initial data: `npm run seed`
+**Migration Files:**
+1. `20250123000001_profiles.sql` - User profiles
+2. `20250123000002_garage_sales.sql` - Garage sale system
+3. `20250124000003_premium_sponsors.sql` - Premium sponsor system
+
+**To Deploy Migrations:**
+
+**Option 1: Supabase CLI**
+```bash
+supabase link --project-ref YOUR_PROJECT_REF
+supabase db push
+```
+
+**Option 2: Manual (Supabase Dashboard)**
+1. Go to Supabase Dashboard → SQL Editor
+2. Run each migration file in chronological order
+3. Verify tables created successfully
+
+---
+
+## Row Level Security (RLS)
+
+All tables have RLS enabled for security.
+
+### profiles
+```sql
+-- Users can read their own profile
+CREATE POLICY "Users can view own profile" ON profiles
+  FOR SELECT USING (auth.uid() = id);
+
+-- Users can update their own profile
+CREATE POLICY "Users can update own profile" ON profiles
+  FOR UPDATE USING (auth.uid() = id);
+```
+
+### garage_sales
+```sql
+-- Public can view active sales
+CREATE POLICY "Anyone can view active sales" ON garage_sales
+  FOR SELECT USING (is_active = true);
+
+-- Authenticated users can create sales
+CREATE POLICY "Authenticated users can create sales" ON garage_sales
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+```
+
+### premium_sponsors
+```sql
+-- Public can view active sponsors
+CREATE POLICY "Anyone can view active sponsors" ON premium_sponsors
+  FOR SELECT USING (is_active = true);
+
+-- Admins can manage sponsors
+CREATE POLICY "Authenticated users can manage sponsors" ON premium_sponsors
+  FOR ALL USING (auth.role() = 'authenticated');
+```
+
+### premium_pricing_plans
+```sql
+-- Public can view active plans
+CREATE POLICY "Anyone can view active pricing plans" ON premium_pricing_plans
+  FOR SELECT USING (is_active = true);
+
+-- Admins can manage plans
+CREATE POLICY "Authenticated users can manage pricing plans" ON premium_pricing_plans
+  FOR ALL USING (auth.role() = 'authenticated');
+```
+
+---
+
+## Database Statistics
+
+| Metric | Count |
+|--------|-------|
+| Active Tables | 4 |
+| Total Columns | ~40 |
+| Indexes | 5 |
+| Triggers | 3 |
+| RLS Policies | 8 |
+
+---
+
+## Archived Tables
+
+The following tables existed in previous documentation but have been **removed**:
+
+### Removed from Old "Trip Planner" Version:
+- ❌ `users` (replaced with Supabase Auth + profiles)
+- ❌ `activities`
+- ❌ `activity_seasons`
+- ❌ `activity_images`
+- ❌ `accommodations`
+- ❌ `itineraries`
+- ❌ `itinerary_items`
+- ❌ `bookings`
+- ❌ `reviews`
+- ❌ `weather_cache`
+- ❌ `aurora_forecast_cache`
+
+### Removed from "Aurora Live Events" Version:
+- ❌ `aurora_events`
+- ❌ `aurora_photos`
+- ❌ `aurora_mosaics`
+- ❌ `kp_index_data`
+- ❌ `push_subscriptions`
+- ❌ `aurora_challenges`
+- ❌ `user_badges`
+- ❌ `aurora_forecasts`
+- ❌ `email_digest_preferences`
+- ❌ `ar_camera_recommendations`
+
+See `ARCHIVED_FEATURES.md` for details on removed features.
+
+---
+
+## Future Planned Tables
+
+These tables may be added in future versions:
+
+### Potential Additions:
+- `events` - Community events calendar
+- `business_directory` - Local business listings
+- `housing_listings` - For people moving to Yellowknife
+- `job_postings` - Employment opportunities
+- `user_reviews` - Reviews for businesses/services
+- `saved_favorites` - User bookmarks
+
+---
+
+**Last Updated:** January 2025
+**Database:** Supabase (PostgreSQL 15)
+**Total Active Tables:** 4
+**Environment:** Production-ready
