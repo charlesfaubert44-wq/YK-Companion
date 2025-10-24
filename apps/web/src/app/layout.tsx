@@ -3,7 +3,6 @@ import { Inter, Press_Start_2P } from 'next/font/google';
 import '../styles/globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import PWAInstaller from '@/components/PWAInstaller';
 import FloatingActionButton from '@/components/FloatingActionButton';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -48,7 +47,6 @@ export default function RootLayout({
         <LanguageProvider>
           <AuthProvider>
             {children}
-            <PWAInstaller />
             <FloatingActionButton />
           </AuthProvider>
         </LanguageProvider>
