@@ -4,61 +4,98 @@ interface IconProps {
   className?: string;
 }
 
-// Animated Bush Plane Icon with Landscape
+// Animated Aurora Night Scene Icon - Visiting
 export function BushPlaneIcon({ className = "" }: IconProps) {
   return (
     <div className={`inline-block transition-all duration-500 hover:scale-110 ${className}`}>
       <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Background Square */}
-        <rect x="10" y="10" width="100" height="100" fill="#1E293B" rx="8"/>
+        <rect x="10" y="10" width="100" height="100" fill="#0F172A" rx="8"/>
 
-        {/* Sky Gradient */}
+        {/* Night Sky Gradient */}
         <defs>
-          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3"/>
-            <stop offset="100%" stopColor="#1E293B" stopOpacity="0.1"/>
+          <linearGradient id="nightSkyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#1E1B4B" stopOpacity="0.8"/>
+            <stop offset="50%" stopColor="#312E81" stopOpacity="0.6"/>
+            <stop offset="100%" stopColor="#1E293B" stopOpacity="0.9"/>
+          </linearGradient>
+
+          {/* Aurora Borealis Gradients */}
+          <linearGradient id="auroraGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.3"/>
+            <stop offset="50%" stopColor="#34D399" stopOpacity="0.6"/>
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0.3"/>
+          </linearGradient>
+
+          <linearGradient id="auroraBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.2"/>
+            <stop offset="50%" stopColor="#60A5FA" stopOpacity="0.5"/>
+            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.2"/>
+          </linearGradient>
+
+          <linearGradient id="auroraPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.2"/>
+            <stop offset="50%" stopColor="#A78BFA" stopOpacity="0.4"/>
+            <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.2"/>
           </linearGradient>
         </defs>
-        <rect x="10" y="10" width="100" height="60" fill="url(#skyGradient)" rx="8"/>
 
-        {/* Mountains in background */}
-        <path d="M10 70 L30 45 L50 60 L70 40 L90 55 L110 65 L110 110 L10 110 Z" fill="#334155" opacity="0.6"/>
-        <path d="M20 75 L40 50 L60 65 L80 48 L100 60 L110 70 L110 110 L10 110 Z" fill="#475569" opacity="0.5"/>
+        <rect x="10" y="10" width="100" height="70" fill="url(#nightSkyGradient)" rx="8"/>
 
-        {/* Trees/Forest */}
-        <path d="M15 85 L18 75 L21 85 Z" fill="#059669" opacity="0.7"/>
-        <path d="M25 90 L29 78 L33 90 Z" fill="#047857" opacity="0.7"/>
-        <path d="M85 88 L89 76 L93 88 Z" fill="#059669" opacity="0.7"/>
-        <path d="M95 92 L99 82 L103 92 Z" fill="#047857" opacity="0.7"/>
+        {/* Stars */}
+        <circle cx="25" cy="20" r="1" fill="white" opacity="0.8" className="animate-pulse"/>
+        <circle cx="45" cy="15" r="0.8" fill="white" opacity="0.6" className="animate-pulse" style={{animationDelay: '0.3s'}}/>
+        <circle cx="70" cy="18" r="1.2" fill="white" opacity="0.9" className="animate-pulse" style={{animationDelay: '0.6s'}}/>
+        <circle cx="90" cy="22" r="0.7" fill="white" opacity="0.7" className="animate-pulse" style={{animationDelay: '0.9s'}}/>
+        <circle cx="35" cy="28" r="0.9" fill="white" opacity="0.8" className="animate-pulse" style={{animationDelay: '1.2s'}}/>
+        <circle cx="85" cy="30" r="1" fill="white" opacity="0.7" className="animate-pulse" style={{animationDelay: '1.5s'}}/>
+        <circle cx="55" cy="25" r="0.8" fill="white" opacity="0.6" className="animate-pulse" style={{animationDelay: '1.8s'}}/>
+        <circle cx="100" cy="35" r="1.1" fill="white" opacity="0.8" className="animate-pulse" style={{animationDelay: '2.1s'}}/>
 
-        {/* Clouds */}
-        <ellipse cx="25" cy="25" rx="8" ry="4" fill="white" opacity="0.3" className="animate-float"/>
-        <ellipse cx="30" cy="23" rx="6" ry="3" fill="white" opacity="0.3" className="animate-float"/>
-        <ellipse cx="85" cy="30" rx="10" ry="5" fill="white" opacity="0.2" className="animate-float-delayed"/>
-        <ellipse cx="92" cy="28" rx="7" ry="4" fill="white" opacity="0.2" className="animate-float-delayed"/>
+        {/* Aurora Borealis - Layered flowing lights */}
+        <path d="M10 30 Q30 25 50 28 T90 30 L110 32 L110 45 Q90 42 70 45 T30 43 L10 45 Z"
+              fill="url(#auroraGreen)" className="animate-aurora" opacity="0.7"/>
+        <path d="M10 35 Q35 32 55 35 T95 37 L110 38 L110 48 Q85 45 65 47 T25 46 L10 48 Z"
+              fill="url(#auroraBlue)" className="animate-aurora-delayed" opacity="0.6"/>
+        <path d="M10 40 Q40 38 60 40 T100 42 L110 43 L110 52 Q80 49 60 51 T20 50 L10 52 Z"
+              fill="url(#auroraPurple)" className="animate-aurora" opacity="0.5" style={{animationDelay: '1s'}}/>
 
-        {/* Bush Plane (centered and larger) */}
-        <g className="hover:animate-wiggle" transform="translate(20, -5)">
-          {/* Wings */}
-          <path d="M15 40 L35 35 L35 45 L15 40 Z" fill="#64CCC5" stroke="#2DD4BF" strokeWidth="2"/>
-          <path d="M45 35 L65 40 L45 45 Z" fill="#64CCC5" stroke="#2DD4BF" strokeWidth="2"/>
+        {/* Snowy mountains silhouette */}
+        <path d="M10 60 L25 45 L40 55 L55 40 L70 50 L85 38 L100 48 L110 55 L110 110 L10 110 Z"
+              fill="#1E293B" opacity="0.9"/>
+        <path d="M10 65 L30 50 L50 58 L70 45 L90 53 L110 60 L110 110 L10 110 Z"
+              fill="#0F172A" opacity="0.8"/>
 
-          {/* Body */}
-          <ellipse cx="40" cy="40" rx="12" ry="6" fill="#86EFAC" stroke="#22C55E" strokeWidth="2"/>
+        {/* Snow caps on mountains (reflecting aurora glow) */}
+        <path d="M23 46 L25 45 L27 47" stroke="#10B981" strokeWidth="1" opacity="0.5"/>
+        <path d="M53 41 L55 40 L57 42" stroke="#34D399" strokeWidth="1" opacity="0.6"/>
+        <path d="M83 39 L85 38 L87 40" stroke="#10B981" strokeWidth="1" opacity="0.5"/>
 
-          {/* Propeller */}
-          <circle cx="40" cy="40" r="2" fill="#FCD34D" className="animate-spin-slow"/>
-          <line x1="38" y1="40" x2="42" y2="40" stroke="#FCD34D" strokeWidth="1" className="animate-spin-slow"/>
-          <line x1="40" y1="38" x2="40" y2="42" stroke="#FCD34D" strokeWidth="1" className="animate-spin-slow"/>
+        {/* Snow-covered evergreen trees */}
+        <g opacity="0.8">
+          <path d="M15 75 L19 62 L23 75 Z" fill="#064E3B"/>
+          <path d="M17 70 L19 62 L21 70 Z" fill="white" opacity="0.6"/>
 
-          {/* Tail */}
-          <path d="M28 40 L22 37 L22 43 Z" fill="#64CCC5" stroke="#2DD4BF" strokeWidth="2"/>
+          <path d="M30 78 L35 65 L40 78 Z" fill="#065F46"/>
+          <path d="M32 72 L35 65 L38 72 Z" fill="white" opacity="0.6"/>
 
-          {/* Windows */}
-          <circle cx="36" cy="39" r="1.5" fill="#BFDBFE"/>
-          <circle cx="40" cy="39" r="1.5" fill="#BFDBFE"/>
-          <circle cx="44" cy="39" r="1.5" fill="#BFDBFE"/>
+          <path d="M75 77 L80 64 L85 77 Z" fill="#064E3B"/>
+          <path d="M77 71 L80 64 L83 71 Z" fill="white" opacity="0.6"/>
+
+          <path d="M92 80 L97 67 L102 80 Z" fill="#065F46"/>
+          <path d="M94 74 L97 67 L100 74 Z" fill="white" opacity="0.6"/>
         </g>
+
+        {/* Snowy ground with aurora reflection */}
+        <rect x="10" y="85" width="100" height="25" fill="#E0F2FE" opacity="0.2"/>
+        <ellipse cx="40" cy="85" rx="25" ry="4" fill="#10B981" opacity="0.15"/>
+        <ellipse cx="80" cy="88" rx="20" ry="3" fill="#3B82F6" opacity="0.15"/>
+
+        {/* Snow texture */}
+        <circle cx="20" cy="90" r="1.5" fill="white" opacity="0.4"/>
+        <circle cx="50" cy="95" r="1.2" fill="white" opacity="0.3"/>
+        <circle cx="85" cy="92" r="1.3" fill="white" opacity="0.35"/>
+        <circle cx="100" cy="97" r="1" fill="white" opacity="0.3"/>
       </svg>
     </div>
   );
@@ -254,6 +291,36 @@ export const customAnimationStyles = `
   50% { transform: translateX(-8px) translateY(-3px); }
 }
 
+@keyframes aurora {
+  0%, 100% {
+    transform: translateY(0px) scaleY(1);
+    opacity: 0.7;
+  }
+  33% {
+    transform: translateY(-3px) scaleY(1.1);
+    opacity: 0.85;
+  }
+  66% {
+    transform: translateY(2px) scaleY(0.95);
+    opacity: 0.6;
+  }
+}
+
+@keyframes aurora-delayed {
+  0%, 100% {
+    transform: translateY(0px) scaleY(1);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translateY(2px) scaleY(0.95);
+    opacity: 0.5;
+  }
+  66% {
+    transform: translateY(-2px) scaleY(1.08);
+    opacity: 0.75;
+  }
+}
+
 .animate-bounce-subtle {
   animation: bounce-subtle 3s ease-in-out infinite;
 }
@@ -272,5 +339,13 @@ export const customAnimationStyles = `
 
 .animate-float-delayed {
   animation: float-delayed 7s ease-in-out infinite;
+}
+
+.animate-aurora {
+  animation: aurora 8s ease-in-out infinite;
+}
+
+.animate-aurora-delayed {
+  animation: aurora-delayed 9s ease-in-out infinite;
 }
 `;
