@@ -26,16 +26,25 @@ export default function AdminSettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      setDebugInfo('Fetching settings from database...');
-      console.log('Fetching settings...');
+      setDebugInfo('Creating query...');
+      console.log('[1] Creating Supabase query');
 
-      // Try fetching with specific columns only (no wildcards)
-      const { data, error } = await supabase
+      const query = supabase
         .from('site_settings')
         .select('key, value, category, description');
 
-      console.log('Settings fetch result:', { data, error });
-      setDebugInfo(`Fetch complete. Rows: ${data?.length || 0}, Error: ${error?.message || 'none'}`);
+      console.log('[2] Query object created, executing...');
+      setDebugInfo('Executing query...');
+
+      const startTime = Date.now();
+      const result = await query;
+      const endTime = Date.now();
+
+      console.log(`[3] Query completed in ${endTime - startTime}ms`);
+      console.log('[4] Result:', result);
+
+      const { data, error } = result;
+      setDebugInfo(`Query took ${endTime - startTime}ms. Rows: ${data?.length || 0}`);
 
       if (data && !error) {
         const settingsObj: Record<string, any> = {};
