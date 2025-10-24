@@ -170,15 +170,7 @@ export default function AboutPage() {
               {t('footer')}
             </p>
             <p className="text-xs text-gray-500">
-              {t('frozen_shield')} •{' '}
-              <a
-                href="https://frozenshield.ca"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-aurora-blue hover:text-aurora-green transition-colors underline decoration-dotted"
-              >
-                frozenshield.ca
-              </a>
+              {t('frozen_shield')}
             </p>
           </div>
         </footer>
