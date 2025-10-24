@@ -4,19 +4,19 @@ import React, { useState } from 'react';
 import { User, Mail, Bell, Search } from 'lucide-react';
 
 // Import UI components from the package
-import { Button } from '@/../../packages/ui/src/components/Button';
-import { Input } from '@/../../packages/ui/src/components/Input';
-import { Select } from '@/../../packages/ui/src/components/Select';
-import { Checkbox } from '@/../../packages/ui/src/components/Checkbox';
-import { Radio } from '@/../../packages/ui/src/components/Radio';
-import { Badge } from '@/../../packages/ui/src/components/Badge';
-import { Alert } from '@/../../packages/ui/src/components/Alert';
-import { Card } from '@/../../packages/ui/src/components/Card';
-import { Tabs } from '@/../../packages/ui/src/components/Tabs';
-import { ToastProvider, useToast } from '@/../../packages/ui/src/components/Toast';
-import { Container } from '@/../../packages/ui/src/components/Container';
-import { Grid } from '@/../../packages/ui/src/components/Grid';
-import { Stack } from '@/../../packages/ui/src/components/Stack';
+import { Button } from '../../../../../packages/ui/src/components/Button';
+import { Input } from '../../../../../packages/ui/src/components/Input';
+import { Select } from '../../../../../packages/ui/src/components/Select';
+import { Checkbox } from '../../../../../packages/ui/src/components/Checkbox';
+import { Radio } from '../../../../../packages/ui/src/components/Radio';
+import { Badge } from '../../../../../packages/ui/src/components/Badge';
+import { Alert } from '../../../../../packages/ui/src/components/Alert';
+import { Card } from '../../../../../packages/ui/src/components/Card';
+import { Tabs } from '../../../../../packages/ui/src/components/Tabs';
+import { ToastProvider, useToast } from '../../../../../packages/ui/src/components/Toast';
+import { Container } from '../../../../../packages/ui/src/components/Container';
+import { Grid } from '../../../../../packages/ui/src/components/Grid';
+import { Stack } from '../../../../../packages/ui/src/components/Stack';
 
 function ComponentShowcase() {
   const { showToast } = useToast();
