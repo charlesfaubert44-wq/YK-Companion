@@ -101,7 +101,7 @@ export function BushPlaneIcon({ className = "" }: IconProps) {
   );
 }
 
-// Animated Northern Cabin Icon with Forest Landscape
+// Snowy Neighborhood Icon - Living
 export function NorthernCabinIcon({ className = "" }: IconProps) {
   return (
     <div className={`inline-block transition-all duration-500 hover:scale-110 ${className}`}>
@@ -109,66 +109,121 @@ export function NorthernCabinIcon({ className = "" }: IconProps) {
         {/* Background Square */}
         <rect x="10" y="10" width="100" height="100" fill="#1E293B" rx="8"/>
 
-        {/* Sky with Northern Lights hint */}
+        {/* Winter Sky - Dusk/Evening */}
         <defs>
-          <linearGradient id="cabinSkyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#6366F1" stopOpacity="0.2"/>
-            <stop offset="50%" stopColor="#8B5CF6" stopOpacity="0.15"/>
+          <linearGradient id="winterSkyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#7C3AED" stopOpacity="0.2"/>
+            <stop offset="50%" stopColor="#EC4899" stopOpacity="0.15"/>
             <stop offset="100%" stopColor="#1E293B" stopOpacity="0.1"/>
           </linearGradient>
         </defs>
-        <rect x="10" y="10" width="100" height="65" fill="url(#cabinSkyGradient)" rx="8"/>
+        <rect x="10" y="10" width="100" height="55" fill="url(#winterSkyGradient)" rx="8"/>
 
-        {/* Background Forest - Far trees */}
-        <path d="M15 65 L20 50 L25 65 Z" fill="#064E3B" opacity="0.5"/>
-        <path d="M23 68 L28 53 L33 68 Z" fill="#065F46" opacity="0.5"/>
-        <path d="M30 67 L35 52 L40 67 Z" fill="#064E3B" opacity="0.5"/>
-        <path d="M70 66 L75 51 L80 66 Z" fill="#065F46" opacity="0.5"/>
-        <path d="M77 68 L82 53 L87 68 Z" fill="#064E3B" opacity="0.5"/>
-        <path d="M85 67 L90 52 L95 67 Z" fill="#065F46" opacity="0.5"/>
-        <path d="M92 69 L97 54 L102 69 Z" fill="#064E3B" opacity="0.5"/>
+        {/* Falling snow */}
+        <circle cx="20" cy="18" r="1" fill="white" opacity="0.6" className="animate-float"/>
+        <circle cx="45" cy="22" r="0.8" fill="white" opacity="0.5" className="animate-float-delayed"/>
+        <circle cx="75" cy="15" r="1.2" fill="white" opacity="0.7" className="animate-float"/>
+        <circle cx="90" cy="25" r="0.9" fill="white" opacity="0.5" className="animate-float-delayed"/>
+        <circle cx="35" cy="30" r="1.1" fill="white" opacity="0.6" className="animate-float"/>
+        <circle cx="95" cy="35" r="0.8" fill="white" opacity="0.5" className="animate-float-delayed"/>
 
-        {/* Snow ground */}
-        <rect x="10" y="75" width="100" height="35" fill="#E0F2FE" opacity="0.3"/>
-        <ellipse cx="30" cy="75" rx="15" ry="3" fill="white" opacity="0.2"/>
-        <ellipse cx="80" cy="78" rx="20" ry="4" fill="white" opacity="0.2"/>
+        {/* Distant hills/treeline */}
+        <path d="M10 60 L110 60 L110 110 L10 110 Z" fill="#334155" opacity="0.4"/>
 
-        {/* Cabin (centered) */}
-        <g transform="translate(20, 15)">
+        {/* Snow ground with rolling hills */}
+        <ellipse cx="30" cy="75" rx="35" ry="8" fill="white" opacity="0.15"/>
+        <ellipse cx="80" cy="78" rx="40" ry="10" fill="white" opacity="0.15"/>
+        <rect x="10" y="75" width="100" height="35" fill="#E0F2FE" opacity="0.25"/>
+
+        {/* House 1 - Left (Blue house) */}
+        <g>
           {/* Smoke from chimney */}
-          <circle cx="55" cy="25" r="2" fill="#9CA3AF" opacity="0.6" className="animate-pulse"/>
-          <circle cx="57" cy="22" r="1.5" fill="#9CA3AF" opacity="0.4" className="animate-pulse" style={{animationDelay: '0.2s'}}/>
-          <circle cx="53" cy="20" r="1" fill="#9CA3AF" opacity="0.3" className="animate-pulse" style={{animationDelay: '0.4s'}}/>
+          <circle cx="28" cy="48" r="1.5" fill="#9CA3AF" opacity="0.5" className="animate-pulse"/>
+          <circle cx="29" cy="46" r="1" fill="#9CA3AF" opacity="0.3" className="animate-pulse" style={{animationDelay: '0.2s'}}/>
 
-          {/* Roof */}
-          <path d="M20 35 L40 20 L60 35 Z" fill="#7C3AED" stroke="#6D28D9" strokeWidth="2"/>
+          {/* Roof with snow */}
+          <path d="M15 62 L30 52 L45 62 Z" fill="#3B82F6" opacity="0.8"/>
+          <path d="M17 62 Q30 54 43 62" fill="white" opacity="0.9" strokeWidth="0"/>
 
           {/* Chimney */}
-          <rect x="50" y="28" width="6" height="12" fill="#8B4513" stroke="#654321" strokeWidth="1"/>
+          <rect x="26" y="53" width="4" height="9" fill="#8B4513" opacity="0.8"/>
 
           {/* House body */}
-          <rect x="25" y="35" width="30" height="25" fill="#F59E0B" stroke="#D97706" strokeWidth="2"/>
+          <rect x="20" y="62" width="20" height="18" fill="#60A5FA" opacity="0.85"/>
+
+          {/* Windows - warm glow */}
+          <rect x="23" y="66" width="4" height="4" fill="#FCD34D" opacity="0.8"/>
+          <rect x="33" y="66" width="4" height="4" fill="#FCD34D" opacity="0.8"/>
 
           {/* Door */}
-          <rect x="35" y="45" width="10" height="15" fill="#78350F" stroke="#451A03" strokeWidth="1.5" rx="1"/>
-          <circle cx="42" cy="52" r="0.8" fill="#FCD34D"/>
-
-          {/* Windows with warm glow */}
-          <rect x="28" y="40" width="5" height="5" fill="#FCD34D" stroke="#F59E0B" strokeWidth="1" opacity="0.8"/>
-          <line x1="28" y1="42.5" x2="33" y2="42.5" stroke="#D97706" strokeWidth="0.5"/>
-          <line x1="30.5" y1="40" x2="30.5" y2="45" stroke="#D97706" strokeWidth="0.5"/>
-
-          <rect x="47" y="40" width="5" height="5" fill="#FCD34D" stroke="#F59E0B" strokeWidth="1" opacity="0.8"/>
-          <line x1="47" y1="42.5" x2="52" y2="42.5" stroke="#D97706" strokeWidth="0.5"/>
-          <line x1="49.5" y1="40" x2="49.5" y2="45" stroke="#D97706" strokeWidth="0.5"/>
-
-          {/* Snow on roof */}
-          <path d="M22 35 Q30 37 40 36 Q50 35 58 35" fill="white" opacity="0.9"/>
+          <rect x="28" y="72" width="4" height="8" fill="#78350F" rx="0.5"/>
         </g>
 
-        {/* Foreground trees */}
-        <path d="M12 85 L16 70 L20 85 Z" fill="#059669" opacity="0.8"/>
-        <path d="M100 88 L105 73 L110 88 Z" fill="#047857" opacity="0.8"/>
+        {/* House 2 - Center (Red/Orange house) */}
+        <g>
+          {/* Smoke from chimney */}
+          <circle cx="60" cy="45" r="1.5" fill="#9CA3AF" opacity="0.5" className="animate-pulse" style={{animationDelay: '0.5s'}}/>
+          <circle cx="61" cy="43" r="1" fill="#9CA3AF" opacity="0.3" className="animate-pulse" style={{animationDelay: '0.7s'}}/>
+
+          {/* Roof with snow */}
+          <path d="M47 58 L60 48 L73 58 Z" fill="#DC2626" opacity="0.8"/>
+          <path d="M49 58 Q60 50 71 58" fill="white" opacity="0.9" strokeWidth="0"/>
+
+          {/* Chimney */}
+          <rect x="58" y="50" width="4" height="8" fill="#8B4513" opacity="0.8"/>
+
+          {/* House body */}
+          <rect x="52" y="58" width="16" height="22" fill="#F59E0B" opacity="0.85"/>
+
+          {/* Windows - warm glow */}
+          <rect x="55" y="62" width="4" height="4" fill="#FCD34D" opacity="0.8"/>
+          <rect x="61" y="62" width="4" height="4" fill="#FCD34D" opacity="0.8"/>
+          <rect x="58" y="69" width="4" height="4" fill="#FCD34D" opacity="0.8"/>
+
+          {/* Door */}
+          <rect x="55" y="74" width="5" height="6" fill="#78350F" rx="0.5"/>
+        </g>
+
+        {/* House 3 - Right (Purple house) */}
+        <g>
+          {/* Smoke from chimney */}
+          <circle cx="92" cy="50" r="1.5" fill="#9CA3AF" opacity="0.5" className="animate-pulse" style={{animationDelay: '1s'}}/>
+          <circle cx="93" cy="48" r="1" fill="#9CA3AF" opacity="0.3" className="animate-pulse" style={{animationDelay: '1.2s'}}/>
+
+          {/* Roof with snow */}
+          <path d="M78 64 L91 54 L104 64 Z" fill="#7C3AED" opacity="0.8"/>
+          <path d="M80 64 Q91 56 102 64" fill="white" opacity="0.9" strokeWidth="0"/>
+
+          {/* Chimney */}
+          <rect x="89" y="55" width="4" height="9" fill="#8B4513" opacity="0.8"/>
+
+          {/* House body */}
+          <rect x="83" y="64" width="16" height="16" fill="#A78BFA" opacity="0.85"/>
+
+          {/* Windows - warm glow */}
+          <rect x="86" y="68" width="3" height="3" fill="#FCD34D" opacity="0.8"/>
+          <rect x="93" y="68" width="3" height="3" fill="#FCD34D" opacity="0.8"/>
+
+          {/* Door */}
+          <rect x="89" y="74" width="4" height="6" fill="#78350F" rx="0.5"/>
+        </g>
+
+        {/* Snow drifts around houses */}
+        <ellipse cx="30" cy="80" rx="18" ry="3" fill="white" opacity="0.4"/>
+        <ellipse cx="60" cy="80" rx="15" ry="3" fill="white" opacity="0.4"/>
+        <ellipse cx="91" cy="80" rx="16" ry="3" fill="white" opacity="0.4"/>
+
+        {/* Footprints in snow */}
+        <ellipse cx="42" cy="82" rx="1.5" ry="2" fill="#1E293B" opacity="0.2"/>
+        <ellipse cx="44" cy="85" rx="1.5" ry="2" fill="#1E293B" opacity="0.2"/>
+        <ellipse cx="46" cy="88" rx="1.5" ry="2" fill="#1E293B" opacity="0.2"/>
+
+        {/* Small evergreen trees between houses */}
+        <path d="M44 70 L46 64 L48 70 Z" fill="#065F46" opacity="0.7"/>
+        <path d="M45 67 L46 64 L47 67 Z" fill="white" opacity="0.6"/>
+
+        <path d="M74 72 L76 66 L78 72 Z" fill="#064E3B" opacity="0.7"/>
+        <path d="M75 69 L76 66 L77 69 Z" fill="white" opacity="0.6"/>
       </svg>
     </div>
   );
