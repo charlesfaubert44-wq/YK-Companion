@@ -21,7 +21,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const supabase = createClient();
+  
+  let supabase;
+  try {
+    supabase = createClient();
+  } catch (error: any) {
+    console.error('Failed to initialize Supabase:', error.message);
+    // Set loading to false immediately if Supabase isn't configured
+    setLoading(false);
+    supabase = null;
+  }
 
   useEffect(() => {
     console.log('AuthProvider: Initializing...');
@@ -121,6 +130,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
+    if (!supabase) {
+      return { 
+        data: null, 
+        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local') 
+      };
+    }
     console.log('signUp called with email:', email);
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -140,6 +155,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) {
+      return { 
+        data: null, 
+        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local') 
+      };
+    }
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -148,6 +169,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
+    if (!supabase) {
+      console.warn('Cannot sign out: Supabase not configured');
+      return;
+    }
     await supabase.auth.signOut();
     setUser(null);
     setProfile(null);
