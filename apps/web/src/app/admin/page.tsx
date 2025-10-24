@@ -27,20 +27,6 @@ export default function AdminDashboard() {
       color: 'from-aurora-green to-aurora-blue',
     },
     {
-      title: 'Banner Management',
-      description: 'View, edit, and create custom banner variations',
-      icon: '🎨',
-      href: '/admin/banners',
-      color: 'from-aurora-blue to-aurora-purple',
-    },
-    {
-      title: 'Content Editor',
-      description: 'Edit site content directly',
-      icon: '✏️',
-      href: '/admin/content',
-      color: 'from-aurora-purple to-aurora-pink',
-    },
-    {
       title: 'User Management',
       description: 'Manage user accounts and permissions',
       icon: '👥',
@@ -48,11 +34,39 @@ export default function AdminDashboard() {
       color: 'from-aurora-pink to-aurora-green',
     },
     {
+      title: 'Garage Sales',
+      description: 'Moderate and manage garage sale listings',
+      icon: '🏘️',
+      href: '/admin/garage-sales',
+      color: 'from-green-400 to-green-600',
+    },
+    {
       title: 'Analytics',
       description: 'View site analytics and reports',
       icon: '📊',
       href: '/admin/analytics',
       color: 'from-aurora-green to-aurora-blue',
+    },
+    {
+      title: 'Banner Management',
+      description: 'View, edit, and create custom banner variations',
+      icon: '🎨',
+      href: '/admin/banners',
+      color: 'from-aurora-blue to-aurora-purple',
+    },
+    {
+      title: 'Knowledge Base',
+      description: 'Manage knowledge base articles and FAQs',
+      icon: '📚',
+      href: '/admin/knowledge',
+      color: 'from-purple-400 to-purple-600',
+    },
+    {
+      title: 'Settings',
+      description: 'Configure site-wide settings and integrations',
+      icon: '⚙️',
+      href: '/admin/settings',
+      color: 'from-gray-400 to-gray-600',
     },
   ];
 

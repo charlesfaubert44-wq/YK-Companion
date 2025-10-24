@@ -14,10 +14,13 @@ interface Sponsor {
   end_date: string;
   is_active: boolean;
   plan_type: string;
+  duration_days: number;
   total_price: number;
   payment_status: string;
   contact_email?: string;
   contact_name?: string;
+  notes?: string;
+  created_at: string;
 }
 
 interface PricingPlan {
@@ -36,10 +39,25 @@ interface PricingPlan {
 export default function AdminSponsorsPage() {
   const supabase = createClient();
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+  const [filteredSponsors, setFilteredSponsors] = useState<Sponsor[]>([]);
   const [pricingPlans, setPricingPlans] = useState<PricingPlan[]>([]);
-  const [showNewSponsorForm, setShowNewSponsorForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
   const [calculatedPrice, setCalculatedPrice] = useState(0);
+  const [selectedSponsors, setSelectedSponsors] = useState<string[]>([]);
+
+  // Filters
+  const [filters, setFilters] = useState({
+    search: '',
+    position: 'all',
+    paymentStatus: 'all',
+    activeStatus: 'all'
+  });
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
 
   // Form state
   const [formData, setFormData] = useState({
@@ -52,7 +70,8 @@ export default function AdminSponsorsPage() {
     start_date: new Date().toISOString().split('T')[0],
     contact_email: '',
     contact_name: '',
-    notes: ''
+    notes: '',
+    payment_status: 'pending'
   });
 
   useEffect(() => {
@@ -63,6 +82,10 @@ export default function AdminSponsorsPage() {
   useEffect(() => {
     calculatePrice();
   }, [formData.position, formData.plan_type, formData.duration_days, pricingPlans]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [sponsors, filters]);
 
   const fetchSponsors = async () => {
     const { data, error } = await supabase
@@ -85,6 +108,40 @@ export default function AdminSponsorsPage() {
     if (data && !error) {
       setPricingPlans(data);
     }
+  };
+
+  const applyFilters = () => {
+    let filtered = [...sponsors];
+
+    // Search filter
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      filtered = filtered.filter(s =>
+        s.name.toLowerCase().includes(searchLower) ||
+        s.tagline?.toLowerCase().includes(searchLower) ||
+        s.contact_email?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Position filter
+    if (filters.position !== 'all') {
+      filtered = filtered.filter(s => s.position === filters.position);
+    }
+
+    // Payment status filter
+    if (filters.paymentStatus !== 'all') {
+      filtered = filtered.filter(s => s.payment_status === filters.paymentStatus);
+    }
+
+    // Active status filter
+    if (filters.activeStatus === 'active') {
+      filtered = filtered.filter(s => s.is_active);
+    } else if (filters.activeStatus === 'inactive') {
+      filtered = filtered.filter(s => !s.is_active);
+    }
+
+    setFilteredSponsors(filtered);
+    setCurrentPage(1); // Reset to first page when filters change
   };
 
   const calculatePrice = () => {
@@ -116,50 +173,86 @@ export default function AdminSponsorsPage() {
     setCalculatedPrice(Math.round(finalPrice * 100) / 100);
   };
 
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      tagline: '',
+      link: '',
+      position: 'home_top',
+      plan_type: 'basic',
+      duration_days: 7,
+      start_date: new Date().toISOString().split('T')[0],
+      contact_email: '',
+      contact_name: '',
+      notes: '',
+      payment_status: 'pending'
+    });
+    setEditingId(null);
+    setShowForm(false);
+  };
+
+  const handleEdit = (sponsor: Sponsor) => {
+    setFormData({
+      name: sponsor.name,
+      tagline: sponsor.tagline || '',
+      link: sponsor.link || '',
+      position: sponsor.position,
+      plan_type: sponsor.plan_type,
+      duration_days: sponsor.duration_days,
+      start_date: new Date(sponsor.start_date).toISOString().split('T')[0],
+      contact_email: sponsor.contact_email || '',
+      contact_name: sponsor.contact_name || '',
+      notes: sponsor.notes || '',
+      payment_status: sponsor.payment_status
+    });
+    setEditingId(sponsor.id);
+    setShowForm(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const endDate = new Date(formData.start_date);
     endDate.setDate(endDate.getDate() + formData.duration_days);
 
-    const { data, error } = await supabase
-      .from('premium_sponsors')
-      .insert([{
-        name: formData.name,
-        tagline: formData.tagline || null,
-        link: formData.link || null,
-        position: formData.position,
-        plan_type: formData.plan_type,
-        duration_days: formData.duration_days,
-        start_date: formData.start_date,
-        end_date: endDate.toISOString(),
-        total_price: calculatedPrice,
-        contact_email: formData.contact_email || null,
-        contact_name: formData.contact_name || null,
-        notes: formData.notes || null,
-        is_active: true,
-        payment_status: 'pending'
-      }])
-      .select();
+    const sponsorData = {
+      name: formData.name,
+      tagline: formData.tagline || null,
+      link: formData.link || null,
+      position: formData.position,
+      plan_type: formData.plan_type,
+      duration_days: formData.duration_days,
+      start_date: formData.start_date,
+      end_date: endDate.toISOString(),
+      total_price: calculatedPrice,
+      contact_email: formData.contact_email || null,
+      contact_name: formData.contact_name || null,
+      notes: formData.notes || null,
+      payment_status: formData.payment_status,
+      is_active: true
+    };
+
+    let error;
+    if (editingId) {
+      // Update existing sponsor
+      ({ error } = await supabase
+        .from('premium_sponsors')
+        .update(sponsorData)
+        .eq('id', editingId));
+    } else {
+      // Create new sponsor
+      ({ error } = await supabase
+        .from('premium_sponsors')
+        .insert([sponsorData]));
+    }
 
     if (!error) {
-      setShowNewSponsorForm(false);
-      setFormData({
-        name: '',
-        tagline: '',
-        link: '',
-        position: 'home_top',
-        plan_type: 'basic',
-        duration_days: 7,
-        start_date: new Date().toISOString().split('T')[0],
-        contact_email: '',
-        contact_name: '',
-        notes: ''
-      });
+      resetForm();
       fetchSponsors();
-      alert('Sponsor added successfully!');
+      alert(editingId ? 'Sponsor updated successfully!' : 'Sponsor added successfully!');
     } else {
-      alert('Error adding sponsor: ' + error.message);
+      alert('Error: ' + error.message);
     }
   };
 
@@ -167,6 +260,17 @@ export default function AdminSponsorsPage() {
     const { error } = await supabase
       .from('premium_sponsors')
       .update({ is_active: !currentStatus })
+      .eq('id', id);
+
+    if (!error) {
+      fetchSponsors();
+    }
+  };
+
+  const updatePaymentStatus = async (id: string, status: string) => {
+    const { error } = await supabase
+      .from('premium_sponsors')
+      .update({ payment_status: status })
       .eq('id', id);
 
     if (!error) {
@@ -187,6 +291,83 @@ export default function AdminSponsorsPage() {
     }
   };
 
+  // Bulk actions
+  const toggleSelectAll = () => {
+    if (selectedSponsors.length === paginatedSponsors.length) {
+      setSelectedSponsors([]);
+    } else {
+      setSelectedSponsors(paginatedSponsors.map(s => s.id));
+    }
+  };
+
+  const toggleSelectSponsor = (id: string) => {
+    setSelectedSponsors(prev =>
+      prev.includes(id) ? prev.filter(sid => sid !== id) : [...prev, id]
+    );
+  };
+
+  const bulkUpdatePaymentStatus = async (status: string) => {
+    if (selectedSponsors.length === 0) return;
+
+    const { error } = await supabase
+      .from('premium_sponsors')
+      .update({ payment_status: status })
+      .in('id', selectedSponsors);
+
+    if (!error) {
+      fetchSponsors();
+      setSelectedSponsors([]);
+      alert(`Updated ${selectedSponsors.length} sponsor(s)`);
+    }
+  };
+
+  const bulkToggleActive = async (isActive: boolean) => {
+    if (selectedSponsors.length === 0) return;
+
+    const { error } = await supabase
+      .from('premium_sponsors')
+      .update({ is_active: isActive })
+      .in('id', selectedSponsors);
+
+    if (!error) {
+      fetchSponsors();
+      setSelectedSponsors([]);
+      alert(`Updated ${selectedSponsors.length} sponsor(s)`);
+    }
+  };
+
+  const exportToCSV = () => {
+    const csv = [
+      ['Name', 'Tagline', 'Position', 'Plan', 'Start Date', 'End Date', 'Price', 'Payment Status', 'Active', 'Contact'],
+      ...filteredSponsors.map(s => [
+        s.name,
+        s.tagline || '',
+        s.position,
+        s.plan_type,
+        new Date(s.start_date).toLocaleDateString(),
+        new Date(s.end_date).toLocaleDateString(),
+        s.total_price,
+        s.payment_status,
+        s.is_active ? 'Yes' : 'No',
+        s.contact_email || ''
+      ])
+    ].map(row => row.join(',')).join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `sponsors_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+  };
+
+  // Pagination
+  const totalPages = Math.ceil(filteredSponsors.length / itemsPerPage);
+  const paginatedSponsors = filteredSponsors.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 p-8">
       <div className="max-w-7xl mx-auto">
@@ -194,25 +375,40 @@ export default function AdminSponsorsPage() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">Premium Sponsors</h1>
-            <p className="text-gray-400">Manage premium spotlight placements</p>
+            <p className="text-gray-400">Manage premium spotlight placements ({filteredSponsors.length} sponsors)</p>
           </div>
           <div className="flex gap-4">
             <Link href="/admin" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">
               ← Back to Admin
             </Link>
             <button
-              onClick={() => setShowNewSponsorForm(!showNewSponsorForm)}
+              onClick={() => {
+                if (showForm && !editingId) {
+                  resetForm();
+                } else {
+                  resetForm();
+                  setShowForm(true);
+                }
+              }}
               className="px-6 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
             >
-              {showNewSponsorForm ? 'Cancel' : '+ New Sponsor'}
+              {showForm ? 'Cancel' : '+ New Sponsor'}
+            </button>
+            <button
+              onClick={exportToCSV}
+              className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
+              Export CSV
             </button>
           </div>
         </div>
 
-        {/* New Sponsor Form */}
-        {showNewSponsorForm && (
+        {/* Form */}
+        {showForm && (
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Add New Premium Sponsor</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">
+              {editingId ? 'Edit Premium Sponsor' : 'Add New Premium Sponsor'}
+            </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
@@ -234,15 +430,17 @@ export default function AdminSponsorsPage() {
                 {/* Tagline */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Tagline
+                    Tagline (max 100 chars)
                   </label>
                   <input
                     type="text"
+                    maxLength={100}
                     value={formData.tagline}
                     onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     placeholder="Experience the magic of the North"
                   />
+                  <p className="text-xs text-gray-500 mt-1">{formData.tagline.length}/100</p>
                 </div>
 
                 {/* Link */}
@@ -305,7 +503,7 @@ export default function AdminSponsorsPage() {
                     min="1"
                     max="365"
                     value={formData.duration_days}
-                    onChange={(e) => setFormData({ ...formData, duration_days: parseInt(e.target.value) })}
+                    onChange={(e) => setFormData({ ...formData, duration_days: parseInt(e.target.value) || 1 })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                   <p className="text-xs text-gray-500 mt-1">
@@ -325,6 +523,23 @@ export default function AdminSponsorsPage() {
                     onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
+                </div>
+
+                {/* Payment Status */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Payment Status
+                  </label>
+                  <select
+                    value={formData.payment_status}
+                    onChange={(e) => setFormData({ ...formData, payment_status: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="paid">Paid</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="refunded">Refunded</option>
+                  </select>
                 </div>
 
                 {/* Contact Name */}
@@ -396,11 +611,11 @@ export default function AdminSponsorsPage() {
                 )}
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Buttons */}
               <div className="flex justify-end gap-4">
                 <button
                   type="button"
-                  onClick={() => setShowNewSponsorForm(false)}
+                  onClick={resetForm}
                   className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
                 >
                   Cancel
@@ -409,27 +624,155 @@ export default function AdminSponsorsPage() {
                   type="submit"
                   className="px-6 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
                 >
-                  Create Sponsor Listing
+                  {editingId ? 'Update Sponsor' : 'Create Sponsor'}
                 </button>
               </div>
             </form>
           </div>
         )}
 
+        {/* Filters */}
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 mb-8">
+          <div className="grid md:grid-cols-4 gap-4">
+            {/* Search */}
+            <div>
+              <input
+                type="text"
+                placeholder="Search sponsors..."
+                value={filters.search}
+                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
+              />
+            </div>
+
+            {/* Position Filter */}
+            <div>
+              <select
+                value={filters.position}
+                onChange={(e) => setFilters({ ...filters, position: e.target.value })}
+                className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
+              >
+                <option value="all">All Positions</option>
+                <option value="home_top">Home - Top</option>
+                <option value="home_middle">Home - Middle</option>
+                <option value="home_bottom">Home - Bottom</option>
+                <option value="visiting">Visiting</option>
+                <option value="living">Living</option>
+                <option value="moving">Moving</option>
+              </select>
+            </div>
+
+            {/* Payment Status Filter */}
+            <div>
+              <select
+                value={filters.paymentStatus}
+                onChange={(e) => setFilters({ ...filters, paymentStatus: e.target.value })}
+                className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
+              >
+                <option value="all">All Payment Status</option>
+                <option value="pending">Pending</option>
+                <option value="paid">Paid</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="refunded">Refunded</option>
+              </select>
+            </div>
+
+            {/* Active Status Filter */}
+            <div>
+              <select
+                value={filters.activeStatus}
+                onChange={(e) => setFilters({ ...filters, activeStatus: e.target.value })}
+                className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
+              >
+                <option value="all">All Status</option>
+                <option value="active">Active Only</option>
+                <option value="inactive">Inactive Only</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Bulk Actions */}
+        {selectedSponsors.length > 0 && (
+          <div className="bg-aurora-blue/10 border border-aurora-blue/30 rounded-xl p-4 mb-6 flex items-center justify-between">
+            <span className="text-white font-semibold">{selectedSponsors.length} sponsor(s) selected</span>
+            <div className="flex gap-3">
+              <button
+                onClick={() => bulkUpdatePaymentStatus('paid')}
+                className="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 text-sm font-semibold"
+              >
+                Mark as Paid
+              </button>
+              <button
+                onClick={() => bulkUpdatePaymentStatus('pending')}
+                className="px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 text-sm font-semibold"
+              >
+                Mark as Pending
+              </button>
+              <button
+                onClick={() => bulkToggleActive(true)}
+                className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 text-sm font-semibold"
+              >
+                Activate
+              </button>
+              <button
+                onClick={() => bulkToggleActive(false)}
+                className="px-4 py-2 bg-gray-500/20 text-gray-400 rounded-lg hover:bg-gray-500/30 text-sm font-semibold"
+              >
+                Deactivate
+              </button>
+              <button
+                onClick={() => setSelectedSponsors([])}
+                className="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 text-sm font-semibold"
+              >
+                Clear Selection
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Sponsors List */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Existing Sponsors</h2>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white">Sponsors</h2>
+            {paginatedSponsors.length > 0 && (
+              <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={selectedSponsors.length === paginatedSponsors.length && paginatedSponsors.length > 0}
+                  onChange={toggleSelectAll}
+                  className="w-4 h-4"
+                />
+                Select All
+              </label>
+            )}
+          </div>
 
           <div className="space-y-4">
-            {sponsors.length === 0 ? (
-              <p className="text-gray-400 text-center py-8">No sponsors yet. Add your first premium sponsor above!</p>
+            {paginatedSponsors.length === 0 ? (
+              <p className="text-gray-400 text-center py-8">
+                {sponsors.length === 0
+                  ? 'No sponsors yet. Add your first premium sponsor above!'
+                  : 'No sponsors match your filters.'}
+              </p>
             ) : (
-              sponsors.map((sponsor) => (
+              paginatedSponsors.map((sponsor) => (
                 <div
                   key={sponsor.id}
                   className="bg-gray-900/50 border border-gray-700 rounded-xl p-6 hover:border-aurora-blue/50 transition-all"
                 >
-                  <div className="flex justify-between items-start">
+                  <div className="flex gap-4">
+                    {/* Checkbox */}
+                    <div className="flex items-start pt-1">
+                      <input
+                        type="checkbox"
+                        checked={selectedSponsors.includes(sponsor.id)}
+                        onChange={() => toggleSelectSponsor(sponsor.id)}
+                        className="w-4 h-4"
+                      />
+                    </div>
+
+                    {/* Content */}
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="text-xl font-bold text-yellow-400">{sponsor.name}</h3>
@@ -451,9 +794,9 @@ export default function AdminSponsorsPage() {
                         <p className="text-gray-400 italic mb-2">{sponsor.tagline}</p>
                       )}
 
-                      <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-400">
+                      <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-400 mb-3">
                         <div>
-                          <span className="text-gray-500">Position:</span> {sponsor.position}
+                          <span className="text-gray-500">Position:</span> {sponsor.position.replace('_', ' ')}
                         </div>
                         <div>
                           <span className="text-gray-500">Plan:</span> {sponsor.plan_type}
@@ -467,23 +810,34 @@ export default function AdminSponsorsPage() {
                         <div>
                           <span className="text-gray-500">End:</span> {new Date(sponsor.end_date).toLocaleDateString()}
                         </div>
-                        {sponsor.link && (
-                          <div>
-                            <a href={sponsor.link} target="_blank" rel="noopener noreferrer" className="text-aurora-blue hover:text-aurora-green">
-                              View Website →
-                            </a>
-                          </div>
-                        )}
+                        <div>
+                          <span className="text-gray-500">Duration:</span> {sponsor.duration_days} days
+                        </div>
                       </div>
 
+                      {sponsor.link && (
+                        <div className="mb-2">
+                          <a href={sponsor.link} target="_blank" rel="noopener noreferrer" className="text-aurora-blue hover:text-aurora-green text-sm">
+                            {sponsor.link} →
+                          </a>
+                        </div>
+                      )}
+
                       {sponsor.contact_name && (
-                        <div className="mt-2 text-sm text-gray-500">
+                        <div className="text-sm text-gray-500">
                           Contact: {sponsor.contact_name} {sponsor.contact_email && `(${sponsor.contact_email})`}
                         </div>
                       )}
                     </div>
 
-                    <div className="flex gap-2">
+                    {/* Actions */}
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => handleEdit(sponsor)}
+                        className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-semibold hover:bg-blue-500/30 transition-all"
+                      >
+                        Edit
+                      </button>
                       <button
                         onClick={() => toggleSponsorStatus(sponsor.id, sponsor.is_active)}
                         className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
@@ -494,6 +848,17 @@ export default function AdminSponsorsPage() {
                       >
                         {sponsor.is_active ? 'Deactivate' : 'Activate'}
                       </button>
+
+                      {/* Payment Status Quick Update */}
+                      {sponsor.payment_status === 'pending' && (
+                        <button
+                          onClick={() => updatePaymentStatus(sponsor.id, 'paid')}
+                          className="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg text-sm font-semibold hover:bg-green-500/30"
+                        >
+                          Mark Paid
+                        </button>
+                      )}
+
                       <button
                         onClick={() => deleteSponsor(sponsor.id)}
                         className="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg text-sm font-semibold hover:bg-red-500/30 transition-all"
@@ -506,6 +871,29 @@ export default function AdminSponsorsPage() {
               ))
             )}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center gap-2 mt-8">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <span className="px-4 py-2 text-white">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
