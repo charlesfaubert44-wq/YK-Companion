@@ -10,12 +10,17 @@ import YKBuddySeasonalBanner from '@/components/YKBuddySeasonalBanner';
 import LanguageSelector from '@/components/LanguageSelector';
 import PremiumSpotlight from '@/components/PremiumSpotlight';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
+import Modal from '@/components/Modal';
+import AboutContent from '@/components/AboutContent';
+import ContactContent from '@/components/ContactContent';
 
 export default function Home() {
   const { user, profile, loading, signOut } = useAuth();
   const { t } = useLanguage();
   const [showUserTypeSelector, setShowUserTypeSelector] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
 
   useEffect(() => {
     console.log('Home page - Auth state:', {
@@ -97,13 +102,19 @@ export default function Home() {
                 {t('home')}
               </Link>
               <span className="text-gray-700">•</span>
-              <Link href="/about" className="text-gray-500 hover:text-aurora-blue transition-colors">
+              <button
+                onClick={() => setShowAboutModal(true)}
+                className="text-gray-500 hover:text-aurora-blue transition-colors"
+              >
                 {t('about')}
-              </Link>
+              </button>
               <span className="text-gray-700">•</span>
-              <Link href="/contact" className="text-gray-500 hover:text-aurora-purple transition-colors">
+              <button
+                onClick={() => setShowContactModal(true)}
+                className="text-gray-500 hover:text-aurora-purple transition-colors"
+              >
                 {t('contact')}
-              </Link>
+              </button>
             </nav>
           </div>
 
@@ -203,13 +214,19 @@ export default function Home() {
               {t('home')}
             </Link>
             <span className="text-gray-700">•</span>
-            <Link href="/about" className="text-gray-500 hover:text-aurora-blue transition-colors">
+            <button
+              onClick={() => setShowAboutModal(true)}
+              className="text-gray-500 hover:text-aurora-blue transition-colors"
+            >
               {t('about')}
-            </Link>
+            </button>
             <span className="text-gray-700">•</span>
-            <Link href="/contact" className="text-gray-500 hover:text-aurora-purple transition-colors">
+            <button
+              onClick={() => setShowContactModal(true)}
+              className="text-gray-500 hover:text-aurora-purple transition-colors"
+            >
               {t('contact')}
-            </Link>
+            </button>
           </nav>
         </div>
 
@@ -289,6 +306,24 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* About Modal */}
+      <Modal
+        isOpen={showAboutModal}
+        onClose={() => setShowAboutModal(false)}
+        title="About YK Buddy"
+      >
+        <AboutContent />
+      </Modal>
+
+      {/* Contact Modal */}
+      <Modal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        title="Contact Us"
+      >
+        <ContactContent />
+      </Modal>
     </>
   );
 }

@@ -8,7 +8,8 @@ import GarageSaleList from '@/components/garage-sales/GarageSaleList';
 import GarageSaleFilters from '@/components/garage-sales/GarageSaleFilters';
 import ItineraryGenerator from '@/components/garage-sales/ItineraryGenerator';
 import AddSaleButton from '@/components/garage-sales/AddSaleButton';
-import FunnyLoginPrompt from '@/components/auth/FunnyLoginPrompt';
+import DelayedRegistrationPrompt from '@/components/auth/DelayedRegistrationPrompt';
+import FeaturePrompt from '@/components/auth/FeaturePrompt';
 import Link from 'next/link';
 
 type ViewMode = 'map' | 'list' | 'calendar' | 'itinerary';
@@ -21,6 +22,7 @@ export default function GarageSalesPage() {
   const [filters, setFilters] = useState<GarageSaleFiltersType>({});
   const [loading, setLoading] = useState(true);
   const [selectedSales, setSelectedSales] = useState<string[]>([]);
+  const [showFeaturePrompt, setShowFeaturePrompt] = useState<string | null>(null);
 
   const fetchGarageSales = async () => {
     setLoading(true);
@@ -157,6 +159,12 @@ export default function GarageSalesPage() {
   };
 
   const handleToggleSelection = (saleId: string) => {
+    // If user is not logged in, show feature prompt
+    if (!user) {
+      setShowFeaturePrompt('Route Planning');
+      return;
+    }
+
     setSelectedSales(prev =>
       prev.includes(saleId)
         ? prev.filter(id => id !== saleId)
@@ -164,30 +172,23 @@ export default function GarageSalesPage() {
     );
   };
 
-  // Fetch garage sales from Supabase
+  // Fetch garage sales from Supabase - load preview data for everyone
   useEffect(() => {
-    if (user) {
-      fetchGarageSales();
-    }
-  }, [user]);
+    fetchGarageSales();
+  }, []);
 
   // Apply filters whenever filters or sales change
   useEffect(() => {
     applyFilters();
   }, [filters, garageSales, applyFilters]);
 
-  // Show funny login prompt if not authenticated
-  if (!authLoading && !user) {
-    return <FunnyLoginPrompt section="living" featureName="Garage Sale Planner" />;
-  }
-
   // Show loading state while checking auth
-  if (authLoading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-northern-midnight flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-aurora-green border-t-transparent mb-4"></div>
-          <p className="text-gray-400">Loading...</p>
+          <p className="text-gray-400">Loading garage sales...</p>
         </div>
       </div>
     );
@@ -195,6 +196,17 @@ export default function GarageSalesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-northern-midnight">
+      {/* Delayed registration prompt - shows after 30 seconds if not logged in */}
+      <DelayedRegistrationPrompt
+        delaySeconds={30}
+        feature="Garage Sale Planner"
+        benefits={[
+          '💾 Save your favorite garage sales',
+          '🔔 Get alerts for new sales in your area',
+          '📍 Create optimized shopping routes',
+          '⭐ Access to exclusive early bird sales'
+        ]}
+      />
       {/* Header */}
       <div className="bg-northern-midnight/80 backdrop-blur-lg border-b border-aurora-green/10 sticky top-0 z-30">
         <div className="container mx-auto px-4 py-6">
@@ -329,6 +341,14 @@ export default function GarageSalesPage() {
             </div>
           )}
         </div>
+      )}
+
+      {/* Feature Prompt - shows when non-logged-in users try to use premium features */}
+      {showFeaturePrompt && (
+        <FeaturePrompt
+          featureName={showFeaturePrompt}
+          onClose={() => setShowFeaturePrompt(null)}
+        />
       )}
     </div>
   );
