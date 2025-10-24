@@ -28,9 +28,16 @@ export default function AdminSettingsPage() {
     try {
       setDebugInfo('Fetching from site_settings table...');
 
-      const { data, error } = await supabase
+      // Add timeout
+      const fetchPromise = supabase
         .from('site_settings')
         .select('*');
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Query timeout after 10s')), 10000)
+      );
+
+      const { data, error } = await Promise.race([fetchPromise, timeoutPromise]) as any;
 
       console.log('Settings fetch result:', { data, error });
       setDebugInfo(`Fetch complete. Rows: ${data?.length || 0}, Error: ${error?.message || 'none'}`);
