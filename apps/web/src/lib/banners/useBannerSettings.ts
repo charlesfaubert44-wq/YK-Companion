@@ -10,8 +10,8 @@ interface BannerSettings {
 }
 
 const DEFAULT_SETTINGS: BannerSettings = {
-  activeTheme: 'auto',
-  autoDetect: true,
+  activeTheme: 'winter',
+  autoDetect: false,
 };
 
 export function useBannerSettings() {
