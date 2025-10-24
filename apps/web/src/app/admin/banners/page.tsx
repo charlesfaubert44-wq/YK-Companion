@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useAdminGuard } from '@/hooks/useAdminGuard';
 import { useBannerSettings } from '@/lib/banners/useBannerSettings';
 import { BANNER_THEMES, BannerTheme } from '@/components/banners/BannerThemes';
 
 export default function BannerShowcasePage() {
+  const { loading: authLoading, isAdmin } = useAdminGuard();
   const { currentTheme, settings, setActiveTheme, toggleAutoDetect } = useBannerSettings();
   const [previewTheme, setPreviewTheme] = useState<BannerTheme>(currentTheme);
 
@@ -35,6 +37,15 @@ export default function BannerShowcasePage() {
     setActiveTheme(previewTheme);
     alert(`Banner set to: ${bannerVariations.find(b => b.id === previewTheme)?.name}`);
   };
+
+  // Show loading state while checking auth
+  if (authLoading || !isAdmin) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   const PreviewBanner = BANNER_THEMES[previewTheme];
 

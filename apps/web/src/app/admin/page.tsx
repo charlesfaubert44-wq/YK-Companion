@@ -1,44 +1,69 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAdminGuard } from '@/hooks/useAdminGuard';
+
+interface Stats {
+  users: {
+    total: number;
+    newThisMonth: number;
+    byType: {
+      visiting: number;
+      living: number;
+      moving: number;
+      unknown: number;
+    };
+  };
+  content: {
+    savedItems: number;
+    itineraries: number;
+    knowledge: {
+      total: number;
+      pending: number;
+      approved: number;
+      rejected: number;
+    };
+  };
+}
 
 export default function AdminDashboard() {
-  const [stats] = useState({
-    totalUsers: 1247,
-    activeBanners: 11,
-    pageViews: 45632,
-    customBanners: 3,
-  });
+  const { loading: authLoading, isAdmin, profile } = useAdminGuard();
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!authLoading && isAdmin) {
+      fetchStats();
+    }
+  }, [authLoading, isAdmin]);
+
+  const fetchStats = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/admin/stats');
+      const data = await response.json();
+
+      if (response.ok) {
+        setStats(data);
+      } else {
+        console.error('Error fetching stats:', data.error);
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const quickActions = [
     {
-      title: 'Premium Sponsors',
-      description: 'Manage premium spotlight placements and sponsors',
-      icon: '✨',
-      href: '/admin/sponsors',
-      color: 'from-yellow-400 to-yellow-600',
-    },
-    {
-      title: 'Pricing Plans',
-      description: 'Configure premium spotlight pricing structure',
-      icon: '💰',
-      href: '/admin/pricing-plans',
+      title: 'Knowledge Database',
+      description: 'Review and manage user submissions',
+      icon: '📚',
+      href: '/admin/knowledge',
       color: 'from-aurora-green to-aurora-blue',
-    },
-    {
-      title: 'Banner Management',
-      description: 'View, edit, and create custom banner variations',
-      icon: '🎨',
-      href: '/admin/banners',
-      color: 'from-aurora-blue to-aurora-purple',
-    },
-    {
-      title: 'Content Editor',
-      description: 'Edit site content directly',
-      icon: '✏️',
-      href: '/admin/content',
-      color: 'from-aurora-purple to-aurora-pink',
+      badge: stats?.content.knowledge.pending || 0,
     },
     {
       title: 'User Management',
@@ -49,19 +74,56 @@ export default function AdminDashboard() {
     },
     {
       title: 'Analytics',
-      description: 'View site analytics and reports',
+      description: 'View comprehensive site analytics',
       icon: '📊',
       href: '/admin/analytics',
       color: 'from-aurora-green to-aurora-blue',
     },
+    {
+      title: 'Premium Sponsors',
+      description: 'Manage premium spotlight placements',
+      icon: '✨',
+      href: '/admin/sponsors',
+      color: 'from-yellow-400 to-yellow-600',
+    },
+    {
+      title: 'Banner Management',
+      description: 'Customize seasonal and holiday banners',
+      icon: '🎨',
+      href: '/admin/banners',
+      color: 'from-aurora-blue to-aurora-purple',
+    },
+    {
+      title: 'Content Editor',
+      description: 'Manage all platform content',
+      icon: '✏️',
+      href: '/admin/content',
+      color: 'from-aurora-purple to-aurora-pink',
+    },
+    {
+      title: 'Pricing Plans',
+      description: 'Configure premium pricing structure',
+      icon: '💰',
+      href: '/admin/pricing-plans',
+      color: 'from-aurora-green to-aurora-blue',
+    },
+    {
+      title: 'System Settings',
+      description: 'Configure platform settings',
+      icon: '⚙️',
+      href: '/admin/settings',
+      color: 'from-gray-400 to-gray-600',
+    },
   ];
 
-  const recentActivity = [
-    { action: 'Banner updated', item: 'Winter Seasonal', time: '2 hours ago', user: 'Admin' },
-    { action: 'Content edited', item: 'Homepage Hero', time: '5 hours ago', user: 'Admin' },
-    { action: 'New user registered', item: 'john@example.com', time: '1 day ago', user: 'System' },
-    { action: 'Banner created', item: 'Halloween Custom', time: '2 days ago', user: 'Admin' },
-  ];
+  // Show loading state while checking auth
+  if (authLoading || !isAdmin) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
@@ -80,12 +142,12 @@ export default function AdminDashboard() {
                 Super Admin Dashboard
               </h1>
               <p className="text-gray-300 mt-2">
-                Manage your YK Buddy platform
+                Welcome back, {profile?.full_name || profile?.email}
               </p>
             </div>
             <div className="text-right">
-              <div className="text-sm text-gray-400">Last login</div>
-              <div className="text-white font-semibold">Today, 10:30 AM</div>
+              <div className="text-sm text-gray-400">Admin Level</div>
+              <div className="text-aurora-green font-semibold">Super Administrator</div>
             </div>
           </div>
         </div>
@@ -93,152 +155,204 @@ export default function AdminDashboard() {
 
       <div className="container mx-auto px-4 py-8">
         {/* Stats Overview */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-dark-800 rounded-xl p-6 border border-aurora-green/20">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Total Users</p>
-                <p className="text-3xl font-bold text-white mt-1">{stats.totalUsers}</p>
-              </div>
-              <div className="text-4xl">👥</div>
-            </div>
-            <div className="mt-4 text-emerald-400 text-sm">+12% from last month</div>
-          </div>
-
-          <div className="bg-dark-800 rounded-xl p-6 border border-aurora-blue/20">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Active Banners</p>
-                <p className="text-3xl font-bold text-white mt-1">{stats.activeBanners}</p>
-              </div>
-              <div className="text-4xl">🎨</div>
-            </div>
-            <div className="mt-4 text-blue-400 text-sm">11 variations ready</div>
-          </div>
-
-          <div className="bg-dark-800 rounded-xl p-6 border border-aurora-purple/20">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Page Views</p>
-                <p className="text-3xl font-bold text-white mt-1">{stats.pageViews.toLocaleString()}</p>
-              </div>
-              <div className="text-4xl">📊</div>
-            </div>
-            <div className="mt-4 text-purple-400 text-sm">+8% from last week</div>
-          </div>
-
-          <div className="bg-dark-800 rounded-xl p-6 border border-aurora-pink/20">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Custom Banners</p>
-                <p className="text-3xl font-bold text-white mt-1">{stats.customBanners}</p>
-              </div>
-              <div className="text-4xl">✨</div>
-            </div>
-            <div className="mt-4 text-pink-400 text-sm">Create more!</div>
-          </div>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Quick Actions */}
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {quickActions.map((action, index) => (
-                <Link key={index} href={action.href} className="group">
-                  <div className={`bg-gradient-to-br ${action.color} p-[2px] rounded-xl hover:shadow-aurora transition-all transform hover:scale-105`}>
-                    <div className="bg-dark-800 rounded-xl p-6 h-full">
-                      <div className="text-5xl mb-4">{action.icon}</div>
-                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-aurora-green transition-colors">
-                        {action.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm">
-                        {action.description}
-                      </p>
-                      <div className="mt-4 text-aurora-green font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Open <span>→</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            {/* Active Banners Preview */}
-            <div className="mt-8">
-              <h2 className="text-2xl font-bold text-white mb-6">Current Banner</h2>
+        {loading || !stats ? (
+          <div className="text-center text-white text-xl py-12">Loading statistics...</div>
+        ) : (
+          <>
+            <div className="grid md:grid-cols-4 gap-6 mb-8">
               <div className="bg-dark-800 rounded-xl p-6 border border-aurora-green/20">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-white font-semibold">Fall Seasonal Banner</h3>
-                    <p className="text-gray-400 text-sm">Auto-selected based on current season</p>
+                    <p className="text-gray-400 text-sm">Total Users</p>
+                    <p className="text-3xl font-bold text-white mt-1">{stats.users.total}</p>
                   </div>
-                  <Link href="/admin/banners">
-                    <button className="px-4 py-2 bg-aurora-green/20 text-aurora-green rounded-lg hover:bg-aurora-green/30 transition-all">
-                      Manage
-                    </button>
-                  </Link>
+                  <div className="text-4xl">👥</div>
                 </div>
-                <div className="aspect-[4/1] bg-gradient-to-br from-orange-400 via-red-400 to-amber-500 rounded-lg flex items-center justify-center">
-                  <h1 className="text-5xl font-black text-white">
-                    YK <span className="text-yellow-300">BUDDY</span>
-                  </h1>
+                <div className="mt-4 text-emerald-400 text-sm">
+                  +{stats.users.newThisMonth} this month
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Recent Activity */}
-          <div className="lg:col-span-1">
-            <h2 className="text-2xl font-bold text-white mb-6">Recent Activity</h2>
-            <div className="bg-dark-800 rounded-xl p-6 border border-aurora-green/20">
-              <div className="space-y-4">
-                {recentActivity.map((activity, index) => (
-                  <div key={index} className="pb-4 border-b border-gray-700 last:border-0 last:pb-0">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <p className="text-white font-semibold">{activity.action}</p>
-                        <p className="text-gray-400 text-sm">{activity.item}</p>
-                        <p className="text-gray-500 text-xs mt-1">{activity.time}</p>
+              <div className="bg-dark-800 rounded-xl p-6 border border-aurora-blue/20">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-400 text-sm">Knowledge Entries</p>
+                    <p className="text-3xl font-bold text-white mt-1">{stats.content.knowledge.total}</p>
+                  </div>
+                  <div className="text-4xl">📚</div>
+                </div>
+                <div className="mt-4 text-blue-400 text-sm">
+                  {stats.content.knowledge.approved} approved
+                </div>
+              </div>
+
+              <div className="bg-dark-800 rounded-xl p-6 border border-aurora-purple/20">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-400 text-sm">Saved Items</p>
+                    <p className="text-3xl font-bold text-white mt-1">{stats.content.savedItems}</p>
+                  </div>
+                  <div className="text-4xl">⭐</div>
+                </div>
+                <div className="mt-4 text-purple-400 text-sm">User bookmarks</div>
+              </div>
+
+              <div className="bg-dark-800 rounded-xl p-6 border border-aurora-pink/20">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-400 text-sm">Pending Reviews</p>
+                    <p className="text-3xl font-bold text-yellow-400 mt-1">
+                      {stats.content.knowledge.pending}
+                    </p>
+                  </div>
+                  <div className="text-4xl">⏳</div>
+                </div>
+                <Link
+                  href="/admin/knowledge"
+                  className="mt-4 text-yellow-400 text-sm inline-flex items-center gap-1 hover:gap-2 transition-all"
+                >
+                  Review Now →
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Quick Actions */}
+              <div className="lg:col-span-2">
+                <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {quickActions.map((action, index) => (
+                    <Link key={index} href={action.href} className="group relative">
+                      {action.badge !== undefined && action.badge > 0 && (
+                        <div className="absolute -top-2 -right-2 z-10 bg-yellow-500 text-dark-900 font-bold text-xs px-2 py-1 rounded-full">
+                          {action.badge}
+                        </div>
+                      )}
+                      <div className={`bg-gradient-to-br ${action.color} p-[2px] rounded-xl hover:shadow-aurora transition-all transform hover:scale-105`}>
+                        <div className="bg-dark-800 rounded-xl p-6 h-full">
+                          <div className="text-5xl mb-4">{action.icon}</div>
+                          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-aurora-green transition-colors">
+                            {action.title}
+                          </h3>
+                          <p className="text-gray-400 text-sm">
+                            {action.description}
+                          </p>
+                          <div className="mt-4 text-aurora-green font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Open <span>→</span>
+                          </div>
+                        </div>
                       </div>
-                      <span className="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">
-                        {activity.user}
-                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* System Status */}
+              <div className="lg:col-span-1">
+                <h2 className="text-2xl font-bold text-white mb-6">System Status</h2>
+                <div className="bg-dark-800 rounded-xl p-6 border border-aurora-green/20">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-white font-semibold">Database</span>
+                      </div>
+                      <span className="text-green-400 text-sm">Online</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-white font-semibold">Authentication</span>
+                      </div>
+                      <span className="text-green-400 text-sm">Online</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-white font-semibold">API</span>
+                      </div>
+                      <span className="text-green-400 text-sm">Online</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
 
-            {/* Upcoming Holidays */}
-            <div className="mt-6 bg-dark-800 rounded-xl p-6 border border-aurora-blue/20">
-              <h3 className="text-white font-semibold mb-4">Upcoming Holidays</h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-orange-500/10 border border-orange-500/30 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <span className="text-orange-300 font-semibold">🎃 Halloween</span>
-                    <span className="text-gray-400 text-sm">Oct 31</span>
+                {/* Platform Stats */}
+                <div className="mt-6 bg-dark-800 rounded-xl p-6 border border-aurora-blue/20">
+                  <h3 className="text-white font-semibold mb-4">Platform Overview</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="text-gray-300">Visitors</span>
+                        <span className="text-white font-semibold">{stats.users.byType.visiting}</span>
+                      </div>
+                      <div className="w-full bg-dark-700 rounded-full h-2">
+                        <div
+                          className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full"
+                          style={{
+                            width: `${stats.users.total > 0 ? (stats.users.byType.visiting / stats.users.total) * 100 : 0}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="text-gray-300">Residents</span>
+                        <span className="text-white font-semibold">{stats.users.byType.living}</span>
+                      </div>
+                      <div className="w-full bg-dark-700 rounded-full h-2">
+                        <div
+                          className="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full"
+                          style={{
+                            width: `${stats.users.total > 0 ? (stats.users.byType.living / stats.users.total) * 100 : 0}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="text-gray-300">Moving</span>
+                        <span className="text-white font-semibold">{stats.users.byType.moving}</span>
+                      </div>
+                      <div className="w-full bg-dark-700 rounded-full h-2">
+                        <div
+                          className="bg-gradient-to-r from-purple-400 to-purple-600 h-2 rounded-full"
+                          style={{
+                            width: `${stats.users.total > 0 ? (stats.users.byType.moving / stats.users.total) * 100 : 0}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-gray-400 text-xs mt-1">Banner active in 3 days</p>
                 </div>
-                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <span className="text-red-300 font-semibold">🌺 Remembrance</span>
-                    <span className="text-gray-400 text-sm">Nov 11</span>
+
+                {/* Quick Links */}
+                <div className="mt-6 bg-dark-800 rounded-xl p-6 border border-aurora-purple/20">
+                  <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+                  <div className="space-y-2">
+                    <Link
+                      href="/admin/analytics"
+                      className="block text-aurora-green hover:text-aurora-blue transition-colors text-sm"
+                    >
+                      → View Full Analytics
+                    </Link>
+                    <Link
+                      href="/admin/users"
+                      className="block text-aurora-green hover:text-aurora-blue transition-colors text-sm"
+                    >
+                      → Manage Users
+                    </Link>
+                    <Link
+                      href="/admin/settings"
+                      className="block text-aurora-green hover:text-aurora-blue transition-colors text-sm"
+                    >
+                      → System Settings
+                    </Link>
                   </div>
-                  <p className="text-gray-400 text-xs mt-1">Banner ready</p>
-                </div>
-                <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <span className="text-green-300 font-semibold">🎄 Christmas</span>
-                    <span className="text-gray-400 text-sm">Dec 25</span>
-                  </div>
-                  <p className="text-gray-400 text-xs mt-1">Auto-schedule set</p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

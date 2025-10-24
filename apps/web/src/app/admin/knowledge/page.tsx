@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAdminGuard } from '@/hooks/useAdminGuard';
 import type { KnowledgeSubmissionWithCategory, KnowledgeStats, SubmissionStatus } from '@/types/knowledge.types';
 
 export default function AdminKnowledgePage() {
-  const { profile, loading: authLoading } = useAuth();
+  const { profile, loading: authLoading, isAdmin } = useAdminGuard();
   const [submissions, setSubmissions] = useState<KnowledgeSubmissionWithCategory[]>([]);
   const [stats, setStats] = useState<KnowledgeStats | null>(null);
   const [filter, setFilter] = useState<SubmissionStatus | 'all'>('pending');
@@ -16,11 +16,11 @@ export default function AdminKnowledgePage() {
   const [rejectionReason, setRejectionReason] = useState('');
 
   useEffect(() => {
-    if (profile?.is_admin) {
+    if (!authLoading && isAdmin) {
       fetchStats();
       fetchSubmissions();
     }
-  }, [profile, filter]);
+  }, [authLoading, isAdmin, filter]);
 
   const fetchStats = async () => {
     try {
@@ -95,20 +95,11 @@ export default function AdminKnowledgePage() {
     );
   }
 
-  if (!profile?.is_admin) {
+  // Show loading state while checking auth
+  if (authLoading || !isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🔒</div>
-          <h1 className="text-3xl font-bold text-white mb-3">Access Denied</h1>
-          <p className="text-gray-400 mb-6">You need admin privileges to access this page.</p>
-          <Link
-            href="/"
-            className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all inline-block"
-          >
-            Go Home
-          </Link>
-        </div>
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
       </div>
     );
   }

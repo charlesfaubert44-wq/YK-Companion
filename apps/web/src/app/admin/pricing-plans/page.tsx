@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { useAdminGuard } from '@/hooks/useAdminGuard';
 import Link from 'next/link';
 
 interface PricingPlan {
@@ -21,6 +22,7 @@ interface PricingPlan {
 }
 
 export default function AdminPricingPlansPage() {
+  const { loading: authLoading, isAdmin } = useAdminGuard();
   const supabase = createClient();
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [showNewPlanForm, setShowNewPlanForm] = useState(false);
@@ -147,6 +149,15 @@ export default function AdminPricingPlansPage() {
       }
     }
   };
+
+  // Show loading state while checking auth
+  if (authLoading || !isAdmin) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 p-8">
