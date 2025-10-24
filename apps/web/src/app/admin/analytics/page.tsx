@@ -116,7 +116,7 @@ export default function AdminAnalyticsPage() {
         .gte('created_at', firstDayOfMonth.toISOString())
         .eq('payment_status', 'paid');
 
-      const revenueThisMonth = monthlySponsors?.reduce((sum, s) => sum + Number(s.total_price), 0) || 0;
+      const revenueThisMonth = monthlySponsors?.reduce((sum: number, s) => sum + Number(s.total_price), 0) || 0;
 
       // Calculate revenue YTD
       const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1).toISOString();
@@ -126,7 +126,7 @@ export default function AdminAnalyticsPage() {
         .gte('created_at', firstDayOfYear)
         .eq('payment_status', 'paid');
 
-      const revenueYTD = ytdSponsors?.reduce((sum, s) => sum + Number(s.total_price), 0) || 0;
+      const revenueYTD = ytdSponsors?.reduce((sum: number, s) => sum + Number(s.total_price), 0) || 0;
 
       // Revenue by month (last 12 months)
       const revenueByMonth = [];
@@ -145,7 +145,7 @@ export default function AdminAnalyticsPage() {
 
         revenueByMonth.push({
           month: date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-          revenue: monthSponsors?.reduce((sum, s) => sum + Number(s.total_price), 0) || 0
+          revenue: monthSponsors?.reduce((sum: number, s) => sum + Number(s.total_price), 0) || 0
         });
       }
 
