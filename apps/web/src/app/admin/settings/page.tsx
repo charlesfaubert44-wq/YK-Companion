@@ -12,22 +12,29 @@ interface Setting {
 }
 
 export default function AdminSettingsPage() {
-  const supabase = createClient();
   const [settings, setSettings] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<string>('');
 
   useEffect(() => {
+    console.log('AdminSettingsPage mounted');
+    setDebugInfo('Component mounted, starting fetch...');
     fetchSettings();
   }, []);
 
   const fetchSettings = async () => {
     try {
+      setDebugInfo('Creating Supabase client...');
+      const supabase = createClient();
+      setDebugInfo('Fetching from site_settings table...');
+
       const { data, error } = await supabase
         .from('site_settings')
         .select('*');
 
       console.log('Settings fetch result:', { data, error });
+      setDebugInfo(`Fetch complete. Rows: ${data?.length || 0}, Error: ${error?.message || 'none'}`);
 
       if (data && !error) {
         const settingsObj: Record<string, any> = {};
@@ -42,12 +49,15 @@ export default function AdminSettingsPage() {
           }
         });
         console.log('Parsed settings:', settingsObj);
+        setDebugInfo(`Successfully parsed ${Object.keys(settingsObj).length} settings`);
         setSettings(settingsObj);
       } else if (error) {
         console.error('Error fetching settings:', error);
+        setDebugInfo(`Error: ${error.message}`);
       }
     } catch (err) {
       console.error('Unexpected error in fetchSettings:', err);
+      setDebugInfo(`Unexpected error: ${err}`);
     } finally {
       setLoading(false);
     }
@@ -103,7 +113,12 @@ export default function AdminSettingsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading settings...</div>
+        <div className="text-white text-center">
+          <div className="text-xl mb-4">Loading settings...</div>
+          {debugInfo && (
+            <div className="text-sm text-aurora-purple">Debug: {debugInfo}</div>
+          )}
+        </div>
       </div>
     );
   }
