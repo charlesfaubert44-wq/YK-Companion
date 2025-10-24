@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 export type Language = 'en' | 'fr' | 'zh' | 'ja' | 'ko' | 'es' | 'de' | 'vi' | 'tl';
 
@@ -29,7 +29,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': 'Aurora forecasts, top attractions, seasonal guides, hidden gems, and local experiences to make your Yellowknife adventure unforgettable.',
     'living_desc': 'Garage sales, local events, seasonal activities, community resources, and insider tips for making the most of life in Yellowknife.',
     'moving_desc': 'Housing market insights, job opportunities, cost of living calculator, moving checklist, and everything you need to relocate to Yellowknife.',
-    'footer': 'Built with love on the traditional territory of the Yellowknives Dene First Nation in Yellowknife, Northwest Territories',
+    'footer': '🏔️ Built with ❤️ on Yellowknives Dene First Nation territory',
+    'frozen_shield': 'Imagined by the Frozen Shield Team',
     'sign_in': 'Sign In',
     'sign_out': 'Sign Out',
   },
@@ -48,7 +49,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': 'Prévisions aurorales, attractions principales, guides saisonniers et expériences locales pour rendre votre aventure à Yellowknife inoubliable.',
     'living_desc': 'Ventes de garage, événements locaux, activités saisonnières et ressources communautaires pour profiter au maximum de la vie à Yellowknife.',
     'moving_desc': 'Informations sur le marché immobilier, opportunités d\'emploi, calculateur du coût de la vie et tout ce dont vous avez besoin pour déménager à Yellowknife.',
-    'footer': 'Créé avec amour sur le territoire traditionnel de la Première Nation Yellowknives Dene à Yellowknife, Territoires du Nord-Ouest',
+    'footer': '🏔️ Créé avec ❤️ sur le territoire de la Première Nation Yellowknives Dene',
+    'frozen_shield': 'Imaginé par l\'équipe Frozen Shield',
     'sign_in': 'Se connecter',
     'sign_out': 'Se déconnecter',
   },
@@ -67,7 +69,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': '极光预测、热门景点、季节指南、隐藏宝藏和当地体验，让您的耶洛奈夫之旅难忘。',
     'living_desc': '车库销售、本地活动、季节性活动、社区资源和内部技巧，充分利用耶洛奈夫的生活。',
     'moving_desc': '房地产市场洞察、工作机会、生活成本计算器、搬家清单以及您搬迁到耶洛奈夫所需的一切。',
-    'footer': '在耶洛奈夫刀民族第一民族传统领地上用心打造',
+    'footer': '🏔️ 在 Yellowknives Dene 第一民族领地上用❤️打造',
+    'frozen_shield': '由 Frozen Shield 团队设计',
     'sign_in': '登录',
     'sign_out': '登出',
   },
@@ -86,7 +89,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': 'オーロラ予報、人気アトラクション、季節のガイド、隠れた名所、イエローナイフの冒険を忘れられないものにする地元体験。',
     'living_desc': 'ガレージセール、地元イベント、季節のアクティビティ、コミュニティリソース、イエローナイフでの生活を最大限に活用するためのインサイダーヒント。',
     'moving_desc': '住宅市場の洞察、求人情報、生活費計算機、引っ越しチェックリスト、イエローナイフへの移住に必要なすべて。',
-    'footer': 'イエローナイフ・デネ・ファーストネーションの伝統的な領土で愛を込めて作成',
+    'footer': '🏔️ Yellowknives Dene ファーストネーション領土で❤️を込めて',
+    'frozen_shield': 'Frozen Shield チームによる創作',
     'sign_in': 'サインイン',
     'sign_out': 'サインアウト',
   },
@@ -105,7 +109,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': '오로라 예보, 인기 명소, 계절 가이드, 숨은 보석, 그리고 옐로나이프 모험을 잊을 수 없게 만들 현지 경험.',
     'living_desc': '차고 세일, 지역 이벤트, 계절 활동, 커뮤니티 리소스, 옐로나이프 생활을 최대한 활용하기 위한 내부자 팁.',
     'moving_desc': '주택 시장 통찰력, 취업 기회, 생활비 계산기, 이사 체크리스트, 옐로나이프로 이주하는 데 필요한 모든 것.',
-    'footer': '옐로나이프 데네 퍼스트 네이션의 전통 영토에서 사랑으로 제작',
+    'footer': '🏔️ Yellowknives Dene 퍼스트 네이션 영토에서 ❤️로 제작',
+    'frozen_shield': 'Frozen Shield 팀이 상상하다',
     'sign_in': '로그인',
     'sign_out': '로그아웃',
   },
@@ -124,7 +129,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': 'Pronósticos de auroras, atracciones principales, guías estacionales, joyas ocultas y experiencias locales para hacer tu aventura en Yellowknife inolvidable.',
     'living_desc': 'Ventas de garaje, eventos locales, actividades estacionales, recursos comunitarios y consejos internos para aprovechar al máximo la vida en Yellowknife.',
     'moving_desc': 'Información del mercado inmobiliario, oportunidades de empleo, calculadora de costo de vida, lista de mudanza y todo lo que necesitas para mudarte a Yellowknife.',
-    'footer': 'Hecho con amor en el territorio tradicional de la Primera Nación Yellowknives Dene en Yellowknife, Territorios del Noroeste',
+    'footer': '🏔️ Hecho con ❤️ en territorio de la Primera Nación Yellowknives Dene',
+    'frozen_shield': 'Imaginado por el equipo Frozen Shield',
     'sign_in': 'Iniciar sesión',
     'sign_out': 'Cerrar sesión',
   },
@@ -143,7 +149,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': 'Polarlichter-Vorhersagen, Top-Attraktionen, saisonale Führer, versteckte Schätze und lokale Erlebnisse, um dein Yellowknife-Abenteuer unvergesslich zu machen.',
     'living_desc': 'Garagenverkäufe, lokale Veranstaltungen, saisonale Aktivitäten, Community-Ressourcen und Insider-Tipps, um das Beste aus dem Leben in Yellowknife zu machen.',
     'moving_desc': 'Immobilienmarkt-Einblicke, Jobmöglichkeiten, Lebenshaltungskosten-Rechner, Umzugscheckliste und alles, was du brauchst, um nach Yellowknife umzuziehen.',
-    'footer': 'Mit Liebe auf dem traditionellen Gebiet der Yellowknives Dene First Nation in Yellowknife, Northwest Territories, erstellt',
+    'footer': '🏔️ Mit ❤️ auf Yellowknives Dene First Nation Gebiet erstellt',
+    'frozen_shield': 'Erdacht vom Frozen Shield Team',
     'sign_in': 'Anmelden',
     'sign_out': 'Abmelden',
   },
@@ -162,7 +169,8 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': 'Dự báo cực quang, điểm tham quan hàng đầu, hướng dẫn theo mùa, viên ngọc ẩn và trải nghiệm địa phương để làm cho cuộc phiêu lưu Yellowknife của bạn khó quên.',
     'living_desc': 'Bán hàng xe hơi, sự kiện địa phương, hoạt động theo mùa, tài nguyên cộng đồng và mẹo nội bộ để tận dụng tối đa cuộc sống ở Yellowknife.',
     'moving_desc': 'Thông tin thị trường nhà đất, cơ hội việc làm, máy tính chi phí sinh hoạt, danh sách kiểm tra chuyển nhà và mọi thứ bạn cần để chuyển đến Yellowknife.',
-    'footer': 'Được tạo ra với tình yêu trên lãnh thổ truyền thống của Yellowknives Dene First Nation tại Yellowknife, Northwest Territories',
+    'footer': '🏔️ Được tạo với ❤️ trên lãnh thổ Yellowknives Dene First Nation',
+    'frozen_shield': 'Hình dung bởi đội Frozen Shield',
     'sign_in': 'Đăng nhập',
     'sign_out': 'Đăng xuất',
   },
@@ -181,22 +189,24 @@ const translations: Record<Language, Record<string, string>> = {
     'visiting_desc': 'Mga hula ng aurora, nangungunang atraksyon, seasonal guides, nakatagong hiyas, at lokal na karanasan upang gawing hindi malilimutan ang iyong Yellowknife adventure.',
     'living_desc': 'Garage sales, lokal na kaganapan, seasonal activities, community resources, at insider tips para sa paggawa ng pinakamahusay sa buhay sa Yellowknife.',
     'moving_desc': 'Mga insight sa housing market, pagkakataon sa trabaho, calculator ng gastos sa pamumuhay, checklist sa paglipat, at lahat ng kailangan mo upang lumipat sa Yellowknife.',
-    'footer': 'Ginawa nang may pagmamahal sa tradisyonal na teritoryo ng Yellowknives Dene First Nation sa Yellowknife, Northwest Territories',
+    'footer': '🏔️ Ginawa nang may ❤️ sa teritoryo ng Yellowknives Dene First Nation',
+    'frozen_shield': 'Inisip ng Frozen Shield Team',
     'sign_in': 'Mag-sign in',
     'sign_out': 'Mag-sign out',
   },
 };
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
-
-  useEffect(() => {
-    // Load saved language from localStorage
-    const saved = localStorage.getItem('yk-buddy-language');
-    if (saved && saved in translations) {
-      setLanguageState(saved as Language);
+  // Use lazy initialization to load from localStorage immediately
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('yk-buddy-language');
+      if (saved && saved in translations) {
+        return saved as Language;
+      }
     }
-  }, []);
+    return 'en';
+  });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
