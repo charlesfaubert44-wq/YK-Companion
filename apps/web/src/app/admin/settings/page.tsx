@@ -26,35 +26,13 @@ export default function AdminSettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      setDebugInfo('Testing Supabase connection...');
-      console.log('Testing Supabase connection...');
+      setDebugInfo('Fetching settings from database...');
+      console.log('Fetching settings...');
 
-      // First, try a simple count query to test connection
-      const { count, error: countError } = await supabase
+      // Try fetching with specific columns only (no wildcards)
+      const { data, error } = await supabase
         .from('site_settings')
-        .select('*', { count: 'exact', head: true });
-
-      console.log('Count result:', { count, countError });
-      setDebugInfo(`Connection test: ${count} rows available`);
-
-      if (countError) {
-        throw new Error(`Count failed: ${countError.message}`);
-      }
-
-      setDebugInfo('Fetching settings data...');
-      console.log('Fetching full settings data...');
-
-      // Now fetch the actual data with a 10-second timeout
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Query timeout after 10 seconds')), 10000)
-      );
-
-      const fetchPromise = supabase
-        .from('site_settings')
-        .select('*');
-
-      const result = await Promise.race([fetchPromise, timeoutPromise]) as any;
-      const { data, error } = result;
+        .select('key, value, category, description');
 
       console.log('Settings fetch result:', { data, error });
       setDebugInfo(`Fetch complete. Rows: ${data?.length || 0}, Error: ${error?.message || 'none'}`);
