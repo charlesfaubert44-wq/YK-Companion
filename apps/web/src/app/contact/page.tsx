@@ -1,9 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSelector from '@/components/LanguageSelector';
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
       {/* Top Navigation */}
