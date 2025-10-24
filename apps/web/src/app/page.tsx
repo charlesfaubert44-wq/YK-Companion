@@ -155,9 +155,25 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="text-sm text-gray-500 mt-8 max-w-2xl mx-auto">
-                {t('footer')}
-              </div>
+              {/* Styled Footer */}
+              <footer className="mt-12 pt-6 border-t border-gray-700/30">
+                <div className="text-center space-y-2">
+                  <p className="text-sm text-gray-400">
+                    {t('footer')}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {t('frozen_shield')} •{' '}
+                    <a
+                      href="https://frozenshield.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-aurora-blue hover:text-aurora-green transition-colors underline decoration-dotted"
+                    >
+                      frozenshield.com
+                    </a>
+                  </p>
+                </div>
+              </footer>
             </div>
           </div>
         </div>
@@ -259,10 +275,25 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="text-sm text-gray-500">
-              {t('footer')}
-            </div>
+            {/* Styled Footer */}
+            <footer className="mt-12 pt-6 border-t border-gray-700/30">
+              <div className="text-center space-y-2">
+                <p className="text-sm text-gray-400">
+                  {t('footer')}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {t('frozen_shield')} •{' '}
+                  <a
+                    href="https://frozenshield.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-aurora-blue hover:text-aurora-green transition-colors underline decoration-dotted"
+                  >
+                    frozenshield.com
+                  </a>
+                </p>
+              </div>
+            </footer>
           </div>
         </div>
       </div>

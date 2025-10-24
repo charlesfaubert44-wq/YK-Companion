@@ -1,15 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSelector from '@/components/LanguageSelector';
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-      {/* Back Button */}
-      <div className="absolute top-6 left-6 z-50">
+      {/* Top Navigation */}
+      <div className="fixed top-6 left-6 right-6 z-50 flex justify-between items-center">
         <Link href="/" className="text-gray-400 hover:text-aurora-green transition-colors text-sm flex items-center gap-2">
           <span>←</span> Back to Home
         </Link>
+        <LanguageSelector />
       </div>
 
       <div className="max-w-4xl mx-auto px-6 py-20">
@@ -158,12 +163,25 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-gray-700/30 text-center text-sm text-gray-500">
-          <p className="mb-2">Built with love, caffeine, and several layers of fleece</p>
-          <p>On the traditional territory of the Yellowknives Dene First Nation</p>
-          <p className="mt-4 text-xs">Yellowknife, Northwest Territories, Canada</p>
-        </div>
+        {/* Styled Footer */}
+        <footer className="mt-16 pt-8 border-t border-gray-700/30">
+          <div className="text-center space-y-2">
+            <p className="text-sm text-gray-400">
+              {t('footer')}
+            </p>
+            <p className="text-xs text-gray-500">
+              {t('frozen_shield')} •{' '}
+              <a
+                href="https://frozenshield.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-aurora-blue hover:text-aurora-green transition-colors underline decoration-dotted"
+              >
+                frozenshield.com
+              </a>
+            </p>
+          </div>
+        </footer>
       </div>
     </div>
   );
