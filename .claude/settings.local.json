@@ -45,7 +45,9 @@
       "Bash(npm run build:*)",
       "Bash(powershell -Command:*)",
       "Read(//c/Users/Charles//**)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git ls-tree:*)"
     ],
     "deny": [],
     "ask": []

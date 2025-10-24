@@ -133,7 +133,7 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
 
         {/* Temperature badge */}
         <div
-          className="absolute top-6 left-6 bg-slate-900/80 backdrop-blur-md px-5 py-2.5 rounded-xl border border-emerald-400/40 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-400/40 transition-all duration-300"
           style={{
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
             boxShadow: isHovered ? '0 0 30px rgba(16, 185, 129, 0.3)' : 'none',
@@ -277,7 +277,7 @@ export const SpringBanner = ({ temperature }: BannerProps) => {
 
         {/* Temperature badge */}
         <div
-          className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-xl border border-emerald-500/50 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-500/50 transition-all duration-300"
           style={{
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
           }}
@@ -436,7 +436,7 @@ export const SummerBanner = ({ temperature }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-6 left-6 bg-orange-100/90 backdrop-blur-md px-5 py-2.5 rounded-xl border border-yellow-500/60 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-100/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-500/60 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
           <div className="text-xl md:text-3xl font-black text-orange-700">{temperature}°C</div>
@@ -548,7 +548,7 @@ export const FallBanner = ({ temperature }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-6 left-6 bg-amber-900/80 backdrop-blur-md px-5 py-2.5 rounded-xl border border-orange-400/50 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
           <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
@@ -604,7 +604,7 @@ export const HalloweenBanner = ({ temperature }: BannerProps) => {
         <div className="absolute bottom-8 left-10 text-6xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}>🎃</div>
         <div className="absolute bottom-6 right-16 text-5xl opacity-80 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(-10deg)' : 'scale(1)' }}>🎃</div>
 
-        <div className="absolute top-6 left-6 bg-orange-900/80 backdrop-blur-md px-5 py-2.5 rounded-xl border border-orange-400/50">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50">
           <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
         </div>
 
@@ -632,7 +632,7 @@ export const RemembranceBanner = ({ temperature }: BannerProps) => {
         <div className="absolute bottom-10 right-12 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}>🌺</div>
         <div className="absolute bottom-12 right-32 text-4xl opacity-80 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}>🌺</div>
 
-        <div className="absolute top-6 left-6 bg-gray-800/80 backdrop-blur-md px-5 py-2.5 rounded-xl border border-red-500/40">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-gray-800/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-red-500/40">
           <div className="text-xl md:text-3xl font-black text-gray-300">{temperature}°C</div>
         </div>
 
@@ -670,7 +670,7 @@ export const ChristmasBanner = ({ temperature }: BannerProps) => {
         <div className="absolute bottom-8 left-10 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🎄</div>
         <div className="absolute bottom-10 right-12 text-4xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>⛄</div>
 
-        <div className="absolute top-6 left-6 bg-green-900/80 backdrop-blur-md px-5 py-2.5 rounded-xl border border-green-400/50">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-green-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-green-400/50">
           <div className="text-xl md:text-3xl font-black text-green-300">{temperature}°C</div>
         </div>
 
@@ -699,7 +699,7 @@ export const NewYearBanner = ({ temperature }: BannerProps) => {
         <div className="absolute top-16 left-1/2 text-6xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}>🎇</div>
         <div className="absolute top-12 right-1/3 text-4xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}>💫</div>
 
-        <div className="absolute top-6 left-6 bg-indigo-900/80 backdrop-blur-md px-5 py-2.5 rounded-xl border border-yellow-400/50">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-indigo-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-400/50">
           <div className="text-xl md:text-3xl font-black text-yellow-300">{temperature}°C</div>
         </div>
 
@@ -727,7 +727,7 @@ export const CanadaDayBanner = ({ temperature }: BannerProps) => {
         <div className="absolute top-8 right-20 text-5xl text-red-700 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(-20deg)' : 'scale(1)' }}>🍁</div>
         <div className="absolute bottom-12 left-1/3 text-4xl text-red-600 opacity-70 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🍁</div>
 
-        <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-xl border border-red-600/50">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-red-600/50">
           <div className="text-xl md:text-3xl font-black text-red-700">{temperature}°C</div>
         </div>
 
@@ -752,7 +752,7 @@ export const IndigenousBanner = ({ temperature }: BannerProps) => {
           <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-r from-amber-600 via-yellow-600 to-red-600" />
         </div>
 
-        <div className="absolute top-6 left-6 bg-amber-900/80 backdrop-blur-md px-5 py-2.5 rounded-xl border border-yellow-400/50">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-400/50">
           <div className="text-xl md:text-3xl font-black text-yellow-200">{temperature}°C</div>
         </div>
 
@@ -780,7 +780,7 @@ export const EasterBanner = ({ temperature }: BannerProps) => {
         <div className="absolute bottom-8 right-16 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🐰</div>
         <div className="absolute top-12 left-1/3 text-4xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🥚</div>
 
-        <div className="absolute top-6 left-6 bg-purple-200/90 backdrop-blur-md px-5 py-2.5 rounded-xl border border-purple-400/50">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-purple-200/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-purple-400/50">
           <div className="text-xl md:text-3xl font-black text-purple-700">{temperature}°C</div>
         </div>
 

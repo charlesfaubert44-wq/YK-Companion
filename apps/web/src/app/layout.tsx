@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Press_Start_2P } from 'next/font/google';
 import '../styles/globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 
 const inter = Inter({ subsets: ['latin'] });
 const pressStart2P = Press_Start_2P({
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={pressStart2P.variable}>
       <body className={inter.className}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

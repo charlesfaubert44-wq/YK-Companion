@@ -3,12 +3,17 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import AuthModal from '@/components/auth/AuthModal';
 import UserTypeSelector from '@/components/auth/UserTypeSelector';
 import YKBuddySeasonalBanner from '@/components/YKBuddySeasonalBanner';
+import LanguageSelector from '@/components/LanguageSelector';
+import PremiumSpotlight from '@/components/PremiumSpotlight';
+import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
 
 export default function Home() {
   const { user, profile, loading, signOut } = useAuth();
+  const { t } = useLanguage();
   const [showUserTypeSelector, setShowUserTypeSelector] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
@@ -71,34 +76,39 @@ export default function Home() {
     return (
       <>
         <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-          {/* Sign Out Button - Top Right */}
-          <button
-            onClick={signOut}
-            className="fixed top-6 right-6 text-gray-400 hover:text-red-400 transition-colors text-sm z-50"
-          >
-            Sign Out
-          </button>
+          {/* Language Selector - Top Right */}
+          <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
+            <button
+              onClick={signOut}
+              className="text-gray-400 hover:text-red-400 transition-colors text-sm"
+            >
+              {t('sign_out')}
+            </button>
+            <LanguageSelector />
+          </div>
 
           {/* YK Buddy Seasonal Banner */}
           <YKBuddySeasonalBanner />
 
           {/* Navigation Menu */}
-          <div className="flex justify-center px-4 py-4">
-            <nav className="flex gap-6 text-sm">
-              <Link href="/about" className="text-gray-400 hover:text-aurora-green transition-colors">
-                About
+          <div className="flex justify-center px-4 py-3">
+            <nav className="flex gap-4 text-xs">
+              <Link href="/" className="text-gray-500 hover:text-aurora-green transition-colors">
+                {t('home')}
               </Link>
-              <Link href="/aurora" className="text-gray-400 hover:text-aurora-blue transition-colors">
-                Aurora
+              <span className="text-gray-700">•</span>
+              <Link href="/about" className="text-gray-500 hover:text-aurora-blue transition-colors">
+                {t('about')}
               </Link>
-              <Link href="/aurora-live" className="text-gray-400 hover:text-aurora-purple transition-colors">
-                Aurora Live
-              </Link>
-              <Link href="/seasonal" className="text-gray-400 hover:text-aurora-pink transition-colors">
-                Seasonal Guide
+              <span className="text-gray-700">•</span>
+              <Link href="/contact" className="text-gray-500 hover:text-aurora-purple transition-colors">
+                {t('contact')}
               </Link>
             </nav>
           </div>
+
+          {/* Premium Spotlight */}
+          <PremiumSpotlight position="home_top" />
 
           <div className="flex items-center justify-center px-4 py-12">
             <div className="max-w-3xl w-full text-center">
@@ -146,7 +156,7 @@ export default function Home() {
               </div>
 
               <div className="text-sm text-gray-500 mt-8 max-w-2xl mx-auto">
-                Built with love on the traditional territory of the Yellowknives Dene First Nation in Yellowknife, Northwest Territories
+                {t('footer')}
               </div>
             </div>
           </div>
@@ -164,74 +174,85 @@ export default function Home() {
         onComplete={() => setShowUserTypeSelector(false)}
       />
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-        {/* Sign In Button - Top Right */}
-        <button
-          onClick={() => setShowAuthModal(true)}
-          className="fixed top-6 right-6 px-6 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all text-sm z-50"
-        >
-          Sign In
-        </button>
+        {/* Language Selector & Sign In - Top Right */}
+        <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
+          <button
+            onClick={() => setShowAuthModal(true)}
+            className="px-6 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all text-sm"
+          >
+            {t('sign_in')}
+          </button>
+          <LanguageSelector />
+        </div>
 
         {/* YK Buddy Seasonal Banner */}
         <YKBuddySeasonalBanner />
 
         {/* Navigation Menu */}
-        <div className="flex justify-center px-4 py-4">
-          <nav className="flex gap-6 text-sm">
-            <Link href="/about" className="text-gray-400 hover:text-aurora-green transition-colors">
-              About
+        <div className="flex justify-center px-4 py-3">
+          <nav className="flex gap-4 text-xs">
+            <Link href="/" className="text-gray-500 hover:text-aurora-green transition-colors">
+              {t('home')}
             </Link>
-            <Link href="/aurora" className="text-gray-400 hover:text-aurora-blue transition-colors">
-              Aurora
+            <span className="text-gray-700">•</span>
+            <Link href="/about" className="text-gray-500 hover:text-aurora-blue transition-colors">
+              {t('about')}
             </Link>
-            <Link href="/aurora-live" className="text-gray-400 hover:text-aurora-purple transition-colors">
-              Aurora Live
-            </Link>
-            <Link href="/seasonal" className="text-gray-400 hover:text-aurora-pink transition-colors">
-              Seasonal Guide
+            <span className="text-gray-700">•</span>
+            <Link href="/contact" className="text-gray-500 hover:text-aurora-purple transition-colors">
+              {t('contact')}
             </Link>
           </nav>
         </div>
+
+        {/* Premium Spotlight */}
+        <PremiumSpotlight position="home_top" />
 
         <div className="flex items-center justify-center px-4 py-12">
           <div className="max-w-4xl w-full text-center">
             {/* Simple Question */}
             <div className="mb-12">
               <h2 className="text-2xl md:text-3xl font-semibold text-white mb-8">
-                Are you...
+                {t('are_you')}
               </h2>
 
               {/* Three Big Buttons */}
               <div className="grid md:grid-cols-3 gap-6">
                 <Link href="/visiting" className="group">
                   <div className="bg-gradient-to-br from-aurora-green/20 to-aurora-green/5 backdrop-blur-lg p-8 rounded-3xl border-2 border-aurora-green/30 hover:border-aurora-green hover:shadow-aurora transition-all transform hover:scale-105 cursor-pointer">
-                    <div className="text-6xl mb-4">🧳</div>
-                    <h3 className="text-2xl font-bold text-white mb-2">Visiting</h3>
-                    <p className="text-gray-400 text-sm mb-4">Plan your trip</p>
+                    <div className="mb-4 flex justify-center">
+                      <BushPlaneIcon />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">{t('visiting')}</h3>
+                    <p className="text-gray-400 text-sm mb-4">{t('plan_your_trip')}</p>
                     <p className="text-gray-500 text-xs leading-relaxed">
-                      Aurora forecasts, top attractions, seasonal guides, hidden gems, and local experiences to make your Yellowknife adventure unforgettable.
+                      {t('visiting_desc')}
                     </p>
                   </div>
                 </Link>
 
                 <Link href="/living" className="group">
                   <div className="bg-gradient-to-br from-aurora-blue/20 to-aurora-blue/5 backdrop-blur-lg p-8 rounded-3xl border-2 border-aurora-blue/30 hover:border-aurora-blue hover:shadow-glow transition-all transform hover:scale-105 cursor-pointer">
-                    <div className="text-6xl mb-4">🏠</div>
-                    <h3 className="text-2xl font-bold text-white mb-2">Living Here</h3>
-                    <p className="text-gray-400 text-sm mb-4">Explore your city</p>
+                    <div className="mb-4 flex justify-center">
+                      <NorthernCabinIcon />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">{t('living')}</h3>
+                    <p className="text-gray-400 text-sm mb-4">{t('explore_your_city')}</p>
                     <p className="text-gray-500 text-xs leading-relaxed">
-                      Garage sales, local events, seasonal activities, community resources, and insider tips for making the most of life in Yellowknife.
+                      {t('living_desc')}
                     </p>
                   </div>
                 </Link>
 
                 <Link href="/moving" className="group">
                   <div className="bg-gradient-to-br from-aurora-purple/20 to-aurora-purple/5 backdrop-blur-lg p-8 rounded-3xl border-2 border-aurora-purple/30 hover:border-aurora-purple transition-all transform hover:scale-105 cursor-pointer">
-                    <div className="text-6xl mb-4">📦</div>
-                    <h3 className="text-2xl font-bold text-white mb-2">Moving Here</h3>
-                    <p className="text-gray-400 text-sm mb-4">Start your move</p>
+                    <div className="mb-4 flex justify-center">
+                      <OldTruckIcon />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">{t('moving')}</h3>
+                    <p className="text-gray-400 text-sm mb-4">{t('start_your_move')}</p>
                     <p className="text-gray-500 text-xs leading-relaxed">
-                      Housing market insights, job opportunities, cost of living calculator, moving checklist, and everything you need to relocate to Yellowknife.
+                      {t('moving_desc')}
                     </p>
                   </div>
                 </Link>
@@ -240,7 +261,7 @@ export default function Home() {
 
             {/* Footer */}
             <div className="text-sm text-gray-500">
-              Made with ❤️ in Yellowknife
+              {t('footer')}
             </div>
           </div>
         </div>

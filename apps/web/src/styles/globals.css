@@ -22,3 +22,92 @@
     @apply bg-white rounded-lg shadow-md p-6;
   }
 }
+
+/* Custom Northern-themed Animations */
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 3s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 4s linear infinite;
+}
+
+/* Northern Lights Animation for Premium Spotlight */
+@keyframes aurora-flow {
+  0% { transform: translateX(-100%) translateY(0) rotate(0deg); opacity: 0.4; }
+  50% { transform: translateX(100%) translateY(-20px) rotate(5deg); opacity: 0.7; }
+  100% { transform: translateX(300%) translateY(0) rotate(0deg); opacity: 0.4; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.aurora-wave {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  filter: blur(40px);
+  mix-blend-mode: screen;
+}
+
+.aurora-green {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.5) 25%,
+    rgba(52, 211, 153, 0.6) 50%,
+    rgba(16, 185, 129, 0.5) 75%,
+    transparent 100%);
+  animation: aurora-flow 15s ease-in-out infinite;
+  top: 0;
+}
+
+.aurora-blue {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.4) 25%,
+    rgba(96, 165, 250, 0.5) 50%,
+    rgba(59, 130, 246, 0.4) 75%,
+    transparent 100%);
+  animation: aurora-flow 20s ease-in-out infinite;
+  animation-delay: -5s;
+  top: 20%;
+}
+
+.aurora-purple {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(139, 92, 246, 0.3) 25%,
+    rgba(167, 139, 250, 0.4) 50%,
+    rgba(139, 92, 246, 0.3) 75%,
+    transparent 100%);
+  animation: aurora-flow 25s ease-in-out infinite;
+  animation-delay: -10s;
+  top: 40%;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}

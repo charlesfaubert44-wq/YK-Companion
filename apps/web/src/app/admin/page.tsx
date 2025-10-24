@@ -13,32 +13,46 @@ export default function AdminDashboard() {
 
   const quickActions = [
     {
+      title: 'Premium Sponsors',
+      description: 'Manage premium spotlight placements and sponsors',
+      icon: '✨',
+      href: '/admin/sponsors',
+      color: 'from-yellow-400 to-yellow-600',
+    },
+    {
+      title: 'Pricing Plans',
+      description: 'Configure premium spotlight pricing structure',
+      icon: '💰',
+      href: '/admin/pricing-plans',
+      color: 'from-aurora-green to-aurora-blue',
+    },
+    {
       title: 'Banner Management',
       description: 'View, edit, and create custom banner variations',
       icon: '🎨',
       href: '/admin/banners',
-      color: 'from-aurora-green to-aurora-blue',
+      color: 'from-aurora-blue to-aurora-purple',
     },
     {
       title: 'Content Editor',
       description: 'Edit site content directly',
       icon: '✏️',
       href: '/admin/content',
-      color: 'from-aurora-blue to-aurora-purple',
+      color: 'from-aurora-purple to-aurora-pink',
     },
     {
       title: 'User Management',
       description: 'Manage user accounts and permissions',
       icon: '👥',
       href: '/admin/users',
-      color: 'from-aurora-purple to-aurora-pink',
+      color: 'from-aurora-pink to-aurora-green',
     },
     {
       title: 'Analytics',
       description: 'View site analytics and reports',
       icon: '📊',
       href: '/admin/analytics',
-      color: 'from-aurora-pink to-aurora-green',
+      color: 'from-aurora-green to-aurora-blue',
     },
   ];
 
@@ -129,7 +143,7 @@ export default function AdminDashboard() {
           {/* Quick Actions */}
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {quickActions.map((action, index) => (
                 <Link key={index} href={action.href} className="group">
                   <div className={`bg-gradient-to-br ${action.color} p-[2px] rounded-xl hover:shadow-aurora transition-all transform hover:scale-105`}>
