@@ -9,6 +9,9 @@ export default function Header() {
   const { user, profile, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  
+  // DEV BRANCH INDICATOR
+  const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
 
   return (
     <>
@@ -20,6 +23,12 @@ export default function Header() {
               <span className="text-2xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
                 YK Buddy
               </span>
+              {/* DEV Badge - Only visible in dev environment */}
+              {isDev && (
+                <span className="ml-2 px-2 py-0.5 bg-yellow-500 text-black text-xs font-bold rounded-md">
+                  DEV
+                </span>
+              )}
             </Link>
 
             {/* Desktop Navigation */}
