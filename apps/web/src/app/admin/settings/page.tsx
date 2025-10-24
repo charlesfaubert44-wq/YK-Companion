@@ -28,7 +28,7 @@ export default function AdminSettingsPage() {
 
     if (data && !error) {
       const settingsObj: Record<string, any> = {};
-      data.forEach(setting => {
+      data.forEach((setting: any) => {
         settingsObj[setting.key] = typeof setting.value === 'string'
           ? JSON.parse(setting.value)
           : setting.value;
