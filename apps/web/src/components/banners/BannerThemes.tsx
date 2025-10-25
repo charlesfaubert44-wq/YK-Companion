@@ -186,7 +186,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Interactive Weather Display */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-slate-900/90 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-slate-900/90 backdrop-blur-md px-3 py-2 md:px-4 md:py-3 rounded-2xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
           onMouseEnter={() => setWeatherHovered(true)}
           onMouseLeave={() => setWeatherHovered(false)}
           style={{
@@ -194,17 +194,17 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             boxShadow: weatherHovered ? '0 0 40px rgba(16, 185, 129, 0.5), 0 0 80px rgba(16, 185, 129, 0.2)' : '0 0 20px rgba(16, 185, 129, 0.2)',
           }}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Weather Emoji Icon */}
             {weather && (
-              <div className="text-3xl md:text-4xl transition-transform duration-300" style={{ transform: weatherHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}>
+              <div className="text-2xl md:text-3xl transition-transform duration-300" style={{ transform: weatherHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}>
                 {getWeatherEmoji(weather.condition, weather.icon)}
               </div>
             )}
 
             {/* Temperature */}
             <div className="flex flex-col">
-              <div className="text-2xl md:text-4xl font-black text-emerald-300 leading-none">
+              <div className="text-xl md:text-3xl font-black text-emerald-300 leading-none">
                 {temperature}°C
               </div>
               {weather && weatherHovered && (
@@ -244,7 +244,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         {/* Logo and slogan */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+            <div className="flex flex-col items-center justify-center gap-2">
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight transition-all duration-500 animate-glow">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-1"
@@ -470,18 +470,18 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Temperature badge */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-500/50 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-emerald-500/50 transition-all duration-300"
           style={{
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
           }}
         >
-          <div className="text-xl md:text-3xl font-black text-emerald-700">{temperature}°C</div>
+          <div className="text-lg md:text-2xl font-black text-emerald-700">{temperature}°C</div>
         </div>
 
         {/* Logo */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+            <div className="flex flex-col items-center justify-center gap-2">
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-spring">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-spring-1"
@@ -713,16 +713,16 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-100/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-500/60 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-100/90 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-yellow-500/60 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
-          <div className="text-xl md:text-3xl font-black text-orange-700">{temperature}°C</div>
+          <div className="text-lg md:text-2xl font-black text-orange-700">{temperature}°C</div>
         </div>
 
         {/* Logo */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+            <div className="flex flex-col items-center justify-center gap-2">
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-summer">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-summer-1"
@@ -909,16 +909,16 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-orange-400/50 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
-          <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
+          <div className="text-lg md:text-2xl font-black text-orange-300">{temperature}°C</div>
         </div>
 
         {/* Logo */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+            <div className="flex flex-col items-center justify-center gap-2">
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-fall">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-fall-1"
@@ -1048,15 +1048,17 @@ export const HalloweenBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute bottom-8 left-10 text-6xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}>🎃</div>
         <div className="absolute bottom-6 right-16 text-5xl opacity-80 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(-10deg)' : 'scale(1)' }}>🎃</div>
 
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50">
-          <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-900/80 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-orange-400/50">
+          <div className="text-lg md:text-2xl font-black text-orange-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(249, 115, 22, 0.8)'}}>
-            YK <span className="text-orange-400">BUDDY</span>
-          </h1>
-          <p className="text-orange-200 text-sm mt-3 opacity-90">Happy Halloween, Yellowknife!</p>
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(249, 115, 22, 0.8)'}}>
+              YK <span className="text-orange-400">BUDDY</span>
+            </h1>
+            <p className="text-orange-200 text-sm opacity-90">Happy Halloween, Yellowknife!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1076,15 +1078,17 @@ export const RemembranceBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute bottom-10 right-12 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}>🌺</div>
         <div className="absolute bottom-12 right-32 text-4xl opacity-80 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}>🌺</div>
 
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-gray-800/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-red-500/40">
-          <div className="text-xl md:text-3xl font-black text-gray-300">{temperature}°C</div>
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-gray-800/80 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-red-500/40">
+          <div className="text-lg md:text-2xl font-black text-gray-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '3px 3px 0px rgba(0, 0, 0, 0.5)'}}>
-            YK <span className="text-red-500">BUDDY</span>
-          </h1>
-          <p className="text-gray-300 text-sm mt-3 opacity-90">Lest We Forget</p>
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-7xl font-black text-white" style={{textShadow: '3px 3px 0px rgba(0, 0, 0, 0.5)'}}>
+              YK <span className="text-red-500">BUDDY</span>
+            </h1>
+            <p className="text-gray-300 text-sm opacity-90">Lest We Forget</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1114,15 +1118,17 @@ export const ChristmasBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute bottom-8 left-10 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🎄</div>
         <div className="absolute bottom-10 right-12 text-4xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>⛄</div>
 
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-green-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-green-400/50">
-          <div className="text-xl md:text-3xl font-black text-green-300">{temperature}°C</div>
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-green-900/80 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-green-400/50">
+          <div className="text-lg md:text-2xl font-black text-green-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(34, 197, 94, 0.6)'}}>
-            YK <span className="text-red-400">BUDDY</span>
-          </h1>
-          <p className="text-green-200 text-sm mt-3 opacity-90">Merry Christmas, Yellowknife!</p>
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(34, 197, 94, 0.6)'}}>
+              YK <span className="text-red-400">BUDDY</span>
+            </h1>
+            <p className="text-green-200 text-sm opacity-90">Merry Christmas, Yellowknife!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1143,15 +1149,17 @@ export const NewYearBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute top-16 left-1/2 text-6xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}>🎇</div>
         <div className="absolute top-12 right-1/3 text-4xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}>💫</div>
 
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-indigo-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-400/50">
-          <div className="text-xl md:text-3xl font-black text-yellow-300">{temperature}°C</div>
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-indigo-900/80 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-yellow-400/50">
+          <div className="text-lg md:text-2xl font-black text-yellow-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(234, 179, 8, 0.8)'}}>
-            YK <span className="text-yellow-400">BUDDY</span>
-          </h1>
-          <p className="text-yellow-200 text-sm mt-3 opacity-90">Happy New Year, Yellowknife!</p>
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(234, 179, 8, 0.8)'}}>
+              YK <span className="text-yellow-400">BUDDY</span>
+            </h1>
+            <p className="text-yellow-200 text-sm opacity-90">Happy New Year, Yellowknife!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1171,15 +1179,17 @@ export const CanadaDayBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute top-8 right-20 text-5xl text-red-700 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(-20deg)' : 'scale(1)' }}>🍁</div>
         <div className="absolute bottom-12 left-1/3 text-4xl text-red-600 opacity-70 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🍁</div>
 
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-red-600/50">
-          <div className="text-xl md:text-3xl font-black text-red-700">{temperature}°C</div>
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-red-600/50">
+          <div className="text-lg md:text-2xl font-black text-red-700">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-red-700" style={{textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)'}}>
-            YK <span className="text-white" style={{textShadow: '3px 3px 0px rgba(220, 38, 38, 0.9)'}}>BUDDY</span>
-          </h1>
-          <p className="text-red-700 text-sm mt-3 opacity-90">Happy Canada Day!</p>
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-7xl font-black text-red-700" style={{textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)'}}>
+              YK <span className="text-white" style={{textShadow: '3px 3px 0px rgba(220, 38, 38, 0.9)'}}>BUDDY</span>
+            </h1>
+            <p className="text-red-700 text-sm opacity-90">Happy Canada Day!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1196,15 +1206,17 @@ export const IndigenousBanner = ({ temperature, weather }: BannerProps) => {
           <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-r from-amber-600 via-yellow-600 to-red-600" />
         </div>
 
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-400/50">
-          <div className="text-xl md:text-3xl font-black text-yellow-200">{temperature}°C</div>
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-yellow-400/50">
+          <div className="text-lg md:text-2xl font-black text-yellow-200">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '4px 4px 0px rgba(120, 53, 15, 0.8)'}}>
-            YK <span className="text-yellow-300">BUDDY</span>
-          </h1>
-          <p className="text-yellow-100 text-sm mt-3 opacity-90">Celebrating Indigenous Peoples</p>
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-7xl font-black text-white" style={{textShadow: '4px 4px 0px rgba(120, 53, 15, 0.8)'}}>
+              YK <span className="text-yellow-300">BUDDY</span>
+            </h1>
+            <p className="text-yellow-100 text-sm opacity-90">Celebrating Indigenous Peoples</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1224,15 +1236,17 @@ export const EasterBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute bottom-8 right-16 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🐰</div>
         <div className="absolute top-12 left-1/3 text-4xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🥚</div>
 
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-purple-200/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-purple-400/50">
-          <div className="text-xl md:text-3xl font-black text-purple-700">{temperature}°C</div>
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-purple-200/90 backdrop-blur-md px-2 py-1 md:px-3 md:py-2 rounded-xl border border-purple-400/50">
+          <div className="text-lg md:text-2xl font-black text-purple-700">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-purple-900" style={{textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)'}}>
-            YK <span className="text-pink-600">BUDDY</span>
-          </h1>
-          <p className="text-purple-700 text-sm mt-3 opacity-90">Happy Easter, Yellowknife!</p>
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-7xl font-black text-purple-900" style={{textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)'}}>
+              YK <span className="text-pink-600">BUDDY</span>
+            </h1>
+            <p className="text-purple-700 text-sm opacity-90">Happy Easter, Yellowknife!</p>
+          </div>
         </div>
       </div>
     </div>
