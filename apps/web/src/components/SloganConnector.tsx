@@ -10,7 +10,7 @@ export default function SloganConnector() {
   if (!currentSlogan) return null;
 
   return (
-    <div className="relative -mt-4 mb-0 z-10">
+    <div className="relative z-10">
       {/* Connector glow effect */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -26,7 +26,7 @@ export default function SloganConnector() {
 
       {/* Slogan container */}
       <div
-        className="relative flex justify-center px-4 py-6"
+        className="relative flex justify-center px-4 py-0"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -49,9 +49,13 @@ export default function SloganConnector() {
 
           {/* Slogan text */}
           <div
-            className="relative px-8 py-4 md:px-12 md:py-5 bg-gradient-to-r from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-lg rounded-2xl border transition-all duration-500"
+            className="relative px-8 py-3 md:px-12 md:py-4 bg-gradient-to-r from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-lg border-l border-r border-b transition-all duration-500"
             style={{
               borderColor: isHovered ? 'rgba(16, 185, 129, 0.4)' : 'rgba(100, 116, 139, 0.3)',
+              borderBottomLeftRadius: '0',
+              borderBottomRightRadius: '0',
+              borderTopLeftRadius: '0',
+              borderTopRightRadius: '0',
               boxShadow: isHovered
                 ? '0 0 40px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
                 : '0 0 20px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
