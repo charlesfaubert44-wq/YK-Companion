@@ -676,7 +676,6 @@ export default function Home() {
 
             {/* Premium Sponsors Section */}
             <div className="mt-12 pt-8 border-t border-gray-700/30">
-              <h2 className="text-2xl font-bold text-white mb-6 text-center">Our Premium Sponsors</h2>
               <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
             </div>
 
