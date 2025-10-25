@@ -242,12 +242,12 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo and slogan */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3">
-              <h1 className="text-7xl font-black tracking-tight text-white transition-all duration-500 animate-glow">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+          <div className="text-center w-full">
+            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight transition-all duration-500 animate-glow">
                 <span
-                  className="inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-1"
                   style={{
                     textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
@@ -255,26 +255,31 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
                   YK
                 </span>{' '}
                 <span
-                  className="text-emerald-300 inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-2"
                   style={{
                     textShadow: '0 0 40px rgba(16, 185, 129, 0.7), 4px 4px 0px rgba(15, 23, 42, 0.8)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                    animationDelay: '0.2s',
                   }}>
                   BUDDY
                 </span>
               </h1>
-              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
             </div>
-            <p
-              className="text-cyan-100 text-sm mt-3 opacity-90 transition-all duration-500"
-              style={{ opacity: isHovered ? 1 : 0.9 }}
-              key={currentSlogan}
-            >
-              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-            </p>
+            <div className="mt-3 mx-auto max-w-2xl px-4">
+              <p
+                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-slate-900/80 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-emerald-400/30"
+                style={{
+                  textShadow: '0 0 10px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)',
+                  opacity: isHovered ? 1 : 0.95,
+                  color: '#d1fae5',
+                }}
+                key={currentSlogan}
+              >
+                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -294,11 +299,53 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.03); opacity: 0.95; }
           }
+          @keyframes color-shift-1 {
+            0%, 100% {
+              color: #ffffff;
+              filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+            }
+            25% {
+              color: #d1fae5;
+              filter: drop-shadow(0 0 25px rgba(52, 211, 153, 0.7));
+            }
+            50% {
+              color: #a7f3d0;
+              filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6));
+            }
+            75% {
+              color: #d1fae5;
+              filter: drop-shadow(0 0 25px rgba(139, 92, 246, 0.5));
+            }
+          }
+          @keyframes color-shift-2 {
+            0%, 100% {
+              color: #6ee7b7;
+              filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.7));
+            }
+            25% {
+              color: #86efac;
+              filter: drop-shadow(0 0 25px rgba(139, 92, 246, 0.6));
+            }
+            50% {
+              color: #5eead4;
+              filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.7));
+            }
+            75% {
+              color: #6ee7b7;
+              filter: drop-shadow(0 0 25px rgba(52, 211, 153, 0.6));
+            }
+          }
           .animate-glow {
             animation: glow 3s ease-in-out infinite;
           }
           .animate-pulse-subtle {
             animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-1 {
+            animation: color-shift-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-2 {
+            animation: color-shift-2 8s ease-in-out infinite 0.5s;
           }
         `}</style>
 
@@ -432,12 +479,12 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3">
-              <h1 className="text-7xl font-black text-slate-800 transition-all duration-500 animate-glow-spring">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+          <div className="text-center w-full">
+            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-spring">
                 <span
-                  className="inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-spring-1"
                   style={{
                     textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
@@ -445,22 +492,30 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
                   YK
                 </span>{' '}
                 <span
-                  className="text-emerald-600 inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-spring-2"
                   style={{
                     textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(16, 185, 129, 0.4)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                    animationDelay: '0.2s',
                   }}>
                   BUDDY
                 </span>
               </h1>
-              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
             </div>
-            <p className="text-slate-700 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
-              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-            </p>
+            <div className="mt-3 mx-auto max-w-2xl px-4">
+              <p
+                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-white/90 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-emerald-500/40 text-slate-800"
+                style={{
+                  textShadow: '0 0 10px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.2)',
+                  opacity: isHovered ? 1 : 0.95,
+                }}
+                key={currentSlogan}
+              >
+                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -478,11 +533,53 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.03); opacity: 0.95; }
           }
+          @keyframes color-shift-spring-1 {
+            0%, 100% {
+              color: #1e293b;
+              filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.5));
+            }
+            25% {
+              color: #334155;
+              filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.6));
+            }
+            50% {
+              color: #475569;
+              filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.5));
+            }
+            75% {
+              color: #334155;
+              filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.6));
+            }
+          }
+          @keyframes color-shift-spring-2 {
+            0%, 100% {
+              color: #059669;
+              filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+            }
+            25% {
+              color: #10b981;
+              filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.7));
+            }
+            50% {
+              color: #14b8a6;
+              filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6));
+            }
+            75% {
+              color: #10b981;
+              filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.7));
+            }
+          }
           .animate-glow-spring {
             animation: glow-spring 3s ease-in-out infinite;
           }
           .animate-pulse-subtle {
             animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-spring-1 {
+            animation: color-shift-spring-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-spring-2 {
+            animation: color-shift-spring-2 8s ease-in-out infinite 0.5s;
           }
         `}</style>
 
@@ -623,12 +720,12 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3">
-              <h1 className="text-7xl font-black text-orange-700 transition-all duration-500 animate-glow-summer">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+          <div className="text-center w-full">
+            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-summer">
                 <span
-                  className="inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-summer-1"
                   style={{
                     textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
@@ -636,22 +733,30 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
                   YK
                 </span>{' '}
                 <span
-                  className="text-yellow-500 inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-summer-2"
                   style={{
                     textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(234, 179, 8, 0.5)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                    animationDelay: '0.2s',
                   }}>
                   BUDDY
                 </span>
               </h1>
-              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
             </div>
-            <p className="text-orange-800 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
-              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-            </p>
+            <div className="mt-3 mx-auto max-w-2xl px-4">
+              <p
+                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-orange-100/90 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-yellow-500/50 text-orange-900"
+                style={{
+                  textShadow: '0 0 10px rgba(255, 255, 255, 0.6), 0 1px 2px rgba(0, 0, 0, 0.3)',
+                  opacity: isHovered ? 1 : 0.95,
+                }}
+                key={currentSlogan}
+              >
+                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -666,11 +771,53 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.03); opacity: 0.95; }
           }
+          @keyframes color-shift-summer-1 {
+            0%, 100% {
+              color: #c2410c;
+              filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.6));
+            }
+            25% {
+              color: #ea580c;
+              filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.7));
+            }
+            50% {
+              color: #f97316;
+              filter: drop-shadow(0 0 30px rgba(234, 179, 8, 0.6));
+            }
+            75% {
+              color: #ea580c;
+              filter: drop-shadow(0 0 25px rgba(249, 115, 22, 0.7));
+            }
+          }
+          @keyframes color-shift-summer-2 {
+            0%, 100% {
+              color: #eab308;
+              filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.7));
+            }
+            25% {
+              color: #facc15;
+              filter: drop-shadow(0 0 25px rgba(249, 115, 22, 0.6));
+            }
+            50% {
+              color: #fde047;
+              filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.7));
+            }
+            75% {
+              color: #facc15;
+              filter: drop-shadow(0 0 25px rgba(234, 179, 8, 0.7));
+            }
+          }
           .animate-glow-summer {
             animation: glow-summer 3s ease-in-out infinite;
           }
           .animate-pulse-subtle {
             animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-summer-1 {
+            animation: color-shift-summer-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-summer-2 {
+            animation: color-shift-summer-2 8s ease-in-out infinite 0.5s;
           }
         `}</style>
 
@@ -769,12 +916,12 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3">
-              <h1 className="text-7xl font-black text-white transition-all duration-500 animate-glow-fall">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+          <div className="text-center w-full">
+            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-fall">
                 <span
-                  className="inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-fall-1"
                   style={{
                     textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
@@ -782,22 +929,30 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
                   YK
                 </span>{' '}
                 <span
-                  className="text-yellow-300 inline-block transition-all duration-700"
+                  className="inline-block transition-all duration-700 animate-color-shift-fall-2"
                   style={{
                     textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(253, 224, 71, 0.6)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                    animationDelay: '0.2s',
                   }}>
                   BUDDY
                 </span>
               </h1>
-              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
             </div>
-            <p className="text-amber-100 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
-              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-            </p>
+            <div className="mt-3 mx-auto max-w-2xl px-4">
+              <p
+                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-amber-900/80 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-orange-400/40 text-amber-100"
+                style={{
+                  textShadow: '0 0 10px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)',
+                  opacity: isHovered ? 1 : 0.95,
+                }}
+                key={currentSlogan}
+              >
+                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -817,11 +972,53 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.03); opacity: 0.95; }
           }
+          @keyframes color-shift-fall-1 {
+            0%, 100% {
+              color: #ffffff;
+              filter: drop-shadow(0 0 20px rgba(234, 88, 12, 0.6));
+            }
+            25% {
+              color: #fef3c7;
+              filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.7));
+            }
+            50% {
+              color: #fde68a;
+              filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.6));
+            }
+            75% {
+              color: #fef3c7;
+              filter: drop-shadow(0 0 25px rgba(234, 88, 12, 0.7));
+            }
+          }
+          @keyframes color-shift-fall-2 {
+            0%, 100% {
+              color: #fde047;
+              filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.7));
+            }
+            25% {
+              color: #fcd34d;
+              filter: drop-shadow(0 0 25px rgba(234, 88, 12, 0.6));
+            }
+            50% {
+              color: #fbbf24;
+              filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.7));
+            }
+            75% {
+              color: #fcd34d;
+              filter: drop-shadow(0 0 25px rgba(253, 224, 71, 0.7));
+            }
+          }
           .animate-glow-fall {
             animation: glow-fall 3s ease-in-out infinite;
           }
           .animate-pulse-subtle {
             animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-fall-1 {
+            animation: color-shift-fall-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-fall-2 {
+            animation: color-shift-fall-2 8s ease-in-out infinite 0.5s;
           }
         `}</style>
 
