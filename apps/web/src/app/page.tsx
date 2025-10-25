@@ -229,7 +229,7 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-6">
                 {/* VISITING - Aurora Sky with Bush Plane (Robbie Craig Style) */}
                 <Link href="/visiting" className="group">
-                  <div className="relative h-64 rounded-3xl overflow-hidden border-2 border-emerald-400/30 hover:border-emerald-400 transition-all transform hover:scale-105 cursor-pointer shadow-2xl hover:shadow-emerald-500/50">
+                  <div className="relative h-64 rounded-3xl overflow-hidden border-2 border-emerald-400/40 hover:border-emerald-300 transition-all duration-500 transform hover:scale-[1.03] cursor-pointer shadow-2xl hover:shadow-emerald-400/60" style={{boxShadow: '0 25px 50px -12px rgba(16, 185, 129, 0.25), inset 0 0 40px rgba(16, 185, 129, 0.05)'}}>
                     {/* Deep Aurora Sky Background - Layered */}
                     <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-purple-950 to-slate-950">
                       {/* Atmospheric Sky Layers */}
@@ -329,7 +329,7 @@ export default function Home() {
 
                 {/* LIVING - Great Slave Lake Life (Robbie Craig Style) */}
                 <Link href="/living" className="group">
-                  <div className="relative h-64 rounded-3xl overflow-hidden border-2 border-blue-400/30 hover:border-blue-400 transition-all transform hover:scale-105 cursor-pointer shadow-2xl hover:shadow-blue-500/50">
+                  <div className="relative h-64 rounded-3xl overflow-hidden border-2 border-blue-400/40 hover:border-blue-300 transition-all duration-500 transform hover:scale-[1.03] cursor-pointer shadow-2xl hover:shadow-blue-400/60" style={{boxShadow: '0 25px 50px -12px rgba(59, 130, 246, 0.25), inset 0 0 40px rgba(59, 130, 246, 0.05)'}}>
                     {/* Deep Night Sky Background */}
                     <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-slate-950 to-blue-950">
                       {/* Atmospheric Depth */}
@@ -501,7 +501,7 @@ export default function Home() {
 
                 {/* MOVING - Ice Road with Moving Truck (Robbie Craig Style) */}
                 <Link href="/moving" className="group">
-                  <div className="relative h-64 rounded-3xl overflow-hidden border-2 border-purple-400/30 hover:border-purple-400 transition-all transform hover:scale-105 cursor-pointer shadow-2xl hover:shadow-purple-500/50">
+                  <div className="relative h-64 rounded-3xl overflow-hidden border-2 border-purple-400/40 hover:border-purple-300 transition-all duration-500 transform hover:scale-[1.03] cursor-pointer shadow-2xl hover:shadow-purple-400/60" style={{boxShadow: '0 25px 50px -12px rgba(167, 139, 250, 0.25), inset 0 0 40px rgba(167, 139, 250, 0.05)'}}>
                     {/* Twilight Sky Background - Deep Layers */}
                     <div className="absolute inset-0 bg-gradient-to-b from-purple-950 via-pink-950 to-orange-900">
                       {/* Atmospheric Depth */}

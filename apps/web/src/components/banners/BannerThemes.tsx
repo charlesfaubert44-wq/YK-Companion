@@ -254,19 +254,28 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-center">
             <div className="flex items-center justify-center gap-3">
-              <h1
-                className="text-7xl font-black tracking-tight text-white transition-all duration-500"
-                style={{
-                  textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
-                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
-                YK <span className="text-emerald-300">BUDDY</span>
-              </h1>
-              {isDev && (
-                <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
-                  BETA
+              <h1 className="text-7xl font-black tracking-tight text-white transition-all duration-500 animate-glow">
+                <span
+                  className="inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  YK
+                </span>{' '}
+                <span
+                  className="text-emerald-300 inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '0 0 40px rgba(16, 185, 129, 0.7), 4px 4px 0px rgba(15, 23, 42, 0.8)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                    animationDelay: '0.2s',
+                  }}>
+                  BUDDY
                 </span>
-              )}
+              </h1>
+              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
             </div>
             <p
               className="text-cyan-100 text-sm mt-3 opacity-90 transition-all duration-500"
@@ -277,6 +286,23 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             </p>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.1); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
+          }
+          .animate-glow {
+            animation: glow 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+        `}</style>
 
         {/* Atmospheric vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-indigo-950/40 pointer-events-none" />
@@ -408,25 +434,47 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-center">
             <div className="flex items-center justify-center gap-3">
-              <h1
-                className="text-7xl font-black text-slate-800 transition-all duration-500"
-                style={{
-                  textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
-                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
-                YK <span className="text-emerald-600">BUDDY</span>
-              </h1>
-              {isDev && (
-                <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
-                  BETA
+              <h1 className="text-7xl font-black text-slate-800 transition-all duration-500 animate-glow-spring">
+                <span
+                  className="inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  YK
+                </span>{' '}
+                <span
+                  className="text-emerald-600 inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(16, 185, 129, 0.4)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                    animationDelay: '0.2s',
+                  }}>
+                  BUDDY
                 </span>
-              )}
+              </h1>
+              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
             </div>
             <p className="text-slate-700 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
               {currentSlogan || 'Because Nobody Should Face -40° Alone'}
             </p>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes glow-spring {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.08); }
+          }
+          .animate-glow-spring {
+            animation: glow-spring 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+        `}</style>
       </div>
 
       <style jsx>{`
@@ -572,19 +620,48 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         {/* Logo */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-center">
-            <h1
-              className="text-7xl font-black text-orange-700 transition-all duration-500"
-              style={{
-                textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
-                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              }}>
-              YK <span className="text-yellow-500">BUDDY</span>
-            </h1>
+            <div className="flex items-center justify-center gap-3">
+              <h1 className="text-7xl font-black text-orange-700 transition-all duration-500 animate-glow-summer">
+                <span
+                  className="inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  YK
+                </span>{' '}
+                <span
+                  className="text-yellow-500 inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(234, 179, 8, 0.5)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                    animationDelay: '0.2s',
+                  }}>
+                  BUDDY
+                </span>
+              </h1>
+              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
+            </div>
             <p className="text-orange-800 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
               {currentSlogan || 'Because Nobody Should Face -40° Alone'}
             </p>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes glow-summer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.1); }
+          }
+          .animate-glow-summer {
+            animation: glow-summer 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+        `}</style>
       </div>
 
       <style jsx>{`
@@ -685,19 +762,48 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         {/* Logo */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-center">
-            <h1
-              className="text-7xl font-black text-white transition-all duration-500"
-              style={{
-                textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
-                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              }}>
-              YK <span className="text-yellow-300">BUDDY</span>
-            </h1>
+            <div className="flex items-center justify-center gap-3">
+              <h1 className="text-7xl font-black text-white transition-all duration-500 animate-glow-fall">
+                <span
+                  className="inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  YK
+                </span>{' '}
+                <span
+                  className="text-yellow-300 inline-block transition-all duration-700"
+                  style={{
+                    textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(253, 224, 71, 0.6)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                    animationDelay: '0.2s',
+                  }}>
+                  BUDDY
+                </span>
+              </h1>
+              <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
+            </div>
             <p className="text-amber-100 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
               {currentSlogan || 'Because Nobody Should Face -40° Alone'}
             </p>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes glow-fall {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.08); }
+          }
+          .animate-glow-fall {
+            animation: glow-fall 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+        `}</style>
       </div>
 
       <style jsx>{`

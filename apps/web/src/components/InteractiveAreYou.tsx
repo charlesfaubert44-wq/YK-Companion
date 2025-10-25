@@ -23,29 +23,29 @@ export default function InteractiveAreYou() {
   }, []);
 
   return (
-    <div className="mb-12 relative">
-      {/* Floating Stars Background */}
-      {floatingStars.map((star) => (
+    <div className="mb-6 relative">
+      {/* Floating Stars Background - Reduced */}
+      {floatingStars.slice(0, 6).map((star) => (
         <div
           key={star.id}
           className="absolute rounded-full animate-pulse"
           style={{
             left: `${star.x}%`,
             top: `${star.y}%`,
-            width: `${2 + Math.random() * 3}px`,
-            height: `${2 + Math.random() * 3}px`,
+            width: `${2 + Math.random() * 2}px`,
+            height: `${2 + Math.random() * 2}px`,
             background:
+              star.id % 3 === 0
+                ? 'rgba(16, 185, 129, 0.3)'
+                : star.id % 3 === 1
+                ? 'rgba(34, 211, 238, 0.3)'
+                : 'rgba(139, 92, 246, 0.3)',
+            boxShadow: `0 0 8px ${
               star.id % 3 === 0
                 ? 'rgba(16, 185, 129, 0.4)'
                 : star.id % 3 === 1
                 ? 'rgba(34, 211, 238, 0.4)'
-                : 'rgba(139, 92, 246, 0.4)',
-            boxShadow: `0 0 10px ${
-              star.id % 3 === 0
-                ? 'rgba(16, 185, 129, 0.6)'
-                : star.id % 3 === 1
-                ? 'rgba(34, 211, 238, 0.6)'
-                : 'rgba(139, 92, 246, 0.6)'
+                : 'rgba(139, 92, 246, 0.4)'
             }`,
             animation: `twinkle ${2 + Math.random() * 2}s ease-in-out infinite`,
             animationDelay: `${star.delay}s`,
@@ -60,43 +60,43 @@ export default function InteractiveAreYou() {
         }`}
       >
         {/* Aurora Glow Effect */}
-        <div className="absolute inset-0 -z-10 blur-3xl opacity-30">
+        <div className="absolute inset-0 -z-10 blur-3xl opacity-20">
           <div
             className="absolute inset-0 animate-pulse"
             style={{
               background:
-                'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(16, 185, 129, 0.4) 0%, rgba(34, 211, 238, 0.3) 40%, rgba(139, 92, 246, 0.3) 70%, transparent 100%)',
+                'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(16, 185, 129, 0.3) 0%, rgba(34, 211, 238, 0.2) 40%, rgba(139, 92, 246, 0.2) 70%, transparent 100%)',
             }}
           />
         </div>
 
-        {/* Decorative Top Elements */}
-        <div className="flex justify-center items-center gap-6 mb-6">
+        {/* Decorative Top Elements - More Compact */}
+        <div className="flex justify-center items-center gap-3 mb-3">
           <div
-            className="w-20 h-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-50"
+            className="w-12 h-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-40"
             style={{
               animation: 'expandWidth 1.5s ease-out forwards',
             }}
           />
           <span
-            className="text-3xl animate-bounce"
+            className="text-2xl animate-bounce"
             style={{
               animationDuration: '2s',
-              filter: 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.8))',
+              filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.6))',
             }}
           >
             🌌
           </span>
           <div
-            className="w-20 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50"
+            className="w-12 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-40"
             style={{
               animation: 'expandWidth 1.5s ease-out forwards',
             }}
           />
         </div>
 
-        {/* Main Question */}
-        <h2 className="text-3xl md:text-4xl font-black text-center mb-4">
+        {/* Main Question - Compact */}
+        <h2 className="text-2xl md:text-3xl font-black text-center mb-2">
           <span
             className="inline-block bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent animate-gradient"
             style={{
@@ -107,20 +107,18 @@ export default function InteractiveAreYou() {
           </span>
         </h2>
 
-        {/* Subtitle with Typing Effect */}
-        <p className="text-center text-gray-400 text-sm md:text-base mb-8 px-4">
-          <span className="inline-block">
-            Choose your path and discover Yellowknife your way
-          </span>
+        {/* Subtitle - Compact */}
+        <p className="text-center text-gray-400 text-xs md:text-sm mb-4">
+          Choose your path and discover Yellowknife your way
         </p>
 
-        {/* Animated Arrow Down */}
+        {/* Animated Arrow Down - Smaller */}
         <div className="flex justify-center">
           <div
-            className="text-emerald-400 text-2xl animate-bounce"
+            className="text-emerald-400 text-xl animate-bounce"
             style={{
               animationDuration: '1.5s',
-              filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.6))',
+              filter: 'drop-shadow(0 0 6px rgba(16, 185, 129, 0.5))',
             }}
           >
             ↓
@@ -135,7 +133,7 @@ export default function InteractiveAreYou() {
             width: 0;
           }
           to {
-            width: 5rem;
+            width: 3rem;
           }
         }
 
