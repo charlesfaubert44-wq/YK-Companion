@@ -1,15 +1,66 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { yellowknifeSlogans } from '@/data/yellowknifeSlogans';
+
+interface WeatherData {
+  temp: number;
+  feels_like: number;
+  condition: string;
+  icon: string;
+  humidity: number;
+  wind_speed: number;
+  description: string;
+}
 
 interface BannerProps {
   temperature: number;
+  weather?: WeatherData | null;
 }
 
+// Get weather emoji based on condition
+const getWeatherEmoji = (condition: string, iconCode: string) => {
+  const isNight = iconCode.includes('n');
+
+  switch (condition.toLowerCase()) {
+    case 'clear':
+      return isNight ? '🌙' : '☀️';
+    case 'clouds':
+      return isNight ? '☁️' : '⛅';
+    case 'rain':
+    case 'drizzle':
+      return '🌧️';
+    case 'thunderstorm':
+      return '⛈️';
+    case 'snow':
+      return '❄️';
+    case 'mist':
+    case 'fog':
+      return '🌫️';
+    default:
+      return '🌡️';
+  }
+};
+
+// Custom hook for random slogan on page load
+const useRotatingSlogan = () => {
+  const [currentSlogan, setCurrentSlogan] = useState('');
+
+  useEffect(() => {
+    // Set random slogan once on page load
+    const randomSlogan = yellowknifeSlogans[Math.floor(Math.random() * yellowknifeSlogans.length)];
+    setCurrentSlogan(randomSlogan);
+  }, []);
+
+  return currentSlogan;
+};
+
 // WINTER - Robbie Craig Style: Aurora and Frozen Wilderness
-export const WinterBanner = ({ temperature }: BannerProps) => {
+export const WinterBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [weatherHovered, setWeatherHovered] = useState(false);
   const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -132,16 +183,72 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
           </div>
         </div>
 
-        {/* Temperature badge */}
+        {/* Interactive Weather Display */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-400/40 transition-all duration-300"
+          className="absolute top-4 left-4 md:top-6 md:left-6 bg-slate-900/90 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
+          onMouseEnter={() => setWeatherHovered(true)}
+          onMouseLeave={() => setWeatherHovered(false)}
           style={{
-            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-            boxShadow: isHovered ? '0 0 30px rgba(16, 185, 129, 0.3)' : 'none',
+            transform: weatherHovered ? 'scale(1.05)' : 'scale(1)',
+            boxShadow: weatherHovered ? '0 0 40px rgba(16, 185, 129, 0.5), 0 0 80px rgba(16, 185, 129, 0.2)' : '0 0 20px rgba(16, 185, 129, 0.2)',
           }}
         >
-          <div className="text-xl md:text-3xl font-black text-emerald-300">{temperature}°C</div>
+          <div className="flex items-center gap-3">
+            {/* Weather Emoji Icon */}
+            {weather && (
+              <div className="text-3xl md:text-4xl transition-transform duration-300" style={{ transform: weatherHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}>
+                {getWeatherEmoji(weather.condition, weather.icon)}
+              </div>
+            )}
+
+            {/* Temperature */}
+            <div className="flex flex-col">
+              <div className="text-2xl md:text-4xl font-black text-emerald-300 leading-none">
+                {temperature}°C
+              </div>
+              {weather && weatherHovered && (
+                <div className="text-xs text-emerald-400/80 mt-1 animate-fadeIn">
+                  feels {weather.feels_like}°C
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Extended Weather Info - Shows on Hover */}
+          {weather && weatherHovered && (
+            <div className="mt-3 pt-3 border-t border-emerald-400/20 space-y-1.5 animate-fadeIn">
+              <div className="text-xs text-emerald-200/90 capitalize">
+                {weather.description}
+              </div>
+              <div className="flex items-center gap-4 text-xs text-emerald-300/80">
+                <div className="flex items-center gap-1.5">
+                  <span>💧</span>
+                  <span>{weather.humidity}%</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span>💨</span>
+                  <span>{weather.wind_speed} km/h</span>
+                </div>
+              </div>
+              {temperature <= -30 && (
+                <div className="flex items-center gap-1.5 text-xs text-cyan-300 font-semibold pt-1">
+                  <span>⚠️</span>
+                  <span>Extreme Cold</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
+        <style jsx>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+          }
+        `}</style>
 
         {/* Logo and slogan */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -157,15 +264,16 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
               </h1>
               {isDev && (
                 <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
-                  DEV
+                  BETA
                 </span>
               )}
             </div>
             <p
-              className="text-cyan-100 text-sm mt-3 opacity-90 transition-opacity duration-300"
+              className="text-cyan-100 text-sm mt-3 opacity-90 transition-all duration-500"
               style={{ opacity: isHovered ? 1 : 0.9 }}
+              key={currentSlogan}
             >
-              Surviving the North, One Buddy at a Time
+              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
             </p>
           </div>
         </div>
@@ -178,9 +286,11 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
 };
 
 // SPRING - Ice Breakup and Renewal
-export const SpringBanner = ({ temperature }: BannerProps) => {
+export const SpringBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [weatherHovered, setWeatherHovered] = useState(false);
   const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -308,12 +418,12 @@ export const SpringBanner = ({ temperature }: BannerProps) => {
               </h1>
               {isDev && (
                 <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
-                  DEV
+                  BETA
                 </span>
               )}
             </div>
-            <p className="text-slate-700 text-sm mt-3 opacity-90">
-              Surviving the North, One Buddy at a Time
+            <p className="text-slate-700 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
+              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
             </p>
           </div>
         </div>
@@ -331,8 +441,9 @@ export const SpringBanner = ({ temperature }: BannerProps) => {
 };
 
 // SUMMER - Midnight Sun Glory
-export const SummerBanner = ({ temperature }: BannerProps) => {
+export const SummerBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -469,8 +580,8 @@ export const SummerBanner = ({ temperature }: BannerProps) => {
               }}>
               YK <span className="text-yellow-500">BUDDY</span>
             </h1>
-            <p className="text-orange-800 text-sm mt-3 opacity-90">
-              Surviving the North, One Buddy at a Time
+            <p className="text-orange-800 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
+              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
             </p>
           </div>
         </div>
@@ -485,8 +596,9 @@ export const SummerBanner = ({ temperature }: BannerProps) => {
 };
 
 // FALL - Autumn Majesty
-export const FallBanner = ({ temperature }: BannerProps) => {
+export const FallBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -581,8 +693,8 @@ export const FallBanner = ({ temperature }: BannerProps) => {
               }}>
               YK <span className="text-yellow-300">BUDDY</span>
             </h1>
-            <p className="text-amber-100 text-sm mt-3 opacity-90">
-              Surviving the North, One Buddy at a Time
+            <p className="text-amber-100 text-sm mt-3 opacity-90 transition-all duration-500" key={currentSlogan}>
+              {currentSlogan || 'Because Nobody Should Face -40° Alone'}
             </p>
           </div>
         </div>
@@ -602,7 +714,7 @@ export const FallBanner = ({ temperature }: BannerProps) => {
 };
 
 // HALLOWEEN - Spooky Aurora
-export const HalloweenBanner = ({ temperature }: BannerProps) => {
+export const HalloweenBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -636,7 +748,7 @@ export const HalloweenBanner = ({ temperature }: BannerProps) => {
 };
 
 // REMEMBRANCE DAY
-export const RemembranceBanner = ({ temperature }: BannerProps) => {
+export const RemembranceBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -664,7 +776,7 @@ export const RemembranceBanner = ({ temperature }: BannerProps) => {
 };
 
 // CHRISTMAS
-export const ChristmasBanner = ({ temperature }: BannerProps) => {
+export const ChristmasBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -702,7 +814,7 @@ export const ChristmasBanner = ({ temperature }: BannerProps) => {
 };
 
 // NEW YEAR
-export const NewYearBanner = ({ temperature }: BannerProps) => {
+export const NewYearBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -731,7 +843,7 @@ export const NewYearBanner = ({ temperature }: BannerProps) => {
 };
 
 // CANADA DAY
-export const CanadaDayBanner = ({ temperature }: BannerProps) => {
+export const CanadaDayBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -759,7 +871,7 @@ export const CanadaDayBanner = ({ temperature }: BannerProps) => {
 };
 
 // INDIGENOUS PEOPLES DAY
-export const IndigenousBanner = ({ temperature }: BannerProps) => {
+export const IndigenousBanner = ({ temperature, weather }: BannerProps) => {
   return (
     <div className="relative w-full h-64 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-amber-700 via-red-700 to-yellow-700">
@@ -784,7 +896,7 @@ export const IndigenousBanner = ({ temperature }: BannerProps) => {
 };
 
 // EASTER
-export const EasterBanner = ({ temperature }: BannerProps) => {
+export const EasterBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
