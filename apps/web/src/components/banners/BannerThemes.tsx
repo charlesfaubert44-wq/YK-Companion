@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { yellowknifeSlogans } from '@/data/yellowknifeSlogans';
+import LiveWeatherEffects from '@/components/LiveWeatherEffects';
 
 interface WeatherData {
   temp: number;
@@ -301,6 +302,9 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
           }
         `}</style>
 
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
+
         {/* Atmospheric vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-indigo-950/40 pointer-events-none" />
       </div>
@@ -481,6 +485,9 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
             animation: pulse-subtle 2s ease-in-out infinite;
           }
         `}</style>
+
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
       </div>
     </div>
   );
@@ -666,6 +673,9 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
             animation: pulse-subtle 2s ease-in-out infinite;
           }
         `}</style>
+
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
       </div>
     </div>
   );
@@ -814,6 +824,9 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
             animation: pulse-subtle 2s ease-in-out infinite;
           }
         `}</style>
+
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
       </div>
     </div>
   );
