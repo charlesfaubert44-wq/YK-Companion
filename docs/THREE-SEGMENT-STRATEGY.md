@@ -1,8 +1,8 @@
-# YKBuddy: Three-Segment Product Strategy
+# YK Buddy: Three-Segment Product Strategy
 
 ## Executive Summary
 
-YKBuddy (formerly True North Trips) serves as a friendly companion for everything Yellowknife, organized around three distinct user segments: **Visiting**, **Living**, and **Moving**. This three-pathway approach creates a comprehensive platform that serves tourists, residents, and relocators with personalized content for each journey.
+YK Buddy serves as a friendly companion for everything Yellowknife, organized around three distinct user segments: **Visiting**, **Living**, and **Moving**. This three-pathway approach creates a comprehensive platform that serves tourists, residents, and relocators with personalized content for each journey.
 
 ---
 
