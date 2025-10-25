@@ -9,7 +9,7 @@ interface WeatherData {
 }
 
 interface LiveWeatherEffectsProps {
-  weather: WeatherData | null;
+  weather: WeatherData | null | undefined;
 }
 
 export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps) {
