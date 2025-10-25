@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSlogan } from '@/contexts/SloganContext';
 
 interface InteractiveMenuProps {
   onAboutClick: () => void;
@@ -11,6 +12,7 @@ interface InteractiveMenuProps {
 
 export default function InteractiveMenu({ onAboutClick, onContactClick }: InteractiveMenuProps) {
   const { t } = useLanguage();
+  const { currentSlogan } = useSlogan();
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const menuItems = [
@@ -32,7 +34,9 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
           />
         </div>
 
-        <div className="group flex items-center gap-2 bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-700/50 shadow-2xl px-6 py-4 hover:border-emerald-500/50 transition-all duration-500">
+        <div className="group flex flex-col gap-3 bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-700/50 shadow-2xl px-6 py-4 hover:border-emerald-500/50 transition-all duration-500">
+          {/* Menu Items */}
+          <div className="flex items-center gap-2">
           {menuItems.map((item, index) => (
             <div key={item.key} className="flex items-center">
               {item.href ? (
@@ -185,6 +189,18 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
               }}
             />
           ))}
+          </div>
+
+          {/* Slogan */}
+          {currentSlogan && (
+            <div className="text-center pt-2 border-t border-slate-700/50">
+              <p className="text-xs sm:text-sm text-emerald-300/90 font-medium leading-relaxed px-2" style={{
+                textShadow: '0 0 10px rgba(16, 185, 129, 0.3)',
+              }}>
+                {currentSlogan}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* CSS Animations */}
