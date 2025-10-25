@@ -260,7 +260,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
             <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tight transition-all duration-500 animate-glow">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tight transition-all duration-500 animate-glow flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-1"
                   style={{
@@ -268,7 +268,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
                   }}>
                   YK
-                </span>{' '}
+                </span>
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-2"
                   style={{
@@ -491,7 +491,7 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
             <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-spring">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-spring flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-spring-1"
                   style={{
@@ -499,7 +499,7 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
                   }}>
                   YK
-                </span>{' '}
+                </span>
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-spring-2"
                   style={{
@@ -727,7 +727,7 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
             <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-summer">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-summer flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-summer-1"
                   style={{
@@ -735,7 +735,7 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
                   }}>
                   YK
-                </span>{' '}
+                </span>
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-summer-2"
                   style={{
@@ -918,7 +918,7 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
             <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-fall">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-fall flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-fall-1"
                   style={{
@@ -926,7 +926,7 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
                   }}>
                   YK
-                </span>{' '}
+                </span>
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-fall-2"
                   style={{
