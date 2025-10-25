@@ -15,6 +15,7 @@ import Modal from '@/components/Modal';
 import AboutContent from '@/components/AboutContent';
 import ContactContent from '@/components/ContactContent';
 import InteractiveMenu from '@/components/InteractiveMenu';
+import SloganConnector from '@/components/SloganConnector';
 import InteractiveAreYou from '@/components/InteractiveAreYou';
 import EnhancedPathwayCards from '@/components/EnhancedPathwayCards';
 
@@ -96,6 +97,9 @@ export default function Home() {
 
           {/* YK Buddy Seasonal Banner */}
           <YKBuddySeasonalBanner />
+
+          {/* Slogan Connector - Seamlessly joins banner to menu */}
+          <SloganConnector />
 
           {/* Interactive Navigation Menu */}
           <InteractiveMenu
