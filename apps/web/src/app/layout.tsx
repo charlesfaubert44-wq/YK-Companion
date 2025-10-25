@@ -3,6 +3,7 @@ import { Inter, Press_Start_2P } from 'next/font/google';
 import '../styles/globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import { SloganProvider } from '@/contexts/SloganContext';
 import PWAInstaller from '@/components/PWAInstaller';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -46,8 +47,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <LanguageProvider>
           <AuthProvider>
-            {children}
-            <PWAInstaller />
+            <SloganProvider>
+              {children}
+              <PWAInstaller />
+            </SloganProvider>
           </AuthProvider>
         </LanguageProvider>
       </body>

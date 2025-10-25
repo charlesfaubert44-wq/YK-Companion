@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { yellowknifeSlogans } from '@/data/yellowknifeSlogans';
 import LiveWeatherEffects from '@/components/LiveWeatherEffects';
+import { useSlogan } from '@/contexts/SloganContext';
 
 interface WeatherData {
   temp: number;
@@ -45,13 +46,15 @@ const getWeatherEmoji = (condition: string, iconCode: string) => {
 
 // Custom hook for random slogan on page load
 const useRotatingSlogan = () => {
+  const { setCurrentSlogan: setGlobalSlogan } = useSlogan();
   const [currentSlogan, setCurrentSlogan] = useState('');
 
   useEffect(() => {
     // Set random slogan once on page load
     const randomSlogan = yellowknifeSlogans[Math.floor(Math.random() * yellowknifeSlogans.length)];
     setCurrentSlogan(randomSlogan);
-  }, []);
+    setGlobalSlogan(randomSlogan);
+  }, [setGlobalSlogan]);
 
   return currentSlogan;
 };
@@ -241,11 +244,11 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
           )}
         </div>
 
-        {/* Logo and slogan */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+        {/* Logo */}
+        <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight transition-all duration-500 animate-glow">
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tight transition-all duration-500 animate-glow">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-1"
                   style={{
@@ -263,22 +266,9 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
                   BUDDY
                 </span>
               </h1>
-              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
-            </div>
-            <div className="mt-3 mx-auto max-w-2xl px-4">
-              <p
-                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-slate-900/80 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-emerald-400/30"
-                style={{
-                  textShadow: '0 0 10px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)',
-                  opacity: isHovered ? 1 : 0.95,
-                  color: '#d1fae5',
-                }}
-                key={currentSlogan}
-              >
-                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-              </p>
             </div>
           </div>
         </div>
@@ -479,10 +469,10 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+        <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-spring">
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-spring">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-spring-1"
                   style={{
@@ -500,21 +490,9 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
                   BUDDY
                 </span>
               </h1>
-              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
-            </div>
-            <div className="mt-3 mx-auto max-w-2xl px-4">
-              <p
-                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-white/90 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-emerald-500/40 text-slate-800"
-                style={{
-                  textShadow: '0 0 10px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.2)',
-                  opacity: isHovered ? 1 : 0.95,
-                }}
-                key={currentSlogan}
-              >
-                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-              </p>
             </div>
           </div>
         </div>
@@ -720,10 +698,10 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+        <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-summer">
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-summer">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-summer-1"
                   style={{
@@ -741,21 +719,9 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
                   BUDDY
                 </span>
               </h1>
-              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
-            </div>
-            <div className="mt-3 mx-auto max-w-2xl px-4">
-              <p
-                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-orange-100/90 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-yellow-500/50 text-orange-900"
-                style={{
-                  textShadow: '0 0 10px rgba(255, 255, 255, 0.6), 0 1px 2px rgba(0, 0, 0, 0.3)',
-                  opacity: isHovered ? 1 : 0.95,
-                }}
-                key={currentSlogan}
-              >
-                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-              </p>
             </div>
           </div>
         </div>
@@ -916,10 +882,10 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+        <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black transition-all duration-500 animate-glow-fall">
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-fall">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-fall-1"
                   style={{
@@ -937,21 +903,9 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
                   BUDDY
                 </span>
               </h1>
-              <span className="px-2 md:px-3 py-1 bg-yellow-500 text-black text-xs md:text-sm font-bold rounded-md animate-pulse-subtle">
+              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
                 BETA
               </span>
-            </div>
-            <div className="mt-3 mx-auto max-w-2xl px-4">
-              <p
-                className="text-xs sm:text-sm md:text-base font-medium leading-relaxed transition-all duration-500 bg-amber-900/80 backdrop-blur-md px-3 py-2 md:px-4 md:py-2.5 rounded-lg border border-orange-400/40 text-amber-100"
-                style={{
-                  textShadow: '0 0 10px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)',
-                  opacity: isHovered ? 1 : 0.95,
-                }}
-                key={currentSlogan}
-              >
-                {currentSlogan || 'Because Nobody Should Face -40° Alone'}
-              </p>
             </div>
           </div>
         </div>
