@@ -240,16 +240,6 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
           )}
         </div>
 
-        <style jsx>{`
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fadeIn {
-            animation: fadeIn 0.3s ease-out forwards;
-          }
-        `}</style>
-
         {/* Logo and slogan */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-center">
@@ -288,6 +278,13 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         <style jsx>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+          }
           @keyframes glow {
             0%, 100% { filter: brightness(1); }
             50% { filter: brightness(1.1); }
@@ -464,9 +461,18 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         <style jsx>{`
+          @keyframes fly {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+          }
+          .animate-fly { animation: fly 3s ease-in-out infinite; }
           @keyframes glow-spring {
             0%, 100% { filter: brightness(1); }
             50% { filter: brightness(1.08); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
           }
           .animate-glow-spring {
             animation: glow-spring 3s ease-in-out infinite;
@@ -476,14 +482,6 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
           }
         `}</style>
       </div>
-
-      <style jsx>{`
-        @keyframes fly {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-        }
-        .animate-fly { animation: fly 3s ease-in-out infinite; }
-      `}</style>
     </div>
   );
 };
@@ -651,9 +649,15 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         <style jsx>{`
+          @keyframes spin-slow { to { transform: rotate(360deg); } }
+          .animate-spin-slow { animation: spin-slow 30s linear infinite; }
           @keyframes glow-summer {
             0%, 100% { filter: brightness(1); }
             50% { filter: brightness(1.1); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
           }
           .animate-glow-summer {
             animation: glow-summer 3s ease-in-out infinite;
@@ -663,11 +667,6 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
           }
         `}</style>
       </div>
-
-      <style jsx>{`
-        @keyframes spin-slow { to { transform: rotate(360deg); } }
-        .animate-spin-slow { animation: spin-slow 30s linear infinite; }
-      `}</style>
     </div>
   );
 };
@@ -793,9 +792,20 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         <style jsx>{`
+          @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+          }
+          .animate-fall { animation: fall linear forwards; }
           @keyframes glow-fall {
             0%, 100% { filter: brightness(1); }
             50% { filter: brightness(1.08); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
           }
           .animate-glow-fall {
             animation: glow-fall 3s ease-in-out infinite;
@@ -805,16 +815,6 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
           }
         `}</style>
       </div>
-
-      <style jsx>{`
-        @keyframes fall {
-          0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
-        }
-        .animate-fall { animation: fall linear forwards; }
-      `}</style>
     </div>
   );
 };
