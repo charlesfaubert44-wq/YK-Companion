@@ -40,6 +40,17 @@
   to { transform: rotate(360deg); }
 }
 
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
 .animate-bounce-subtle {
   animation: bounce-subtle 3s ease-in-out infinite;
 }
@@ -50,6 +61,10 @@
 
 .animate-spin-slow {
   animation: spin-slow 4s linear infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
 }
 
 /* Northern Lights Animation for Premium Spotlight */

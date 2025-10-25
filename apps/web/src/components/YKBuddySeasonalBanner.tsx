@@ -3,26 +3,128 @@
 import { useState, useEffect } from 'react';
 import { useBannerSettings } from '@/lib/banners/useBannerSettings';
 import { BANNER_THEMES } from './banners/BannerThemes';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface WeatherData {
+  temp: number;
+  feels_like: number;
+  condition: string;
+  icon: string;
+  humidity: number;
+  wind_speed: number;
+  description: string;
+}
 
 export default function YKBuddySeasonalBanner() {
   const { currentTheme } = useBannerSettings();
-  const [temperature, setTemperature] = useState<number>(-30);
+  const { language } = useLanguage();
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Set mock temperature based on current month
   useEffect(() => {
-    const month = new Date().getMonth() + 1;
-    if (month === 12 || month === 1 || month === 2 || month === 3) {
-      setTemperature(-30 - Math.floor(Math.random() * 15)); // -30 to -45°C
-    } else if (month === 4 || month === 5) {
-      setTemperature(-5 + Math.floor(Math.random() * 15)); // -5 to +10°C
-    } else if (month === 6 || month === 7 || month === 8) {
-      setTemperature(15 + Math.floor(Math.random() * 12)); // +15 to +27°C
-    } else {
-      setTemperature(-5 + Math.floor(Math.random() * 15)); // -5 to +10°C
-    }
-  }, []);
+    const fetchWeather = async () => {
+      try {
+        setLoading(true);
+
+        // Yellowknife coordinates
+        const lat = 62.4540;
+        const lon = -114.3718;
+
+        const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+
+        if (!apiKey) {
+          console.warn('OpenWeatherMap API key not configured - using fallback temperature');
+          // Fallback to mock temperature based on month
+          const month = new Date().getMonth() + 1;
+          let fallbackTemp = -30;
+          if (month === 12 || month === 1 || month === 2 || month === 3) {
+            fallbackTemp = -30 - Math.floor(Math.random() * 15);
+          } else if (month === 4 || month === 5) {
+            fallbackTemp = -5 + Math.floor(Math.random() * 15);
+          } else if (month === 6 || month === 7 || month === 8) {
+            fallbackTemp = 15 + Math.floor(Math.random() * 12);
+          } else {
+            fallbackTemp = -5 + Math.floor(Math.random() * 15);
+          }
+          setWeather({
+            temp: fallbackTemp,
+            feels_like: fallbackTemp - 5,
+            condition: 'Clear',
+            icon: '01d',
+            humidity: 70,
+            wind_speed: 15,
+            description: 'clear sky',
+          });
+          setLoading(false);
+          return;
+        }
+
+        const langCode = language === 'zh' ? 'zh_cn' : language;
+
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=${langCode}&appid=${apiKey}`,
+          {
+            next: { revalidate: 600 } // Cache for 10 minutes
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error('Weather API request failed');
+        }
+
+        const data = await response.json();
+
+        setWeather({
+          temp: Math.round(data.main.temp),
+          feels_like: Math.round(data.main.feels_like),
+          condition: data.weather[0].main,
+          icon: data.weather[0].icon,
+          humidity: data.main.humidity,
+          wind_speed: Math.round(data.wind.speed * 3.6), // Convert m/s to km/h
+          description: data.weather[0].description,
+        });
+      } catch (err) {
+        console.error('Error fetching weather:', err);
+        // Fallback to mock temperature
+        const month = new Date().getMonth() + 1;
+        let fallbackTemp = -30;
+        if (month >= 12 || month <= 3) {
+          fallbackTemp = -30 - Math.floor(Math.random() * 15);
+        } else if (month >= 4 && month <= 5) {
+          fallbackTemp = -5 + Math.floor(Math.random() * 15);
+        } else if (month >= 6 && month <= 8) {
+          fallbackTemp = 15 + Math.floor(Math.random() * 12);
+        } else {
+          fallbackTemp = -5 + Math.floor(Math.random() * 15);
+        }
+        setWeather({
+          temp: fallbackTemp,
+          feels_like: fallbackTemp - 5,
+          condition: 'Clear',
+          icon: '01d',
+          humidity: 70,
+          wind_speed: 15,
+          description: 'clear sky',
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWeather();
+
+    // Refresh weather every 10 minutes
+    const interval = setInterval(fetchWeather, 600000);
+
+    return () => clearInterval(interval);
+  }, [language]);
 
   const BannerComponent = BANNER_THEMES[currentTheme];
 
-  return <BannerComponent temperature={temperature} />;
+  if (loading || !weather) {
+    // Show banner with loading state
+    return <BannerComponent temperature={-30} weather={null} />;
+  }
+
+  return <BannerComponent temperature={weather.temp} weather={weather} />;
 }
