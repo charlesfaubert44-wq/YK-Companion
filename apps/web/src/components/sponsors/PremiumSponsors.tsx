@@ -100,8 +100,8 @@ export default function PremiumSponsors({
 
   if (loading) {
     return (
-      <div className="flex justify-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-aurora-blue"></div>
+      <div className="py-8">
+        {/* Reserve space while loading to prevent layout shift */}
       </div>
     );
   }
