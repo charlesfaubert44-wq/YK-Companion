@@ -234,7 +234,7 @@ export default function Home() {
             <EnhancedPathwayCards />
 
             {/* Premium Sponsors Section */}
-            <div className="mt-12 pt-8 border-t border-gray-700/30">
+            <div className="mt-24 pt-8 border-t border-gray-700/30">
               <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
             </div>
 
