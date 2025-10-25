@@ -20,7 +20,7 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
   ];
 
   return (
-    <div className="flex justify-center px-4 py-6">
+    <div className="flex justify-center px-4 py-0">
       <nav className="relative">
         {/* Aurora Glow Background - Animated */}
         <div className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
@@ -32,7 +32,12 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
           />
         </div>
 
-        <div className="group flex items-center gap-2 bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-700/50 shadow-2xl px-6 py-4 hover:border-emerald-500/50 transition-all duration-500">
+        <div className="group flex items-center gap-2 bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-md border-l border-r border-b border-slate-700/50 shadow-2xl px-6 py-4 hover:border-emerald-500/50 transition-all duration-500" style={{
+          borderBottomLeftRadius: '1rem',
+          borderBottomRightRadius: '1rem',
+          borderTopLeftRadius: '0',
+          borderTopRightRadius: '0',
+        }}>
           {menuItems.map((item, index) => (
             <div key={item.key} className="flex items-center">
               {item.href ? (
