@@ -13,6 +13,7 @@ interface WeatherData {
   humidity: number;
   wind_speed: number;
   description: string;
+  isFallback?: boolean;
 }
 
 interface BannerProps {
@@ -189,7 +190,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Interactive Weather Display */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-slate-900/90 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
+          className="absolute top-8 left-4 md:top-12 md:left-6 bg-slate-900/90 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
           onMouseEnter={() => setWeatherHovered(true)}
           onMouseLeave={() => setWeatherHovered(false)}
           style={{
@@ -207,12 +208,23 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
             {/* Temperature */}
             <div className="flex flex-col">
-              <div className="text-2xl md:text-4xl font-black text-emerald-300 leading-none">
-                {temperature}°C
+              <div className="flex items-center gap-2">
+                <div className="text-2xl md:text-4xl font-black text-emerald-300 leading-none">
+                  {temperature}°C
+                </div>
+                {weather?.isFallback && (
+                  <span className="text-[10px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-300/70 rounded border border-emerald-400/30 font-medium">
+                    AVG
+                  </span>
+                )}
               </div>
               {weather && weatherHovered && (
                 <div className="text-xs text-emerald-400/80 mt-1 animate-fadeIn">
-                  feels {weather.feels_like}°C
+                  {weather.isFallback ? (
+                    <>seasonal average</>
+                  ) : (
+                    <>feels {weather.feels_like}°C</>
+                  )}
                 </div>
               )}
             </div>
@@ -460,12 +472,19 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Temperature badge */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-500/50 transition-all duration-300"
+          className="absolute top-8 left-4 md:top-12 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-500/50 transition-all duration-300"
           style={{
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
           }}
         >
-          <div className="text-xl md:text-3xl font-black text-emerald-700">{temperature}°C</div>
+          <div className="flex items-center gap-2">
+            <div className="text-xl md:text-3xl font-black text-emerald-700">{temperature}°C</div>
+            {weather?.isFallback && (
+              <span className="text-[10px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-700/70 rounded border border-emerald-500/40 font-medium">
+                AVG
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Logo */}
@@ -691,10 +710,17 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-100/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-500/60 transition-all duration-300"
+          className="absolute top-8 left-4 md:top-12 md:left-6 bg-orange-100/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-500/60 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
-          <div className="text-xl md:text-3xl font-black text-orange-700">{temperature}°C</div>
+          <div className="flex items-center gap-2">
+            <div className="text-xl md:text-3xl font-black text-orange-700">{temperature}°C</div>
+            {weather?.isFallback && (
+              <span className="text-[10px] px-1.5 py-0.5 bg-orange-500/20 text-orange-700/70 rounded border border-orange-500/40 font-medium">
+                AVG
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Logo */}
@@ -875,10 +901,17 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50 transition-all duration-300"
+          className="absolute top-8 left-4 md:top-12 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
-          <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
+          <div className="flex items-center gap-2">
+            <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
+            {weather?.isFallback && (
+              <span className="text-[10px] px-1.5 py-0.5 bg-orange-500/20 text-orange-300/70 rounded border border-orange-400/40 font-medium">
+                AVG
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Logo */}
