@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useWeatherEffectsSettings } from '@/hooks/useWeatherEffectsSettings';
 
 interface WeatherData {
   condition: string;
@@ -14,12 +15,14 @@ interface LiveWeatherEffectsProps {
 
 export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps) {
   const [mounted, setMounted] = useState(false);
+  const effectsSettings = useWeatherEffectsSettings();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!weather || !mounted) return null;
+  // Don't render if weather effects are disabled globally
+  if (!weather || !mounted || !effectsSettings.enabled) return null;
 
   const condition = weather.condition.toLowerCase();
   const windSpeed = weather.wind_speed || 0;
@@ -27,7 +30,7 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
       {/* SNOW EFFECT */}
-      {condition === 'snow' && (
+      {condition === 'snow' && effectsSettings.snow && (
         <div className="absolute inset-0">
           {[...Array(80)].map((_, i) => (
             <div
@@ -52,7 +55,7 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
       )}
 
       {/* RAIN EFFECT */}
-      {(condition === 'rain' || condition === 'drizzle') && (
+      {(condition === 'rain' || condition === 'drizzle') && effectsSettings.rain && (
         <div className="absolute inset-0">
           {[...Array(condition === 'drizzle' ? 40 : 100)].map((_, i) => (
             <div
@@ -75,7 +78,7 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
       )}
 
       {/* THUNDERSTORM EFFECT */}
-      {condition === 'thunderstorm' && (
+      {condition === 'thunderstorm' && effectsSettings.thunderstorm && (
         <>
           {/* Heavy Rain */}
           <div className="absolute inset-0">
@@ -102,7 +105,7 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
       )}
 
       {/* FOG/MIST EFFECT */}
-      {(condition === 'mist' || condition === 'fog' || condition === 'haze') && (
+      {(condition === 'mist' || condition === 'fog' || condition === 'haze') && effectsSettings.fog && (
         <div className="absolute inset-0">
           <div
             className="absolute inset-0 animate-fog-drift"
@@ -131,7 +134,7 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
       )}
 
       {/* CLOUDS DRIFTING */}
-      {condition === 'clouds' && (
+      {condition === 'clouds' && effectsSettings.clouds && (
         <div className="absolute inset-0">
           {[...Array(3)].map((_, i) => (
             <div
@@ -153,7 +156,7 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
       )}
 
       {/* WIND PARTICLES (for windy conditions) */}
-      {windSpeed > 20 && (
+      {windSpeed > 20 && effectsSettings.wind && (
         <div className="absolute inset-0">
           {[...Array(30)].map((_, i) => (
             <div
@@ -175,7 +178,7 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
       )}
 
       {/* CLEAR SKY SPARKLES */}
-      {condition === 'clear' && (
+      {condition === 'clear' && effectsSettings.clear && (
         <div className="absolute inset-0">
           {[...Array(15)].map((_, i) => (
             <div
