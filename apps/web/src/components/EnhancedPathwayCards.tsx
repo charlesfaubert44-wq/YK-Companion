@@ -1,10 +1,30 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function EnhancedPathwayCards() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [planeOffset, setPlaneOffset] = useState(0);
+  const visitingCardRef = useRef<HTMLDivElement>(null);
+
+  // Continuous plane animation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaneOffset(prev => (prev + 0.5) % 100);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Mouse tracking for interactive aurora
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!visitingCardRef.current) return;
+    const rect = visitingCardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
+  };
 
   return (
     <div className="relative">
@@ -51,9 +71,10 @@ export default function EnhancedPathwayCards() {
 
       {/* Three Ultra-Premium Pathway Cards */}
       <div className="grid md:grid-cols-3 gap-8 perspective-1000">
-        {/* VISITING Card */}
+        {/* VISITING Card - Robbie Craig Style: Plane Flying in Auroras */}
         <Link href="/visiting" className="group">
           <div
+            ref={visitingCardRef}
             className="relative h-96 rounded-3xl overflow-hidden transform-gpu transition-all duration-700 cursor-pointer"
             style={{
               transformStyle: 'preserve-3d',
@@ -64,22 +85,24 @@ export default function EnhancedPathwayCards() {
             }}
             onMouseEnter={() => setHoveredCard('visiting')}
             onMouseLeave={() => setHoveredCard(null)}
+            onMouseMove={handleMouseMove}
           >
-            {/* Glassmorphic Border */}
-            <div className="absolute inset-0 rounded-3xl border-2 border-emerald-400/40 group-hover:border-emerald-300/60 transition-all duration-500" />
+            {/* Glassmorphic Border with Bold Outline */}
+            <div className="absolute inset-0 rounded-3xl border-4 border-emerald-400/50 group-hover:border-emerald-300/70 transition-all duration-500" />
 
-            {/* Background Layers with Parallax */}
+            {/* Background Layers - Robbie Craig Style */}
             <div className="absolute inset-0">
-              {/* Deep Space Sky */}
+              {/* Deep Night Sky with Bold Gradient */}
               <div
-                className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-purple-950 to-slate-950"
+                className="absolute inset-0"
                 style={{
+                  background: 'linear-gradient(to bottom, #0a0e27 0%, #1a1347 30%, #2d1b69 60%, #1e0a3c 100%)',
                   transform: hoveredCard === 'visiting' ? 'translateZ(-20px) scale(1.05)' : 'translateZ(0px)',
                   transition: 'transform 0.7s ease-out',
                 }}
               />
 
-              {/* Multi-Layer Aurora with Enhanced Glow */}
+              {/* Vibrant Multi-Color Aurora Curtains - Bold & Fluid */}
               <div
                 className="absolute inset-0"
                 style={{
@@ -87,90 +110,156 @@ export default function EnhancedPathwayCards() {
                   transition: 'transform 0.7s ease-out',
                 }}
               >
-                {/* Primary aurora curtain */}
+                {/* Emerald green curtain */}
                 <div
-                  className="absolute w-full h-full opacity-60 group-hover:opacity-95 transition-all duration-1000"
+                  className="absolute w-full h-full opacity-70 group-hover:opacity-95 transition-all duration-1000"
                   style={{
-                    background: 'radial-gradient(ellipse 130% 90% at 50% 20%, rgba(16, 185, 129, 0.9) 0%, rgba(52, 211, 153, 0.6) 25%, rgba(167, 243, 208, 0.3) 50%, transparent 80%)',
-                    filter: 'blur(70px)',
-                    animation: 'aurora-wave 6s ease-in-out infinite',
+                    background: `radial-gradient(ellipse 140% 95% at ${mousePos.x}% ${Math.max(10, mousePos.y * 0.3)}%, rgba(16, 185, 129, 0.95) 0%, rgba(52, 211, 153, 0.75) 20%, rgba(167, 243, 208, 0.4) 45%, transparent 85%)`,
+                    filter: 'blur(60px)',
+                    animation: 'aurora-wave-fluid 7s ease-in-out infinite',
+                    mixBlendMode: 'screen',
                   }}
                 />
-                {/* Secondary purple aurora */}
+                {/* Electric blue wave */}
                 <div
-                  className="absolute w-full h-full opacity-45 group-hover:opacity-75 transition-all duration-700"
+                  className="absolute w-full h-full opacity-60 group-hover:opacity-85 transition-all duration-700"
                   style={{
-                    background: 'radial-gradient(ellipse 100% 70% at 35% 30%, rgba(139, 92, 246, 0.7) 0%, rgba(196, 181, 253, 0.4) 35%, transparent 70%)',
+                    background: 'radial-gradient(ellipse 120% 80% at 70% 15%, rgba(59, 130, 246, 0.9) 0%, rgba(96, 165, 250, 0.6) 25%, rgba(147, 197, 253, 0.3) 50%, transparent 80%)',
                     filter: 'blur(55px)',
-                    animation: 'aurora-wave 8s ease-in-out infinite reverse',
+                    animation: 'aurora-wave-fluid 9s ease-in-out infinite reverse',
+                    mixBlendMode: 'screen',
                   }}
                 />
-                {/* Cyan accent */}
+                {/* Vivid purple accent */}
                 <div
-                  className="absolute w-full h-full opacity-35 group-hover:opacity-60 transition-all duration-500"
+                  className="absolute w-full h-full opacity-55 group-hover:opacity-80 transition-all duration-500"
                   style={{
-                    background: 'radial-gradient(ellipse 80% 50% at 75% 25%, rgba(34, 211, 238, 0.5) 0%, transparent 65%)',
+                    background: 'radial-gradient(ellipse 100% 70% at 25% 20%, rgba(168, 85, 247, 0.8) 0%, rgba(192, 132, 252, 0.5) 30%, transparent 70%)',
+                    filter: 'blur(50px)',
+                    animation: 'aurora-wave-fluid 11s ease-in-out infinite',
+                    mixBlendMode: 'screen',
+                  }}
+                />
+                {/* Magenta splash */}
+                <div
+                  className="absolute w-full h-full opacity-45 group-hover:opacity-70 transition-all duration-600"
+                  style={{
+                    background: 'radial-gradient(ellipse 90% 60% at 85% 25%, rgba(236, 72, 153, 0.7) 0%, rgba(244, 114, 182, 0.4) 35%, transparent 70%)',
+                    filter: 'blur(48px)',
+                    animation: 'aurora-wave-fluid 8s ease-in-out infinite',
+                    mixBlendMode: 'screen',
+                  }}
+                />
+                {/* Cyan streak */}
+                <div
+                  className="absolute w-full h-full opacity-50 group-hover:opacity-75 transition-all duration-500"
+                  style={{
+                    background: 'radial-gradient(ellipse 80% 50% at 50% 18%, rgba(6, 182, 212, 0.75) 0%, rgba(34, 211, 238, 0.45) 30%, transparent 65%)',
                     filter: 'blur(45px)',
-                    animation: 'aurora-wave 10s ease-in-out infinite',
+                    animation: 'aurora-wave-fluid 10s ease-in-out infinite reverse',
+                    mixBlendMode: 'screen',
+                  }}
+                />
+                {/* Warm yellow glow */}
+                <div
+                  className="absolute w-full h-full opacity-35 group-hover:opacity-60 transition-all duration-400"
+                  style={{
+                    background: 'radial-gradient(ellipse 70% 40% at 40% 22%, rgba(250, 204, 21, 0.6) 0%, rgba(252, 211, 77, 0.35) 28%, transparent 60%)',
+                    filter: 'blur(42px)',
+                    animation: 'aurora-wave-fluid 13s ease-in-out infinite',
+                    mixBlendMode: 'screen',
                   }}
                 />
               </div>
 
-              {/* Enhanced Star Field with Depth */}
-              {[...Array(60)].map((_, i) => (
+              {/* Enhanced Twinkling Stars with Varied Sizes */}
+              {[...Array(80)].map((_, i) => (
                 <div
                   key={i}
                   className="absolute rounded-full bg-white"
                   style={{
                     left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 70}%`,
-                    width: `${0.5 + Math.random() * 2.5}px`,
-                    height: `${0.5 + Math.random() * 2.5}px`,
-                    opacity: 0.3 + Math.random() * 0.7,
-                    boxShadow: `0 0 ${2 + Math.random() * 4}px rgba(255,255,255,${0.5 + Math.random() * 0.5})`,
-                    animation: `twinkle ${1.5 + Math.random() * 3}s ease-in-out infinite`,
-                    animationDelay: `${Math.random() * 3}s`,
-                    transform: hoveredCard === 'visiting' ? `translateZ(${5 + Math.random() * 15}px)` : 'translateZ(0px)',
+                    top: `${Math.random() * 65}%`,
+                    width: `${0.3 + Math.random() * 3}px`,
+                    height: `${0.3 + Math.random() * 3}px`,
+                    opacity: 0.2 + Math.random() * 0.8,
+                    boxShadow: `0 0 ${2 + Math.random() * 6}px rgba(255,255,255,${0.4 + Math.random() * 0.6})`,
+                    animation: `twinkle-varied ${1 + Math.random() * 4}s ease-in-out infinite`,
+                    animationDelay: `${Math.random() * 4}s`,
+                    transform: hoveredCard === 'visiting' ? `translateZ(${5 + Math.random() * 20}px)` : 'translateZ(0px)',
                     transition: 'transform 0.7s ease-out',
                   }}
                 />
               ))}
 
-              {/* Enhanced Bush Plane with Motion Trail */}
+              {/* Animated Bush Plane Flying Through Auroras - Bold Graphic Style */}
               <div
-                className="absolute bottom-32 right-20 transition-all duration-1000"
+                className="absolute transition-all duration-300"
                 style={{
+                  left: `${planeOffset}%`,
+                  top: `${35 + Math.sin(planeOffset * 0.08) * 15}%`,
                   transform: hoveredCard === 'visiting'
-                    ? 'translateZ(30px) translateX(10px) translateY(-10px) rotateZ(-2deg)'
-                    : 'translateZ(0px) translateX(0px) translateY(0px) rotateZ(0deg)',
-                  filter: hoveredCard === 'visiting' ? 'drop-shadow(0 10px 30px rgba(16, 185, 129, 0.6))' : 'drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5))',
+                    ? `translateZ(35px) scale(1.3) rotate(${Math.sin(planeOffset * 0.05) * 5}deg)`
+                    : `translateZ(0px) scale(1.1) rotate(${Math.sin(planeOffset * 0.05) * 3}deg)`,
+                  filter: hoveredCard === 'visiting'
+                    ? 'drop-shadow(0 0 40px rgba(16, 185, 129, 0.9)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.7))'
+                    : 'drop-shadow(0 0 20px rgba(16, 185, 129, 0.6))',
                 }}
               >
-                <svg width="110" height="55" viewBox="0 0 110 55" className="opacity-70 group-hover:opacity-95 transition-opacity">
-                  {/* Motion trails */}
-                  <path d="M5,27 Q25,24 45,27" stroke="rgba(255,255,255,0.15)" strokeWidth="3" fill="none" opacity="0.7" className="animate-pulse"/>
-                  <path d="M8,27 Q28,25 48,27" stroke="rgba(16,185,129,0.2)" strokeWidth="2" fill="none" opacity="0.6" className="animate-pulse"/>
-                  {/* Detailed plane body */}
+                <svg width="130" height="65" viewBox="0 0 130 65" className="opacity-90 group-hover:opacity-100 transition-opacity">
+                  {/* Bold Graphic Motion Trails */}
+                  <path d="M0,32 Q20,28 40,32" stroke="#10b981" strokeWidth="6" fill="none" opacity="0.4" strokeLinecap="round">
+                    <animate attributeName="opacity" values="0.2;0.6;0.2" dur="1.5s" repeatCount="indefinite"/>
+                  </path>
+                  <path d="M5,32 Q25,30 45,32" stroke="#3b82f6" strokeWidth="5" fill="none" opacity="0.5" strokeLinecap="round">
+                    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
+                  </path>
+                  <path d="M10,32 Q30,31 50,32" stroke="#a855f7" strokeWidth="4" fill="none" opacity="0.3" strokeLinecap="round">
+                    <animate attributeName="opacity" values="0.2;0.5;0.2" dur="1.5s" repeatCount="indefinite" begin="0.6s"/>
+                  </path>
+
+                  {/* Bold Plane Silhouette with Graphic Lines */}
                   <g>
-                    {/* Main fuselage */}
-                    <ellipse cx="45" cy="27" rx="22" ry="8" fill="#1a2332" stroke="#2d3748" strokeWidth="1.5"/>
-                    {/* Cockpit */}
-                    <ellipse cx="58" cy="27" rx="8" ry="6" fill="#1a2332" stroke="#2d3748" strokeWidth="1.5"/>
-                    <ellipse cx="60" cy="27" rx="5" ry="4" fill="rgba(135, 206, 235, 0.3)" stroke="#4a5568" strokeWidth="1"/>
-                    {/* Wings */}
-                    <ellipse cx="45" cy="27" rx="45" ry="3" fill="#1a2332" stroke="#2d3748" strokeWidth="1.5" opacity="0.9"/>
-                    {/* Tail */}
-                    <path d="M28,27 L20,20 L25,27 L20,34 Z" fill="#1a2332" stroke="#2d3748" strokeWidth="1.5"/>
-                    {/* Engine details */}
-                    <circle cx="65" cy="27" r="3" fill="#4a5568" stroke="#2d3748" strokeWidth="1"/>
-                    {/* Pontoons */}
-                    <ellipse cx="50" cy="35" rx="15" ry="2.5" fill="#2d3748" opacity="0.8"/>
-                    <ellipse cx="40" cy="35" rx="12" ry="2" fill="#2d3748" opacity="0.8"/>
+                    {/* Main fuselage - bold and graphic */}
+                    <ellipse cx="55" cy="32" rx="26" ry="10" fill="#1e293b" stroke="#10b981" strokeWidth="3"/>
+                    <ellipse cx="55" cy="32" rx="24" ry="8" fill="#334155"/>
+
+                    {/* Cockpit with bold outline */}
+                    <ellipse cx="70" cy="32" rx="10" ry="7" fill="#1e293b" stroke="#3b82f6" strokeWidth="2.5"/>
+                    <ellipse cx="73" cy="32" rx="6" ry="5" fill="rgba(147, 197, 253, 0.5)" stroke="#60a5fa" strokeWidth="2"/>
+
+                    {/* Bold wings */}
+                    <ellipse cx="55" cy="32" rx="52" ry="4" fill="#1e293b" stroke="#10b981" strokeWidth="3" opacity="0.95"/>
+                    <ellipse cx="55" cy="32" rx="50" ry="2.5" fill="#334155" opacity="0.9"/>
+
+                    {/* Tail with bold lines */}
+                    <path d="M32,32 L22,22 L28,32 L22,42 Z" fill="#1e293b" stroke="#a855f7" strokeWidth="2.5"/>
+                    <path d="M33,32 L25,24 L29,32 L25,40 Z" fill="#334155"/>
+
+                    {/* Engine with glow */}
+                    <circle cx="78" cy="32" r="4" fill="#475569" stroke="#fbbf24" strokeWidth="2"/>
+                    <circle cx="78" cy="32" r="2" fill="#fcd34d">
+                      <animate attributeName="opacity" values="0.7;1;0.7" dur="1s" repeatCount="indefinite"/>
+                    </circle>
+
+                    {/* Bold pontoons */}
+                    <ellipse cx="60" cy="42" rx="18" ry="3" fill="#0f172a" stroke="#3b82f6" strokeWidth="2" opacity="0.85"/>
+                    <ellipse cx="48" cy="42" rx="15" ry="2.5" fill="#0f172a" stroke="#3b82f6" strokeWidth="2" opacity="0.85"/>
                   </g>
+
+                  {/* Aurora glow behind plane */}
+                  <ellipse cx="60" cy="32" rx="45" ry="25" fill="url(#planeGlow)" opacity="0.6"/>
+                  <defs>
+                    <radialGradient id="planeGlow">
+                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.4"/>
+                      <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.2"/>
+                      <stop offset="100%" stopColor="transparent" stopOpacity="0"/>
+                    </radialGradient>
+                  </defs>
                 </svg>
               </div>
 
-              {/* Enhanced Mountain Ranges with More Depth */}
+              {/* Bold Graphic Mountain Silhouettes - Impressionistic Style */}
               <svg
                 viewBox="0 0 400 140"
                 className="absolute bottom-0 w-full h-40"
@@ -181,25 +270,29 @@ export default function EnhancedPathwayCards() {
                 }}
               >
                 <defs>
-                  <linearGradient id="mountain-far-v" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#1e293b" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0.5" />
+                  <linearGradient id="mountain-bold-v1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#0f172a" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#0a0e27" stopOpacity="0.6" />
                   </linearGradient>
-                  <linearGradient id="mountain-mid-v" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#1e293b" stopOpacity="0.6" />
-                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0.8" />
+                  <linearGradient id="mountain-bold-v2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#1e293b" stopOpacity="0.7" />
+                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0.9" />
                   </linearGradient>
-                  <linearGradient id="mountain-near-v" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#1e293b" stopOpacity="0.85" />
-                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0.98" />
+                  <linearGradient id="mountain-bold-v3" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#334155" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#1e293b" stopOpacity="1" />
                   </linearGradient>
                 </defs>
-                <path d="M0,85 L100,55 L180,65 L250,50 L320,60 L400,70 L400,140 L0,140 Z" fill="url(#mountain-far-v)"/>
-                <path d="M0,95 L80,65 L140,75 L200,60 L260,70 L320,65 L400,80 L400,140 L0,140 Z" fill="url(#mountain-mid-v)"/>
-                <path d="M0,105 L60,75 L120,85 L180,70 L240,80 L300,75 L360,85 L400,90 L400,140 L0,140 Z" fill="url(#mountain-near-v)"/>
-                {/* Snow caps */}
-                <path d="M100,55 L110,60 L120,58 L130,62 L120,65" fill="#f0f9ff" opacity="0.6"/>
-                <path d="M200,60 L210,65 L220,63 L230,67 L220,70" fill="#f0f9ff" opacity="0.6"/>
+                {/* Far mountains with bold shapes */}
+                <path d="M0,85 L95,50 L175,62 L245,45 L315,58 L400,68 L400,140 L0,140 Z" fill="url(#mountain-bold-v1)" stroke="#10b981" strokeWidth="2" opacity="0.6"/>
+                {/* Mid mountains with definition */}
+                <path d="M0,95 L75,60 L135,72 L195,55 L255,68 L315,62 L400,78 L400,140 L0,140 Z" fill="url(#mountain-bold-v2)" stroke="#3b82f6" strokeWidth="2.5" opacity="0.75"/>
+                {/* Near mountains with bold outline */}
+                <path d="M0,105 L55,70 L115,82 L175,65 L235,78 L295,72 L355,82 L400,88 L400,140 L0,140 Z" fill="url(#mountain-bold-v3)" stroke="#a855f7" strokeWidth="3" opacity="0.9"/>
+                {/* Bold snow caps with vibrant colors */}
+                <path d="M95,50 L105,56 L115,54 L125,58 L115,62" fill="#f0f9ff" stroke="#06b6d4" strokeWidth="2" opacity="0.8"/>
+                <path d="M195,55 L205,61 L215,59 L225,63 L215,67" fill="#fef3c7" stroke="#fbbf24" strokeWidth="2" opacity="0.8"/>
+                <path d="M295,72 L305,78 L315,76 L325,80 L315,84" fill="#fce7f3" stroke="#ec4899" strokeWidth="2" opacity="0.7"/>
               </svg>
 
               {/* Title with Ultra-Enhanced Glow */}
@@ -848,9 +941,35 @@ export default function EnhancedPathwayCards() {
           50% { transform: translateX(10px) scale(1.05); }
         }
 
+        @keyframes aurora-wave-fluid {
+          0%, 100% {
+            transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+            opacity: 1;
+          }
+          25% {
+            transform: translateX(15px) translateY(-8px) scale(1.03) rotate(1deg);
+            opacity: 0.9;
+          }
+          50% {
+            transform: translateX(10px) translateY(5px) scale(1.06) rotate(-0.5deg);
+            opacity: 1;
+          }
+          75% {
+            transform: translateX(-8px) translateY(-3px) scale(1.02) rotate(0.8deg);
+            opacity: 0.95;
+          }
+        }
+
         @keyframes twinkle {
           0%, 100% { opacity: 0.3; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        @keyframes twinkle-varied {
+          0%, 100% { opacity: 0.2; transform: scale(1) rotate(0deg); }
+          25% { opacity: 0.6; transform: scale(1.3) rotate(90deg); }
+          50% { opacity: 1; transform: scale(1.6) rotate(180deg); }
+          75% { opacity: 0.6; transform: scale(1.3) rotate(270deg); }
         }
 
         .perspective-1000 {
