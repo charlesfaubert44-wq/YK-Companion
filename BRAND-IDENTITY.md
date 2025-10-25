@@ -1,17 +1,14 @@
-# YKBuddy - Brand Identity
+# YK Buddy - Brand Identity
 
 ## Brand Name
-**YKBuddy** - Your friendly Yellowknife companion
+**YK Buddy** - Your friendly Yellowknife companion
 
 ## Tagline
-"Your Yellowknife Companion"
+**"Because Nobody Should Face -40° Alone"**
 
-## Alternative Names Considered
-- Northern Pal
-- YK Buddy
-- Arctic Ally
-- Knife Companion (play on "Yellowknife")
-- Aurora Buddy
+## Previous Names
+- YKBuddy (early version - no space)
+- True North Trips (original concept - archived)
 
 ## Brand Personality
 
@@ -101,9 +98,9 @@
 
 **The Problem**: Visiting or moving to Yellowknife is overwhelming. Tourist sites are impersonal, locals are hard to find, and you don't know who to trust.
 
-**The Solution**: YKBuddy is like having a local friend in your pocket. Someone who knows all the good spots, gives honest advice, and actually cares if you have a great time.
+**The Solution**: YK Buddy is like having a local friend in your pocket. Someone who knows all the good spots, gives honest advice, and actually cares if you have a great time.
 
-**The Promise**: Whether you're visiting for a weekend, living here for years, or moving permanently, YKBuddy is your constant companion—always ready to help, never judging, genuinely excited to share the North with you.
+**The Promise**: Whether you're visiting for a weekend, living here for years, or moving permanently, YK Buddy is your constant companion—always ready to help, never judging, genuinely excited to share the North with you.
 
 ## Key Messaging
 
@@ -192,5 +189,5 @@
 
 ---
 
-**Last Updated**: October 2025
-**Brand Strategy**: YKBuddy - Your Friendly Yellowknife Companion
+**Last Updated**: January 2025
+**Brand**: YK Buddy - Because Nobody Should Face -40° Alone

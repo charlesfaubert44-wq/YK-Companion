@@ -13,11 +13,11 @@
 
 ## 🌟 Quick Links
 
-- **📖 Documentation:** [CURRENT_FEATURES.md](./CURRENT_FEATURES.md) - Complete feature list
-- **🚀 Deployment:** [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) - Full deployment instructions
-- **⚡ Quick Start:** [QUICK_START.md](./QUICK_START.md) - Get online in 1 hour
-- **🗄️ Database:** [docs/database-schema.md](./docs/database-schema.md) - Schema documentation
-- **📦 Archived:** [ARCHIVED_FEATURES.md](./ARCHIVED_FEATURES.md) - Removed features
+- **📖 All Documentation:** [DOCUMENTATION.md](./DOCUMENTATION.md) - Complete documentation index
+- **🚀 Quick Deploy:** [QUICK_START.md](./QUICK_START.md) - Get online in 1 hour
+- **✨ Features:** [CURRENT_FEATURES.md](./CURRENT_FEATURES.md) - What's live now
+- **🎨 Brand Guide:** [BRAND-IDENTITY.md](./BRAND-IDENTITY.md) - Brand guidelines
+- **🗄️ Database:** [docs/database-schema.md](./docs/database-schema.md) - Schema docs
 
 ---
 
@@ -303,11 +303,14 @@ MIT License - See LICENSE file for details
 
 ## 📚 Documentation
 
-- **[CURRENT_FEATURES.md](./CURRENT_FEATURES.md)** - Complete current feature list
-- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Comprehensive deployment instructions
-- **[QUICK_START.md](./QUICK_START.md)** - Get online in 1 hour
-- **[ARCHIVED_FEATURES.md](./ARCHIVED_FEATURES.md)** - Features that were removed
+**See [DOCUMENTATION.md](./DOCUMENTATION.md) for complete documentation index.**
+
+Key documents:
+- **[CURRENT_FEATURES.md](./CURRENT_FEATURES.md)** - What's live now
+- **[QUICK_START.md](./QUICK_START.md)** - 1-hour deployment guide
+- **[BRAND-IDENTITY.md](./BRAND-IDENTITY.md)** - Brand guidelines
 - **[docs/database-schema.md](./docs/database-schema.md)** - Database schema
+- **[docs/THREE-SEGMENT-STRATEGY.md](./docs/THREE-SEGMENT-STRATEGY.md)** - Product strategy
 
 ---
 
