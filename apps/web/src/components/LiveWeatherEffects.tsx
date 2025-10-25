@@ -22,10 +22,23 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
   }, []);
 
   // Don't render if weather effects are disabled globally
-  if (!weather || !mounted || !effectsSettings.enabled) return null;
+  if (!mounted || !effectsSettings.enabled) return null;
 
-  const condition = weather.condition.toLowerCase();
-  const windSpeed = weather.wind_speed || 0;
+  // Use forced weather condition if enabled, otherwise use live weather
+  let condition: string;
+  let windSpeed = 0;
+
+  if (effectsSettings.forceEnabled && effectsSettings.forceCondition !== 'none') {
+    condition = effectsSettings.forceCondition.toLowerCase();
+    // Set a default wind speed for forced conditions
+    windSpeed = 15; // Default moderate wind
+  } else if (weather) {
+    condition = weather.condition.toLowerCase();
+    windSpeed = weather.wind_speed || 0;
+  } else {
+    // No weather data and no forced weather
+    return null;
+  }
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">

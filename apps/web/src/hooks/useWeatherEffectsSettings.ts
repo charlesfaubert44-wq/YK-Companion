@@ -12,6 +12,8 @@ export interface WeatherEffectsSettings {
   clouds: boolean;
   wind: boolean;
   clear: boolean;
+  forceEnabled: boolean;
+  forceCondition: string;
 }
 
 export function useWeatherEffectsSettings(): WeatherEffectsSettings {
@@ -24,6 +26,8 @@ export function useWeatherEffectsSettings(): WeatherEffectsSettings {
     clouds: true,
     wind: true,
     clear: true,
+    forceEnabled: false,
+    forceCondition: 'none',
   });
 
   useEffect(() => {
@@ -43,13 +47,21 @@ export function useWeatherEffectsSettings(): WeatherEffectsSettings {
             'weather_effects_clouds',
             'weather_effects_wind',
             'weather_effects_clear',
+            'weather_force_enabled',
+            'weather_force_condition',
           ]);
 
         if (data && !error) {
-          const settingsMap: Record<string, boolean> = {};
+          const settingsMap: Record<string, any> = {};
           data.forEach((setting: any) => {
-            // Parse JSONB boolean values
-            settingsMap[setting.key] = setting.value === true || setting.value === 'true';
+            // Parse JSONB values - booleans or strings
+            if (typeof setting.value === 'boolean') {
+              settingsMap[setting.key] = setting.value;
+            } else if (setting.value === 'true' || setting.value === 'false') {
+              settingsMap[setting.key] = setting.value === 'true';
+            } else {
+              settingsMap[setting.key] = setting.value;
+            }
           });
 
           setSettings({
@@ -61,6 +73,8 @@ export function useWeatherEffectsSettings(): WeatherEffectsSettings {
             clouds: settingsMap.weather_effects_clouds !== false,
             wind: settingsMap.weather_effects_wind !== false,
             clear: settingsMap.weather_effects_clear !== false,
+            forceEnabled: settingsMap.weather_force_enabled === true,
+            forceCondition: settingsMap.weather_force_condition || 'none',
           });
         }
       } catch (err) {
