@@ -13,6 +13,7 @@ interface WeatherData {
   humidity: number;
   wind_speed: number;
   description: string;
+  isFallback?: boolean;
 }
 
 export default function YKBuddySeasonalBanner() {
@@ -33,27 +34,50 @@ export default function YKBuddySeasonalBanner() {
         const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
         if (!apiKey) {
-          console.warn('OpenWeatherMap API key not configured - using fallback temperature');
-          // Fallback to mock temperature based on month
+          console.warn('OpenWeatherMap API key not configured - using seasonal average temperature');
+          // Fallback to seasonal average temperature based on month
           const month = new Date().getMonth() + 1;
-          let fallbackTemp = -30;
-          if (month === 12 || month === 1 || month === 2 || month === 3) {
-            fallbackTemp = -30 - Math.floor(Math.random() * 15);
+          let fallbackTemp = -25;
+          let condition = 'Clear';
+          let icon = '01d';
+          let description = 'typical for season';
+
+          if (month === 12 || month === 1 || month === 2) {
+            fallbackTemp = -28; // Deep winter
+            condition = 'Snow';
+            icon = '13d';
+            description = 'typical winter conditions';
+          } else if (month === 3) {
+            fallbackTemp = -18; // Late winter
+            condition = 'Clouds';
+            icon = '02d';
+            description = 'late winter conditions';
           } else if (month === 4 || month === 5) {
-            fallbackTemp = -5 + Math.floor(Math.random() * 15);
+            fallbackTemp = 2; // Spring
+            condition = 'Clouds';
+            icon = '03d';
+            description = 'spring thaw';
           } else if (month === 6 || month === 7 || month === 8) {
-            fallbackTemp = 15 + Math.floor(Math.random() * 12);
+            fallbackTemp = 17; // Summer
+            condition = 'Clear';
+            icon = '01d';
+            description = 'summer warmth';
           } else {
-            fallbackTemp = -5 + Math.floor(Math.random() * 15);
+            fallbackTemp = -2; // Fall
+            condition = 'Clouds';
+            icon = '04d';
+            description = 'autumn chill';
           }
+
           setWeather({
             temp: fallbackTemp,
             feels_like: fallbackTemp - 5,
-            condition: 'Clear',
-            icon: '01d',
+            condition,
+            icon,
             humidity: 70,
             wind_speed: 15,
-            description: 'clear sky',
+            description,
+            isFallback: true,
           });
           setLoading(false);
           return;
@@ -85,26 +109,49 @@ export default function YKBuddySeasonalBanner() {
         });
       } catch (err) {
         console.error('Error fetching weather:', err);
-        // Fallback to mock temperature
+        // Fallback to seasonal average temperature
         const month = new Date().getMonth() + 1;
-        let fallbackTemp = -30;
-        if (month >= 12 || month <= 3) {
-          fallbackTemp = -30 - Math.floor(Math.random() * 15);
-        } else if (month >= 4 && month <= 5) {
-          fallbackTemp = -5 + Math.floor(Math.random() * 15);
-        } else if (month >= 6 && month <= 8) {
-          fallbackTemp = 15 + Math.floor(Math.random() * 12);
+        let fallbackTemp = -25;
+        let condition = 'Clear';
+        let icon = '01d';
+        let description = 'typical for season';
+
+        if (month === 12 || month === 1 || month === 2) {
+          fallbackTemp = -28; // Deep winter
+          condition = 'Snow';
+          icon = '13d';
+          description = 'typical winter conditions';
+        } else if (month === 3) {
+          fallbackTemp = -18; // Late winter
+          condition = 'Clouds';
+          icon = '02d';
+          description = 'late winter conditions';
+        } else if (month === 4 || month === 5) {
+          fallbackTemp = 2; // Spring
+          condition = 'Clouds';
+          icon = '03d';
+          description = 'spring thaw';
+        } else if (month === 6 || month === 7 || month === 8) {
+          fallbackTemp = 17; // Summer
+          condition = 'Clear';
+          icon = '01d';
+          description = 'summer warmth';
         } else {
-          fallbackTemp = -5 + Math.floor(Math.random() * 15);
+          fallbackTemp = -2; // Fall
+          condition = 'Clouds';
+          icon = '04d';
+          description = 'autumn chill';
         }
+
         setWeather({
           temp: fallbackTemp,
           feels_like: fallbackTemp - 5,
-          condition: 'Clear',
-          icon: '01d',
+          condition,
+          icon,
           humidity: 70,
           wind_speed: 15,
-          description: 'clear sky',
+          description,
+          isFallback: true,
         });
       } finally {
         setLoading(false);
