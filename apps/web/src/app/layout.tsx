@@ -4,7 +4,9 @@ import '../styles/globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { SloganProvider } from '@/contexts/SloganContext';
+import { SeasonalThemeProvider } from '@/contexts/SeasonalThemeContext';
 import PWAInstaller from '@/components/PWAInstaller';
+import SeasonalThemeSwitcher from '@/components/SeasonalThemeSwitcher';
 
 const inter = Inter({ subsets: ['latin'] });
 const pressStart2P = Press_Start_2P({
@@ -46,12 +48,15 @@ export default function RootLayout({
     <html lang="en" className={pressStart2P.variable}>
       <body className={inter.className}>
         <LanguageProvider>
-          <AuthProvider>
-            <SloganProvider>
-              {children}
-              <PWAInstaller />
-            </SloganProvider>
-          </AuthProvider>
+          <SeasonalThemeProvider>
+            <AuthProvider>
+              <SloganProvider>
+                {children}
+                <PWAInstaller />
+                <SeasonalThemeSwitcher />
+              </SloganProvider>
+            </AuthProvider>
+          </SeasonalThemeProvider>
         </LanguageProvider>
       </body>
     </html>

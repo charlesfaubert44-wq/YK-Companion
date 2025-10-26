@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import AuroraBackground from '@/components/aurora/AuroraBackground';
+import { LuggageIcon, AuroraWave, NorthernStar } from '@/components/icons/NorthernIcons';
 
 interface FAQ {
   question: string;
@@ -35,12 +37,15 @@ export default function VisitingPage() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
+      <AuroraBackground intensity="medium" interactive={true} />
+      <div className="min-h-screen relative z-10 pt-20">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 animate-fade-in">
-            <div className="text-6xl mb-4 animate-bounce-subtle">🧳</div>
+            <div className="mb-4 flex justify-center">
+              <LuggageIcon size={80} interactive={true} />
+            </div>
             <h1 className="text-5xl font-bold text-white mb-4">
               Planning Your Visit
             </h1>
