@@ -2,13 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSlogan } from '@/contexts/SloganContext';
 
 export default function InteractiveAreYou() {
   const { t } = useLanguage();
-  const { currentSlogan } = useSlogan();
   const [isVisible, setIsVisible] = useState(false);
-  const [isSloganHovered, setIsSloganHovered] = useState(false);
   const [floatingStars, setFloatingStars] = useState<Array<{ id: number; x: number; y: number; delay: number }>>([]);
 
   useEffect(() => {
@@ -74,31 +71,6 @@ export default function InteractiveAreYou() {
               }}
             />
           </div>
-
-          {/* Slogan Section */}
-          {currentSlogan && (
-            <div
-              className="mb-8 group cursor-default"
-              onMouseEnter={() => setIsSloganHovered(true)}
-              onMouseLeave={() => setIsSloganHovered(false)}
-            >
-              <p
-                className="text-base md:text-lg font-medium text-center transition-all duration-500 px-4"
-                style={{
-                  background: isSloganHovered
-                    ? 'linear-gradient(135deg, #d1fae5, #6ee7b7, #5eead4)'
-                    : 'linear-gradient(135deg, #a7f3d0, #6ee7b7, #86efac)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  filter: isSloganHovered ? 'brightness(1.1) drop-shadow(0 0 20px rgba(16, 185, 129, 0.5))' : 'brightness(1) drop-shadow(0 0 10px rgba(16, 185, 129, 0.3))',
-                  transform: isSloganHovered ? 'scale(1.02)' : 'scale(1)',
-                }}
-              >
-                {currentSlogan}
-              </p>
-            </div>
-          )}
 
           {/* Decorative Top Elements */}
           <div className="flex justify-center items-center gap-4 mb-6">
