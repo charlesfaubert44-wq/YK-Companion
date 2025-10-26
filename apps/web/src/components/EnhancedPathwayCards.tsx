@@ -8,8 +8,10 @@ export default function EnhancedPathwayCards() {
 
   return (
     <div className="relative">
-      {/* Three Pathway Cards with Glassmorphic Design */}
-      <div className="grid md:grid-cols-3 gap-6">
+      {/* Unified Glassmorphic Container */}
+      <div className="backdrop-blur-xl bg-gradient-to-br from-slate-900/60 via-slate-800/60 to-slate-900/60 border-l border-r border-b border-slate-700/50 rounded-b-3xl px-8 py-12 shadow-2xl -mt-px">
+        {/* Three Pathway Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
         {/* VISITING Card - Explorer with Northern Lights */}
         <Link href="/visiting" className="group">
           <div
@@ -446,6 +448,7 @@ export default function EnhancedPathwayCards() {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/0 group-hover:from-purple-500/10 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
           </div>
         </Link>
+      </div>
       </div>
 
       {/* CSS Animations */}
