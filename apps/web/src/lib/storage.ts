@@ -180,7 +180,7 @@ export function getLocalStorageSize(): number {
   try {
     let total = 0;
     for (const key in localStorage) {
-      if (localStorage.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(localStorage, key)) {
         total += key.length + (localStorage[key]?.length || 0);
       }
     }
@@ -198,7 +198,7 @@ export function getLocalStorageSize(): number {
  * @example
  * updateLocalStorage('user-preferences', { theme: 'light' }); // Only updates theme
  */
-export function updateLocalStorage<T extends Record<string, any>>(
+export function updateLocalStorage<T extends Record<string, unknown>>(
   key: string,
   updates: Partial<T>
 ): boolean {

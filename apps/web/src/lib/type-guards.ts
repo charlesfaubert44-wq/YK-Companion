@@ -165,7 +165,7 @@ export function hasProperty<K extends string>(
  *   callback();
  * }
  */
-export function isFunction(value: unknown): value is Function {
+export function isFunction(value: unknown): value is (...args: unknown[]) => unknown {
   return typeof value === 'function';
 }
 
