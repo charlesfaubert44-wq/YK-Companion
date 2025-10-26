@@ -287,7 +287,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Slogan at bottom on snowy ground */}
         {currentSlogan && (
-          <div className="absolute bottom-8 left-0 right-0 flex justify-center px-4 z-20">
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center px-4 z-20">
             <p
               className="text-sm md:text-base font-medium text-center transition-all duration-500 px-4 max-w-2xl animate-color-shift-slogan"
               style={{
