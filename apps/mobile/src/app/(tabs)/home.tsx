@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { PathwayCard } from '../../components/ui/PathwayCard';
@@ -61,15 +61,41 @@ export default function HomeScreen() {
         <View style={styles.quickActions}>
           <Text style={styles.quickActionsTitle}>Quick Access</Text>
           <View style={styles.quickActionsGrid}>
-            <View style={styles.quickActionCard}>
+            <TouchableOpacity
+              style={styles.quickActionCard}
+              onPress={() => router.push('/(tabs)/aurora')}
+            >
               <Text style={styles.quickActionIcon}>🌌</Text>
               <Text style={styles.quickActionText}>Aurora Forecast</Text>
-            </View>
-            <View style={styles.quickActionCard}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickActionCard}
+              onPress={() => router.push('/(features)/garage-sales')}
+            >
               <Text style={styles.quickActionIcon}>🛒</Text>
               <Text style={styles.quickActionText}>Garage Sales</Text>
-            </View>
+            </TouchableOpacity>
           </View>
+        </View>
+
+        {/* Explore Activities */}
+        <View style={styles.exploreSection}>
+          <Text style={styles.exploreTitleText}>Explore Activities</Text>
+          <TouchableOpacity
+            style={styles.exploreCard}
+            onPress={() => router.push('/(features)/activities')}
+          >
+            <View style={styles.exploreIconContainer}>
+              <Text style={styles.exploreIcon}>🏔️</Text>
+            </View>
+            <View style={styles.exploreContent}>
+              <Text style={styles.exploreCardTitle}>Browse All Activities</Text>
+              <Text style={styles.exploreCardText}>
+                Dog sledding, aurora tours, ice fishing, and more
+              </Text>
+            </View>
+            <Text style={styles.exploreArrow}>→</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -161,5 +187,55 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '600',
     textAlign: 'center',
+  },
+  exploreSection: {
+    marginBottom: 32,
+  },
+  exploreTitleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 16,
+  },
+  exploreCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: '#3B82F6',
+    padding: 16,
+  },
+  exploreIconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+  },
+  exploreIcon: {
+    fontSize: 32,
+  },
+  exploreContent: {
+    flex: 1,
+  },
+  exploreCardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 4,
+  },
+  exploreCardText: {
+    fontSize: 14,
+    color: '#9CA3AF',
+    lineHeight: 20,
+  },
+  exploreArrow: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#3B82F6',
+    marginLeft: 8,
   },
 });
