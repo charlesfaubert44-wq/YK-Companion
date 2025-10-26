@@ -190,38 +190,38 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Interactive Weather Display */}
         <div
-          className="absolute top-8 left-4 md:top-12 md:left-6 bg-slate-900/90 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
+          className="absolute top-4 left-3 md:top-6 md:left-4 bg-slate-900/90 backdrop-blur-md px-2 py-1.5 md:px-3 md:py-2 rounded-xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
           onMouseEnter={() => setWeatherHovered(true)}
           onMouseLeave={() => setWeatherHovered(false)}
           style={{
             transform: weatherHovered ? 'scale(1.05)' : 'scale(1)',
-            boxShadow: weatherHovered ? '0 0 40px rgba(16, 185, 129, 0.5), 0 0 80px rgba(16, 185, 129, 0.2)' : '0 0 20px rgba(16, 185, 129, 0.2)',
+            boxShadow: weatherHovered ? '0 0 30px rgba(16, 185, 129, 0.4), 0 0 60px rgba(16, 185, 129, 0.15)' : '0 0 15px rgba(16, 185, 129, 0.15)',
           }}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Weather Emoji Icon */}
             {weather && (
-              <div className="text-3xl md:text-4xl transition-transform duration-300" style={{ transform: weatherHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}>
+              <div className="text-xl md:text-2xl transition-transform duration-300" style={{ transform: weatherHovered ? 'scale(1.1) rotate(10deg)' : 'scale(1)' }}>
                 {getWeatherEmoji(weather.condition, weather.icon)}
               </div>
             )}
 
             {/* Temperature */}
             <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <div className="text-2xl md:text-4xl font-black text-emerald-300 leading-none">
+              <div className="flex items-center gap-1.5">
+                <div className="text-xl md:text-2xl font-black text-emerald-300 leading-none">
                   {temperature}°C
                 </div>
                 {weather?.isFallback && (
-                  <span className="text-[10px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-300/70 rounded border border-emerald-400/30 font-medium">
+                  <span className="text-[8px] px-1 py-0.5 bg-emerald-500/20 text-emerald-300/70 rounded border border-emerald-400/30 font-medium">
                     AVG
                   </span>
                 )}
               </div>
               {weather && weatherHovered && (
-                <div className="text-xs text-emerald-400/80 mt-1 animate-fadeIn">
+                <div className="text-[10px] text-emerald-400/80 mt-0.5 animate-fadeIn">
                   {weather.isFallback ? (
-                    <>seasonal average</>
+                    <>seasonal avg</>
                   ) : (
                     <>feels {weather.feels_like}°C</>
                   )}
@@ -232,22 +232,22 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
           {/* Extended Weather Info - Shows on Hover */}
           {weather && weatherHovered && (
-            <div className="mt-3 pt-3 border-t border-emerald-400/20 space-y-1.5 animate-fadeIn">
-              <div className="text-xs text-emerald-200/90 capitalize">
+            <div className="mt-2 pt-2 border-t border-emerald-400/20 space-y-1 animate-fadeIn">
+              <div className="text-[10px] text-emerald-200/90 capitalize">
                 {weather.description}
               </div>
-              <div className="flex items-center gap-4 text-xs text-emerald-300/80">
-                <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-3 text-[10px] text-emerald-300/80">
+                <div className="flex items-center gap-1">
                   <span>💧</span>
                   <span>{weather.humidity}%</span>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   <span>💨</span>
                   <span>{weather.wind_speed} km/h</span>
                 </div>
               </div>
               {temperature <= -30 && (
-                <div className="flex items-center gap-1.5 text-xs text-cyan-300 font-semibold pt-1">
+                <div className="flex items-center gap-1 text-[10px] text-cyan-300 font-semibold pt-0.5">
                   <span>⚠️</span>
                   <span>Extreme Cold</span>
                 </div>
@@ -258,7 +258,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
         {/* Logo */}
         <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-8 md:px-40">
-          <div className="text-center w-full relative">
+          <div className="text-center w-full">
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight transition-all duration-500 animate-glow flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
               <span
                 className="inline-block transition-all duration-700 animate-color-shift-1"
@@ -277,11 +277,6 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
                 BUDDY
               </span>
             </h1>
-
-            {/* BETA badge - absolutely positioned to not affect centering */}
-            <span className="absolute -top-6 right-1/2 translate-x-32 sm:translate-x-40 md:translate-x-52 lg:translate-x-64 px-2 py-1 bg-yellow-500 text-black text-xs font-bold rounded-md animate-pulse-subtle">
-              BETA
-            </span>
           </div>
         </div>
 
