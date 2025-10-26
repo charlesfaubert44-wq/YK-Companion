@@ -76,27 +76,46 @@ export default function EnhancedPathwayCards() {
                 <p className="text-xs text-gray-300/90">Explore the North</p>
               </div>
 
-              {/* Camera Icon - Bottom */}
+              {/* Plane Icon - Bottom */}
               <div className="flex justify-center mb-2">
-                <svg width="80" height="60" viewBox="0 0 100 75" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] transform transition-all duration-700 group-hover:scale-110">
-                  {/* Camera Body */}
-                  <rect x="20" y="25" width="60" height="35" rx="4" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2.5" />
-                  <rect x="25" y="30" width="50" height="25" rx="3" fill="rgba(6, 78, 59, 0.4)" />
+                <svg width="90" height="70" viewBox="0 0 120 80" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] transform transition-all duration-700 group-hover:scale-110">
+                  {/* Plane Body */}
+                  <ellipse cx="60" cy="45" rx="25" ry="8" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2" />
 
-                  {/* Lens */}
-                  <circle cx="50" cy="42" r="12" fill="rgba(6, 182, 212, 0.2)" stroke="#06b6d4" strokeWidth="2.5" />
-                  <circle cx="50" cy="42" r="8" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2" />
-                  <circle cx="50" cy="42" r="4" fill="#10b981" opacity="0.6">
-                    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite" />
+                  {/* Fuselage */}
+                  <path d="M35 45 L85 45 L90 48 L85 48 L35 48 Z" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="1.5" />
+
+                  {/* Cockpit */}
+                  <ellipse cx="82" cy="46" rx="8" ry="6" fill="rgba(59, 130, 246, 0.3)" stroke="#3b82f6" strokeWidth="1.5" />
+                  <ellipse cx="82" cy="46" rx="5" ry="4" fill="rgba(96, 165, 250, 0.4)">
+                    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite" />
+                  </ellipse>
+
+                  {/* Wings */}
+                  <path d="M50 45 L20 30 L15 32 L48 47 Z" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2" />
+                  <path d="M50 47 L20 62 L15 60 L48 47 Z" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2" />
+
+                  {/* Tail Wing */}
+                  <path d="M35 40 L30 25 L28 26 L35 42 Z" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="1.5" />
+
+                  {/* Engine Glow */}
+                  <circle cx="32" cy="46" r="3" fill="#fbbf24" opacity="0.8">
+                    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" />
+                    <animate attributeName="r" values="3;4;3" dur="1.5s" repeatCount="indefinite" />
                   </circle>
 
-                  {/* Flash */}
-                  <rect x="65" y="28" width="6" height="5" rx="1.5" fill="#fbbf24" opacity="0.7">
-                    <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite" />
-                  </rect>
-
-                  {/* Viewfinder */}
-                  <rect x="62" y="22" width="8" height="3" rx="1" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="1.5" />
+                  {/* Motion Lines */}
+                  <g opacity="0.4">
+                    <line x1="10" y1="40" x2="25" y2="42" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round">
+                      <animate attributeName="x1" values="10;5;10" dur="2s" repeatCount="indefinite" />
+                    </line>
+                    <line x1="8" y1="46" x2="23" y2="46" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round">
+                      <animate attributeName="x1" values="8;3;8" dur="2.2s" repeatCount="indefinite" />
+                    </line>
+                    <line x1="10" y1="52" x2="25" y2="50" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round">
+                      <animate attributeName="x1" values="10;5;10" dur="1.8s" repeatCount="indefinite" />
+                    </line>
+                  </g>
                 </svg>
               </div>
             </div>
