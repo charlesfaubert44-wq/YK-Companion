@@ -259,47 +259,46 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         {/* Logo */}
         <div className="absolute inset-0 flex items-center justify-center px-4 md:px-40">
           <div className="text-center w-full">
-            <div className="flex flex-col items-center justify-center gap-3">
-              {/* Title with BETA badge */}
-              <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
-                <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight transition-all duration-500 animate-glow flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-                  <span
-                    className="inline-block transition-all duration-700 animate-color-shift-1"
-                    style={{
-                      textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
-                      transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                    }}>
-                    YK
-                  </span>
-                  <span
-                    className="inline-block transition-all duration-700 animate-color-shift-2"
-                    style={{
-                      textShadow: '0 0 40px rgba(16, 185, 129, 0.7), 4px 4px 0px rgba(15, 23, 42, 0.8)',
-                      transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                    }}>
-                    BUDDY
-                  </span>
-                </h1>
-                <span className="px-2 py-1 bg-yellow-500 text-black text-xs font-bold rounded-md animate-pulse-subtle">
-                  BETA
-                </span>
-              </div>
-
-              {/* Slogan below logo */}
-              {currentSlogan && (
-                <p
-                  className="text-sm md:text-base font-medium text-center transition-all duration-500 px-4 max-w-2xl animate-color-shift-slogan"
+            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight transition-all duration-500 animate-glow flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-1"
                   style={{
-                    textShadow: '0 0 20px rgba(16, 185, 129, 0.4), 2px 2px 0px rgba(15, 23, 42, 0.6)',
+                    textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
                     transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                  }}
-                >
-                  {currentSlogan}
-                </p>
-              )}
+                  }}>
+                  YK
+                </span>
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-2"
+                  style={{
+                    textShadow: '0 0 40px rgba(16, 185, 129, 0.7), 4px 4px 0px rgba(15, 23, 42, 0.8)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  BUDDY
+                </span>
+              </h1>
+              <span className="px-2 py-1 bg-yellow-500 text-black text-xs font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
             </div>
           </div>
         </div>
+
+        {/* Slogan at bottom on snowy ground */}
+        {currentSlogan && (
+          <div className="absolute bottom-8 left-0 right-0 flex justify-center px-4 z-20">
+            <p
+              className="text-sm md:text-base font-medium text-center transition-all duration-500 px-4 max-w-2xl animate-color-shift-slogan"
+              style={{
+                textShadow: '0 0 20px rgba(16, 185, 129, 0.4), 2px 2px 0px rgba(15, 23, 42, 0.6)',
+                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+              }}
+            >
+              {currentSlogan}
+            </p>
+          </div>
+        )}
 
         <style jsx>{`
           @keyframes fadeIn {
