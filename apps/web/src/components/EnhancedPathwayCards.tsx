@@ -76,46 +76,58 @@ export default function EnhancedPathwayCards() {
                 <p className="text-xs text-gray-300/90">Explore the North</p>
               </div>
 
-              {/* Plane Icon - Bottom */}
+              {/* Bush Plane on Floats - Bottom */}
               <div className="flex justify-center mb-2">
-                <svg width="90" height="70" viewBox="0 0 120 80" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] transform transition-all duration-700 group-hover:scale-110">
-                  {/* Plane Body */}
-                  <ellipse cx="60" cy="45" rx="25" ry="8" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2" />
+                <svg width="100" height="70" viewBox="0 0 140 90" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] transform transition-all duration-700 group-hover:scale-110">
+                  {/* Pontoon Floats */}
+                  <ellipse cx="50" cy="70" rx="35" ry="6" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="2" />
+                  <ellipse cx="90" cy="70" rx="35" ry="6" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="2" />
 
-                  {/* Fuselage */}
-                  <path d="M35 45 L85 45 L90 48 L85 48 L35 48 Z" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="1.5" />
+                  {/* Float Struts */}
+                  <line x1="50" y1="64" x2="55" y2="50" stroke="#10b981" strokeWidth="2" />
+                  <line x1="90" y1="64" x2="85" y2="50" stroke="#10b981" strokeWidth="2" />
 
-                  {/* Cockpit */}
-                  <ellipse cx="82" cy="46" rx="8" ry="6" fill="rgba(59, 130, 246, 0.3)" stroke="#3b82f6" strokeWidth="1.5" />
-                  <ellipse cx="82" cy="46" rx="5" ry="4" fill="rgba(96, 165, 250, 0.4)">
-                    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite" />
-                  </ellipse>
+                  {/* Fuselage Body */}
+                  <ellipse cx="70" cy="45" rx="38" ry="9" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2.5" />
+                  <path d="M32 45 L108 45 L115 48 L108 48 L32 48 Z" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2" />
 
-                  {/* Wings */}
-                  <path d="M50 45 L20 30 L15 32 L48 47 Z" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2" />
-                  <path d="M50 47 L20 62 L15 60 L48 47 Z" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2" />
+                  {/* Cockpit Windows */}
+                  <rect x="75" y="39" width="12" height="8" rx="2" fill="rgba(59, 130, 246, 0.4)" stroke="#3b82f6" strokeWidth="1.5" />
+                  <rect x="88" y="39" width="12" height="8" rx="2" fill="rgba(59, 130, 246, 0.4)" stroke="#3b82f6" strokeWidth="1.5" />
+                  <rect x="101" y="39" width="10" height="8" rx="2" fill="rgba(96, 165, 250, 0.5)" stroke="#3b82f6" strokeWidth="1.5">
+                    <animate attributeName="fill" values="rgba(96, 165, 250, 0.5);rgba(96, 165, 250, 0.7);rgba(96, 165, 250, 0.5)" dur="3s" repeatCount="indefinite" />
+                  </rect>
 
-                  {/* Tail Wing */}
-                  <path d="M35 40 L30 25 L28 26 L35 42 Z" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="1.5" />
+                  {/* High Wing */}
+                  <ellipse cx="70" cy="32" rx="48" ry="5" fill="rgba(16, 185, 129, 0.5)" stroke="#10b981" strokeWidth="2.5" />
+                  <rect x="22" y="30" width="96" height="4" rx="2" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2" />
 
-                  {/* Engine Glow */}
-                  <circle cx="32" cy="46" r="3" fill="#fbbf24" opacity="0.8">
-                    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" />
-                    <animate attributeName="r" values="3;4;3" dur="1.5s" repeatCount="indefinite" />
-                  </circle>
+                  {/* Wing Struts */}
+                  <line x1="50" y1="34" x2="50" y2="43" stroke="#10b981" strokeWidth="2" opacity="0.7" />
+                  <line x1="90" y1="34" x2="90" y2="43" stroke="#10b981" strokeWidth="2" opacity="0.7" />
 
-                  {/* Motion Lines */}
-                  <g opacity="0.4">
-                    <line x1="10" y1="40" x2="25" y2="42" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round">
-                      <animate attributeName="x1" values="10;5;10" dur="2s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="8" y1="46" x2="23" y2="46" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round">
-                      <animate attributeName="x1" values="8;3;8" dur="2.2s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="10" y1="52" x2="25" y2="50" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round">
-                      <animate attributeName="x1" values="10;5;10" dur="1.8s" repeatCount="indefinite" />
-                    </line>
+                  {/* Tail */}
+                  <path d="M32 45 L20 38 L22 35 L32 42 Z" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="2" />
+                  <path d="M32 40 L25 28 L27 27 L32 38 Z" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2" />
+
+                  {/* Propeller (Spinning) */}
+                  <g transform-origin="118 46">
+                    <ellipse cx="118" cy="46" rx="2" ry="12" fill="rgba(203, 213, 225, 0.6)" opacity="0.5">
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        values="0 118 46;360 118 46"
+                        dur="0.3s"
+                        repeatCount="indefinite"
+                      />
+                    </ellipse>
                   </g>
+
+                  {/* Propeller Hub */}
+                  <circle cx="118" cy="46" r="3" fill="rgba(71, 85, 105, 0.8)" stroke="#10b981" strokeWidth="1.5" />
+
+                  {/* Engine Cowling */}
+                  <ellipse cx="113" cy="46" rx="6" ry="7" fill="rgba(71, 85, 105, 0.6)" stroke="#10b981" strokeWidth="2" />
                 </svg>
               </div>
             </div>
