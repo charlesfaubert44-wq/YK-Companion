@@ -288,15 +288,10 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
               {/* Slogan below logo */}
               {currentSlogan && (
                 <p
-                  className="text-sm md:text-base font-medium text-center transition-all duration-500 px-4 max-w-2xl"
+                  className="text-sm md:text-base font-medium text-center transition-all duration-500 px-4 max-w-2xl animate-color-shift-slogan"
                   style={{
-                    background: isHovered
-                      ? 'linear-gradient(135deg, #d1fae5, #6ee7b7, #5eead4)'
-                      : 'linear-gradient(135deg, #a7f3d0, #6ee7b7, #86efac)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    filter: isHovered ? 'brightness(1.1) drop-shadow(0 0 15px rgba(16, 185, 129, 0.5))' : 'brightness(1) drop-shadow(0 0 8px rgba(16, 185, 129, 0.3))',
+                    textShadow: '0 0 20px rgba(16, 185, 129, 0.4), 2px 2px 0px rgba(15, 23, 42, 0.6)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
                   }}
                 >
                   {currentSlogan}
@@ -369,6 +364,20 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
           }
           .animate-color-shift-2 {
             animation: color-shift-2 8s ease-in-out infinite 0.5s;
+          }
+          @keyframes color-shift-slogan {
+            0%, 100% {
+              color: #a7f3d0;
+            }
+            33% {
+              color: #86efac;
+            }
+            66% {
+              color: #6ee7b7;
+            }
+          }
+          .animate-color-shift-slogan {
+            animation: color-shift-slogan 8s ease-in-out infinite 1s;
           }
         `}</style>
 
