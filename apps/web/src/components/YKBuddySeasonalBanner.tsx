@@ -35,6 +35,7 @@ export default function YKBuddySeasonalBanner() {
 
         if (!apiKey) {
           console.warn('OpenWeatherMap API key not configured - using seasonal average temperature');
+          console.log('Using fallback weather data for month:', new Date().getMonth() + 1);
           // Fallback to seasonal average temperature based on month
           const month = new Date().getMonth() + 1;
           let fallbackTemp = -25;
@@ -62,11 +63,21 @@ export default function YKBuddySeasonalBanner() {
             condition = 'Clear';
             icon = '01d';
             description = 'summer warmth';
-          } else {
-            fallbackTemp = -2; // Fall
+          } else if (month === 9) {
+            fallbackTemp = 2; // Early fall
             condition = 'Clouds';
             icon = '04d';
-            description = 'autumn chill';
+            description = 'early autumn';
+          } else if (month === 10) {
+            fallbackTemp = -8; // Late fall
+            condition = 'Clouds';
+            icon = '04d';
+            description = 'late autumn chill';
+          } else {
+            fallbackTemp = -15; // November
+            condition = 'Snow';
+            icon = '13d';
+            description = 'early winter';
           }
 
           setWeather({
@@ -98,6 +109,12 @@ export default function YKBuddySeasonalBanner() {
 
         const data = await response.json();
 
+        console.log('Weather API response:', {
+          temp: data.main.temp,
+          location: data.name,
+          condition: data.weather[0].main
+        });
+
         setWeather({
           temp: Math.round(data.main.temp),
           feels_like: Math.round(data.main.feels_like),
@@ -109,6 +126,7 @@ export default function YKBuddySeasonalBanner() {
         });
       } catch (err) {
         console.error('Error fetching weather:', err);
+        console.log('Using fallback weather data for month:', new Date().getMonth() + 1);
         // Fallback to seasonal average temperature
         const month = new Date().getMonth() + 1;
         let fallbackTemp = -25;
@@ -136,11 +154,21 @@ export default function YKBuddySeasonalBanner() {
           condition = 'Clear';
           icon = '01d';
           description = 'summer warmth';
-        } else {
-          fallbackTemp = -2; // Fall
+        } else if (month === 9) {
+          fallbackTemp = 2; // Early fall
           condition = 'Clouds';
           icon = '04d';
-          description = 'autumn chill';
+          description = 'early autumn';
+        } else if (month === 10) {
+          fallbackTemp = -8; // Late fall
+          condition = 'Clouds';
+          icon = '04d';
+          description = 'late autumn chill';
+        } else {
+          fallbackTemp = -15; // November
+          condition = 'Snow';
+          icon = '13d';
+          description = 'early winter';
         }
 
         setWeather({
