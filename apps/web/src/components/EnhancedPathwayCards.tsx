@@ -1,17 +1,96 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function EnhancedPathwayCards() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const cards = ['visiting', 'living', 'moving'];
+  const totalSlides = cards.length;
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const nextSlide = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    setTimeout(() => setIsTransitioning(false), 500);
+  }, [isTransitioning, totalSlides]);
+
+  const prevSlide = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setTimeout(() => setIsTransitioning(false), 500);
+  }, [isTransitioning, totalSlides]);
+
+  const goToSlide = (index: number) => {
+    if (isTransitioning || index === currentSlide) return;
+    setIsTransitioning(true);
+    setCurrentSlide(index);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  // Touch handlers for mobile swipe
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nextSlide, prevSlide]);
 
   return (
     <div className="relative">
-      {/* Three Pathway Cards with Glassmorphic Design */}
-      <div className="grid md:grid-cols-3 gap-6">
-        {/* VISITING Card - Explorer with Northern Lights */}
-        <Link href="/visiting" className="group">
+      {/* Carousel Container */}
+      <div
+        className="relative overflow-hidden"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* Cards Wrapper */}
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        >
+          {/* Card 1: VISITING */}
+          <div className="w-full flex-shrink-0 px-4">
+            <Link href="/visiting" className="group">
           <div
             className="relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-emerald-500/30 transition-all duration-500 hover:border-emerald-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
             onMouseEnter={() => setHoveredCard('visiting')}
@@ -102,10 +181,12 @@ export default function EnhancedPathwayCards() {
             {/* Glow Effect on Hover */}
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/10 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
           </div>
-        </Link>
+            </Link>
+          </div>
 
-        {/* LIVING Card - House with Smoke, Snow & Car */}
-        <Link href="/living" className="group">
+          {/* Card 2: LIVING */}
+          <div className="w-full flex-shrink-0 px-4">
+            <Link href="/living" className="group">
           <div
             className="relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-blue-500/30 transition-all duration-500 hover:border-blue-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(59,130,246,0.4)]"
             onMouseEnter={() => setHoveredCard('living')}
@@ -228,10 +309,12 @@ export default function EnhancedPathwayCards() {
             {/* Glow Effect on Hover */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-500/0 group-hover:from-blue-500/10 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
           </div>
-        </Link>
+            </Link>
+          </div>
 
-        {/* MOVING Card - Journey with Compass & Northern Path */}
-        <Link href="/moving" className="group">
+          {/* Card 3: MOVING */}
+          <div className="w-full flex-shrink-0 px-4">
+            <Link href="/moving" className="group">
           <div
             className="relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-purple-500/30 transition-all duration-500 hover:border-purple-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(168,85,247,0.4)]"
             onMouseEnter={() => setHoveredCard('moving')}
@@ -385,7 +468,61 @@ export default function EnhancedPathwayCards() {
             {/* Glow Effect on Hover */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/0 group-hover:from-purple-500/10 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
           </div>
-        </Link>
+            </Link>
+          </div>
+        </div>
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={prevSlide}
+          disabled={isTransitioning}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20 hover:border-white/40 shadow-lg hover:shadow-xl"
+          aria-label="Previous slide"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <button
+          onClick={nextSlide}
+          disabled={isTransitioning}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20 hover:border-white/40 shadow-lg hover:shadow-xl"
+          aria-label="Next slide"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Dot Indicators */}
+      <div className="flex justify-center gap-3 mt-6">
+        {cards.map((card, index) => (
+          <button
+            key={card}
+            onClick={() => goToSlide(index)}
+            disabled={isTransitioning}
+            className={`transition-all duration-300 rounded-full ${
+              currentSlide === index
+                ? 'w-12 h-3 bg-gradient-to-r from-emerald-400 to-cyan-400 shadow-lg shadow-emerald-500/50'
+                : 'w-3 h-3 bg-white/30 hover:bg-white/50 hover:scale-125'
+            } disabled:cursor-not-allowed`}
+            aria-label={`Go to ${card} slide`}
+          />
+        ))}
       </div>
 
       {/* CSS Animations */}
