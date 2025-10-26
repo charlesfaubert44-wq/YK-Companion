@@ -76,52 +76,18 @@ export default function EnhancedPathwayCards() {
                 <p className="text-xs text-gray-300/90">Explore the North</p>
               </div>
 
-              {/* Bush Plane on Floats - Bird's Eye View */}
+              {/* Simple Plane Outline */}
               <div className="flex justify-center mb-2">
-                <svg width="100" height="80" viewBox="0 0 120 100" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] transform transition-all duration-700 group-hover:scale-110">
-                  {/* Left Pontoon Float */}
-                  <ellipse cx="35" cy="60" rx="8" ry="30" fill="rgba(6, 182, 212, 0.3)" stroke="#06b6d4" strokeWidth="2" />
-
-                  {/* Right Pontoon Float */}
-                  <ellipse cx="85" cy="60" rx="8" ry="30" fill="rgba(6, 182, 212, 0.3)" stroke="#06b6d4" strokeWidth="2" />
-
-                  {/* Left Wing */}
-                  <ellipse cx="20" cy="60" rx="15" ry="35" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2.5" />
-
-                  {/* Right Wing */}
-                  <ellipse cx="100" cy="60" rx="15" ry="35" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="2.5" />
-
-                  {/* Main Wing Center */}
-                  <rect x="25" y="50" width="70" height="20" rx="3" fill="rgba(16, 185, 129, 0.5)" stroke="#10b981" strokeWidth="2.5" />
-
-                  {/* Fuselage */}
-                  <ellipse cx="60" cy="60" rx="12" ry="40" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2.5" />
-
-                  {/* Cockpit */}
-                  <ellipse cx="60" cy="35" rx="9" ry="12" fill="rgba(59, 130, 246, 0.4)" stroke="#3b82f6" strokeWidth="2" />
-                  <ellipse cx="60" cy="35" rx="6" ry="8" fill="rgba(96, 165, 250, 0.5)">
-                    <animate attributeName="fill" values="rgba(96, 165, 250, 0.4);rgba(96, 165, 250, 0.7);rgba(96, 165, 250, 0.4)" dur="3s" repeatCount="indefinite" />
-                  </ellipse>
-
-                  {/* Tail Section */}
-                  <path d="M52 85 L60 95 L68 85 Z" fill="rgba(6, 182, 212, 0.4)" stroke="#06b6d4" strokeWidth="2" />
-
-                  {/* Vertical Stabilizer */}
-                  <rect x="57" y="88" width="6" height="8" rx="1" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="1.5" />
-
-                  {/* Propeller (Spinning Blur) */}
-                  <circle cx="60" cy="20" r="12" fill="rgba(203, 213, 225, 0.2)" stroke="rgba(203, 213, 225, 0.4)" strokeWidth="1" opacity="0.6">
-                    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.2s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx="60" cy="20" r="8" fill="rgba(203, 213, 225, 0.3)" opacity="0.5">
-                    <animate attributeName="r" values="8;10;8" dur="0.2s" repeatCount="indefinite" />
-                  </circle>
-
-                  {/* Engine/Nose */}
-                  <ellipse cx="60" cy="22" rx="7" ry="8" fill="rgba(71, 85, 105, 0.6)" stroke="#10b981" strokeWidth="2" />
-
-                  {/* Propeller Hub */}
-                  <circle cx="60" cy="20" r="3" fill="rgba(71, 85, 105, 0.8)" stroke="#475569" strokeWidth="1.5" />
+                <svg width="90" height="70" viewBox="0 0 100 80" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] transform transition-all duration-700 group-hover:scale-110">
+                  {/* Single line plane outline from top */}
+                  <path
+                    d="M 50 10 L 50 35 L 10 35 L 10 45 L 50 45 L 50 70 L 40 70 L 40 75 L 50 75 L 60 75 L 60 70 L 50 70 L 50 45 L 90 45 L 90 35 L 50 35 L 50 10 Z"
+                    fill="none"
+                    stroke="#10b981"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
             </div>
