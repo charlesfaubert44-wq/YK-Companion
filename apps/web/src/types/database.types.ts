@@ -8,6 +8,7 @@ export interface Profile {
   full_name: string | null;
   user_type: UserType | null;
   avatar_url: string | null;
+  address: string | null;
   is_admin: boolean;
   created_at: string;
   updated_at: string;
