@@ -25,7 +25,7 @@ export default function InteractiveAreYou() {
   return (
     <div className="relative mb-0">
       {/* Glassmorphic Container */}
-      <div className="relative backdrop-blur-xl bg-gradient-to-br from-slate-900/60 via-slate-800/60 to-slate-900/60 border border-slate-700/50 rounded-t-3xl px-8 py-12 shadow-2xl">
+      <div className="relative backdrop-blur-xl bg-gradient-to-br from-slate-900/60 via-slate-800/60 to-slate-900/60 border border-slate-700/50 rounded-t-3xl px-8 py-6 shadow-2xl">
         {/* Floating Stars Background */}
         {floatingStars.slice(0, 8).map((star) => (
           <div
@@ -73,7 +73,7 @@ export default function InteractiveAreYou() {
           </div>
 
           {/* Decorative Top Elements */}
-          <div className="flex justify-center items-center gap-4 mb-6">
+          <div className="flex justify-center items-center gap-4 mb-3">
             <div
               className="h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-60"
               style={{
@@ -100,7 +100,7 @@ export default function InteractiveAreYou() {
           </div>
 
           {/* Main Question */}
-          <h2 className="text-3xl md:text-4xl font-black text-center mb-4">
+          <h2 className="text-2xl md:text-3xl font-black text-center mb-2">
             <span
               className="inline-block bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent animate-gradient"
               style={{
@@ -112,7 +112,7 @@ export default function InteractiveAreYou() {
           </h2>
 
           {/* Subtitle */}
-          <p className="text-center text-gray-300 text-sm md:text-base mb-8 max-w-md mx-auto">
+          <p className="text-center text-gray-300 text-xs md:text-sm mb-3 max-w-md mx-auto">
             Choose your path and discover Yellowknife your way
           </p>
 

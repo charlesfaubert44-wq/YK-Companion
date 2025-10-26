@@ -146,20 +146,26 @@ export default function ProfileScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>About</Text>
 
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => router.push('/(features)/about')}
+        >
           <Text style={styles.settingEmoji}>ℹ️</Text>
           <View style={styles.settingText}>
-            <Text style={styles.settingLabel}>About TRUE NORTH TRIPS</Text>
-            <Text style={styles.settingDescription}>Version 1.0.0</Text>
+            <Text style={styles.settingLabel}>About YK Buddy</Text>
+            <Text style={styles.settingDescription}>Our story and mission</Text>
           </View>
           <Text style={styles.settingArrow}>→</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => router.push('/(features)/contact')}
+        >
           <Text style={styles.settingEmoji}>📧</Text>
           <View style={styles.settingText}>
-            <Text style={styles.settingLabel}>Contact Support</Text>
-            <Text style={styles.settingDescription}>Get help</Text>
+            <Text style={styles.settingLabel}>Contact Us</Text>
+            <Text style={styles.settingDescription}>Get in touch with our team</Text>
           </View>
           <Text style={styles.settingArrow}>→</Text>
         </TouchableOpacity>
