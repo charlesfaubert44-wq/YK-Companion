@@ -5,12 +5,17 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AuthModal from './auth/AuthModal';
+import Modal from './Modal';
+import AboutContent from './AboutContent';
+import ContactContent from './ContactContent';
 
 export default function Header() {
   const { user, profile, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -220,8 +225,52 @@ export default function Header() {
             showMenu ? 'translate-y-0' : '-translate-y-full'
           }`}>
             <div className="bg-dark-900/90 backdrop-blur-lg rounded-3xl border border-aurora-blue/30 shadow-2xl shadow-aurora-blue/20 overflow-hidden">
-              {/* Navigation Items */}
+              {/* Main Navigation */}
               <div className="p-4 space-y-2">
+                <Link
+                  href="/"
+                  className={`group flex items-center space-x-4 px-5 py-4 rounded-2xl transition-all duration-300 ${
+                    pathname === '/'
+                      ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white shadow-glow'
+                      : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white'
+                  }`}
+                  onClick={() => setShowMenu(false)}
+                >
+                  <span className="text-2xl transition-transform group-hover:scale-125 duration-300">🏠</span>
+                  <span className="font-semibold text-lg">Home</span>
+                  {pathname === '/' && (
+                    <div className="ml-auto w-2 h-2 rounded-full bg-gradient-to-r from-aurora-green to-aurora-blue shadow-glow"></div>
+                  )}
+                </Link>
+
+                <button
+                  onClick={() => {
+                    setShowAboutModal(true);
+                    setShowMenu(false);
+                  }}
+                  className="group w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white transition-all duration-300"
+                >
+                  <span className="text-2xl transition-transform group-hover:scale-125 duration-300">ℹ️</span>
+                  <span className="font-semibold text-lg">About</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setShowContactModal(true);
+                    setShowMenu(false);
+                  }}
+                  className="group w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white transition-all duration-300"
+                >
+                  <span className="text-2xl transition-transform group-hover:scale-125 duration-300">📧</span>
+                  <span className="font-semibold text-lg">Contact</span>
+                </button>
+              </div>
+
+              {/* Pathways Section */}
+              <div className="border-t border-aurora-blue/20 p-4 space-y-2">
+                <div className="px-5 py-2">
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Pathways</span>
+                </div>
                 {navItems.map((item, index) => (
                   <Link
                     key={item.href}
@@ -231,6 +280,7 @@ export default function Header() {
                         ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white shadow-glow'
                         : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white'
                     }`}
+                    onClick={() => setShowMenu(false)}
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <span className="text-2xl transition-transform group-hover:scale-125 group-hover:rotate-12 duration-300">
@@ -295,6 +345,24 @@ export default function Header() {
 
       {/* Auth Modal */}
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+
+      {/* About Modal */}
+      <Modal
+        isOpen={showAboutModal}
+        onClose={() => setShowAboutModal(false)}
+        title="About YK Buddy"
+      >
+        <AboutContent />
+      </Modal>
+
+      {/* Contact Modal */}
+      <Modal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        title="Contact Us"
+      >
+        <ContactContent />
+      </Modal>
     </>
   );
 }
