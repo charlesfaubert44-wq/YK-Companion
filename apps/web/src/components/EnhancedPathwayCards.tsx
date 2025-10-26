@@ -13,7 +13,7 @@ export default function EnhancedPathwayCards() {
         {/* VISITING Card - Explorer with Northern Lights */}
         <Link href="/visiting" className="group">
           <div
-            className="relative h-[420px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-emerald-500/30 transition-all duration-500 hover:border-emerald-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
+            className="relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-emerald-500/30 transition-all duration-500 hover:border-emerald-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
             onMouseEnter={() => setHoveredCard('visiting')}
             onMouseLeave={() => setHoveredCard(null)}
           >
@@ -22,7 +22,7 @@ export default function EnhancedPathwayCards() {
 
             {/* Falling Snow Particles */}
             <div className="absolute inset-0 overflow-hidden">
-              {[...Array(30)].map((_, i) => (
+              {[...Array(20)].map((_, i) => (
                 <div
                   key={i}
                   className="absolute rounded-full bg-white/60"
@@ -39,43 +39,19 @@ export default function EnhancedPathwayCards() {
               ))}
             </div>
 
-            {/* Camera/Binoculars Icon */}
-            <div className="absolute top-12 left-1/2 -translate-x-1/2 transform transition-all duration-700 group-hover:scale-110 group-hover:-translate-y-2">
-              <svg width="100" height="100" viewBox="0 0 100 100" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)]">
-                {/* Camera Body */}
-                <rect x="20" y="35" width="60" height="40" rx="6" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2.5" />
-                <rect x="25" y="40" width="50" height="30" rx="4" fill="rgba(6, 78, 59, 0.4)" />
-
-                {/* Lens */}
-                <circle cx="50" cy="55" r="15" fill="rgba(6, 182, 212, 0.2)" stroke="#06b6d4" strokeWidth="2.5" />
-                <circle cx="50" cy="55" r="10" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2" />
-                <circle cx="50" cy="55" r="5" fill="#10b981" opacity="0.6">
-                  <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite" />
-                </circle>
-
-                {/* Flash */}
-                <rect x="65" y="38" width="8" height="6" rx="2" fill="#fbbf24" opacity="0.7">
-                  <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite" />
-                </rect>
-
-                {/* Viewfinder */}
-                <rect x="62" y="30" width="10" height="4" rx="1" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="1.5" />
-              </svg>
-            </div>
-
-            {/* Northern Lights Waves */}
-            <div className="absolute top-0 left-0 right-0 h-32 opacity-40 group-hover:opacity-60 transition-opacity duration-700">
-              <svg width="100%" height="100%" viewBox="0 0 400 120" preserveAspectRatio="none">
+            {/* Northern Lights Waves - Top */}
+            <div className="absolute top-0 left-0 right-0 h-24 opacity-40 group-hover:opacity-60 transition-opacity duration-700">
+              <svg width="100%" height="100%" viewBox="0 0 400 100" preserveAspectRatio="none">
                 <path
-                  d="M0,60 Q100,20 200,60 T400,60 L400,0 L0,0 Z"
+                  d="M0,50 Q100,20 200,50 T400,50 L400,0 L0,0 Z"
                   fill="url(#visitingGradient)"
                   opacity="0.6"
                 >
                   <animate
                     attributeName="d"
-                    values="M0,60 Q100,20 200,60 T400,60 L400,0 L0,0 Z;
-                            M0,60 Q100,80 200,60 T400,60 L400,0 L0,0 Z;
-                            M0,60 Q100,20 200,60 T400,60 L400,0 L0,0 Z"
+                    values="M0,50 Q100,20 200,50 T400,50 L400,0 L0,0 Z;
+                            M0,50 Q100,70 200,50 T400,50 L400,0 L0,0 Z;
+                            M0,50 Q100,20 200,50 T400,50 L400,0 L0,0 Z"
                     dur="6s"
                     repeatCount="indefinite"
                   />
@@ -90,12 +66,37 @@ export default function EnhancedPathwayCards() {
               </svg>
             </div>
 
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent">
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+            {/* Content Container - Bottom Aligned */}
+            <div className="absolute inset-0 flex flex-col justify-end pb-6 px-6">
+              {/* Title */}
+              <h3 className="text-3xl font-bold text-white mb-3 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300 relative z-10">
                 VISITING
               </h3>
-              <p className="text-sm text-gray-300/90">Explore the North</p>
+              <p className="text-xs text-gray-300/90 mb-4 relative z-10">Explore the North</p>
+
+              {/* Camera Icon - Bottom */}
+              <div className="flex justify-center mb-2">
+                <svg width="80" height="60" viewBox="0 0 100 75" className="drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] transform transition-all duration-700 group-hover:scale-110">
+                  {/* Camera Body */}
+                  <rect x="20" y="25" width="60" height="35" rx="4" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2.5" />
+                  <rect x="25" y="30" width="50" height="25" rx="3" fill="rgba(6, 78, 59, 0.4)" />
+
+                  {/* Lens */}
+                  <circle cx="50" cy="42" r="12" fill="rgba(6, 182, 212, 0.2)" stroke="#06b6d4" strokeWidth="2.5" />
+                  <circle cx="50" cy="42" r="8" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2" />
+                  <circle cx="50" cy="42" r="4" fill="#10b981" opacity="0.6">
+                    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite" />
+                  </circle>
+
+                  {/* Flash */}
+                  <rect x="65" y="28" width="6" height="5" rx="1.5" fill="#fbbf24" opacity="0.7">
+                    <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite" />
+                  </rect>
+
+                  {/* Viewfinder */}
+                  <rect x="62" y="22" width="8" height="3" rx="1" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" strokeWidth="1.5" />
+                </svg>
+              </div>
             </div>
 
             {/* Glow Effect on Hover */}
@@ -106,7 +107,7 @@ export default function EnhancedPathwayCards() {
         {/* LIVING Card - House with Smoke, Snow & Car */}
         <Link href="/living" className="group">
           <div
-            className="relative h-[420px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-blue-500/30 transition-all duration-500 hover:border-blue-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(59,130,246,0.4)]"
+            className="relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-blue-500/30 transition-all duration-500 hover:border-blue-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(59,130,246,0.4)]"
             onMouseEnter={() => setHoveredCard('living')}
             onMouseLeave={() => setHoveredCard(null)}
           >
@@ -115,7 +116,7 @@ export default function EnhancedPathwayCards() {
 
             {/* Falling Snow */}
             <div className="absolute inset-0 overflow-hidden">
-              {[...Array(40)].map((_, i) => (
+              {[...Array(25)].map((_, i) => (
                 <div
                   key={i}
                   className="absolute rounded-full bg-white"
@@ -132,121 +133,96 @@ export default function EnhancedPathwayCards() {
               ))}
             </div>
 
-            {/* House Illustration */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full transform transition-all duration-700 group-hover:scale-105">
-              <svg width="100%" height="280" viewBox="0 0 300 280" preserveAspectRatio="xMidYMax meet">
-                {/* Ground Snow */}
-                <ellipse cx="150" cy="260" rx="140" ry="20" fill="rgba(255, 255, 255, 0.3)" />
-
-                {/* Snow Piles - Left Side */}
-                <ellipse cx="80" cy="220" rx="35" ry="18" fill="rgba(255, 255, 255, 0.4)" />
-                <ellipse cx="70" cy="215" rx="28" ry="14" fill="rgba(255, 255, 255, 0.5)" />
-                <ellipse cx="85" cy="217" rx="20" ry="10" fill="rgba(226, 232, 240, 0.6)" />
-
-                {/* Snow Piles - Right Side */}
-                <ellipse cx="220" cy="220" rx="35" ry="18" fill="rgba(255, 255, 255, 0.4)" />
-                <ellipse cx="230" cy="215" rx="28" ry="14" fill="rgba(255, 255, 255, 0.5)" />
-                <ellipse cx="215" cy="217" rx="20" ry="10" fill="rgba(226, 232, 240, 0.6)" />
-
-                {/* House Body */}
-                <rect x="105" y="160" width="90" height="70" rx="4" fill="rgba(71, 85, 105, 0.7)" stroke="rgba(148, 163, 184, 0.5)" strokeWidth="2" />
-
-                {/* Roof */}
-                <path d="M95 160 L150 120 L205 160 Z" fill="rgba(51, 65, 85, 0.8)" stroke="rgba(100, 116, 139, 0.6)" strokeWidth="2" />
-
-                {/* Roof Snow */}
-                <path d="M95 160 L150 125 L205 160 L200 162 L150 130 L100 162 Z" fill="rgba(255, 255, 255, 0.5)" />
-
-                {/* Chimney */}
-                <rect x="165" y="130" width="18" height="35" rx="2" fill="rgba(127, 29, 29, 0.8)" stroke="rgba(185, 28, 28, 0.5)" strokeWidth="1.5" />
-                <rect x="163" y="128" width="22" height="4" rx="1" fill="rgba(153, 27, 27, 0.9)" />
-
-                {/* Chimney Snow Cap */}
-                <ellipse cx="174" cy="128" rx="12" ry="4" fill="rgba(255, 255, 255, 0.6)" />
-
-                {/* Animated Smoke */}
-                <g opacity="0.7">
-                  <ellipse cx="174" cy="115" rx="8" ry="8" fill="rgba(203, 213, 225, 0.6)">
-                    <animate attributeName="cy" values="115;105;95;85" dur="3s" repeatCount="indefinite" />
-                    <animate attributeName="rx" values="8;10;13;16" dur="3s" repeatCount="indefinite" />
-                    <animate attributeName="ry" values="8;10;12;14" dur="3s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.6;0.4;0.2;0" dur="3s" repeatCount="indefinite" />
-                  </ellipse>
-                  <ellipse cx="178" cy="115" rx="7" ry="7" fill="rgba(226, 232, 240, 0.5)">
-                    <animate attributeName="cy" values="115;105;95;85" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
-                    <animate attributeName="rx" values="7;9;12;15" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
-                    <animate attributeName="ry" values="7;9;11;13" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
-                    <animate attributeName="opacity" values="0.5;0.3;0.15;0" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
-                  </ellipse>
-                  <ellipse cx="170" cy="115" rx="6" ry="6" fill="rgba(241, 245, 249, 0.4)">
-                    <animate attributeName="cy" values="115;105;95;85" dur="4s" repeatCount="indefinite" begin="1s" />
-                    <animate attributeName="rx" values="6;8;11;14" dur="4s" repeatCount="indefinite" begin="1s" />
-                    <animate attributeName="ry" values="6;8;10;12" dur="4s" repeatCount="indefinite" begin="1s" />
-                    <animate attributeName="opacity" values="0.4;0.25;0.1;0" dur="4s" repeatCount="indefinite" begin="1s" />
-                  </ellipse>
-                </g>
-
-                {/* Windows with Warm Glow */}
-                <rect x="120" y="180" width="20" height="24" rx="2" fill="rgba(251, 191, 36, 0.6)" stroke="rgba(217, 119, 6, 0.4)" strokeWidth="1.5">
-                  <animate attributeName="fill" values="rgba(251, 191, 36, 0.6);rgba(251, 191, 36, 0.8);rgba(251, 191, 36, 0.6)" dur="4s" repeatCount="indefinite" />
-                </rect>
-                <rect x="160" y="180" width="20" height="24" rx="2" fill="rgba(251, 191, 36, 0.6)" stroke="rgba(217, 119, 6, 0.4)" strokeWidth="1.5">
-                  <animate attributeName="fill" values="rgba(251, 191, 36, 0.6);rgba(251, 191, 36, 0.8);rgba(251, 191, 36, 0.6)" dur="4s" repeatCount="indefinite" begin="0.5s" />
-                </rect>
-
-                {/* Window Panes */}
-                <line x1="130" y1="180" x2="130" y2="204" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
-                <line x1="120" y1="192" x2="140" y2="192" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
-                <line x1="170" y1="180" x2="170" y2="204" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
-                <line x1="160" y1="192" x2="180" y2="192" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
-
-                {/* Door */}
-                <rect x="142" y="195" width="16" height="35" rx="2" fill="rgba(120, 53, 15, 0.8)" stroke="rgba(146, 64, 14, 0.5)" strokeWidth="1.5" />
-                <circle cx="154" cy="212" r="1.5" fill="rgba(251, 191, 36, 0.7)" />
-
-                {/* Running Car */}
-                <g transform="translate(30, 210)">
-                  {/* Car Body */}
-                  <rect x="0" y="10" width="45" height="18" rx="3" fill="rgba(30, 58, 138, 0.7)" stroke="rgba(59, 130, 246, 0.5)" strokeWidth="1.5" />
-                  {/* Car Roof */}
-                  <path d="M8 10 L12 2 L33 2 L37 10 Z" fill="rgba(30, 58, 138, 0.6)" stroke="rgba(59, 130, 246, 0.5)" strokeWidth="1.5" />
-
-                  {/* Windows */}
-                  <rect x="13" y="4" width="8" height="5" rx="1" fill="rgba(96, 165, 250, 0.4)" />
-                  <rect x="24" y="4" width="8" height="5" rx="1" fill="rgba(96, 165, 250, 0.4)" />
-
-                  {/* Wheels */}
-                  <circle cx="12" cy="28" r="4" fill="rgba(31, 41, 55, 0.8)" stroke="rgba(75, 85, 99, 0.6)" strokeWidth="1.5" />
-                  <circle cx="33" cy="28" r="4" fill="rgba(31, 41, 55, 0.8)" stroke="rgba(75, 85, 99, 0.6)" strokeWidth="1.5" />
-                  <circle cx="12" cy="28" r="2" fill="rgba(107, 114, 128, 0.5)" />
-                  <circle cx="33" cy="28" r="2" fill="rgba(107, 114, 128, 0.5)" />
-
-                  {/* Headlights */}
-                  <circle cx="42" cy="16" r="1.5" fill="rgba(253, 224, 71, 0.8)">
-                    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
-                  </circle>
-
-                  {/* Exhaust Smoke */}
-                  <ellipse cx="-3" cy="22" rx="5" ry="4" fill="rgba(203, 213, 225, 0.5)">
-                    <animate attributeName="cx" values="-3;-13;-23" dur="2s" repeatCount="indefinite" />
-                    <animate attributeName="rx" values="5;7;9" dur="2s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.5;0.3;0" dur="2s" repeatCount="indefinite" />
-                  </ellipse>
-                  <ellipse cx="-3" cy="22" rx="4" ry="3" fill="rgba(226, 232, 240, 0.4)">
-                    <animate attributeName="cx" values="-3;-13;-23" dur="2.5s" repeatCount="indefinite" begin="0.3s" />
-                    <animate attributeName="rx" values="4;6;8" dur="2.5s" repeatCount="indefinite" begin="0.3s" />
-                    <animate attributeName="opacity" values="0.4;0.2;0" dur="2.5s" repeatCount="indefinite" begin="0.3s" />
-                  </ellipse>
-                </g>
-              </svg>
-            </div>
-
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent">
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+            {/* Content Container - Bottom Aligned */}
+            <div className="absolute inset-0 flex flex-col justify-end pb-6 px-6">
+              {/* Title */}
+              <h3 className="text-3xl font-bold text-white mb-3 bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300 relative z-10">
                 LIVING
               </h3>
-              <p className="text-sm text-gray-300/90">Life in the Arctic</p>
+              <p className="text-xs text-gray-300/90 mb-4 relative z-10">Life in the Arctic</p>
+
+              {/* House Illustration - Compact Bottom Version */}
+              <div className="flex justify-center items-end">
+                <svg width="100%" height="140" viewBox="0 0 300 140" preserveAspectRatio="xMidYMax meet" className="transform transition-all duration-700 group-hover:scale-105">
+                  {/* Snow Piles - Left */}
+                  <ellipse cx="60" cy="125" rx="30" ry="12" fill="rgba(255, 255, 255, 0.4)" />
+                  <ellipse cx="50" cy="122" rx="22" ry="9" fill="rgba(255, 255, 255, 0.5)" />
+
+                  {/* Snow Piles - Right */}
+                  <ellipse cx="240" cy="125" rx="30" ry="12" fill="rgba(255, 255, 255, 0.4)" />
+                  <ellipse cx="250" cy="122" rx="22" ry="9" fill="rgba(255, 255, 255, 0.5)" />
+
+                  {/* House Body */}
+                  <rect x="110" y="70" width="80" height="60" rx="3" fill="rgba(71, 85, 105, 0.7)" stroke="rgba(148, 163, 184, 0.5)" strokeWidth="1.5" />
+
+                  {/* Roof */}
+                  <path d="M100 70 L150 35 L200 70 Z" fill="rgba(51, 65, 85, 0.8)" stroke="rgba(100, 116, 139, 0.6)" strokeWidth="1.5" />
+                  <path d="M100 70 L150 40 L200 70 L195 72 L150 45 L105 72 Z" fill="rgba(255, 255, 255, 0.5)" />
+
+                  {/* Chimney */}
+                  <rect x="165" y="45" width="14" height="28" rx="1.5" fill="rgba(127, 29, 29, 0.8)" stroke="rgba(185, 28, 28, 0.5)" strokeWidth="1.5" />
+                  <rect x="163" y="43" width="18" height="3" rx="1" fill="rgba(153, 27, 27, 0.9)" />
+                  <ellipse cx="172" cy="43" rx="10" ry="3" fill="rgba(255, 255, 255, 0.6)" />
+
+                  {/* Animated Smoke - More Compact */}
+                  <g opacity="0.7">
+                    <ellipse cx="172" cy="32" rx="6" ry="6" fill="rgba(203, 213, 225, 0.6)">
+                      <animate attributeName="cy" values="32;22;12;2" dur="3s" repeatCount="indefinite" />
+                      <animate attributeName="rx" values="6;8;11;14" dur="3s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.6;0.4;0.2;0" dur="3s" repeatCount="indefinite" />
+                    </ellipse>
+                    <ellipse cx="176" cy="32" rx="5" ry="5" fill="rgba(226, 232, 240, 0.5)">
+                      <animate attributeName="cy" values="32;22;12;2" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+                      <animate attributeName="rx" values="5;7;10;13" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+                      <animate attributeName="opacity" values="0.5;0.3;0.15;0" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+                    </ellipse>
+                  </g>
+
+                  {/* Windows with Warm Glow */}
+                  <rect x="125" y="85" width="16" height="20" rx="2" fill="rgba(251, 191, 36, 0.6)" stroke="rgba(217, 119, 6, 0.4)" strokeWidth="1.5">
+                    <animate attributeName="fill" values="rgba(251, 191, 36, 0.6);rgba(251, 191, 36, 0.8);rgba(251, 191, 36, 0.6)" dur="4s" repeatCount="indefinite" />
+                  </rect>
+                  <rect x="159" y="85" width="16" height="20" rx="2" fill="rgba(251, 191, 36, 0.6)" stroke="rgba(217, 119, 6, 0.4)" strokeWidth="1.5">
+                    <animate attributeName="fill" values="rgba(251, 191, 36, 0.6);rgba(251, 191, 36, 0.8);rgba(251, 191, 36, 0.6)" dur="4s" repeatCount="indefinite" begin="0.5s" />
+                  </rect>
+
+                  {/* Window Panes */}
+                  <line x1="133" y1="85" x2="133" y2="105" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
+                  <line x1="125" y1="95" x2="141" y2="95" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
+                  <line x1="167" y1="85" x2="167" y2="105" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
+                  <line x1="159" y1="95" x2="175" y2="95" stroke="rgba(217, 119, 6, 0.3)" strokeWidth="1" />
+
+                  {/* Door */}
+                  <rect x="144" y="105" width="12" height="25" rx="1.5" fill="rgba(120, 53, 15, 0.8)" stroke="rgba(146, 64, 14, 0.5)" strokeWidth="1.5" />
+                  <circle cx="153" cy="117" r="1" fill="rgba(251, 191, 36, 0.7)" />
+
+                  {/* Running Car - Compact */}
+                  <g transform="translate(20, 110)">
+                    <rect x="0" y="8" width="40" height="15" rx="2" fill="rgba(30, 58, 138, 0.7)" stroke="rgba(59, 130, 246, 0.5)" strokeWidth="1.5" />
+                    <path d="M6 8 L10 2 L28 2 L32 8 Z" fill="rgba(30, 58, 138, 0.6)" stroke="rgba(59, 130, 246, 0.5)" strokeWidth="1.5" />
+
+                    {/* Windows */}
+                    <rect x="11" y="4" width="6" height="4" rx="0.5" fill="rgba(96, 165, 250, 0.4)" />
+                    <rect x="20" y="4" width="6" height="4" rx="0.5" fill="rgba(96, 165, 250, 0.4)" />
+
+                    {/* Wheels */}
+                    <circle cx="10" cy="23" r="3.5" fill="rgba(31, 41, 55, 0.8)" stroke="rgba(75, 85, 99, 0.6)" strokeWidth="1.5" />
+                    <circle cx="30" cy="23" r="3.5" fill="rgba(31, 41, 55, 0.8)" stroke="rgba(75, 85, 99, 0.6)" strokeWidth="1.5" />
+
+                    {/* Headlight */}
+                    <circle cx="37" cy="13" r="1" fill="rgba(253, 224, 71, 0.8)">
+                      <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
+                    </circle>
+
+                    {/* Exhaust */}
+                    <ellipse cx="-2" cy="18" rx="4" ry="3" fill="rgba(203, 213, 225, 0.5)">
+                      <animate attributeName="cx" values="-2;-10;-18" dur="2s" repeatCount="indefinite" />
+                      <animate attributeName="rx" values="4;6;8" dur="2s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.5;0.3;0" dur="2s" repeatCount="indefinite" />
+                    </ellipse>
+                  </g>
+                </svg>
+              </div>
             </div>
 
             {/* Glow Effect on Hover */}
@@ -257,7 +233,7 @@ export default function EnhancedPathwayCards() {
         {/* MOVING Card - Journey with Compass & Northern Path */}
         <Link href="/moving" className="group">
           <div
-            className="relative h-[420px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-purple-500/30 transition-all duration-500 hover:border-purple-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(168,85,247,0.4)]"
+            className="relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-purple-500/30 transition-all duration-500 hover:border-purple-400/60 hover:bg-white/10 hover:shadow-[0_0_40px_rgba(168,85,247,0.4)]"
             onMouseEnter={() => setHoveredCard('moving')}
             onMouseLeave={() => setHoveredCard(null)}
           >
@@ -266,7 +242,7 @@ export default function EnhancedPathwayCards() {
 
             {/* Falling Snow */}
             <div className="absolute inset-0 overflow-hidden">
-              {[...Array(30)].map((_, i) => (
+              {[...Array(20)].map((_, i) => (
                 <div
                   key={i}
                   className="absolute rounded-full bg-white/50"
@@ -283,115 +259,19 @@ export default function EnhancedPathwayCards() {
               ))}
             </div>
 
-            {/* Animated Path/Road */}
-            <div className="absolute bottom-0 left-0 right-0 h-48 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
-              <svg width="100%" height="100%" viewBox="0 0 300 180" preserveAspectRatio="xMidYMax meet">
+            {/* Northern Lights Accent - Top */}
+            <div className="absolute top-0 left-0 right-0 h-28 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
+              <svg width="100%" height="100%" viewBox="0 0 400 120" preserveAspectRatio="none">
                 <path
-                  d="M-50,180 Q80,140 150,100 T350,60"
-                  fill="none"
-                  stroke="rgba(168, 85, 247, 0.4)"
-                  strokeWidth="40"
-                  strokeLinecap="round"
-                />
-                {/* Dashed Center Line */}
-                <path
-                  d="M-50,180 Q80,140 150,100 T350,60"
-                  fill="none"
-                  stroke="rgba(236, 72, 153, 0.6)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeDasharray="15 10"
-                >
-                  <animate
-                    attributeName="stroke-dashoffset"
-                    values="0;25;0"
-                    dur="3s"
-                    repeatCount="indefinite"
-                  />
-                </path>
-              </svg>
-            </div>
-
-            {/* Compass/Navigation Icon */}
-            <div className="absolute top-12 left-1/2 -translate-x-1/2 transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-12">
-              <svg width="100" height="100" viewBox="0 0 100 100" className="drop-shadow-[0_0_20px_rgba(168,85,247,0.6)]">
-                {/* Compass Outer Ring */}
-                <circle cx="50" cy="50" r="38" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" strokeWidth="2.5" />
-                <circle cx="50" cy="50" r="32" fill="rgba(88, 28, 135, 0.3)" stroke="#c084fc" strokeWidth="2" />
-
-                {/* Cardinal Directions */}
-                <text x="50" y="22" textAnchor="middle" fill="#fbbf24" fontSize="12" fontWeight="bold">N</text>
-                <text x="78" y="54" textAnchor="middle" fill="#e0e7ff" fontSize="10">E</text>
-                <text x="50" y="82" textAnchor="middle" fill="#e0e7ff" fontSize="10">S</text>
-                <text x="22" y="54" textAnchor="middle" fill="#e0e7ff" fontSize="10">W</text>
-
-                {/* Compass Needle */}
-                <g className="origin-center">
-                  <path d="M50,50 L50,28 L46,50 Z" fill="#ef4444" opacity="0.8">
-                    <animateTransform
-                      attributeName="transform"
-                      type="rotate"
-                      values="0 50 50;5 50 50;-5 50 50;0 50 50"
-                      dur="4s"
-                      repeatCount="indefinite"
-                    />
-                  </path>
-                  <path d="M50,50 L50,72 L54,50 Z" fill="#e0e7ff" opacity="0.7">
-                    <animateTransform
-                      attributeName="transform"
-                      type="rotate"
-                      values="0 50 50;5 50 50;-5 50 50;0 50 50"
-                      dur="4s"
-                      repeatCount="indefinite"
-                    />
-                  </path>
-                </g>
-
-                {/* Center Pin */}
-                <circle cx="50" cy="50" r="4" fill="#fbbf24" stroke="#f59e0b" strokeWidth="1.5">
-                  <animate attributeName="r" values="4;5;4" dur="2s" repeatCount="indefinite" />
-                </circle>
-
-                {/* Decorative Tick Marks */}
-                <g stroke="#c084fc" strokeWidth="1.5" opacity="0.6">
-                  <line x1="50" y1="16" x2="50" y2="20" />
-                  <line x1="84" y1="50" x2="80" y2="50" />
-                  <line x1="50" y1="84" x2="50" y2="80" />
-                  <line x1="16" y1="50" x2="20" y2="50" />
-                </g>
-              </svg>
-            </div>
-
-            {/* Moving Truck Silhouette */}
-            <div className="absolute bottom-24 left-8 opacity-40 group-hover:opacity-60 transition-all duration-700 group-hover:translate-x-2">
-              <svg width="70" height="50" viewBox="0 0 70 50">
-                {/* Truck Body */}
-                <rect x="5" y="15" width="40" height="22" rx="2" fill="rgba(168, 85, 247, 0.5)" stroke="#a855f7" strokeWidth="1.5" />
-                <rect x="45" y="20" width="18" height="17" rx="2" fill="rgba(168, 85, 247, 0.4)" stroke="#a855f7" strokeWidth="1.5" />
-
-                {/* Windows */}
-                <rect x="47" y="22" width="7" height="8" rx="1" fill="rgba(192, 132, 252, 0.3)" />
-                <rect x="55" y="22" width="6" height="8" rx="1" fill="rgba(192, 132, 252, 0.3)" />
-
-                {/* Wheels */}
-                <circle cx="18" cy="37" r="5" fill="rgba(88, 28, 135, 0.6)" stroke="#c084fc" strokeWidth="1.5" />
-                <circle cx="52" cy="37" r="5" fill="rgba(88, 28, 135, 0.6)" stroke="#c084fc" strokeWidth="1.5" />
-              </svg>
-            </div>
-
-            {/* Northern Lights Accent */}
-            <div className="absolute top-0 left-0 right-0 h-40 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
-              <svg width="100%" height="100%" viewBox="0 0 400 150" preserveAspectRatio="none">
-                <path
-                  d="M0,80 Q100,40 200,80 T400,80 L400,0 L0,0 Z"
+                  d="M0,70 Q100,30 200,70 T400,70 L400,0 L0,0 Z"
                   fill="url(#movingGradient)"
                   opacity="0.5"
                 >
                   <animate
                     attributeName="d"
-                    values="M0,80 Q100,40 200,80 T400,80 L400,0 L0,0 Z;
-                            M0,80 Q100,100 200,80 T400,80 L400,0 L0,0 Z;
-                            M0,80 Q100,40 200,80 T400,80 L400,0 L0,0 Z"
+                    values="M0,70 Q100,30 200,70 T400,70 L400,0 L0,0 Z;
+                            M0,70 Q100,90 200,70 T400,70 L400,0 L0,0 Z;
+                            M0,70 Q100,30 200,70 T400,70 L400,0 L0,0 Z"
                     dur="7s"
                     repeatCount="indefinite"
                   />
@@ -406,12 +286,100 @@ export default function EnhancedPathwayCards() {
               </svg>
             </div>
 
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent">
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+            {/* Content Container - Bottom Aligned */}
+            <div className="absolute inset-0 flex flex-col justify-end pb-6 px-6">
+              {/* Title */}
+              <h3 className="text-3xl font-bold text-white mb-3 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300 relative z-10">
                 MOVING
               </h3>
-              <p className="text-sm text-gray-300/90">Journey Awaits</p>
+              <p className="text-xs text-gray-300/90 mb-4 relative z-10">Journey Awaits</p>
+
+              {/* Bottom Elements - Compass and Journey Path */}
+              <div className="relative flex justify-center items-end">
+                {/* Journey Road Path */}
+                <div className="absolute bottom-0 left-0 right-0 h-20 opacity-40">
+                  <svg width="100%" height="100%" viewBox="0 0 300 80" preserveAspectRatio="xMidYMax meet">
+                    <path
+                      d="M-20,80 Q100,50 150,40 T320,20"
+                      fill="none"
+                      stroke="rgba(168, 85, 247, 0.4)"
+                      strokeWidth="30"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M-20,80 Q100,50 150,40 T320,20"
+                      fill="none"
+                      stroke="rgba(236, 72, 153, 0.6)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeDasharray="10 8"
+                    >
+                      <animate
+                        attributeName="stroke-dashoffset"
+                        values="0;18;0"
+                        dur="3s"
+                        repeatCount="indefinite"
+                      />
+                    </path>
+                  </svg>
+                </div>
+
+                {/* Compass Icon */}
+                <div className="relative z-10 mb-2">
+                  <svg width="80" height="80" viewBox="0 0 100 100" className="drop-shadow-[0_0_20px_rgba(168,85,247,0.6)] transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-12">
+                    {/* Compass Rings */}
+                    <circle cx="50" cy="50" r="35" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" strokeWidth="2.5" />
+                    <circle cx="50" cy="50" r="28" fill="rgba(88, 28, 135, 0.3)" stroke="#c084fc" strokeWidth="2" />
+
+                    {/* Cardinal Directions */}
+                    <text x="50" y="25" textAnchor="middle" fill="#fbbf24" fontSize="11" fontWeight="bold">N</text>
+                    <text x="75" y="54" textAnchor="middle" fill="#e0e7ff" fontSize="9">E</text>
+                    <text x="50" y="80" textAnchor="middle" fill="#e0e7ff" fontSize="9">S</text>
+                    <text x="25" y="54" textAnchor="middle" fill="#e0e7ff" fontSize="9">W</text>
+
+                    {/* Compass Needle */}
+                    <g>
+                      <path d="M50,50 L50,30 L47,50 Z" fill="#ef4444" opacity="0.8">
+                        <animateTransform
+                          attributeName="transform"
+                          type="rotate"
+                          values="0 50 50;5 50 50;-5 50 50;0 50 50"
+                          dur="4s"
+                          repeatCount="indefinite"
+                        />
+                      </path>
+                      <path d="M50,50 L50,70 L53,50 Z" fill="#e0e7ff" opacity="0.7">
+                        <animateTransform
+                          attributeName="transform"
+                          type="rotate"
+                          values="0 50 50;5 50 50;-5 50 50;0 50 50"
+                          dur="4s"
+                          repeatCount="indefinite"
+                        />
+                      </path>
+                    </g>
+
+                    {/* Center Pin */}
+                    <circle cx="50" cy="50" r="3.5" fill="#fbbf24" stroke="#f59e0b" strokeWidth="1.5">
+                      <animate attributeName="r" values="3.5;4.5;3.5" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                  </svg>
+                </div>
+
+                {/* Moving Truck - Left Side */}
+                <div className="absolute left-4 bottom-6 opacity-50 group-hover:opacity-70 transition-all duration-700 group-hover:translate-x-1">
+                  <svg width="50" height="35" viewBox="0 0 60 40">
+                    <rect x="5" y="12" width="32" height="18" rx="2" fill="rgba(168, 85, 247, 0.5)" stroke="#a855f7" strokeWidth="1.5" />
+                    <rect x="37" y="16" width="15" height="14" rx="1.5" fill="rgba(168, 85, 247, 0.4)" stroke="#a855f7" strokeWidth="1.5" />
+
+                    <rect x="39" y="18" width="5" height="6" rx="0.5" fill="rgba(192, 132, 252, 0.3)" />
+                    <rect x="45" y="18" width="5" height="6" rx="0.5" fill="rgba(192, 132, 252, 0.3)" />
+
+                    <circle cx="16" cy="30" r="4" fill="rgba(88, 28, 135, 0.6)" stroke="#c084fc" strokeWidth="1.5" />
+                    <circle cx="44" cy="30" r="4" fill="rgba(88, 28, 135, 0.6)" stroke="#c084fc" strokeWidth="1.5" />
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {/* Glow Effect on Hover */}
