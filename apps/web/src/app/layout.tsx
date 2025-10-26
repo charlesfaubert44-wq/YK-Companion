@@ -43,8 +43,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={pressStart2P.variable}>
-      <body className={inter.className}>
+    <html lang="en" className={`${pressStart2P.variable} overflow-x-hidden`}>
+      <body className={`${inter.className} overflow-x-hidden`}>
         <LanguageProvider>
           <AuthProvider>
             <SloganProvider>
