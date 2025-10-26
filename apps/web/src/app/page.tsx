@@ -18,6 +18,7 @@ import InteractiveMenu from '@/components/InteractiveMenu';
 import SloganConnector from '@/components/SloganConnector';
 import InteractiveAreYou from '@/components/InteractiveAreYou';
 import EnhancedPathwayCards from '@/components/EnhancedPathwayCards';
+import EnhancedPathwayCardsCarousel from '@/components/EnhancedPathwayCardsCarousel';
 
 export default function Home() {
   const { user, profile, loading, signOut } = useAuth();
@@ -230,8 +231,8 @@ export default function Home() {
             {/* Interactive "Are You..." Section */}
             <InteractiveAreYou />
 
-            {/* Enhanced Pathway Cards with Beautiful Wrapper */}
-            <EnhancedPathwayCards />
+            {/* Enhanced Pathway Cards with Beautiful Wrapper - Now with Carousel on Mobile */}
+            <EnhancedPathwayCardsCarousel />
 
             {/* Premium Sponsors Section */}
             <div className="mt-24 pt-8 border-t border-gray-700/30">
