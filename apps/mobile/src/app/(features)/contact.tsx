@@ -30,23 +30,28 @@ interface FAQ {
 const faqs: FAQ[] = [
   {
     question: 'How do I add my business to YK Buddy?',
-    answer: 'Send us an email at hello@ykbuddy.com with your business details. We support local businesses and Indigenous-owned enterprises.',
+    answer:
+      'Send us an email at hello@ykbuddy.com with your business details. We support local businesses and Indigenous-owned enterprises.',
   },
   {
     question: 'Can I contribute local knowledge?',
-    answer: 'Absolutely! We love hearing from locals. Share your favorite spots, tips, or corrections through the contact form or email.',
+    answer:
+      'Absolutely! We love hearing from locals. Share your favorite spots, tips, or corrections through the contact form or email.',
   },
   {
     question: 'How do I report incorrect information?',
-    answer: 'Use the contact form below or email us at hello@ykbuddy.com. We\'ll update it as quickly as possible.',
+    answer:
+      "Use the contact form below or email us at hello@ykbuddy.com. We'll update it as quickly as possible.",
   },
   {
     question: 'Do you have a newsletter?',
-    answer: 'Yes! We send weekly updates about aurora forecasts, upcoming events, and new activities. Sign up on our website.',
+    answer:
+      'Yes! We send weekly updates about aurora forecasts, upcoming events, and new activities. Sign up on our website.',
   },
   {
     question: 'How can I support YK Buddy?',
-    answer: 'Share the app with friends, leave a review, and support our local partners. We\'re community-funded!',
+    answer:
+      "Share the app with friends, leave a review, and support our local partners. We're community-funded!",
   },
 ];
 
@@ -84,7 +89,7 @@ export default function ContactScreen() {
       icon: '📍',
       title: 'Visit Us',
       subtitle: 'Yellowknife, NT',
-      action: () => Alert.alert('Location', 'We\'re based in downtown Yellowknife!'),
+      action: () => Alert.alert('Location', "We're based in downtown Yellowknife!"),
       color: '#F59E0B',
     },
   ];
@@ -102,7 +107,7 @@ export default function ContactScreen() {
 
     Alert.alert(
       'Message Sent! 🎉',
-      'Thank you for contacting us! We\'ll get back to you within 24 hours.',
+      "Thank you for contacting us! We'll get back to you within 24 hours.",
       [
         {
           text: 'OK',
@@ -144,8 +149,8 @@ export default function ContactScreen() {
           <Text style={styles.heroEmoji}>👋</Text>
           <Text style={styles.heroTitle}>Let's Connect!</Text>
           <Text style={styles.heroSubtitle}>
-            We'd love to hear from you. Whether you have a question, suggestion,
-            or just want to say hi—we're here!
+            We'd love to hear from you. Whether you have a question, suggestion, or just want to say
+            hi—we're here!
           </Text>
         </View>
 
@@ -299,9 +304,7 @@ export default function ContactScreen() {
 
         {/* Footer */}
         <View style={styles.footerSection}>
-          <Text style={styles.footerText}>
-            Made with ❤️ in Yellowknife
-          </Text>
+          <Text style={styles.footerText}>Made with ❤️ in Yellowknife</Text>
           <Text style={styles.footerSubtext}>
             We're here to make your Northern experience unforgettable!
           </Text>

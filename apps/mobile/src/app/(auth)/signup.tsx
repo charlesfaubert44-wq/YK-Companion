@@ -108,16 +108,11 @@ export default function SignUpScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <StatusBar style="light" />
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>
-            Join the YK Buddy community today
-          </Text>
+          <Text style={styles.subtitle}>Join the YK Buddy community today</Text>
         </View>
 
         {/* Logo/Icon Area */}
@@ -172,9 +167,7 @@ export default function SignUpScreen() {
             autoComplete="password-new"
             textContentType="newPassword"
             rightIcon={
-              <Text style={styles.showPasswordText}>
-                {showPassword ? 'Hide' : 'Show'}
-              </Text>
+              <Text style={styles.showPasswordText}>{showPassword ? 'Hide' : 'Show'}</Text>
             }
             onRightIconPress={() => setShowPassword(!showPassword)}
           />
@@ -185,8 +178,7 @@ export default function SignUpScreen() {
             value={confirmPassword}
             onChangeText={(text) => {
               setConfirmPassword(text);
-              if (errors.confirmPassword)
-                setErrors({ ...errors, confirmPassword: undefined });
+              if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: undefined });
             }}
             error={errors.confirmPassword}
             secureTextEntry={!showConfirmPassword}
@@ -194,9 +186,7 @@ export default function SignUpScreen() {
             autoComplete="password-new"
             textContentType="newPassword"
             rightIcon={
-              <Text style={styles.showPasswordText}>
-                {showConfirmPassword ? 'Hide' : 'Show'}
-              </Text>
+              <Text style={styles.showPasswordText}>{showConfirmPassword ? 'Hide' : 'Show'}</Text>
             }
             onRightIconPress={() => setShowConfirmPassword(!showConfirmPassword)}
           />
@@ -224,8 +214,7 @@ export default function SignUpScreen() {
 
         {/* Terms */}
         <Text style={styles.termsText}>
-          By signing up, you agree to our{' '}
-          <Text style={styles.termsLink}>Terms of Service</Text> and{' '}
+          By signing up, you agree to our <Text style={styles.termsLink}>Terms of Service</Text> and{' '}
           <Text style={styles.termsLink}>Privacy Policy</Text>
         </Text>
       </ScrollView>

@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#0a1128"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.truenorthtrips.app",
@@ -42,11 +40,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-location",
-      "expo-notifications"
-    ],
+    "plugins": ["expo-router", "expo-location", "expo-notifications"],
     "scheme": "truenorthtrips",
     "extra": {
       "router": {

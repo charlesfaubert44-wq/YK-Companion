@@ -69,7 +69,7 @@ const features: Feature[] = [
   {
     icon: '❄️',
     title: 'Winter Survival',
-    description: 'Essential tips for thriving in Canada\'s coldest capital',
+    description: "Essential tips for thriving in Canada's coldest capital",
   },
   {
     icon: '🏘️',
@@ -118,9 +118,7 @@ export default function AboutScreen() {
             <View style={styles.auroraGlow} />
           </View>
           <Text style={styles.heroTitle}>YK Buddy</Text>
-          <Text style={styles.heroTagline}>
-            Because Nobody Should Face -40° Alone
-          </Text>
+          <Text style={styles.heroTagline}>Because Nobody Should Face -40° Alone</Text>
           <Text style={styles.version}>Version 1.0.0</Text>
         </View>
 
@@ -130,15 +128,15 @@ export default function AboutScreen() {
           <View style={styles.storyCard}>
             <Text style={styles.storyEmoji}>🏔️</Text>
             <Text style={styles.storyText}>
-              YK Buddy was born from a simple idea: Yellowknife is an incredible place,
-              but navigating life at 62° North can be challenging. Whether you're visiting
-              to see the aurora, moving here for work, or already call this place home,
-              we're here to help you make the most of your Northern experience.
+              YK Buddy was born from a simple idea: Yellowknife is an incredible place, but
+              navigating life at 62° North can be challenging. Whether you're visiting to see the
+              aurora, moving here for work, or already call this place home, we're here to help you
+              make the most of your Northern experience.
             </Text>
             <Text style={styles.storyText} style={{ marginTop: 12 }}>
-              From finding the best dog sledding tours to discovering this weekend's garage
-              sales, from aurora forecasts to winter survival tips—we've got your back in
-              Canada's coldest capital.
+              From finding the best dog sledding tours to discovering this weekend's garage sales,
+              from aurora forecasts to winter survival tips—we've got your back in Canada's coldest
+              capital.
             </Text>
           </View>
         </View>
@@ -175,9 +173,7 @@ export default function AboutScreen() {
                   <Text style={styles.teamName}>{member.name}</Text>
                   <Text style={styles.teamRole}>{member.role}</Text>
                 </View>
-                <Text style={styles.expandIcon}>
-                  {expandedMember === index ? '−' : '+'}
-                </Text>
+                <Text style={styles.expandIcon}>{expandedMember === index ? '−' : '+'}</Text>
               </View>
               {expandedMember === index && (
                 <View style={styles.teamBio}>
@@ -260,9 +256,7 @@ export default function AboutScreen() {
 
         {/* Credits */}
         <View style={styles.creditsSection}>
-          <Text style={styles.creditsText}>
-            Made with ❤️ in Yellowknife, Northwest Territories
-          </Text>
+          <Text style={styles.creditsText}>Made with ❤️ in Yellowknife, Northwest Territories</Text>
           <Text style={styles.creditsSubtext}>
             On the traditional territory of the Yellowknives Dene First Nation
           </Text>

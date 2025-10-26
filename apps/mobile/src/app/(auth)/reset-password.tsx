@@ -44,11 +44,9 @@ export default function ResetPasswordScreen() {
     setLoading(false);
 
     if (resetError) {
-      Alert.alert(
-        'Error',
-        resetError.message || 'Could not send reset email. Please try again.',
-        [{ text: 'OK' }]
-      );
+      Alert.alert('Error', resetError.message || 'Could not send reset email. Please try again.', [
+        { text: 'OK' },
+      ]);
     } else {
       setEmailSent(true);
     }
@@ -63,9 +61,7 @@ export default function ResetPasswordScreen() {
             <Text style={styles.successIconText}>✓</Text>
           </View>
           <Text style={styles.successTitle}>Check Your Email</Text>
-          <Text style={styles.successMessage}>
-            We've sent a password reset link to:
-          </Text>
+          <Text style={styles.successMessage}>We've sent a password reset link to:</Text>
           <Text style={styles.email}>{email}</Text>
           <Text style={styles.successInstructions}>
             Click the link in the email to reset your password. The link will expire in 1 hour.
@@ -100,15 +96,9 @@ export default function ResetPasswordScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <StatusBar style="light" />
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         {/* Back Button */}
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={styles.backButton}
-        >
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
 
@@ -155,9 +145,7 @@ export default function ResetPasswordScreen() {
 
         {/* Help Text */}
         <View style={styles.helpContainer}>
-          <Text style={styles.helpText}>
-            Remember your password?{' '}
-          </Text>
+          <Text style={styles.helpText}>Remember your password? </Text>
           <TouchableOpacity onPress={() => router.push('/(auth)/login')}>
             <Text style={styles.helpLink}>Sign In</Text>
           </TouchableOpacity>

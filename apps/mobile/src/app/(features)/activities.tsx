@@ -17,7 +17,8 @@ const mockActivities = [
   {
     id: '1',
     name: 'Dog Sledding Adventure',
-    description: 'Experience the thrill of mushing your own team of huskies across frozen lakes and through snowy forests.',
+    description:
+      'Experience the thrill of mushing your own team of huskies across frozen lakes and through snowy forests.',
     category: 'adventure',
     seasons: ['winter'],
     difficulty: 'moderate',
@@ -38,7 +39,8 @@ const mockActivities = [
   {
     id: '2',
     name: 'Aurora Viewing Tour',
-    description: 'Prime aurora viewing location with heated cabin, hot beverages, and expert guides.',
+    description:
+      'Prime aurora viewing location with heated cabin, hot beverages, and expert guides.',
     category: 'aurora',
     seasons: ['winter', 'fall', 'spring'],
     difficulty: 'easy',
@@ -59,7 +61,8 @@ const mockActivities = [
   {
     id: '3',
     name: 'Ice Fishing Experience',
-    description: 'Learn traditional ice fishing techniques and catch your own northern pike or lake trout.',
+    description:
+      'Learn traditional ice fishing techniques and catch your own northern pike or lake trout.',
     category: 'fishing',
     seasons: ['winter'],
     difficulty: 'easy',
@@ -80,7 +83,8 @@ const mockActivities = [
   {
     id: '4',
     name: 'Cultural Heritage Tour',
-    description: 'Learn about Dene and Métis history, traditions, and contemporary culture from Indigenous guides.',
+    description:
+      'Learn about Dene and Métis history, traditions, and contemporary culture from Indigenous guides.',
     category: 'culture',
     seasons: ['winter', 'spring', 'summer', 'fall'],
     difficulty: 'easy',
@@ -101,7 +105,8 @@ const mockActivities = [
   {
     id: '5',
     name: 'Houseboat Adventure',
-    description: 'Explore Great Slave Lake on a unique houseboat stay with fishing, kayaking, and wilderness views.',
+    description:
+      'Explore Great Slave Lake on a unique houseboat stay with fishing, kayaking, and wilderness views.',
     category: 'summer_activities',
     seasons: ['summer'],
     difficulty: 'easy',
@@ -122,7 +127,8 @@ const mockActivities = [
   {
     id: '6',
     name: 'Snowmobiling Tour',
-    description: 'Ride across frozen tundra and through boreal forests on a guided snowmobile adventure.',
+    description:
+      'Ride across frozen tundra and through boreal forests on a guided snowmobile adventure.',
     category: 'winter_sports',
     seasons: ['winter'],
     difficulty: 'moderate',
@@ -158,21 +164,26 @@ export default function ActivitiesScreen() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredActivities = mockActivities.filter(activity => {
+  const filteredActivities = mockActivities.filter((activity) => {
     const matchesCategory = selectedCategory === 'all' || activity.category === selectedCategory;
-    const matchesSearch = searchQuery === '' ||
+    const matchesSearch =
+      searchQuery === '' ||
       activity.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       activity.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      activity.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      activity.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return '#10B981';
-      case 'moderate': return '#F59E0B';
-      case 'challenging': return '#EF4444';
-      default: return '#9CA3AF';
+      case 'easy':
+        return '#10B981';
+      case 'moderate':
+        return '#F59E0B';
+      case 'challenging':
+        return '#EF4444';
+      default:
+        return '#9CA3AF';
     }
   };
 
@@ -189,7 +200,7 @@ export default function ActivitiesScreen() {
     return `${minutes}m`;
   };
 
-  const handleActivityPress = (activity: typeof mockActivities[0]) => {
+  const handleActivityPress = (activity: (typeof mockActivities)[0]) => {
     Alert.alert(
       activity.name,
       `${activity.description}\n\n⏱️ Duration: ${formatDuration(activity.duration)}\n💵 Price: ${formatPrice(activity.price)}\n📍 ${activity.location.address}\n${activity.isIndigenousOwned ? '🪶 Indigenous-owned\n' : ''}⭐ ${activity.rating} (${activity.reviewCount} reviews)`,
@@ -234,8 +245,12 @@ export default function ActivitiesScreen() {
       </View>
 
       {/* Category Filter */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesContainer}>
-        {categories.map(category => (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.categoriesContainer}
+      >
+        {categories.map((category) => (
           <TouchableOpacity
             key={category.id}
             style={[
@@ -267,7 +282,7 @@ export default function ActivitiesScreen() {
           </View>
         ) : (
           <View style={styles.listContainer}>
-            {filteredActivities.map(activity => (
+            {filteredActivities.map((activity) => (
               <TouchableOpacity
                 key={activity.id}
                 style={styles.activityCard}
@@ -276,7 +291,7 @@ export default function ActivitiesScreen() {
                 {/* Image Placeholder */}
                 <View style={styles.imagePlaceholder}>
                   <Text style={styles.imagePlaceholderEmoji}>
-                    {categories.find(c => c.id === activity.category)?.emoji || '🏔️'}
+                    {categories.find((c) => c.id === activity.category)?.emoji || '🏔️'}
                   </Text>
                 </View>
 
@@ -287,9 +302,7 @@ export default function ActivitiesScreen() {
                       <Text style={styles.activityName} numberOfLines={2}>
                         {activity.name}
                       </Text>
-                      {activity.isIndigenousOwned && (
-                        <Text style={styles.indigenousBadge}>🪶</Text>
-                      )}
+                      {activity.isIndigenousOwned && <Text style={styles.indigenousBadge}>🪶</Text>}
                     </View>
                     <View style={styles.ratingRow}>
                       <Text style={styles.ratingText}>⭐ {activity.rating}</Text>

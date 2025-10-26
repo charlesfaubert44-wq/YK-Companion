@@ -20,7 +20,7 @@ const mockGarageSales: GarageSale[] = [
     title: 'Moving Sale - Everything Must Go!',
     description: 'Furniture, appliances, winter gear, and more',
     address: '123 Franklin Ave, Yellowknife',
-    latitude: 62.4540,
+    latitude: 62.454,
     longitude: -114.3718,
     location_details: 'Behind Northern United Place',
     sale_date: '2025-06-15',
@@ -94,20 +94,19 @@ export default function GarageSalesScreen() {
   const popularTags = ['furniture', 'winter gear', 'kids', 'tools', 'electronics', 'outdoor'];
 
   const toggleTag = (tag: string) => {
-    setSelectedTags(prev =>
-      prev.includes(tag)
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   };
 
-  const filteredSales = mockGarageSales.filter(sale => {
-    const matchesSearch = searchQuery === '' ||
+  const filteredSales = mockGarageSales.filter((sale) => {
+    const matchesSearch =
+      searchQuery === '' ||
       sale.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       sale.description?.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesTags = selectedTags.length === 0 ||
-      selectedTags.some(tag => sale.tags.includes(tag));
+    const matchesTags =
+      selectedTags.length === 0 || selectedTags.some((tag) => sale.tags.includes(tag));
 
     return matchesSearch && matchesTags;
   });
@@ -178,7 +177,7 @@ export default function GarageSalesScreen() {
 
       {/* Tag Filters */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
-        {popularTags.map(tag => (
+        {popularTags.map((tag) => (
           <TouchableOpacity
             key={tag}
             style={[styles.tagChip, selectedTags.includes(tag) && styles.tagChipActive]}
@@ -203,7 +202,7 @@ export default function GarageSalesScreen() {
                 <Text style={styles.emptySubtext}>Try adjusting your search or filters</Text>
               </View>
             ) : (
-              filteredSales.map(sale => (
+              filteredSales.map((sale) => (
                 <TouchableOpacity
                   key={sale.id}
                   style={styles.saleCard}
@@ -270,12 +269,8 @@ export default function GarageSalesScreen() {
           <View style={styles.mapPlaceholder}>
             <Text style={styles.mapEmoji}>🗺️</Text>
             <Text style={styles.mapText}>Map View</Text>
-            <Text style={styles.mapSubtext}>
-              Interactive map with garage sale locations
-            </Text>
-            <Text style={styles.mapNote}>
-              {filteredSales.length} sales in Yellowknife
-            </Text>
+            <Text style={styles.mapSubtext}>Interactive map with garage sale locations</Text>
+            <Text style={styles.mapNote}>{filteredSales.length} sales in Yellowknife</Text>
             <TouchableOpacity
               style={styles.mapButton}
               onPress={() => Alert.alert('Map View', 'Map integration coming soon!')}

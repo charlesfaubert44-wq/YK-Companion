@@ -54,11 +54,9 @@ export default function LoginScreen() {
     setLoading(false);
 
     if (error) {
-      Alert.alert(
-        'Login Failed',
-        error.message || 'Invalid email or password. Please try again.',
-        [{ text: 'OK' }]
-      );
+      Alert.alert('Login Failed', error.message || 'Invalid email or password. Please try again.', [
+        { text: 'OK' },
+      ]);
     } else {
       // Navigation will happen automatically via AuthContext
       router.replace('/(tabs)');
@@ -71,16 +69,11 @@ export default function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <StatusBar style="light" />
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Welcome Back!</Text>
-          <Text style={styles.subtitle}>
-            Sign in to your YK Buddy account
-          </Text>
+          <Text style={styles.subtitle}>Sign in to your YK Buddy account</Text>
         </View>
 
         {/* Logo/Icon Area */}
@@ -123,9 +116,7 @@ export default function LoginScreen() {
             autoComplete="password"
             textContentType="password"
             rightIcon={
-              <Text style={styles.showPasswordText}>
-                {showPassword ? 'Hide' : 'Show'}
-              </Text>
+              <Text style={styles.showPasswordText}>{showPassword ? 'Hide' : 'Show'}</Text>
             }
             onRightIconPress={() => setShowPassword(!showPassword)}
           />
@@ -137,13 +128,7 @@ export default function LoginScreen() {
             <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <Button
-            title="Sign In"
-            onPress={handleLogin}
-            loading={loading}
-            fullWidth
-            size="large"
-          />
+          <Button title="Sign In" onPress={handleLogin} loading={loading} fullWidth size="large" />
         </View>
 
         {/* Sign Up Link */}
