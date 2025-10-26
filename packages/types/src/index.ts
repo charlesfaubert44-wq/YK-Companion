@@ -1,3 +1,19 @@
+// ============================================================
+// EXPORTS - Import types from other files
+// ============================================================
+
+// Database types
+export * from './database';
+// Garage sales types
+export * from './garage-sales';
+// Premium sponsors types
+export * from './sponsors';
+
+// ============================================================
+// LEGACY TYPES (from old TRUE NORTH TRIPS project)
+// Keep these for backwards compatibility, but new code should use types from files above
+// ============================================================
+
 // User Segment Types
 export enum UserSegment {
   VISITING = 'visiting', // Tourists planning trips

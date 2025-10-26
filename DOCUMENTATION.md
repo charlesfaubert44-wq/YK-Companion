@@ -40,6 +40,12 @@
 - **[docs/AURORA-FEATURES.md](./docs/AURORA-FEATURES.md)** - Aurora-related features
 - **[email-templates/README.md](./email-templates/README.md)** - Email template system
 
+### Mobile App Development
+- **[MOBILE_APP_PLAN.md](./MOBILE_APP_PLAN.md)** - Complete iOS/Android app development plan
+- **[MOBILE_QUICK_START.md](./MOBILE_QUICK_START.md)** - Get mobile app running in 15 minutes
+- **[docs/mobile-implementation-checklist.md](./docs/mobile-implementation-checklist.md)** - Phase-by-phase implementation checklist
+- **[docs/web-vs-mobile-comparison.md](./docs/web-vs-mobile-comparison.md)** - Web vs mobile technical comparison
+
 ### Development & Testing
 - **[DEV_FEATURE_TEST.md](./DEV_FEATURE_TEST.md)** - Feature testing guidelines
 
@@ -72,6 +78,13 @@ Strategic and planning documents:
 2. [docs/priority-features.md](./docs/priority-features.md) - Roadmap
 3. [docs/user-research-findings.md](./docs/user-research-findings.md) - Research
 4. [CHANGELOG.md](./CHANGELOG.md) - History
+
+### For Mobile App Developers
+Building the iOS/Android apps:
+1. [MOBILE_APP_PLAN.md](./MOBILE_APP_PLAN.md) - Complete development plan
+2. [MOBILE_QUICK_START.md](./MOBILE_QUICK_START.md) - Quick start guide
+3. [docs/mobile-implementation-checklist.md](./docs/mobile-implementation-checklist.md) - Implementation checklist
+4. [docs/web-vs-mobile-comparison.md](./docs/web-vs-mobile-comparison.md) - Platform differences
 
 ---
 
@@ -175,7 +188,14 @@ Found something unclear or outdated?
 - Payment integration (Stripe)
 - Email notifications
 - Enhanced analytics
-- Mobile app (Expo/React Native)
+
+**In Planning:**
+- 📱 Mobile app for iOS & Android (see [MOBILE_APP_PLAN.md](./MOBILE_APP_PLAN.md))
+  - Native apps using Expo/React Native
+  - Push notifications for aurora alerts
+  - Offline mode with data caching
+  - Full feature parity with web app
+  - Target: 16-week development timeline
 
 ---
 
