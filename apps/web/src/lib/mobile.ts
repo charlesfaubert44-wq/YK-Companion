@@ -338,8 +338,8 @@ export function onOrientationChange(
   }
 
   // Fallback to resize event
-  window.addEventListener('resize', handler);
-  return () => window.removeEventListener('resize', handler);
+  (window as Window).addEventListener('resize', handler);
+  return () => (window as Window).removeEventListener('resize', handler);
 }
 
 // =============================================================================
