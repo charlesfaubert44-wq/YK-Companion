@@ -9,8 +9,10 @@ interface AuthContextType {
   user: User | null;
   profile: Profile | null;
   loading: boolean;
-  signUp: (email: string, password: string, fullName: string) => Promise<any>;
+  signUp: (email: string, password: string, fullName: string, address?: string) => Promise<any>;
   signIn: (email: string, password: string) => Promise<any>;
+  signInWithGoogle: () => Promise<any>;
+  signInWithApple: () => Promise<any>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<Profile>) => Promise<void>;
 }
@@ -129,11 +131,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string) => {
+  const signUp = async (email: string, password: string, fullName: string, address?: string) => {
     if (!supabase) {
-      return { 
-        data: null, 
-        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local') 
+      return {
+        data: null,
+        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local')
       };
     }
     console.log('signUp called with email:', email);
@@ -143,6 +145,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       options: {
         data: {
           full_name: fullName,
+          address: address || null,
         },
       },
     });
@@ -156,14 +159,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     if (!supabase) {
-      return { 
-        data: null, 
-        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local') 
+      return {
+        data: null,
+        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local')
       };
     }
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
+    });
+    return { data, error };
+  };
+
+  const signInWithGoogle = async () => {
+    if (!supabase) {
+      return {
+        data: null,
+        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local')
+      };
+    }
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    return { data, error };
+  };
+
+  const signInWithApple = async () => {
+    if (!supabase) {
+      return {
+        data: null,
+        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local')
+      };
+    }
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'apple',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
     return { data, error };
   };
@@ -200,6 +235,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         loading,
         signUp,
         signIn,
+        signInWithGoogle,
+        signInWithApple,
         signOut,
         updateProfile,
       }}
