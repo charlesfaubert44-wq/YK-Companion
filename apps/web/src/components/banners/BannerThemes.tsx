@@ -257,10 +257,10 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex items-center justify-center px-4">
+        <div className="absolute inset-0 flex items-center justify-center px-4 md:px-40">
           <div className="text-center w-full">
             <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tight transition-all duration-500 animate-glow flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight transition-all duration-500 animate-glow flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
                 <span
                   className="inline-block transition-all duration-700 animate-color-shift-1"
                   style={{
