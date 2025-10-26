@@ -98,11 +98,55 @@ const config: Config = {
             transform: 'translateY(-10px)',
           },
         },
+        'bounce-slow': {
+          '0%, 100%': {
+            transform: 'translateY(0)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '50%': {
+            transform: 'translateY(-5%)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+        'pulse-subtle': {
+          '0%, 100%': {
+            opacity: '1',
+            transform: 'scale(1)',
+          },
+          '50%': {
+            opacity: '0.9',
+            transform: 'scale(1.02)',
+          },
+        },
+        'shimmer-slow': {
+          '0%': {
+            transform: 'translateX(-200%)',
+          },
+          '100%': {
+            transform: 'translateX(200%)',
+          },
+        },
+        'spin-slow': {
+          '0%': {
+            transform: 'rotate(0deg)',
+          },
+          '100%': {
+            transform: 'rotate(360deg)',
+          },
+        },
       },
       animation: {
         aurora: 'aurora 15s ease-in-out infinite',
         shimmer: 'shimmer 3s linear infinite',
         float: 'float 3s ease-in-out infinite',
+        'bounce-slow': 'bounce-slow 3s ease-in-out infinite',
+        'pulse-subtle': 'pulse-subtle 2s ease-in-out infinite',
+        'shimmer-slow': 'shimmer-slow 8s linear infinite',
+        'spin-slow': 'spin-slow 20s linear infinite',
+      },
+      perspective: {
+        '1000': '1000px',
+        '2000': '2000px',
       },
     },
   },
