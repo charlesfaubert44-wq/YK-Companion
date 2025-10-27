@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import Link from 'next/link';
 
 interface User {
@@ -30,6 +31,7 @@ interface UserPermissions {
 }
 
 export default function AdminUsersPage() {
+  const { isAdmin, isSuperAdmin, permissions, loading: authLoading } = useAdminAuth();
   const supabase = createClient();
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
@@ -125,15 +127,22 @@ export default function AdminUsersPage() {
   };
 
   const toggleAdminStatus = async (userId: string, currentStatus: boolean) => {
-    const { error } = await supabase
-      .from('profiles')
-      .update({ is_admin: !currentStatus })
-      .eq('id', userId);
+    try {
+      const response = await fetch('/api/admin/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, is_admin: !currentStatus }),
+      });
 
-    if (!error) {
-      fetchUsers();
-      alert(`Admin status ${!currentStatus ? 'granted' : 'revoked'} successfully`);
-    } else {
+      const data = await response.json();
+
+      if (response.ok) {
+        fetchUsers();
+        alert(`Admin status ${!currentStatus ? 'granted' : 'revoked'} successfully`);
+      } else {
+        alert('Error updating admin status: ' + (data.error || 'Unknown error'));
+      }
+    } catch (error: any) {
       alert('Error updating admin status: ' + error.message);
     }
   };
@@ -184,21 +193,26 @@ export default function AdminUsersPage() {
   const savePermissions = async () => {
     if (!selectedUser) return;
 
-    // Upsert permissions
-    const { error } = await supabase
-      .from('user_permissions')
-      .upsert({
-        user_id: selectedUser.id,
-        ...permissions
-      }, {
-        onConflict: 'user_id'
+    try {
+      const response = await fetch('/api/admin/users/permissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: selectedUser.id,
+          ...permissions,
+        }),
       });
 
-    if (!error) {
-      setShowPermissionsModal(false);
-      fetchUsers();
-      alert('Permissions updated successfully');
-    } else {
+      const data = await response.json();
+
+      if (response.ok) {
+        setShowPermissionsModal(false);
+        fetchUsers();
+        alert('Permissions updated successfully');
+      } else {
+        alert('Error updating permissions: ' + (data.error || 'Unknown error'));
+      }
+    } catch (error: any) {
       alert('Error updating permissions: ' + error.message);
     }
   };
@@ -231,6 +245,30 @@ export default function AdminUsersPage() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  // Loading state
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  // Permission check
+  if (!isAdmin || !permissions?.can_manage_users) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-white mb-4">Access Denied</h1>
+          <p className="text-gray-400 mb-6">You don't have permission to manage users.</p>
+          <Link href="/admin" className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all">
+            Back to Admin Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 p-8">

@@ -55,7 +55,33 @@ export async function middleware(request: NextRequest) {
   );
 
   // Refresh session if expired
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Protect admin routes
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    // Check if user is authenticated
+    if (!user) {
+      const redirectUrl = new URL('/', request.url);
+      redirectUrl.searchParams.set('error', 'auth_required');
+      redirectUrl.searchParams.set('redirect', request.nextUrl.pathname);
+      return NextResponse.redirect(redirectUrl);
+    }
+
+    // Check if user is admin
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile?.is_admin) {
+      const redirectUrl = new URL('/', request.url);
+      redirectUrl.searchParams.set('error', 'admin_required');
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
 
   return response;
 }

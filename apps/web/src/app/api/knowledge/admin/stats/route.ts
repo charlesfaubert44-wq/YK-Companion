@@ -1,26 +1,15 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { requirePermission } from '@/lib/auth/admin';
 
 // GET /api/knowledge/admin/stats - Get knowledge database statistics (admin only)
 export async function GET() {
   try {
+    // Check admin authentication with analytics permission
+    const adminCheck = await requirePermission('can_view_analytics');
+    if (adminCheck instanceof NextResponse) return adminCheck;
+
     const supabase = await createClient();
-
-    // Check authentication and admin status
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('is_admin')
-      .eq('id', user.id)
-      .single();
-
-    if (!profile?.is_admin) {
-      return NextResponse.json({ error: 'Forbidden - Admin only' }, { status: 403 });
-    }
 
     // Fetch stats
     const { data: submissions } = await supabase

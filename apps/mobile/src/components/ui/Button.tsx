@@ -8,6 +8,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
@@ -17,6 +18,7 @@ interface ButtonProps extends TouchableOpacityProps {
   icon?: React.ReactNode;
   fullWidth?: boolean;
   textStyle?: TextStyle;
+  disableHaptics?: boolean;
 }
 
 export function Button({
@@ -29,6 +31,8 @@ export function Button({
   disabled,
   style,
   textStyle,
+  disableHaptics = false,
+  onPress,
   ...props
 }: ButtonProps) {
   const buttonStyles: ViewStyle[] = [styles.button, styles[variant]];
@@ -50,11 +54,19 @@ export function Button({
     buttonStyles.push(styles.buttonDisabled);
   }
 
+  const handlePress = (event: any) => {
+    if (!disableHaptics && !disabled && !loading) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+    onPress?.(event);
+  };
+
   return (
     <TouchableOpacity
       style={[...buttonStyles, style]}
       disabled={disabled || loading}
       activeOpacity={0.7}
+      onPress={handlePress}
       {...props}
     >
       {loading ? (

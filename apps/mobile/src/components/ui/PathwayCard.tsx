@@ -1,14 +1,20 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Dimensions,
-  Animated,
   Platform,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+  interpolate,
+} from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import * as Haptics from 'expo-haptics';
 
 const { width } = Dimensions.get('window');
 
@@ -40,66 +46,49 @@ interface PathwayCardProps {
  * />
  */
 export function PathwayCard({ title, icon, description, color, onPress }: PathwayCardProps) {
-  // Animation values for micro-interactions
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const glowAnim = useRef(new Animated.Value(0)).current;
-  const iconScaleAnim = useRef(new Animated.Value(1)).current;
-  const arrowTranslateAnim = useRef(new Animated.Value(0)).current;
+  // Reanimated shared values for 60fps animations
+  const pressed = useSharedValue(0);
+  const scale = useSharedValue(1);
+  const glowOpacity = useSharedValue(0);
+  const iconScale = useSharedValue(1);
+  const arrowTranslateX = useSharedValue(0);
 
-  // Press animation with spring physics
-  const handlePressIn = () => {
-    Animated.parallel([
-      Animated.spring(scaleAnim, {
-        toValue: 0.96,
-        useNativeDriver: true,
-        speed: 50,
-        bounciness: 4,
-      }),
-      Animated.timing(glowAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: false,
-      }),
-      Animated.spring(iconScaleAnim, {
-        toValue: 1.1,
-        useNativeDriver: true,
-        speed: 40,
-        bounciness: 8,
-      }),
-      Animated.timing(arrowTranslateAnim, {
-        toValue: 4,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
+  // Gesture handler for tap
+  const tapGesture = Gesture.Tap()
+    .onBegin(() => {
+      'worklet';
+      pressed.value = 1;
+      scale.value = withSpring(0.96, {
+        damping: 15,
+        stiffness: 300,
+      });
+      glowOpacity.value = withTiming(1, { duration: 200 });
+      iconScale.value = withSpring(1.1, {
+        damping: 10,
+        stiffness: 200,
+      });
+      arrowTranslateX.value = withTiming(4, { duration: 200 });
+    })
+    .onFinalize((_, success) => {
+      'worklet';
+      pressed.value = 0;
+      scale.value = withSpring(1, {
+        damping: 15,
+        stiffness: 300,
+      });
+      glowOpacity.value = withTiming(0, { duration: 300 });
+      iconScale.value = withSpring(1, {
+        damping: 10,
+        stiffness: 200,
+      });
+      arrowTranslateX.value = withTiming(0, { duration: 300 });
 
-  const handlePressOut = () => {
-    Animated.parallel([
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        useNativeDriver: true,
-        speed: 50,
-        bounciness: 4,
-      }),
-      Animated.timing(glowAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }),
-      Animated.spring(iconScaleAnim, {
-        toValue: 1,
-        useNativeDriver: true,
-        speed: 40,
-        bounciness: 8,
-      }),
-      Animated.timing(arrowTranslateAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
+      if (success) {
+        // Trigger haptic feedback on main thread
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        onPress();
+      }
+    });
 
   // Convert hex color to rgba for glow effect
   const hexToRgba = (hex: string, alpha: number) => {
@@ -109,50 +98,50 @@ export function PathwayCard({ title, icon, description, color, onPress }: Pathwa
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
-  // Animated glow opacity
-  const glowOpacity = glowAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 0.6],
-  });
+  // Animated styles using Reanimated
+  const containerAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
-  const shadowOpacity = glowAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.3, 0.6],
-  });
+  const glowAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(glowOpacity.value, [0, 1], [0, 0.6]),
+    shadowOpacity: interpolate(glowOpacity.value, [0, 1], [0.3, 0.6]),
+  }));
+
+  const iconAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: iconScale.value }],
+  }));
+
+  const arrowAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: arrowTranslateX.value }],
+  }));
+
+  const shimmerAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(glowOpacity.value, [0, 1], [0, 0.3]),
+  }));
 
   return (
-    <Animated.View
-      style={[
-        styles.cardContainer,
-        {
-          transform: [{ scale: scaleAnim }],
-        },
-      ]}
-    >
-      {/* Outer glow effect */}
+    <GestureDetector gesture={tapGesture}>
       <Animated.View
-        style={[
-          styles.glowContainer,
-          {
-            backgroundColor: hexToRgba(color, 0.15),
-            opacity: glowOpacity,
-            shadowColor: color,
-            shadowOpacity: shadowOpacity,
-          },
-        ]}
-      />
-
-      <TouchableOpacity
-        style={[styles.card, { borderColor: color }]}
-        onPress={onPress}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        activeOpacity={1}
+        style={[styles.cardContainer, containerAnimatedStyle]}
         accessible={true}
         accessibilityLabel={`${title} pathway. ${description}`}
         accessibilityRole="button"
         accessibilityHint="Tap to explore this pathway"
       >
+        {/* Outer glow effect */}
+        <Animated.View
+          style={[
+            styles.glowContainer,
+            glowAnimatedStyle,
+            {
+              backgroundColor: hexToRgba(color, 0.15),
+              shadowColor: color,
+            },
+          ]}
+        />
+
+        <View style={[styles.card, { borderColor: color }]}>
         {/* Gradient overlay for depth */}
         <View style={styles.gradientOverlay}>
           <View style={[styles.gradientTop, { backgroundColor: hexToRgba(color, 0.05) }]} />
@@ -163,10 +152,10 @@ export function PathwayCard({ title, icon, description, color, onPress }: Pathwa
         <Animated.View
           style={[
             styles.iconContainer,
+            iconAnimatedStyle,
             {
               backgroundColor: hexToRgba(color, 0.15),
               borderColor: hexToRgba(color, 0.3),
-              transform: [{ scale: iconScaleAnim }],
             },
           ]}
         >
@@ -200,14 +189,7 @@ export function PathwayCard({ title, icon, description, color, onPress }: Pathwa
         </View>
 
         {/* Animated arrow indicator */}
-        <Animated.View
-          style={[
-            styles.arrow,
-            {
-              transform: [{ translateX: arrowTranslateAnim }],
-            },
-          ]}
-        >
+        <Animated.View style={[styles.arrow, arrowAnimatedStyle]}>
           <View style={[styles.arrowCircle, { backgroundColor: hexToRgba(color, 0.15) }]}>
             <Text style={[styles.arrowText, { color }]} accessibilityLabel="Navigate arrow">
               →
@@ -216,19 +198,10 @@ export function PathwayCard({ title, icon, description, color, onPress }: Pathwa
         </Animated.View>
 
         {/* Shimmer effect overlay */}
-        <Animated.View
-          style={[
-            styles.shimmer,
-            {
-              opacity: glowAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 0.3],
-              }),
-            },
-          ]}
-        />
-      </TouchableOpacity>
-    </Animated.View>
+        <Animated.View style={[styles.shimmer, shimmerAnimatedStyle]} />
+        </View>
+      </Animated.View>
+    </GestureDetector>
   );
 }
 

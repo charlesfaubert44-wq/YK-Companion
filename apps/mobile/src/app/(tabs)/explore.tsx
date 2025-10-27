@@ -1,5 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { colors } from '../../theme/colors';
+import * as Haptics from 'expo-haptics';
 
 const activities = [
   { id: 1, title: 'Aurora Viewing', emoji: '🌌', season: 'Winter', difficulty: 'Easy' },
@@ -13,8 +15,44 @@ const activities = [
 ];
 
 export default function ExploreScreen() {
+  const [refreshing, setRefreshing] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('All');
+
+  // Pull-to-refresh handler with haptic feedback
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+    // Simulate data refresh (replace with actual API calls)
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    setRefreshing(false);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+  }, []);
+
+  const handleFilterPress = (filter: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setSelectedFilter(filter);
+  };
+
+  const handleActivityPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    // Navigate to activity detail
+  };
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={colors.aurora.green}
+          colors={[colors.aurora.green, colors.aurora.blue, colors.aurora.purple]}
+          progressBackgroundColor={colors.background.card}
+        />
+      }
+    >
       <View style={styles.header}>
         <Text style={styles.title}>Explore Activities</Text>
         <Text style={styles.subtitle}>Discover what Yellowknife has to offer</Text>
@@ -22,27 +60,62 @@ export default function ExploreScreen() {
 
       <View style={styles.filterSection}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
-          <TouchableOpacity style={[styles.filterButton, styles.filterButtonActive]}>
-            <Text style={styles.filterTextActive}>All</Text>
+          <TouchableOpacity
+            style={[styles.filterButton, selectedFilter === 'All' && styles.filterButtonActive]}
+            activeOpacity={0.7}
+            onPress={() => handleFilterPress('All')}
+          >
+            <Text style={selectedFilter === 'All' ? styles.filterTextActive : styles.filterText}>
+              All
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Winter</Text>
+          <TouchableOpacity
+            style={[styles.filterButton, selectedFilter === 'Winter' && styles.filterButtonActive]}
+            activeOpacity={0.7}
+            onPress={() => handleFilterPress('Winter')}
+          >
+            <Text style={selectedFilter === 'Winter' ? styles.filterTextActive : styles.filterText}>
+              Winter
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Summer</Text>
+          <TouchableOpacity
+            style={[styles.filterButton, selectedFilter === 'Summer' && styles.filterButtonActive]}
+            activeOpacity={0.7}
+            onPress={() => handleFilterPress('Summer')}
+          >
+            <Text style={selectedFilter === 'Summer' ? styles.filterTextActive : styles.filterText}>
+              Summer
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Easy</Text>
+          <TouchableOpacity
+            style={[styles.filterButton, selectedFilter === 'Easy' && styles.filterButtonActive]}
+            activeOpacity={0.7}
+            onPress={() => handleFilterPress('Easy')}
+          >
+            <Text style={selectedFilter === 'Easy' ? styles.filterTextActive : styles.filterText}>
+              Easy
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Moderate</Text>
+          <TouchableOpacity
+            style={[styles.filterButton, selectedFilter === 'Moderate' && styles.filterButtonActive]}
+            activeOpacity={0.7}
+            onPress={() => handleFilterPress('Moderate')}
+          >
+            <Text style={selectedFilter === 'Moderate' ? styles.filterTextActive : styles.filterText}>
+              Moderate
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
 
       <View style={styles.activitiesSection}>
         {activities.map((activity) => (
-          <TouchableOpacity key={activity.id} style={styles.activityCard}>
+          <TouchableOpacity
+            key={activity.id}
+            style={styles.activityCard}
+            activeOpacity={0.7}
+            onPress={handleActivityPress}
+          >
             <Text style={styles.activityEmoji}>{activity.emoji}</Text>
             <View style={styles.activityInfo}>
               <Text style={styles.activityTitle}>{activity.title}</Text>
