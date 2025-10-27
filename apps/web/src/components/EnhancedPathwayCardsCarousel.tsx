@@ -1,11 +1,39 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import Carousel, { CarouselCard } from './Carousel';
+import { useState, useEffect } from 'react';
 
 export default function EnhancedPathwayCardsCarousel() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Detect screen size and motion preferences
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    const checkMotionPreference = () => {
+      setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    };
+
+    checkScreenSize();
+    checkMotionPreference();
+
+    window.addEventListener('resize', checkScreenSize);
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    motionQuery.addEventListener('change', checkMotionPreference);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+      motionQuery.removeEventListener('change', checkMotionPreference);
+    };
+  }, []);
+
+  // Reduce particle count on mobile for performance
+  const particleCount = isMobile ? 15 : 30;
+  const shouldAnimateParticles = !prefersReducedMotion;
 
   const pathwayCards = [
     {
@@ -63,11 +91,11 @@ export default function EnhancedPathwayCardsCarousel() {
             </path>
           </svg>
 
-          {/* Star Field */}
-          {[...Array(30)].map((_, i) => (
+          {/* Star Field - Optimized for Mobile */}
+          {shouldAnimateParticles && [...Array(particleCount)].map((_, i) => (
             <div
               key={i}
-              className="absolute rounded-full bg-white"
+              className="absolute rounded-full bg-white pointer-events-none"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 60}%`,
@@ -101,9 +129,9 @@ export default function EnhancedPathwayCardsCarousel() {
             </defs>
           </svg>
 
-          {/* Main Plane Icon - Centered */}
-          <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-700">
-            <svg width="120" height="100" viewBox="0 0 120 100" className="drop-shadow-[0_0_30px_rgba(16,185,129,0.8)] filter" style={{ filter: 'url(#glow)' }}>
+          {/* Main Plane Icon - Centered - Responsive */}
+          <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-105 md:group-hover:scale-110 group-hover:-translate-y-1 md:group-hover:-translate-y-2 transition-all duration-700">
+            <svg className="w-24 h-20 sm:w-28 sm:h-24 md:w-32 md:h-28 drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] md:drop-shadow-[0_0_30px_rgba(16,185,129,0.8)] filter" viewBox="0 0 120 100" style={{ filter: 'url(#glow)' }}>
               <defs>
                 <linearGradient id="planeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" style={{ stopColor: '#10b981', stopOpacity: 1 }} />
@@ -203,11 +231,11 @@ export default function EnhancedPathwayCardsCarousel() {
             <path d="M0,220 L60,150 L140,200 L220,140 L300,190 L400,150 L400,300 L0,300 Z" fill="url(#mountainGrad)" opacity="0.6" />
           </svg>
 
-          {/* Snowfall */}
-          {[...Array(25)].map((_, i) => (
+          {/* Snowfall - Optimized for Mobile */}
+          {shouldAnimateParticles && [...Array(particleCount)].map((_, i) => (
             <div
               key={i}
-              className="absolute rounded-full bg-white"
+              className="absolute rounded-full bg-white pointer-events-none"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `-${Math.random() * 20}%`,
@@ -223,9 +251,9 @@ export default function EnhancedPathwayCardsCarousel() {
           {/* Ground/Snow Layer */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-blue-100/20 via-blue-200/10 to-transparent" />
 
-          {/* Main House Icon - Centered */}
+          {/* Main House Icon - Centered - Responsive */}
           <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-105 transition-all duration-700">
-            <svg width="140" height="140" viewBox="0 0 200 200" className="drop-shadow-[0_0_40px_rgba(251,146,60,0.6)]">
+            <svg className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 drop-shadow-[0_0_30px_rgba(251,146,60,0.5)] md:drop-shadow-[0_0_40px_rgba(251,146,60,0.6)]" viewBox="0 0 200 200">
               <defs>
                 <linearGradient id="roofGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" style={{ stopColor: '#dc2626', stopOpacity: 1 }} />
@@ -425,9 +453,9 @@ export default function EnhancedPathwayCardsCarousel() {
             <path d="M0,100 L0,60 L50,30 L100,50 L150,20 L200,45 L250,25 L300,50 L350,35 L400,55 L400,100 Z" fill="rgba(168, 85, 247, 0.4)" />
           </svg>
 
-          {/* Main Compass Icon - Centered */}
-          <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
-            <svg width="160" height="160" viewBox="0 0 200 200" className="drop-shadow-[0_0_40px_rgba(168,85,247,0.8)]">
+          {/* Main Compass Icon - Centered - Responsive */}
+          <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-105 md:group-hover:scale-110 group-hover:rotate-3 md:group-hover:rotate-6 transition-all duration-700">
+            <svg className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 drop-shadow-[0_0_30px_rgba(168,85,247,0.6)] md:drop-shadow-[0_0_40px_rgba(168,85,247,0.8)]" viewBox="0 0 200 200">
               <defs>
                 <radialGradient id="compassGlow">
                   <stop offset="0%" style={{ stopColor: '#a855f7', stopOpacity: 0.6 }} />
@@ -580,11 +608,11 @@ export default function EnhancedPathwayCardsCarousel() {
             </svg>
           </div>
 
-          {/* Traveling Light Particles */}
-          {[...Array(8)].map((_, i) => (
+          {/* Traveling Light Particles - Optimized for Mobile */}
+          {shouldAnimateParticles && [...Array(isMobile ? 6 : 8)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-1.5 h-1.5 bg-purple-400 rounded-full"
+              className="absolute w-1.5 h-1.5 bg-purple-400 rounded-full pointer-events-none"
               style={{
                 left: `${20 + i * 10}%`,
                 top: `${30 + (i % 3) * 20}%`,
@@ -602,41 +630,23 @@ export default function EnhancedPathwayCardsCarousel() {
 
   return (
     <div className="relative">
-      {/* Unified Glassmorphic Container */}
-      <div className="backdrop-blur-xl bg-gradient-to-br from-slate-900/60 via-slate-800/60 to-slate-900/60 border-l border-r border-b border-slate-700/50 rounded-b-3xl px-4 md:px-8 py-8 md:py-12 shadow-2xl -mt-px">
-        {/* Desktop: Grid Layout (hidden on mobile) */}
-        <div className="hidden md:grid md:grid-cols-3 gap-6">
+      {/* Unified Glassmorphic Container - Fully Responsive */}
+      <div className="backdrop-blur-xl bg-gradient-to-br from-slate-900/60 via-slate-800/60 to-slate-900/60 border-l border-r border-b border-slate-700/50 rounded-b-3xl px-3 sm:px-4 md:px-8 py-6 sm:py-8 md:py-12 shadow-2xl -mt-px">
+
+        {/* Responsive Grid Layout - Unified Approach */}
+        {/* Mobile: Stack vertically, Tablet: 2 columns, Desktop: 3 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
           {pathwayCards.map((card) => (
             <PathwayCard
               key={card.id}
               card={card}
               hoveredCard={hoveredCard}
               setHoveredCard={setHoveredCard}
+              isMobile={isMobile}
+              particleCount={particleCount}
+              shouldAnimateParticles={shouldAnimateParticles}
             />
           ))}
-        </div>
-
-        {/* Mobile: Carousel Layout (visible only on mobile) */}
-        <div className="block md:hidden">
-          <Carousel
-            showDots={true}
-            showArrows={false}
-            loop={true}
-            itemsPerView={{ mobile: 1, tablet: 1, desktop: 3 }}
-            gap={16}
-            snap={true}
-            className="px-2"
-          >
-            {pathwayCards.map((card) => (
-              <CarouselCard key={card.id}>
-                <PathwayCard
-                  card={card}
-                  hoveredCard={hoveredCard}
-                  setHoveredCard={setHoveredCard}
-                />
-              </CarouselCard>
-            ))}
-          </Carousel>
         </div>
       </div>
 
@@ -684,24 +694,32 @@ export default function EnhancedPathwayCardsCarousel() {
 function PathwayCard({
   card,
   hoveredCard,
-  setHoveredCard
+  setHoveredCard,
+  isMobile,
+  particleCount,
+  shouldAnimateParticles
 }: {
   card: any;
   hoveredCard: string | null;
   setHoveredCard: (id: string | null) => void;
+  isMobile: boolean;
+  particleCount: number;
+  shouldAnimateParticles: boolean;
 }) {
   const isHovered = hoveredCard === card.id;
 
   return (
     <Link href={card.href} className="group block">
       <div
-        className={`relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border transition-all duration-700 hover:shadow-2xl ${
+        className={`relative h-[280px] sm:h-[320px] md:h-[340px] lg:h-[360px] rounded-xl sm:rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border transition-all duration-500 md:duration-700 touch-manipulation ${
           isHovered
-            ? `border-${card.borderColor}/80 bg-white/10 shadow-[0_0_60px_rgba(168,85,247,0.5)] scale-[1.02]`
+            ? `border-${card.borderColor}/80 bg-white/10 shadow-[0_0_40px_rgba(168,85,247,0.4)] md:shadow-[0_0_60px_rgba(168,85,247,0.5)] scale-[1.01] md:scale-[1.02]`
             : `border-${card.borderColor}/30`
         }`}
-        onMouseEnter={() => setHoveredCard(card.id)}
-        onMouseLeave={() => setHoveredCard(null)}
+        onMouseEnter={() => !isMobile && setHoveredCard(card.id)}
+        onMouseLeave={() => !isMobile && setHoveredCard(null)}
+        role="article"
+        aria-label={`${card.title} pathway - ${card.subtitle}`}
       >
         {/* Layered Background Gradients */}
         <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-60 group-hover:opacity-90 transition-all duration-700`} />
@@ -710,27 +728,27 @@ function PathwayCard({
         {/* Radial Gradient Overlay */}
         <div className={`absolute inset-0 bg-radial-gradient from-${card.borderColor}/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
 
-        {/* Content Container - Bottom Aligned */}
-        <div className="absolute inset-0 flex flex-col justify-end pb-6 px-6 z-10">
+        {/* Content Container - Bottom Aligned - Fully Responsive */}
+        <div className="absolute inset-0 flex flex-col justify-end pb-4 sm:pb-5 md:pb-6 px-4 sm:px-5 md:px-6 z-10">
           {/* Title - Fixed Position from Bottom with Enhanced Effects */}
-          <div className={`absolute bottom-[140px] left-6 right-6 transition-all duration-500 ${
-            isHovered ? 'transform -translate-y-2' : ''
+          <div className={`absolute bottom-[120px] sm:bottom-[130px] md:bottom-[140px] left-4 sm:left-5 md:left-6 right-4 sm:right-5 md:right-6 transition-all duration-500 ${
+            isHovered && !isMobile ? 'transform -translate-y-2' : ''
           }`}>
-            <h3 className={`text-3xl font-bold text-white mb-2 bg-gradient-to-r ${card.titleGradient} bg-clip-text text-transparent transition-all duration-500 ${
-              isHovered ? 'scale-110 tracking-wider' : ''
+            <h3 className={`text-2xl sm:text-2xl md:text-3xl lg:text-3xl font-bold text-white mb-1 sm:mb-1.5 md:mb-2 bg-gradient-to-r ${card.titleGradient} bg-clip-text text-transparent transition-all duration-500 ${
+              isHovered && !isMobile ? 'md:scale-110 md:tracking-wider' : ''
             }`}>
               {card.title}
             </h3>
-            <p className={`text-xs text-gray-300/90 transition-all duration-500 ${
-              isHovered ? 'text-gray-100 tracking-wide' : ''
+            <p className={`text-xs sm:text-xs md:text-sm text-gray-300/90 transition-all duration-500 ${
+              isHovered && !isMobile ? 'text-gray-100 tracking-wide' : ''
             }`}>
               {card.subtitle}
             </p>
           </div>
 
-          {/* Icon Container with Parallax Effect */}
-          <div className={`flex justify-center mb-2 transition-all duration-700 ${
-            isHovered ? 'transform translate-y-[-8px]' : ''
+          {/* Icon Container with Parallax Effect - Scale down on mobile */}
+          <div className={`flex justify-center mb-1 sm:mb-1.5 md:mb-2 transition-all duration-700 scale-90 sm:scale-95 md:scale-100 ${
+            isHovered && !isMobile ? 'md:transform md:translate-y-[-8px]' : ''
           }`}>
             {card.icon}
           </div>
