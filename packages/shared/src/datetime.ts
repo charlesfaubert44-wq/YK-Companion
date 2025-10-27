@@ -266,7 +266,7 @@ export function generateTimeSlots(
  * );
  */
 export function findAvailableSlots(
-  date: string,
+  _date: string,
   businessHours: { open: string; close: string },
   bookedSlots: { start: string; end: string }[],
   slotDuration: number
@@ -333,7 +333,6 @@ export function getDaylightHours(date: Date | string): number {
   // Summer solstice (day ~172): ~20.5 hours
   // Winter solstice (day ~355): ~4.5 hours
   const summerSolstice = 172;
-  const winterSolstice = 355;
   const maxDaylight = 20.5;
   const minDaylight = 4.5;
 
