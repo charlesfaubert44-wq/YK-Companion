@@ -10,12 +10,12 @@
     "dev": "tsc --watch",
     "type-check": "tsc --noEmit"
   },
-  "devDependencies": {
-    "@types/node": "^20.10.0",
-    "typescript": "^5.3.3"
-  },
   "dependencies": {
+    "@types/node": "^20.10.0",
     "@yk-trip-planner/types": "file:../types",
     "date-fns": "^3.0.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
   }
 }
