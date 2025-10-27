@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Carousel, { CarouselCard } from './Carousel';
 
 export default function EnhancedPathwayCardsCarousel() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [flippedCard, setFlippedCard] = useState<string | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const pathwayCards = [
     {
@@ -13,9 +15,20 @@ export default function EnhancedPathwayCardsCarousel() {
       href: '/visiting',
       title: 'VISITING',
       subtitle: 'Explore the North',
+      description: 'Discover breathtaking attractions, plan your perfect northern adventure, and create unforgettable memories.',
       borderColor: 'emerald-500',
       gradient: 'from-emerald-500/20 via-cyan-500/10 to-transparent',
       titleGradient: 'from-emerald-400 to-cyan-400',
+      accentColor: '#10b981',
+      features: [
+        { icon: '🏔️', text: 'Top Attractions', count: '50+' },
+        { icon: '🗺️', text: 'Travel Guides', count: '20+' },
+        { icon: '📸', text: 'Photo Spots', count: '100+' }
+      ],
+      quickActions: [
+        { label: 'Plan Trip', icon: '✈️' },
+        { label: 'View Map', icon: '🗺️' }
+      ],
       icon: (
         // Aurora-inspired plane with flight trail and northern lights
         <div className="relative w-full h-full">
@@ -185,9 +198,20 @@ export default function EnhancedPathwayCardsCarousel() {
       href: '/living',
       title: 'LIVING',
       subtitle: 'Life in the Arctic',
+      description: 'Connect with your community, discover local events, and make the most of life in Yellowknife.',
       borderColor: 'blue-500',
       gradient: 'from-blue-500/20 via-orange-500/10 to-transparent',
       titleGradient: 'from-blue-400 to-orange-400',
+      accentColor: '#3b82f6',
+      features: [
+        { icon: '🎉', text: 'Local Events', count: '30+' },
+        { icon: '🍽️', text: 'Restaurants', count: '40+' },
+        { icon: '👥', text: 'Community', count: '5k+' }
+      ],
+      quickActions: [
+        { label: 'Find Events', icon: '📅' },
+        { label: 'Join Community', icon: '👋' }
+      ],
       icon: (
         // Cozy cabin in snowy landscape with warm glow
         <div className="relative w-full h-full">
@@ -358,9 +382,20 @@ export default function EnhancedPathwayCardsCarousel() {
       href: '/moving',
       title: 'MOVING',
       subtitle: 'Journey Awaits',
+      description: 'Everything you need to relocate smoothly, from housing to healthcare, jobs to schools.',
       borderColor: 'purple-500',
       gradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
       titleGradient: 'from-purple-400 to-pink-400',
+      accentColor: '#a855f7',
+      features: [
+        { icon: '🏠', text: 'Housing Options', count: '15+' },
+        { icon: '💼', text: 'Job Listings', count: '25+' },
+        { icon: '📋', text: 'Checklists', count: '10+' }
+      ],
+      quickActions: [
+        { label: 'Get Started', icon: '🚀' },
+        { label: 'View Guide', icon: '📖' }
+      ],
       icon: (
         // Journey-themed compass with map texture and path elements
         <div className="relative w-full h-full">
@@ -612,6 +647,8 @@ export default function EnhancedPathwayCardsCarousel() {
               card={card}
               hoveredCard={hoveredCard}
               setHoveredCard={setHoveredCard}
+              flippedCard={flippedCard}
+              setFlippedCard={setFlippedCard}
             />
           ))}
         </div>
@@ -633,6 +670,8 @@ export default function EnhancedPathwayCardsCarousel() {
                   card={card}
                   hoveredCard={hoveredCard}
                   setHoveredCard={setHoveredCard}
+                  flippedCard={flippedCard}
+                  setFlippedCard={setFlippedCard}
                 />
               </CarouselCard>
             ))}
@@ -676,6 +715,45 @@ export default function EnhancedPathwayCardsCarousel() {
           75% { opacity: 0.8; }
           100% { transform: translateX(100px) translateY(0); opacity: 0; }
         }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.6;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.05);
+          }
+        }
+
+        /* 3D Transform Utilities */
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+
+        .transform-style-3d {
+          transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+          backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+          transform: rotateY(180deg);
+        }
       `}</style>
     </div>
   );
@@ -684,73 +762,265 @@ export default function EnhancedPathwayCardsCarousel() {
 function PathwayCard({
   card,
   hoveredCard,
-  setHoveredCard
+  setHoveredCard,
+  flippedCard,
+  setFlippedCard
 }: {
   card: any;
   hoveredCard: string | null;
   setHoveredCard: (id: string | null) => void;
+  flippedCard: string | null;
+  setFlippedCard: (id: string | null) => void;
 }) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
   const isHovered = hoveredCard === card.id;
+  const isFlipped = flippedCard === card.id;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
+  };
+
+  const toggleFlip = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFlippedCard(isFlipped ? null : card.id);
+  };
 
   return (
-    <Link href={card.href} className="group block">
+    <div
+      ref={cardRef}
+      className="group relative h-[400px] perspective-1000"
+      onMouseEnter={() => setHoveredCard(card.id)}
+      onMouseLeave={() => setHoveredCard(null)}
+      onMouseMove={handleMouseMove}
+    >
+      {/* Card Container with 3D Flip */}
       <div
-        className={`relative h-[300px] rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border transition-all duration-700 hover:shadow-2xl ${
-          isHovered
-            ? `border-${card.borderColor}/80 bg-white/10 shadow-[0_0_60px_rgba(168,85,247,0.5)] scale-[1.02]`
-            : `border-${card.borderColor}/30`
+        className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
+          isFlipped ? 'rotate-y-180' : ''
         }`}
-        onMouseEnter={() => setHoveredCard(card.id)}
-        onMouseLeave={() => setHoveredCard(null)}
+        style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Layered Background Gradients */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-60 group-hover:opacity-90 transition-all duration-700`} />
-        <div className={`absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+        {/* FRONT FACE */}
+        <div
+          className="absolute inset-0 backface-hidden"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          <Link href={card.href}>
+            <div
+              className={`relative h-full rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 transition-all duration-500 cursor-pointer ${
+                isHovered
+                  ? 'border-white/40 shadow-[0_0_80px_rgba(255,255,255,0.3)] scale-[1.03]'
+                  : 'border-white/20'
+              }`}
+              style={{
+                background: isHovered
+                  ? `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, ${card.accentColor}33 0%, transparent 50%)`
+                  : undefined
+              }}
+            >
+              {/* Dynamic Gradient Overlay */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-40 group-hover:opacity-70 transition-all duration-700`}
+                style={{
+                  background: isHovered
+                    ? `radial-gradient(600px circle at ${mousePos.x}% ${mousePos.y}%, ${card.accentColor}40, transparent 40%)`
+                    : undefined
+                }}
+              />
 
-        {/* Radial Gradient Overlay */}
-        <div className={`absolute inset-0 bg-radial-gradient from-${card.borderColor}/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+              {/* Animated Background Pattern */}
+              <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                  backgroundSize: '40px 40px'
+                }} />
+              </div>
 
-        {/* Content Container - Bottom Aligned */}
-        <div className="absolute inset-0 flex flex-col justify-end pb-6 px-6 z-10">
-          {/* Title - Fixed Position from Bottom with Enhanced Effects */}
-          <div className={`absolute bottom-[140px] left-6 right-6 transition-all duration-500 ${
-            isHovered ? 'transform -translate-y-2' : ''
-          }`}>
-            <h3 className={`text-3xl font-bold text-white mb-2 bg-gradient-to-r ${card.titleGradient} bg-clip-text text-transparent transition-all duration-500 ${
-              isHovered ? 'scale-110 tracking-wider' : ''
-            }`}>
-              {card.title}
-            </h3>
-            <p className={`text-xs text-gray-300/90 transition-all duration-500 ${
-              isHovered ? 'text-gray-100 tracking-wide' : ''
-            }`}>
-              {card.subtitle}
-            </p>
-          </div>
+              {/* Top Section - Icon with Pulsing Glow */}
+              <div className="relative h-[45%] flex items-center justify-center overflow-hidden">
+                {/* Pulsing Glow Effect */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  style={{
+                    background: `radial-gradient(circle at center, ${card.accentColor}30 0%, transparent 70%)`,
+                    animation: 'pulse 3s ease-in-out infinite'
+                  }}
+                />
 
-          {/* Icon Container with Parallax Effect */}
-          <div className={`flex justify-center mb-2 transition-all duration-700 ${
-            isHovered ? 'transform translate-y-[-8px]' : ''
-          }`}>
-            {card.icon}
-          </div>
+                {/* Icon - Scaled Down */}
+                <div className="relative z-10 transform scale-75 group-hover:scale-85 transition-transform duration-500">
+                  {card.icon}
+                </div>
+
+                {/* Info Button */}
+                <button
+                  onClick={toggleFlip}
+                  className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center transition-all hover:bg-white/20 hover:scale-110 hover:rotate-180 duration-300"
+                  aria-label="More info"
+                >
+                  <span className="text-white text-lg">ⓘ</span>
+                </button>
+              </div>
+
+              {/* Bottom Section - Content */}
+              <div className="relative h-[55%] flex flex-col justify-between p-6 bg-gradient-to-t from-black/80 via-black/60 to-transparent">
+                {/* Title Section */}
+                <div className="space-y-2">
+                  <h3 className={`text-3xl font-bold bg-gradient-to-r ${card.titleGradient} bg-clip-text text-transparent transition-all duration-500 ${
+                    isHovered ? 'scale-105 tracking-wide' : ''
+                  }`}>
+                    {card.title}
+                  </h3>
+                  <p className="text-sm text-gray-300/90 font-medium">
+                    {card.subtitle}
+                  </p>
+                </div>
+
+                {/* Features Grid - Interactive Stats */}
+                <div className="grid grid-cols-3 gap-2 mt-4">
+                  {card.features.map((feature: any, idx: number) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/30 hover:scale-105 transition-all duration-300 cursor-pointer group/feature"
+                      style={{
+                        animationDelay: `${idx * 100}ms`,
+                        animation: isHovered ? 'slideUp 0.5s ease-out forwards' : undefined
+                      }}
+                    >
+                      <span className="text-2xl mb-1 group-hover/feature:scale-125 transition-transform">
+                        {feature.icon}
+                      </span>
+                      <span className="text-xs text-white/70 text-center leading-tight mb-1">
+                        {feature.text}
+                      </span>
+                      <span
+                        className="text-sm font-bold bg-clip-text text-transparent"
+                        style={{
+                          backgroundImage: `linear-gradient(135deg, ${card.accentColor} 0%, white 100%)`
+                        }}
+                      >
+                        {feature.count}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA Button */}
+                <button
+                  className="mt-4 w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg relative overflow-hidden group/btn"
+                  style={{
+                    background: `linear-gradient(135deg, ${card.accentColor} 0%, ${card.accentColor}dd 100%)`
+                  }}
+                >
+                  <span className="relative z-10">Explore Now</span>
+                  <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-500" />
+                </button>
+              </div>
+
+              {/* Shimmer Effect */}
+              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none`}>
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500"
+                  style={{ width: '50%' }}
+                />
+              </div>
+            </div>
+          </Link>
         </div>
 
-        {/* Animated Glow Effect on Hover */}
-        <div className={`absolute inset-0 bg-gradient-to-br from-${card.borderColor}/0 to-${card.borderColor}/0 group-hover:from-${card.borderColor}/20 group-hover:to-transparent transition-all duration-700 pointer-events-none`} />
+        {/* BACK FACE */}
+        <div
+          className="absolute inset-0 backface-hidden rotate-y-180"
+          style={{
+            backfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)'
+          }}
+        >
+          <div
+            className={`relative h-full rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-black/90 to-black/70 border-2 border-white/30 p-6 flex flex-col justify-between`}
+          >
+            {/* Close Button */}
+            <button
+              onClick={toggleFlip}
+              className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center transition-all hover:bg-white/20 hover:scale-110 hover:rotate-90 duration-300"
+              aria-label="Close"
+            >
+              <span className="text-white text-xl">×</span>
+            </button>
 
-        {/* Edge Glow */}
-        <div className={`absolute inset-0 rounded-2xl shadow-inner opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
-             style={{
-               boxShadow: `inset 0 0 60px rgba(168, 85, 247, 0.3)`
-             }}
-        />
+            {/* Content */}
+            <div className="flex-1 flex flex-col justify-center space-y-6">
+              {/* Title */}
+              <div>
+                <h3
+                  className="text-3xl font-bold mb-2"
+                  style={{ color: card.accentColor }}
+                >
+                  {card.title}
+                </h3>
+                <div
+                  className="w-20 h-1 rounded-full"
+                  style={{ background: card.accentColor }}
+                />
+              </div>
 
-        {/* Shimmer Effect */}
-        <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000`}>
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500" />
+              {/* Description */}
+              <p className="text-gray-200 text-base leading-relaxed">
+                {card.description}
+              </p>
+
+              {/* Feature List */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                  What's Included
+                </h4>
+                {card.features.map((feature: any, idx: number) => (
+                  <div
+                    key={idx}
+                    className="flex items-center space-x-3 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all"
+                  >
+                    <span className="text-2xl">{feature.icon}</span>
+                    <span className="text-white text-sm flex-1">{feature.text}</span>
+                    <span
+                      className="text-sm font-bold"
+                      style={{ color: card.accentColor }}
+                    >
+                      {feature.count}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="grid grid-cols-2 gap-3 mt-6">
+              {card.quickActions.map((action: any, idx: number) => (
+                <Link key={idx} href={card.href}>
+                  <button
+                    className="w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
+                    style={{
+                      background: idx === 0
+                        ? `linear-gradient(135deg, ${card.accentColor} 0%, ${card.accentColor}dd 100%)`
+                        : 'rgba(255, 255, 255, 0.1)',
+                      border: idx === 1 ? `2px solid ${card.accentColor}` : 'none'
+                    }}
+                  >
+                    <span className="text-lg">{action.icon}</span>
+                    <span className="text-sm">{action.label}</span>
+                  </button>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
