@@ -45,7 +45,7 @@ export default function AdminUsersPage() {
     activeStatus: 'all'
   });
 
-  const [permissions, setPermissions] = useState({
+  const [editPermissions, setEditPermissions] = useState({
     is_super_admin: false,
     can_manage_users: false,
     can_manage_sponsors: false,
@@ -164,7 +164,7 @@ export default function AdminUsersPage() {
   const openPermissionsModal = (user: User) => {
     setSelectedUser(user);
     if (user.permissions) {
-      setPermissions({
+      setEditPermissions({
         is_super_admin: user.permissions.is_super_admin,
         can_manage_users: user.permissions.can_manage_users,
         can_manage_sponsors: user.permissions.can_manage_sponsors,
@@ -176,7 +176,7 @@ export default function AdminUsersPage() {
       });
     } else {
       // Default permissions if none exist
-      setPermissions({
+      setEditPermissions({
         is_super_admin: false,
         can_manage_users: false,
         can_manage_sponsors: false,
@@ -199,7 +199,7 @@ export default function AdminUsersPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: selectedUser.id,
-          ...permissions,
+          ...editPermissions,
         }),
       });
 
@@ -539,11 +539,11 @@ export default function AdminUsersPage() {
               <label className="flex items-center gap-3 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg cursor-pointer hover:bg-yellow-500/20 transition-colors">
                 <input
                   type="checkbox"
-                  checked={permissions.is_super_admin}
+                  checked={editPermissions.is_super_admin}
                   onChange={(e) => {
                     const isSuperAdmin = e.target.checked;
-                    setPermissions({
-                      ...permissions,
+                    setEditPermissions({
+                      ...editPermissions,
                       is_super_admin: isSuperAdmin,
                       // If super admin, grant all permissions
                       ...(isSuperAdmin ? {
@@ -565,12 +565,12 @@ export default function AdminUsersPage() {
               </label>
 
               {/* Individual Permissions */}
-              <div className={`space-y-3 ${permissions.is_super_admin ? 'opacity-50 pointer-events-none' : ''}`}>
+              <div className={`space-y-3 ${editPermissions.is_super_admin ? 'opacity-50 pointer-events-none' : ''}`}>
                 <label className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-900/70 transition-colors">
                   <input
                     type="checkbox"
-                    checked={permissions.can_manage_users}
-                    onChange={(e) => setPermissions({ ...permissions, can_manage_users: e.target.checked })}
+                    checked={editPermissions.can_manage_users}
+                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_users: e.target.checked })}
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Users</span>
@@ -579,8 +579,8 @@ export default function AdminUsersPage() {
                 <label className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-900/70 transition-colors">
                   <input
                     type="checkbox"
-                    checked={permissions.can_manage_sponsors}
-                    onChange={(e) => setPermissions({ ...permissions, can_manage_sponsors: e.target.checked })}
+                    checked={editPermissions.can_manage_sponsors}
+                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_sponsors: e.target.checked })}
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Sponsors</span>
@@ -589,8 +589,8 @@ export default function AdminUsersPage() {
                 <label className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-900/70 transition-colors">
                   <input
                     type="checkbox"
-                    checked={permissions.can_manage_content}
-                    onChange={(e) => setPermissions({ ...permissions, can_manage_content: e.target.checked })}
+                    checked={editPermissions.can_manage_content}
+                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_content: e.target.checked })}
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Content</span>
@@ -599,8 +599,8 @@ export default function AdminUsersPage() {
                 <label className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-900/70 transition-colors">
                   <input
                     type="checkbox"
-                    checked={permissions.can_manage_garage_sales}
-                    onChange={(e) => setPermissions({ ...permissions, can_manage_garage_sales: e.target.checked })}
+                    checked={editPermissions.can_manage_garage_sales}
+                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_garage_sales: e.target.checked })}
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Garage Sales</span>
@@ -609,8 +609,8 @@ export default function AdminUsersPage() {
                 <label className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-900/70 transition-colors">
                   <input
                     type="checkbox"
-                    checked={permissions.can_view_analytics}
-                    onChange={(e) => setPermissions({ ...permissions, can_view_analytics: e.target.checked })}
+                    checked={editPermissions.can_view_analytics}
+                    onChange={(e) => setEditPermissions({ ...editPermissions, can_view_analytics: e.target.checked })}
                     className="w-4 h-4"
                   />
                   <span className="text-white">View Analytics</span>
@@ -619,8 +619,8 @@ export default function AdminUsersPage() {
                 <label className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-900/70 transition-colors">
                   <input
                     type="checkbox"
-                    checked={permissions.can_manage_settings}
-                    onChange={(e) => setPermissions({ ...permissions, can_manage_settings: e.target.checked })}
+                    checked={editPermissions.can_manage_settings}
+                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_settings: e.target.checked })}
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Settings</span>
@@ -633,8 +633,8 @@ export default function AdminUsersPage() {
                   Notes
                 </label>
                 <textarea
-                  value={permissions.notes}
-                  onChange={(e) => setPermissions({ ...permissions, notes: e.target.value })}
+                  value={editPermissions.notes}
+                  onChange={(e) => setEditPermissions({ ...editPermissions, notes: e.target.value })}
                   rows={3}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   placeholder="Any notes about this user's permissions..."
