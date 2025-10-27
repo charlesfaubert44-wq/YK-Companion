@@ -1,4 +1,30 @@
+/**
+ * YK Companion Shared Utilities
+ * Core utilities and helpers shared across web, mobile, and API apps
+ */
+
 import { Season } from '@yk-trip-planner/types';
+
+// ============================================================
+// EXPORTS - New Utility Modules
+// ============================================================
+
+// Async and Promise utilities
+export * from './async';
+
+// Form validation and management utilities
+export * from './forms';
+
+// Query parameter and URL utilities
+export * from './query-params';
+
+// Date and time utilities (Yellowknife-specific)
+export * from './datetime';
+
+// ============================================================
+// LEGACY UTILITIES (backward compatibility)
+// Keeping these for existing code that imports them
+// ============================================================
 
 /**
  * Get the current season based on the date
