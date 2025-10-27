@@ -5,6 +5,7 @@
   "description": "YKBuddy Web App - Next.js 14 app featuring Aurora Live Events with real-time tracking, Photography Challenges, Garage Sale Planner with TSP route optimization, and Pixel UI component library",
   "scripts": {
     "dev": "next dev -p 3002",
+    "prebuild": "cd ../../packages/types && npm install && npm run build && cd ../shared && npm install && npm run build",
     "build": "next build",
     "start": "next start -p 3002",
     "lint": "next lint",
