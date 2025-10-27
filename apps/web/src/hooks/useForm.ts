@@ -6,8 +6,8 @@
 'use client';
 
 import { useState, useCallback, FormEvent } from 'react';
-import type { FieldConfig, ValidationResult } from '@yk-trip-planner/shared/forms';
-import { validateForm, getFieldError as getError } from '@yk-trip-planner/shared/forms';
+import type { FieldConfig, ValidationResult } from '@yk-trip-planner/shared';
+import { validateForm, getFieldError as getError } from '@yk-trip-planner/shared';
 
 /**
  * Form hook configuration

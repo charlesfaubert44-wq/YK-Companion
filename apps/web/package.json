@@ -14,6 +14,8 @@
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.76.1",
     "@tanstack/react-query": "^5.14.2",
+    "@yk-trip-planner/shared": "file:../../packages/shared",
+    "@yk-trip-planner/types": "file:../../packages/types",
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
     "date-fns": "^3.0.6",
