@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YK Buddy - Open Graph Image Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a192f 0%, #1a2332 50%, #0a192f 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .og-card {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #0a192f 0%, #1e293b 100%);
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Aurora Background Animation */
+        .aurora-bg {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+            animation: aurora 20s ease-in-out infinite;
+            filter: blur(60px);
+        }
+
+        @keyframes aurora {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            33% { transform: translateY(-30px) translateX(30px); }
+            66% { transform: translateY(30px) translateX(-30px); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px;
+            text-align: center;
+        }
+
+        .logo-area {
+            margin-bottom: 40px;
+        }
+
+        .logo-text {
+            font-size: 96px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10B981, #3B82F6, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            text-shadow: 0 0 60px rgba(16, 185, 129, 0.3);
+        }
+
+        .tagline {
+            font-size: 42px;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: 32px;
+            color: #94a3b8;
+            font-weight: 400;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .features {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 28px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+        }
+
+        .feature-text {
+            font-size: 24px;
+            color: #10B981;
+            font-weight: 600;
+        }
+
+        .location {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 28px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Decorative Elements */
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .decoration-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #10B981, #3B82F6);
+            top: -200px;
+            right: -200px;
+            filter: blur(80px);
+        }
+
+        .decoration-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            bottom: -150px;
+            left: -150px;
+            filter: blur(80px);
+        }
+    </style>
+</head>
+<body>
+    <div class="og-card">
+        <!-- Aurora Background -->
+        <div class="aurora-bg"></div>
+
+        <!-- Decorative Elements -->
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="logo-area">
+                <div class="logo-text">YK Buddy</div>
+            </div>
+
+            <div class="tagline">Your Yellowknife Companion</div>
+
+            <div class="subtitle">"Because Nobody Should Face -40° Alone"</div>
+
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">🌌</span>
+                    <span class="feature-text">Aurora Tracking</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🗺️</span>
+                    <span class="feature-text">Local Events</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🏠</span>
+                    <span class="feature-text">Moving Guide</span>
+                </div>
+            </div>
+
+            <div class="location">📍 Yellowknife, Northwest Territories</div>
+        </div>
+    </div>
+
+    <script>
+        // Instructions
+        console.log("=".repeat(80));
+        console.log("INSTRUCTIONS TO CREATE OG IMAGE:");
+        console.log("=".repeat(80));
+        console.log("1. Open this file in Chrome/Firefox");
+        console.log("2. Press F12 to open DevTools");
+        console.log("3. Press Ctrl+Shift+P (Cmd+Shift+P on Mac)");
+        console.log("4. Type 'screenshot' and select 'Capture node screenshot'");
+        console.log("5. Click on the card element");
+        console.log("6. OR use a screenshot tool to capture at exactly 1200x630px");
+        console.log("7. Save as 'og-image.jpg' in apps/web/public/");
+        console.log("=".repeat(80));
+    </script>
+</body>
+</html>

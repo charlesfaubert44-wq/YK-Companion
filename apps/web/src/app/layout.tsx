@@ -8,7 +8,7 @@ import PWAInstaller from '@/components/PWAInstaller';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import StructuredData from '@/components/StructuredData';
 import { Analytics } from '@vercel/analytics/react';
-import { defaultMetadata } from '@/lib/seo';
+import { defaultMetadata, googleSiteVerification } from '@/lib/seo';
 
 const inter = Inter({ subsets: ['latin'] });
 const pressStart2P = Press_Start_2P({
@@ -32,6 +32,11 @@ export const metadata: Metadata = {
     userScalable: true,
     viewportFit: 'cover',
   },
+  ...(googleSiteVerification && {
+    verification: {
+      google: googleSiteVerification,
+    },
+  }),
 };
 
 export default function RootLayout({

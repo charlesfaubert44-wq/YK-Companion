@@ -4,6 +4,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ykbuddy.com';
 const siteName = 'YK Buddy';
 const siteDescription = 'Your friendly companion for exploring Yellowknife - whether you are visiting, living here, or planning to move. Features aurora tracking, garage sale planner, and local insights.';
 
+// Google Search Console verification
+export const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
