@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { GarageSale, CreateGarageSaleInput } from '@/types/garage-sales.types';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import Header from '@/components/Header';
 
 // Dynamically import map to avoid SSR issues
 const MapView = dynamic(() => import('@/components/garage-sales/SimpleMap'), {
@@ -188,33 +189,45 @@ export default function GarageSalesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-northern-midnight flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-aurora-green border-t-transparent mb-4"></div>
-          <p className="text-gray-400">Loading garage sales...</p>
+      <>
+        <Header />
+        <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20 flex items-center justify-center">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-aurora-green border-t-transparent mb-4"></div>
+            <p className="text-gray-400">Loading garage sales...</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-northern-midnight pb-20">
-      {/* Mobile-First Header */}
-      <div className="sticky top-0 z-30 bg-northern-midnight/95 backdrop-blur-lg border-b border-aurora-green/10">
-        <div className="px-4 py-4">
-          <Link
-            href="/living"
-            className="text-aurora-green hover:text-aurora-blue transition-colors inline-flex items-center gap-2 text-sm mb-3"
-          >
-            ← Living
-          </Link>
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
+        <div className="container mx-auto px-4 py-6">
+          {/* Breadcrumbs */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <Link href="/" className="hover:text-aurora-green transition-colors">
+                YK Buddy
+              </Link>
+              <span>›</span>
+              <Link href="/living" className="hover:text-aurora-green transition-colors">
+                Living
+              </Link>
+              <span>›</span>
+              <span className="text-white">Garage Sales</span>
+            </div>
+          </div>
 
-          <div className="flex items-center justify-between mb-4">
+          {/* Page Header */}
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
                 Garage Sales
               </h1>
-              <p className="text-sm text-gray-400 mt-1">
+              <p className="text-gray-400">
                 {filteredSales.length} active {filteredSales.length === 1 ? 'sale' : 'sales'}
               </p>
             </div>
@@ -228,7 +241,7 @@ export default function GarageSalesPage() {
           </div>
 
           {/* Search Bar */}
-          <div className="relative mb-4">
+          <div className="relative mb-6">
             <input
               type="text"
               placeholder="Search sales..."
@@ -242,7 +255,7 @@ export default function GarageSalesPage() {
           </div>
 
           {/* View Toggle */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 mb-6">
             <button
               onClick={() => setViewMode('list')}
               className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all ${
@@ -264,95 +277,95 @@ export default function GarageSalesPage() {
               🗺️ Map
             </button>
           </div>
-        </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="px-4 py-6">
-        {/* Add/Edit Form */}
-        {showAddForm && (
-          <AddEditSaleForm
-            sale={editingSale}
-            onClose={() => {
-              setShowAddForm(false);
-              setEditingSale(null);
-            }}
-            onSave={(sale) => {
-              if (editingSale) {
-                setGarageSales(prev => prev.map(s => s.id === sale.id ? sale : s));
-              } else {
-                setGarageSales(prev => [sale, ...prev]);
-              }
-              setShowAddForm(false);
-              setEditingSale(null);
-            }}
-          />
-        )}
+          {/* Main Content */}
+          <div>
+            {/* Add/Edit Form */}
+            {showAddForm && (
+              <AddEditSaleForm
+                sale={editingSale}
+                onClose={() => {
+                  setShowAddForm(false);
+                  setEditingSale(null);
+                }}
+                onSave={(sale) => {
+                  if (editingSale) {
+                    setGarageSales(prev => prev.map(s => s.id === sale.id ? sale : s));
+                  } else {
+                    setGarageSales(prev => [sale, ...prev]);
+                  }
+                  setShowAddForm(false);
+                  setEditingSale(null);
+                }}
+              />
+            )}
 
-        {/* List View */}
-        {viewMode === 'list' && (
-          <div className="space-y-4">
-            {filteredSales.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">📦</div>
-                <h3 className="text-xl font-bold text-white mb-2">No garage sales found</h3>
-                <p className="text-gray-400 mb-6">
-                  {searchQuery ? 'Try a different search' : 'Be the first to add one!'}
-                </p>
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="px-6 py-3 bg-dark-800 text-white rounded-lg hover:bg-dark-700 transition-all"
-                >
-                  Clear Search
-                </button>
+            {/* List View */}
+            {viewMode === 'list' && (
+              <div className="space-y-4">
+                {filteredSales.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">📦</div>
+                    <h3 className="text-xl font-bold text-white mb-2">No garage sales found</h3>
+                    <p className="text-gray-400 mb-6">
+                      {searchQuery ? 'Try a different search' : 'Be the first to add one!'}
+                    </p>
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="px-6 py-3 bg-dark-800 text-white rounded-lg hover:bg-dark-700 transition-all"
+                    >
+                      Clear Search
+                    </button>
+                  </div>
+                ) : (
+                  filteredSales.map(sale => (
+                    <SaleCard
+                      key={sale.id}
+                      sale={sale}
+                      currentUserId={user?.id}
+                      onEdit={() => handleEditSale(sale)}
+                      onDelete={() => handleDeleteSale(sale.id)}
+                    />
+                  ))
+                )}
               </div>
-            ) : (
-              filteredSales.map(sale => (
-                <SaleCard
-                  key={sale.id}
-                  sale={sale}
-                  currentUserId={user?.id}
-                  onEdit={() => handleEditSale(sale)}
-                  onDelete={() => handleDeleteSale(sale.id)}
-                />
-              ))
+            )}
+
+            {/* Map View */}
+            {viewMode === 'map' && (
+              <div className="space-y-4">
+                <MapView sales={filteredSales} />
+
+                {/* Mini List Below Map */}
+                <div className="space-y-3">
+                  {filteredSales.map(sale => (
+                    <div key={sale.id} className="bg-dark-800 rounded-lg p-3 border border-gray-700">
+                      <h3 className="font-semibold text-white text-sm mb-1">{sale.title}</h3>
+                      <p className="text-xs text-gray-400 mb-2">{sale.address}</p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-aurora-green">
+                          {new Date(sale.sale_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          {' • '}
+                          {sale.start_time}
+                        </span>
+                        <a
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${sale.latitude},${sale.longitude}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-aurora-blue hover:underline"
+                        >
+                          Get Directions →
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
-        )}
-
-        {/* Map View */}
-        {viewMode === 'map' && (
-          <div className="space-y-4">
-            <MapView sales={filteredSales} />
-
-            {/* Mini List Below Map */}
-            <div className="space-y-3">
-              {filteredSales.map(sale => (
-                <div key={sale.id} className="bg-dark-800 rounded-lg p-3 border border-gray-700">
-                  <h3 className="font-semibold text-white text-sm mb-1">{sale.title}</h3>
-                  <p className="text-xs text-gray-400 mb-2">{sale.address}</p>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-aurora-green">
-                      {new Date(sale.sale_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      {' • '}
-                      {sale.start_time}
-                    </span>
-                    <a
-                      href={`https://www.google.com/maps/dir/?api=1&destination=${sale.latitude},${sale.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-aurora-blue hover:underline"
-                    >
-                      Get Directions →
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

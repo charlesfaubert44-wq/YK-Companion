@@ -5,6 +5,10 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { SloganProvider } from '@/contexts/SloganContext';
 import PWAInstaller from '@/components/PWAInstaller';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import StructuredData from '@/components/StructuredData';
+import { Analytics } from '@vercel/analytics/react';
+import { defaultMetadata } from '@/lib/seo';
 
 const inter = Inter({ subsets: ['latin'] });
 const pressStart2P = Press_Start_2P({
@@ -14,10 +18,7 @@ const pressStart2P = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
-  title: 'YK Buddy - Your Yellowknife Companion',
-  description: 'Your friendly companion for exploring Yellowknife - whether you are visiting, living here, or planning to move.',
-  keywords: ['Yellowknife', 'Northwest Territories', 'Aurora', 'Northern Lights', 'Trip Planning', 'Canada Travel', 'Moving to Yellowknife'],
-  manifest: '/manifest.json',
+  ...defaultMetadata,
   themeColor: '#10B981',
   appleWebApp: {
     capable: true,
@@ -31,10 +32,6 @@ export const metadata: Metadata = {
     userScalable: true,
     viewportFit: 'cover',
   },
-  icons: {
-    icon: '/icons/icon-192x192.png',
-    apple: '/icons/icon-192x192.png',
-  },
 };
 
 export default function RootLayout({
@@ -44,12 +41,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${pressStart2P.variable} overflow-x-hidden`}>
+      <head>
+        <GoogleAnalytics />
+        <StructuredData />
+      </head>
       <body className={`${inter.className} overflow-x-hidden`}>
         <LanguageProvider>
           <AuthProvider>
             <SloganProvider>
               {children}
               <PWAInstaller />
+              <Analytics />
             </SloganProvider>
           </AuthProvider>
         </LanguageProvider>

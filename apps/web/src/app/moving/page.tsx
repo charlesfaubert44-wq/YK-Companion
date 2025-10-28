@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import Header from '@/components/Header';
+import AppLayout from '@/components/layout/AppLayout';
+import PageHeader from '@/components/layout/PageHeader';
 
 interface ChecklistSection {
   id: string;
@@ -76,22 +77,18 @@ export default function MovingPage() {
   const totalItems = checklistSections.reduce((sum, section) => sum + section.items.length, 0);
   const completionPercentage = (checkedItems.size / totalItems) * 100;
 
+  const breadcrumbs = [
+    { label: 'YK Buddy', href: '/' },
+    { label: 'Moving' }
+  ];
+
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12 animate-fade-in">
-            <div className="text-6xl mb-4 animate-bounce-subtle">📦</div>
-            <h1 className="text-5xl font-bold text-white mb-4">
-              Moving to Yellowknife
-            </h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Everything you need to relocate successfully—from housing costs to climate prep.
-            </p>
-          </div>
+    <AppLayout breadcrumbs={breadcrumbs}>
+      <PageHeader
+        icon="📦"
+        title="Moving to Yellowknife"
+        description="Everything you need to relocate successfully—from housing costs to climate prep."
+      />
 
           {/* Key Topics */}
           <div className="grid md:grid-cols-3 gap-6 mb-12">
@@ -341,9 +338,6 @@ export default function MovingPage() {
               </div>
             </div>
           </div>
-          </div>
-        </div>
-      </div>
-    </>
+    </AppLayout>
   );
 }

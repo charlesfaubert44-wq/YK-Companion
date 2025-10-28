@@ -4,28 +4,18 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import AuthModal from '@/components/auth/AuthModal';
 import UserTypeSelector from '@/components/auth/UserTypeSelector';
-import YKBuddySeasonalBanner from '@/components/YKBuddySeasonalBanner';
-import LanguageSelector from '@/components/LanguageSelector';
 import PremiumSpotlight from '@/components/PremiumSpotlight';
 import PremiumSponsors from '@/components/sponsors/PremiumSponsors';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
-import Modal from '@/components/Modal';
-import AboutContent from '@/components/AboutContent';
-import ContactContent from '@/components/ContactContent';
-import InteractiveMenu from '@/components/InteractiveMenu';
-import SloganConnector from '@/components/SloganConnector';
 import InteractiveAreYou from '@/components/InteractiveAreYou';
 import EnhancedPathwayCards from '@/components/EnhancedPathwayCards';
+import Header from '@/components/Header';
 
 export default function Home() {
-  const { user, profile, loading, signOut } = useAuth();
+  const { user, profile, loading } = useAuth();
   const { t } = useLanguage();
   const [showUserTypeSelector, setShowUserTypeSelector] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [showAboutModal, setShowAboutModal] = useState(false);
-  const [showContactModal, setShowContactModal] = useState(false);
 
   useEffect(() => {
     console.log('Home page - Auth state:', {
@@ -85,39 +75,19 @@ export default function Home() {
 
     return (
       <>
+        <Header />
         <UserTypeSelector
           isOpen={showUserTypeSelector}
           onComplete={() => setShowUserTypeSelector(false)}
         />
-        <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-          {/* Language Selector & Sign Out - Top Right */}
-          <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
-            <button
-              onClick={signOut}
-              className="text-gray-400 hover:text-red-400 transition-colors text-sm"
-            >
-              {t('sign_out')}
-            </button>
-            <LanguageSelector />
-          </div>
+        <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
+          <div className="container mx-auto px-4 py-12">
+            <div className="max-w-6xl mx-auto">
+              {/* Premium Spotlight */}
+              <PremiumSpotlight position="home_top" />
 
-          {/* YK Buddy Seasonal Banner */}
-          <YKBuddySeasonalBanner />
-
-          {/* Slogan Connector - Seamlessly joins banner to menu */}
-          <SloganConnector />
-
-          {/* Interactive Navigation Menu */}
-          <InteractiveMenu
-            onAboutClick={() => setShowAboutModal(true)}
-            onContactClick={() => setShowContactModal(true)}
-          />
-
-          {/* Premium Spotlight */}
-          <PremiumSpotlight position="home_top" />
-
-          <div className="flex items-center justify-center px-4 py-12">
-            <div className="max-w-3xl w-full text-center group">
+              <div className="flex items-center justify-center px-4 py-12">
+                <div className="max-w-3xl w-full text-center group">
               <div className="mb-6 flex justify-center">{config.icon}</div>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
                 {config.title}
@@ -182,25 +152,9 @@ export default function Home() {
               </footer>
             </div>
           </div>
+            </div>
+          </div>
         </div>
-
-        {/* About Modal */}
-        <Modal
-          isOpen={showAboutModal}
-          onClose={() => setShowAboutModal(false)}
-          title="About YK Buddy"
-        >
-          <AboutContent />
-        </Modal>
-
-        {/* Contact Modal */}
-        <Modal
-          isOpen={showContactModal}
-          onClose={() => setShowContactModal(false)}
-          title="Contact Us"
-        >
-          <ContactContent />
-        </Modal>
       </>
     );
   }
@@ -208,37 +162,19 @@ export default function Home() {
   // Default view for non-logged-in users
   return (
     <>
-      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      <Header />
       <UserTypeSelector
         isOpen={showUserTypeSelector}
         onComplete={() => setShowUserTypeSelector(false)}
       />
-      <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-        {/* Language Selector & Sign In - Top Right */}
-        <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
-          <button
-            onClick={() => setShowAuthModal(true)}
-            className="px-6 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all text-sm"
-          >
-            {t('sign_in')}
-          </button>
-          <LanguageSelector />
-        </div>
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-6xl mx-auto">
+            {/* Premium Spotlight */}
+            <PremiumSpotlight position="home_top" />
 
-        {/* YK Buddy Seasonal Banner */}
-        <YKBuddySeasonalBanner />
-
-        {/* Interactive Navigation Menu */}
-        <InteractiveMenu
-          onAboutClick={() => setShowAboutModal(true)}
-          onContactClick={() => setShowContactModal(true)}
-        />
-
-        {/* Premium Spotlight */}
-        <PremiumSpotlight position="home_top" />
-
-        <div className="flex items-center justify-center px-4 py-12">
-          <div className="max-w-4xl w-full text-center">
+            <div className="flex items-center justify-center px-4 py-12">
+              <div className="max-w-4xl w-full text-center">
             {/* Interactive "Are You..." Section */}
             <InteractiveAreYou />
 
@@ -260,25 +196,9 @@ export default function Home() {
             </footer>
           </div>
         </div>
+          </div>
+        </div>
       </div>
-
-      {/* About Modal */}
-      <Modal
-        isOpen={showAboutModal}
-        onClose={() => setShowAboutModal(false)}
-        title="About YK Buddy"
-      >
-        <AboutContent />
-      </Modal>
-
-      {/* Contact Modal */}
-      <Modal
-        isOpen={showContactModal}
-        onClose={() => setShowContactModal(false)}
-        title="Contact Us"
-      >
-        <ContactContent />
-      </Modal>
     </>
   );
 }

@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import Header from '@/components/Header';
+import AppLayout from '@/components/layout/AppLayout';
+import PageHeader from '@/components/layout/PageHeader';
 
 interface ChecklistItem {
   id: string;
@@ -38,22 +39,18 @@ export default function LivingPage() {
 
   const completionPercentage = (checkedItems.size / checklistItems.length) * 100;
 
+  const breadcrumbs = [
+    { label: 'YK Buddy', href: '/' },
+    { label: 'Living' }
+  ];
+
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12 animate-fade-in">
-            <div className="text-6xl mb-4 animate-bounce-subtle">🏠</div>
-            <h1 className="text-5xl font-bold text-white mb-4">
-              Living in Yellowknife
-            </h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Local events, seasonal guides, hidden gems, and community resources for residents.
-            </p>
-          </div>
+    <AppLayout breadcrumbs={breadcrumbs}>
+      <PageHeader
+        icon="🏠"
+        title="Living in Yellowknife"
+        description="Local events, seasonal guides, hidden gems, and community resources for residents."
+      />
 
           {/* Key Features for Residents */}
           <div className="grid md:grid-cols-2 gap-6 mb-12">
@@ -266,9 +263,6 @@ export default function LivingPage() {
               </div>
             )}
           </div>
-          </div>
-        </div>
-      </div>
-    </>
+    </AppLayout>
   );
 }
