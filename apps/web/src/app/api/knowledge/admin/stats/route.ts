@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { requirePermission } from '@/lib/auth/admin';
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 // GET /api/knowledge/admin/stats - Get knowledge database statistics (admin only)
 export async function GET() {
   try {

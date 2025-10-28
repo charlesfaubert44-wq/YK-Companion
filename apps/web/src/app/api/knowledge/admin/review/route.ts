@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import type { ReviewSubmissionInput } from '@/types/knowledge.types';
 import { requirePermission, logAdminActivity } from '@/lib/auth/admin';
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 // POST /api/knowledge/admin/review - Review a submission (admin only)
 export async function POST(request: NextRequest) {
   try {

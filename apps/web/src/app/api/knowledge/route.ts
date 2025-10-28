@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import type { CreateKnowledgeSubmissionInput, KnowledgeFilters } from '@/types/knowledge.types';
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 // GET /api/knowledge - Browse approved knowledge submissions
 export async function GET(request: NextRequest) {
   try {

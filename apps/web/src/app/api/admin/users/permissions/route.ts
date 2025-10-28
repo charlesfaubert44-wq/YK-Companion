@@ -9,6 +9,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requirePermission, logAdminActivity } from '@/lib/auth/admin';
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 // POST /api/admin/users/permissions - Grant or update permissions
 export async function POST(request: NextRequest) {
   try {
