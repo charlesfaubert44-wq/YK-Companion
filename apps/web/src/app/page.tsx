@@ -105,9 +105,6 @@ export default function Home() {
           {/* YK Buddy Seasonal Banner */}
           <YKBuddySeasonalBanner />
 
-          {/* Slogan Connector - Seamlessly joins banner to menu */}
-          <SloganConnector />
-
           {/* Interactive Navigation Menu */}
           <InteractiveMenu
             onAboutClick={() => setShowAboutModal(true)}
