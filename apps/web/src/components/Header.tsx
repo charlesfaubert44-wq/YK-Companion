@@ -194,18 +194,30 @@ export default function Header() {
               )}
             </nav>
 
-            {/* Enhanced Mobile menu button - 44px touch target */}
-            <button
-              onClick={() => setShowMenu(!showMenu)}
-              className="md:hidden relative z-50 p-3 min-w-[44px] min-h-[44px] rounded-xl bg-dark-800/80 border border-aurora-blue/30 hover:border-aurora-green/50 transition-all duration-300 touch-manipulation flex items-center justify-center"
-              aria-label={showMenu ? 'Close menu' : 'Open menu'}
-            >
-              <div className="w-6 h-6 flex flex-col justify-center items-center">
-                <span className={`block w-6 h-0.5 bg-gradient-to-r from-aurora-green to-aurora-blue rounded-full transition-all duration-300 ${showMenu ? 'rotate-45 translate-y-1.5' : '-translate-y-1'}`}></span>
-                <span className={`block w-6 h-0.5 bg-gradient-to-r from-aurora-blue to-aurora-purple rounded-full transition-all duration-300 ${showMenu ? 'opacity-0' : 'opacity-100'}`}></span>
-                <span className={`block w-6 h-0.5 bg-gradient-to-r from-aurora-purple to-aurora-pink rounded-full transition-all duration-300 ${showMenu ? '-rotate-45 -translate-y-1.5' : 'translate-y-1'}`}></span>
-              </div>
-            </button>
+            {/* Mobile Login and Menu Buttons */}
+            <div className="md:hidden flex items-center gap-2">
+              {!user && (
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="px-4 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white text-sm font-semibold rounded-lg hover:shadow-aurora transition-all duration-300"
+                >
+                  Sign In
+                </button>
+              )}
+
+              {/* Enhanced Mobile menu button - 44px touch target */}
+              <button
+                onClick={() => setShowMenu(!showMenu)}
+                className="relative z-50 p-3 min-w-[44px] min-h-[44px] rounded-xl bg-dark-800/80 border border-aurora-blue/30 hover:border-aurora-green/50 transition-all duration-300 touch-manipulation flex items-center justify-center"
+                aria-label={showMenu ? 'Close menu' : 'Open menu'}
+              >
+                <div className="w-6 h-6 flex flex-col justify-center items-center">
+                  <span className={`block w-6 h-0.5 bg-gradient-to-r from-aurora-green to-aurora-blue rounded-full transition-all duration-300 ${showMenu ? 'rotate-45 translate-y-1.5' : '-translate-y-1'}`}></span>
+                  <span className={`block w-6 h-0.5 bg-gradient-to-r from-aurora-blue to-aurora-purple rounded-full transition-all duration-300 ${showMenu ? 'opacity-0' : 'opacity-100'}`}></span>
+                  <span className={`block w-6 h-0.5 bg-gradient-to-r from-aurora-purple to-aurora-pink rounded-full transition-all duration-300 ${showMenu ? '-rotate-45 -translate-y-1.5' : 'translate-y-1'}`}></span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
 
