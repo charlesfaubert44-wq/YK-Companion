@@ -45,18 +45,18 @@ export default function EnhancedPathwayCards() {
 
   return (
     <div className="relative">
-      {/* Unified Glassmorphic Container with enhanced depth */}
-      <div className="backdrop-blur-2xl bg-gradient-to-br from-slate-900/70 via-slate-800/70 to-slate-900/70 border-l-2 border-r-2 border-b-2 border-slate-700/60 rounded-b-3xl px-8 py-16 shadow-2xl -mt-px relative overflow-hidden">
+      {/* Unified Glassmorphic Container with enhanced depth - Mobile Optimized */}
+      <div className="backdrop-blur-2xl bg-gradient-to-br from-slate-900/70 via-slate-800/70 to-slate-900/70 border-l border-r border-b sm:border-l-2 sm:border-r-2 sm:border-b-2 border-slate-700/60 rounded-b-2xl sm:rounded-b-3xl px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 shadow-2xl -mt-px relative overflow-hidden">
         {/* Animated background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-aurora-green/5 via-aurora-blue/5 to-aurora-purple/5 animate-aurora opacity-40" />
 
-        {/* Three Pathway Cards */}
-        <div className="grid md:grid-cols-3 gap-8 relative z-10">
+        {/* Three Pathway Cards - Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 relative z-10">
           {/* VISITING Card - Explorer with Northern Lights */}
           <Link href="/visiting" className="group block">
             <div
               ref={cardRefs.visiting}
-              className="relative h-[340px] rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-emerald-500/40 transition-all duration-500 hover:border-emerald-400/70 hover:shadow-[0_0_50px_rgba(16,185,129,0.5)] transform-gpu perspective-1000"
+              className="relative min-h-[280px] h-[320px] sm:h-[340px] md:h-[360px] rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-emerald-500/40 transition-all duration-500 hover:border-emerald-400/70 hover:shadow-[0_0_50px_rgba(16,185,129,0.5)] transform-gpu perspective-1000 touch-manipulation"
               style={{
                 transform: hoveredCard === 'visiting'
                   ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.02)`
@@ -208,7 +208,7 @@ export default function EnhancedPathwayCards() {
           <Link href="/living" className="group block">
             <div
               ref={cardRefs.living}
-              className="relative h-[340px] rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-blue-500/40 transition-all duration-500 hover:border-blue-400/70 hover:shadow-[0_0_50px_rgba(59,130,246,0.5)] transform-gpu perspective-1000"
+              className="relative min-h-[280px] h-[320px] sm:h-[340px] md:h-[360px] rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-blue-500/40 transition-all duration-500 hover:border-blue-400/70 hover:shadow-[0_0_50px_rgba(59,130,246,0.5)] transform-gpu perspective-1000 touch-manipulation"
               style={{
                 transform: hoveredCard === 'living'
                   ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.02)`
@@ -373,7 +373,7 @@ export default function EnhancedPathwayCards() {
           <Link href="/moving" className="group block">
             <div
               ref={cardRefs.moving}
-              className="relative h-[340px] rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-purple-500/40 transition-all duration-500 hover:border-purple-400/70 hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transform-gpu perspective-1000"
+              className="relative min-h-[280px] h-[320px] sm:h-[340px] md:h-[360px] rounded-2xl sm:rounded-3xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 border-purple-500/40 transition-all duration-500 hover:border-purple-400/70 hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] transform-gpu perspective-1000 touch-manipulation"
               style={{
                 transform: hoveredCard === 'moving'
                   ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.02)`

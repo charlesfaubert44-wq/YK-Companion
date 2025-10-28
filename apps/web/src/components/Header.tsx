@@ -51,14 +51,14 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 safe-top ${
           scrolled
             ? 'bg-northern-midnight/95 backdrop-blur-xl shadow-lg shadow-aurora-blue/10'
             : 'bg-northern-midnight/70 backdrop-blur-lg'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
             {/* Logo with enhanced design */}
             <Link href="/" className="flex items-center space-x-3 group">
               <div className="relative">
@@ -194,10 +194,11 @@ export default function Header() {
               )}
             </nav>
 
-            {/* Enhanced Mobile menu button */}
+            {/* Enhanced Mobile menu button - 44px touch target */}
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="md:hidden relative z-50 p-2 rounded-xl bg-dark-800/80 border border-aurora-blue/30 hover:border-aurora-green/50 transition-all duration-300"
+              className="md:hidden relative z-50 p-3 min-w-[44px] min-h-[44px] rounded-xl bg-dark-800/80 border border-aurora-blue/30 hover:border-aurora-green/50 transition-all duration-300 touch-manipulation flex items-center justify-center"
+              aria-label={showMenu ? 'Close menu' : 'Open menu'}
             >
               <div className="w-6 h-6 flex flex-col justify-center items-center">
                 <span className={`block w-6 h-0.5 bg-gradient-to-r from-aurora-green to-aurora-blue rounded-full transition-all duration-300 ${showMenu ? 'rotate-45 translate-y-1.5' : '-translate-y-1'}`}></span>
@@ -210,7 +211,7 @@ export default function Header() {
 
         {/* Enhanced Mobile menu */}
         <div
-          className={`md:hidden fixed inset-0 top-20 transition-all duration-300 ${
+          className={`md:hidden fixed inset-0 top-16 sm:top-18 md:top-20 transition-all duration-300 ${
             showMenu ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         >
@@ -220,8 +221,8 @@ export default function Header() {
             onClick={() => setShowMenu(false)}
           ></div>
 
-          {/* Menu Content */}
-          <div className={`relative max-w-md mx-auto p-6 transition-all duration-500 ${
+          {/* Menu Content - Mobile Safe Areas */}
+          <div className={`relative max-w-md mx-auto p-4 sm:p-6 safe-bottom transition-all duration-500 ${
             showMenu ? 'translate-y-0' : '-translate-y-full'
           }`}>
             <div className="bg-dark-900/90 backdrop-blur-lg rounded-3xl border border-aurora-blue/30 shadow-2xl shadow-aurora-blue/20 overflow-hidden">
@@ -229,7 +230,7 @@ export default function Header() {
               <div className="p-4 space-y-2">
                 <Link
                   href="/"
-                  className={`group flex items-center space-x-4 px-5 py-4 rounded-2xl transition-all duration-300 ${
+                  className={`group flex items-center space-x-4 px-5 py-4 min-h-[52px] rounded-2xl transition-all duration-300 touch-manipulation ${
                     pathname === '/'
                       ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white shadow-glow'
                       : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white'
@@ -248,7 +249,7 @@ export default function Header() {
                     setShowAboutModal(true);
                     setShowMenu(false);
                   }}
-                  className="group w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white transition-all duration-300"
+                  className="group w-full flex items-center space-x-4 px-5 py-4 min-h-[52px] rounded-2xl text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white transition-all duration-300 touch-manipulation"
                 >
                   <span className="text-2xl transition-transform group-hover:scale-125 duration-300">ℹ️</span>
                   <span className="font-semibold text-lg">About</span>
@@ -259,7 +260,7 @@ export default function Header() {
                     setShowContactModal(true);
                     setShowMenu(false);
                   }}
-                  className="group w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white transition-all duration-300"
+                  className="group w-full flex items-center space-x-4 px-5 py-4 min-h-[52px] rounded-2xl text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white transition-all duration-300 touch-manipulation"
                 >
                   <span className="text-2xl transition-transform group-hover:scale-125 duration-300">📧</span>
                   <span className="font-semibold text-lg">Contact</span>
@@ -275,7 +276,7 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`group flex items-center space-x-4 px-5 py-4 rounded-2xl transition-all duration-300 ${
+                    className={`group flex items-center space-x-4 px-5 py-4 min-h-[52px] rounded-2xl transition-all duration-300 touch-manipulation ${
                       pathname === item.href
                         ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white shadow-glow'
                         : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 hover:text-white'

@@ -8,14 +8,21 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "@types/node": "^20.10.0",
     "@yk-trip-planner/types": "file:../types",
-    "date-fns": "^3.0.6"
-  },
-  "devDependencies": {
+    "date-fns": "^3.0.6",
+    "vitest": "latest",
+    "@vitest/ui": "latest",
+    "@vitest/coverage-v8": "latest",
+    "happy-dom": "latest",
     "typescript": "^5.3.3"
   }
 }
