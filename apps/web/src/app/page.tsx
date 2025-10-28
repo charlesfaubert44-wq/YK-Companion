@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useWeather, getWeatherEmoji, getTempColor } from '@/hooks/useWeather';
 import AuthModal from '@/components/auth/AuthModal';
 import UserTypeSelector from '@/components/auth/UserTypeSelector';
 import YKBuddySeasonalBanner from '@/components/YKBuddySeasonalBanner';
@@ -24,7 +23,6 @@ import EnhancedPathwayCardsCarousel from '@/components/EnhancedPathwayCardsCarou
 export default function Home() {
   const { user, profile, loading, signOut } = useAuth();
   const { t } = useLanguage();
-  const { weather, loading: weatherLoading } = useWeather({ refreshInterval: 600000, enableFallback: true });
   const [showUserTypeSelector, setShowUserTypeSelector] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
@@ -93,22 +91,8 @@ export default function Home() {
           onComplete={() => setShowUserTypeSelector(false)}
         />
         <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-          {/* Top Right Navigation - Weather, User Menu and Language Selector */}
+          {/* Top Right Navigation - User Menu and Language Selector */}
           <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
-            {/* Temperature Badge */}
-            {weather && !weatherLoading && (
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-dark-800/80 to-dark-900/80 border border-aurora-blue/20 backdrop-blur-sm">
-                <span className="text-lg" title={weather.description}>
-                  {getWeatherEmoji(weather.condition, weather.icon)}
-                </span>
-                <span className={`text-sm font-bold ${getTempColor(weather.temp)}`}>
-                  {weather.temp}°C
-                </span>
-                {weather.isFallback && (
-                  <span className="text-[10px] text-gray-500" title="Estimated seasonal temperature">~</span>
-                )}
-              </div>
-            )}
             <button
               onClick={signOut}
               className="px-4 py-2 bg-gradient-to-r from-red-500/80 to-red-600/80 text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all duration-300"
@@ -228,22 +212,8 @@ export default function Home() {
         onComplete={() => setShowUserTypeSelector(false)}
       />
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-        {/* Top Right Navigation - Weather, Language Selector and Sign In */}
+        {/* Top Right Navigation - Language Selector and Sign In */}
         <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
-          {/* Temperature Badge */}
-          {weather && !weatherLoading && (
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-dark-800/80 to-dark-900/80 border border-aurora-blue/20 backdrop-blur-sm">
-              <span className="text-lg" title={weather.description}>
-                {getWeatherEmoji(weather.condition, weather.icon)}
-              </span>
-              <span className={`text-sm font-bold ${getTempColor(weather.temp)}`}>
-                {weather.temp}°C
-              </span>
-              {weather.isFallback && (
-                <span className="text-[10px] text-gray-500" title="Estimated seasonal temperature">~</span>
-              )}
-            </div>
-          )}
           <button
             onClick={() => setShowAuthModal(true)}
             className="px-4 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white text-sm font-semibold rounded-lg hover:shadow-aurora transition-all duration-300"
