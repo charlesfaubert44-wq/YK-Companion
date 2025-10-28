@@ -4,14 +4,13 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 /**
- * ModernPathwayCards - Compact, interactive 3-card pathway system with custom northern icons
+ * ModernPathwayCards - User-first pathway selection system
  *
  * Features:
- * - Custom SVG northern life icons
- * - Compact, space-efficient design
- * - Rich interactive animations
- * - Perfect alignment on mobile and desktop
- * - High performance
+ * - Clear decision-making flow
+ * - Self-identifying options
+ * - Primary action focus
+ * - Excellent UX for first-time users
  */
 export default function ModernPathwayCards() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -21,57 +20,68 @@ export default function ModernPathwayCards() {
       id: 'visiting',
       href: '/visiting',
       title: 'Visiting',
-      subtitle: 'Explore Yellowknife',
-      description: 'Discover attractions, tours, and experiences',
+      userLabel: 'I am planning a visit',
+      helpText: 'Tourist • First time • Short stay',
+      description: 'Explore attractions, book tours, find accommodations, and plan your northern adventure.',
       gradient: 'from-emerald-500 to-teal-500',
       hoverGradient: 'from-emerald-400 to-teal-400',
       bgPattern: 'from-emerald-500/10 via-teal-500/5 to-transparent',
-      borderColor: 'border-emerald-500/30 hover:border-emerald-400/60',
+      borderColor: 'border-emerald-500/30 hover:border-emerald-400',
       textColor: 'text-emerald-400',
       shadowColor: 'shadow-emerald-500/50',
+      ctaText: 'Start Planning',
     },
     {
       id: 'living',
       href: '/living',
       title: 'Living',
-      subtitle: 'Life in the North',
-      description: 'Connect with your community',
+      userLabel: 'I already live here',
+      helpText: 'Resident • Local • Community',
+      description: 'Connect with your community, discover local events, services, and everything happening in Yellowknife.',
       gradient: 'from-blue-500 to-cyan-500',
       hoverGradient: 'from-blue-400 to-cyan-400',
       bgPattern: 'from-blue-500/10 via-cyan-500/5 to-transparent',
-      borderColor: 'border-blue-500/30 hover:border-blue-400/60',
+      borderColor: 'border-blue-500/30 hover:border-blue-400',
       textColor: 'text-blue-400',
       shadowColor: 'shadow-blue-500/50',
+      ctaText: 'Explore Local',
     },
     {
       id: 'moving',
       href: '/moving',
       title: 'Moving',
-      subtitle: 'Start Your Journey',
-      description: 'Everything you need to relocate',
+      userLabel: 'I am relocating here',
+      helpText: 'New resident • Job transfer • Moving soon',
+      description: 'Get everything you need to relocate: housing, jobs, services, schools, and settling-in resources.',
       gradient: 'from-purple-500 to-pink-500',
       hoverGradient: 'from-purple-400 to-pink-400',
       bgPattern: 'from-purple-500/10 via-pink-500/5 to-transparent',
-      borderColor: 'border-purple-500/30 hover:border-purple-400/60',
+      borderColor: 'border-purple-500/30 hover:border-purple-400',
       textColor: 'text-purple-400',
       shadowColor: 'shadow-purple-500/50',
+      ctaText: 'Get Started',
     },
   ];
 
   return (
-    <div className="w-full py-6 sm:py-8 md:py-10">
-      {/* Section Header */}
-      <div className="text-center mb-6 sm:mb-8 md:mb-10 px-4">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">
-          Choose Your Path
+    <div className="w-full py-8 sm:py-12 md:py-16">
+      {/* Primary Decision Prompt */}
+      <div className="text-center mb-8 sm:mb-10 md:mb-12 px-4">
+        <div className="inline-flex items-center justify-center gap-2 mb-4">
+          <div className="h-px w-8 bg-gradient-to-r from-transparent to-gray-500"></div>
+          <span className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider">Step 1</span>
+          <div className="h-px w-8 bg-gradient-to-l from-transparent to-gray-500"></div>
+        </div>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-5">
+          What brings you to Yellowknife?
         </h2>
-        <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
-          Select the experience that matches your needs
+        <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          Select the option that best describes your situation to get personalized information and resources.
         </p>
       </div>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 px-4 sm:px-6 max-w-7xl mx-auto">
+      {/* Cards Grid - Larger with more breathing room */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 px-4 sm:px-6 max-w-7xl mx-auto">
         {pathways.map((pathway) => {
           const isHovered = hoveredCard === pathway.id;
 
@@ -85,15 +95,16 @@ export default function ModernPathwayCards() {
             >
               <div
                 className={`
-                  relative h-[340px] sm:h-[360px] md:h-[380px]
-                  rounded-xl sm:rounded-2xl overflow-hidden
-                  backdrop-blur-xl bg-gradient-to-br from-gray-900/90 to-gray-800/90
+                  relative min-h-[440px] sm:min-h-[460px] md:min-h-[480px]
+                  rounded-2xl sm:rounded-3xl overflow-hidden
+                  backdrop-blur-xl bg-gradient-to-br from-gray-900/95 to-gray-800/95
                   border-2 ${pathway.borderColor}
                   transition-all duration-500 ease-out
-                  ${isHovered ? `transform scale-[1.03] md:scale-[1.05] shadow-2xl ${pathway.shadowColor}` : 'shadow-lg'}
+                  cursor-pointer
+                  ${isHovered ? `transform scale-[1.02] lg:scale-[1.05] shadow-2xl ${pathway.shadowColor}` : 'shadow-xl'}
                 `}
               >
-                {/* Animated Background Pattern */}
+                {/* Background Pattern */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${pathway.bgPattern} opacity-40 group-hover:opacity-70 transition-opacity duration-500`} />
 
                 {/* Gradient Overlay on Hover */}
@@ -105,33 +116,14 @@ export default function ModernPathwayCards() {
                   `}
                 />
 
-                {/* Animated particles on hover */}
-                {isHovered && (
-                  <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(8)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-white rounded-full animate-float-particle"
-                        style={{
-                          left: `${20 + i * 10}%`,
-                          top: `${30 + (i % 3) * 20}%`,
-                          animationDelay: `${i * 0.2}s`,
-                          opacity: 0.6,
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-
                 {/* Content Container */}
-                <div className="relative h-full flex flex-col justify-between p-5 sm:p-6 md:p-7">
-                  {/* Top Section - Icon and Title */}
-                  <div className="flex items-start gap-4">
-                    {/* Custom Northern Icon */}
+                <div className="relative h-full flex flex-col p-6 sm:p-7 md:p-8">
+                  {/* Icon - Centered and Prominent */}
+                  <div className="flex justify-center mb-6">
                     <div
                       className={`
-                        flex-shrink-0 transition-all duration-500
-                        ${isHovered ? 'scale-110 -translate-y-1' : ''}
+                        transition-all duration-500
+                        ${isHovered ? 'scale-110 -translate-y-2' : ''}
                       `}
                     >
                       {pathway.id === 'visiting' && (
@@ -144,59 +136,55 @@ export default function ModernPathwayCards() {
                         <MovingTruckIcon isHovered={isHovered} />
                       )}
                     </div>
-
-                    {/* Title and Subtitle */}
-                    <div className="flex-1 min-w-0">
-                      <h3
-                        className={`
-                          text-2xl sm:text-3xl md:text-4xl font-bold mb-1
-                          bg-gradient-to-r ${pathway.gradient} bg-clip-text text-transparent
-                          transition-all duration-300
-                          ${isHovered ? 'tracking-wide' : ''}
-                        `}
-                      >
-                        {pathway.title}
-                      </h3>
-                      <p className={`text-sm sm:text-base md:text-lg font-medium ${pathway.textColor}`}>
-                        {pathway.subtitle}
-                      </p>
-                    </div>
                   </div>
 
-                  {/* Middle Section - Description */}
-                  <div className="flex-1 flex items-center">
-                    <p className="text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed">
-                      {pathway.description}
-                    </p>
-                  </div>
+                  {/* User-facing Label - Primary identifier */}
+                  <h3 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">
+                    {pathway.userLabel}
+                  </h3>
 
-                  {/* Bottom Section - CTA */}
-                  <div className="flex items-center justify-between">
-                    {/* Decorative Divider */}
+                  {/* Help Text - Secondary identifier */}
+                  <p className={`text-center text-sm sm:text-base ${pathway.textColor} mb-4 sm:mb-5 font-medium`}>
+                    {pathway.helpText}
+                  </p>
+
+                  {/* Divider */}
+                  <div className="flex justify-center mb-5 sm:mb-6">
                     <div
                       className={`
-                        h-0.5 bg-gradient-to-r ${pathway.gradient} rounded-full
+                        h-1 bg-gradient-to-r ${pathway.gradient} rounded-full
                         transition-all duration-500
-                        ${isHovered ? 'w-16 sm:w-20' : 'w-8 sm:w-12'}
+                        ${isHovered ? 'w-24 sm:w-32' : 'w-16 sm:w-20'}
                       `}
                     />
+                  </div>
 
-                    {/* CTA Button */}
+                  {/* Description - What they'll get */}
+                  <p className="text-center text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-8 flex-grow">
+                    {pathway.description}
+                  </p>
+
+                  {/* Primary CTA Button */}
+                  <div className="flex justify-center">
                     <div
                       className={`
-                        flex items-center gap-2 text-white font-semibold text-sm sm:text-base
+                        inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4
+                        bg-gradient-to-r ${pathway.gradient}
+                        rounded-xl sm:rounded-2xl
+                        text-white font-bold text-base sm:text-lg
+                        shadow-lg
                         transition-all duration-300
-                        ${isHovered ? 'translate-x-1' : ''}
+                        ${isHovered ? 'shadow-2xl scale-105 gap-4' : ''}
                       `}
                     >
-                      <span>Explore</span>
+                      <span>{pathway.ctaText}</span>
                       <svg
-                        className={`w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 ${isHovered ? 'translate-x-1 scale-110' : ''}`}
+                        className={`w-5 h-5 sm:w-6 sm:h-6 transition-all duration-300 ${isHovered ? 'translate-x-1' : ''}`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </div>
                   </div>
@@ -211,29 +199,42 @@ export default function ModernPathwayCards() {
                   `}
                 />
 
+                {/* Selection Indicator on Hover */}
+                <div
+                  className={`
+                    absolute top-4 right-4
+                    w-8 h-8 sm:w-10 sm:h-10
+                    rounded-full bg-gradient-to-br ${pathway.gradient}
+                    flex items-center justify-center
+                    transition-all duration-300
+                    ${isHovered ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
+                  `}
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
                 {/* Bottom Accent Bar */}
                 <div
                   className={`
                     absolute bottom-0 left-0 right-0
                     bg-gradient-to-r ${pathway.gradient}
                     transition-all duration-500
-                    ${isHovered ? 'h-1' : 'h-0.5 opacity-50'}
-                  `}
-                />
-
-                {/* Corner Accent */}
-                <div
-                  className={`
-                    absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24
-                    bg-gradient-to-br ${pathway.gradient}
-                    opacity-0 blur-2xl transition-opacity duration-500
-                    ${isHovered ? 'opacity-30' : ''}
+                    ${isHovered ? 'h-1.5' : 'h-1 opacity-60'}
                   `}
                 />
               </div>
             </Link>
           );
         })}
+      </div>
+
+      {/* Helper Text Below */}
+      <div className="text-center mt-8 sm:mt-10 px-4">
+        <p className="text-xs sm:text-sm text-gray-500">
+          Not sure? You can always explore other sections later.
+        </p>
       </div>
 
       {/* CSS Animations */}
@@ -247,29 +248,8 @@ export default function ModernPathwayCards() {
           }
         }
 
-        @keyframes float-particle {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.6;
-          }
-          50% {
-            transform: translateY(-20px) translateX(10px);
-            opacity: 1;
-          }
-          90% {
-            opacity: 0.6;
-          }
-        }
-
         .animate-shine {
-          animation: shine 1.2s ease-in-out;
-        }
-
-        .animate-float-particle {
-          animation: float-particle 3s ease-in-out infinite;
+          animation: shine 1.5s ease-in-out;
         }
       `}</style>
     </div>
@@ -280,7 +260,7 @@ export default function ModernPathwayCards() {
 function BushPlaneIcon({ isHovered }: { isHovered: boolean }) {
   return (
     <svg
-      className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 transition-all duration-500 ${isHovered ? 'drop-shadow-[0_0_12px_rgba(16,185,129,0.8)]' : 'drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]'}`}
+      className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 transition-all duration-500 ${isHovered ? 'drop-shadow-[0_0_16px_rgba(16,185,129,0.9)]' : 'drop-shadow-[0_0_10px_rgba(16,185,129,0.6)]'}`}
       viewBox="0 0 80 80"
       fill="none"
     >
@@ -337,7 +317,7 @@ function BushPlaneIcon({ isHovered }: { isHovered: boolean }) {
 function NorthernCabinIcon({ isHovered }: { isHovered: boolean }) {
   return (
     <svg
-      className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 transition-all duration-500 ${isHovered ? 'drop-shadow-[0_0_12px_rgba(59,130,246,0.8)]' : 'drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]'}`}
+      className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 transition-all duration-500 ${isHovered ? 'drop-shadow-[0_0_16px_rgba(59,130,246,0.9)]' : 'drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]'}`}
       viewBox="0 0 80 80"
       fill="none"
     >
@@ -416,7 +396,7 @@ function NorthernCabinIcon({ isHovered }: { isHovered: boolean }) {
 function MovingTruckIcon({ isHovered }: { isHovered: boolean }) {
   return (
     <svg
-      className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 transition-all duration-500 ${isHovered ? 'drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]' : 'drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]'}`}
+      className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 transition-all duration-500 ${isHovered ? 'drop-shadow-[0_0_16px_rgba(168,85,247,0.9)]' : 'drop-shadow-[0_0_10px_rgba(168,85,247,0.6)]'}`}
       viewBox="0 0 80 80"
       fill="none"
     >
