@@ -17,15 +17,18 @@ enum Season {
 
 // Async and Promise utilities (excluding retryWithBackoff to avoid conflict)
 export {
-  debounce,
-  throttle,
-  asyncMap,
-  asyncFilter,
-  asyncForEach,
-  sleep,
-  timeout,
-  pollUntil,
+  safeAsync,
   asyncPool,
+  asyncSequential,
+  withTimeout,
+  debounceAsync,
+  throttleAsync,
+  sleep,
+  pollUntil,
+  asyncCache,
+  asyncAllSettled,
+  asyncBatch,
+  AsyncResult,
 } from './async';
 
 // Form validation and management utilities
