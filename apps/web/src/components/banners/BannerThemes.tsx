@@ -64,7 +64,6 @@ const useRotatingSlogan = () => {
 export const WinterBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [weatherHovered, setWeatherHovered] = useState(false);
-  const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
   const currentSlogan = useRotatingSlogan();
 
   return (
@@ -389,7 +388,6 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 export const SpringBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [weatherHovered, setWeatherHovered] = useState(false);
-  const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
   const currentSlogan = useRotatingSlogan();
 
   return (
@@ -514,29 +512,24 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
         {/* Logo */}
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-spring flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-                <span
-                  className="inline-block transition-all duration-700 animate-color-shift-spring-1"
-                  style={{
-                    textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
-                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                  }}>
-                  YK
-                </span>
-                <span
-                  className="inline-block transition-all duration-700 animate-color-shift-spring-2"
-                  style={{
-                    textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(16, 185, 129, 0.4)',
-                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                  }}>
-                  BUDDY
-                </span>
-              </h1>
-              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
-                BETA
+            <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-spring flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-spring-1"
+                style={{
+                  textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                YK
               </span>
-            </div>
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-spring-2"
+                style={{
+                  textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(16, 185, 129, 0.4)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                BUDDY
+              </span>
+            </h1>
           </div>
         </div>
 
@@ -750,29 +743,24 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         {/* Logo */}
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-summer flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-                <span
-                  className="inline-block transition-all duration-700 animate-color-shift-summer-1"
-                  style={{
-                    textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
-                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                  }}>
-                  YK
-                </span>
-                <span
-                  className="inline-block transition-all duration-700 animate-color-shift-summer-2"
-                  style={{
-                    textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(234, 179, 8, 0.5)',
-                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                  }}>
-                  BUDDY
-                </span>
-              </h1>
-              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
-                BETA
+            <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-summer flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-summer-1"
+                style={{
+                  textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                YK
               </span>
-            </div>
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-summer-2"
+                style={{
+                  textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(234, 179, 8, 0.5)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                BUDDY
+              </span>
+            </h1>
           </div>
         </div>
 
@@ -941,29 +929,24 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         {/* Logo */}
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center w-full">
-            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
-              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-fall flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-                <span
-                  className="inline-block transition-all duration-700 animate-color-shift-fall-1"
-                  style={{
-                    textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
-                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                  }}>
-                  YK
-                </span>
-                <span
-                  className="inline-block transition-all duration-700 animate-color-shift-fall-2"
-                  style={{
-                    textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(253, 224, 71, 0.6)',
-                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                  }}>
-                  BUDDY
-                </span>
-              </h1>
-              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
-                BETA
+            <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-fall flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-fall-1"
+                style={{
+                  textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                YK
               </span>
-            </div>
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-fall-2"
+                style={{
+                  textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(253, 224, 71, 0.6)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                BUDDY
+              </span>
+            </h1>
           </div>
         </div>
 

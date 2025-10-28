@@ -53,32 +53,10 @@ export default function ImprovedHeader() {
         {/* Floating Navigation - Positioned over banner with improved layout */}
         <div className="absolute top-0 left-0 right-0 z-50 safe-top">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16 sm:h-18 pt-2">
-
-              {/* Desktop Navigation - Left aligned pathway buttons */}
-              <div className="hidden lg:flex items-center space-x-3">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`group relative px-4 py-2.5 rounded-xl backdrop-blur-md transition-all duration-300 ${
-                      pathname === item.href
-                        ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg scale-105`
-                        : 'text-gray-200 bg-northern-midnight/50 hover:bg-northern-midnight/70 hover:text-white hover:scale-105'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg transition-transform group-hover:scale-125 duration-300">
-                        {item.icon}
-                      </span>
-                      <span className="text-sm font-semibold">{item.label}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+            <div className="flex justify-end items-center h-16 sm:h-18 pt-2">
 
               {/* Mobile & Desktop - Right aligned auth + menu */}
-              <div className="flex items-center gap-3 ml-auto">
+              <div className="flex items-center gap-3">
 
                 {/* User Avatar/Sign In Button */}
                 {user ? (
@@ -191,7 +169,25 @@ export default function ImprovedHeader() {
                 showMenu ? 'translate-x-0' : 'translate-x-full'
               }`}
             >
-              <div className="max-w-lg mx-auto p-6 pt-24">
+              <div className="max-w-lg mx-auto p-6 pt-20">
+
+                {/* Close Button */}
+                <div className="flex justify-end mb-6">
+                  <button
+                    onClick={() => setShowMenu(false)}
+                    className="p-3 rounded-xl bg-northern-midnight/70 backdrop-blur-md border-2 border-aurora-blue/40 hover:border-red-500/60 transition-all duration-300 shadow-lg group"
+                    aria-label="Close menu"
+                  >
+                    <svg
+                      className="w-6 h-6 text-white group-hover:text-red-400 transition-colors"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
 
                 {/* Main Pathway Cards */}
                 <div className="mb-8">
