@@ -90,8 +90,14 @@ export default function Home() {
           onComplete={() => setShowUserTypeSelector(false)}
         />
         <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-          {/* Language Selector - Top Right */}
+          {/* Language Selector & Sign Out - Top Right */}
           <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
+            <button
+              onClick={signOut}
+              className="text-gray-400 hover:text-red-400 transition-colors text-sm"
+            >
+              {t('sign_out')}
+            </button>
             <LanguageSelector />
           </div>
 
@@ -208,8 +214,14 @@ export default function Home() {
         onComplete={() => setShowUserTypeSelector(false)}
       />
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-        {/* Language Selector - Top Right */}
+        {/* Language Selector & Sign In - Top Right */}
         <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
+          <button
+            onClick={() => setShowAuthModal(true)}
+            className="px-6 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all text-sm"
+          >
+            {t('sign_in')}
+          </button>
           <LanguageSelector />
         </div>
 
