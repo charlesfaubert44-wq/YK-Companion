@@ -10,7 +10,7 @@ import PremiumSponsors from '@/components/sponsors/PremiumSponsors';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
 import InteractiveAreYou from '@/components/InteractiveAreYou';
 import EnhancedPathwayCards from '@/components/EnhancedPathwayCards';
-import Header from '@/components/Header';
+import InteractiveHeader from '@/components/InteractiveHeader';
 
 export default function Home() {
   const { user, profile, loading } = useAuth();
@@ -75,7 +75,7 @@ export default function Home() {
 
     return (
       <>
-        <Header />
+        <InteractiveHeader />
         <UserTypeSelector
           isOpen={showUserTypeSelector}
           onComplete={() => setShowUserTypeSelector(false)}
@@ -162,7 +162,7 @@ export default function Home() {
   // Default view for non-logged-in users
   return (
     <>
-      <Header />
+      <InteractiveHeader />
       <UserTypeSelector
         isOpen={showUserTypeSelector}
         onComplete={() => setShowUserTypeSelector(false)}

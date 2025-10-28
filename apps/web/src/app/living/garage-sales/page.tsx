@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { GarageSale, CreateGarageSaleInput } from '@/types/garage-sales.types';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import Header from '@/components/Header';
+import InteractiveHeader from '@/components/InteractiveHeader';
 import { createClient } from '@/lib/supabase/client';
 
 // Dynamically import map to avoid SSR issues
@@ -210,7 +210,7 @@ export default function GarageSalesPage() {
   if (loading) {
     return (
       <>
-        <Header />
+        <InteractiveHeader />
         <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20 flex items-center justify-center">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-aurora-green border-t-transparent mb-4"></div>
@@ -223,7 +223,7 @@ export default function GarageSalesPage() {
 
   return (
     <>
-      <Header />
+      <InteractiveHeader />
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
         <div className="container mx-auto px-4 py-6">
           {/* Breadcrumbs */}

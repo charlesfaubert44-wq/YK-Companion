@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import Header from '@/components/Header';
+import InteractiveHeader from '@/components/InteractiveHeader';
 
 interface ChecklistItem {
   id: string;
@@ -40,7 +40,7 @@ export default function LivingPage() {
 
   return (
     <>
-      <Header />
+      <InteractiveHeader />
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
         <div className="container mx-auto px-4 py-6">
           <div className="max-w-6xl mx-auto">
