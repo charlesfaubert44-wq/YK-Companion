@@ -8,8 +8,6 @@ import UserTypeSelector from '@/components/auth/UserTypeSelector';
 import PremiumSpotlight from '@/components/PremiumSpotlight';
 import PremiumSponsors from '@/components/sponsors/PremiumSponsors';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
-import InteractiveAreYou from '@/components/InteractiveAreYou';
-import EnhancedPathwayCards from '@/components/EnhancedPathwayCards';
 import ImprovedHeader from '@/components/ImprovedHeader';
 import OnboardingModal from '@/components/OnboardingModal';
 
@@ -179,31 +177,43 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 py-8">
           <PremiumSpotlight position="home_top" />
 
-          <div className="py-6">
-            <InteractiveAreYou />
+          <div className="py-12">
+            {/* Welcome Section */}
+            <div className="text-center py-16">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple mb-8 animate-pulse-slow">
+                <span className="text-5xl">✨</span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
+                Welcome to YK Buddy
+              </h2>
+              <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Your personalized guide to Yellowknife
+              </p>
 
-            <div className="mt-8">
-              <EnhancedPathwayCards />
-            </div>
-
-            {/* CTA to retrigger onboarding */}
-            {!showOnboarding && (
-              <div className="mt-12 text-center">
+              {/* Main CTA - Opens Onboarding Modal */}
+              {!showOnboarding && (
                 <button
                   onClick={() => setShowOnboarding(true)}
-                  className="px-6 py-3 bg-gradient-to-r from-aurora-green/20 via-aurora-blue/20 to-aurora-purple/20 border-2 border-aurora-blue/40 text-gray-300 hover:text-white rounded-xl hover:bg-opacity-80 transition-all flex items-center gap-2 mx-auto font-semibold"
+                  className="group px-10 py-5 bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple text-white text-lg font-bold rounded-2xl hover:shadow-aurora transition-all transform hover:scale-105 flex items-center gap-3 mx-auto shadow-2xl"
                 >
-                  <span>✨</span>
+                  <span className="text-2xl group-hover:rotate-12 transition-transform">✨</span>
                   <span>Customize Your Experience</span>
+                  <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
                 </button>
-              </div>
-            )}
+              )}
 
-            <div className="mt-12 pt-6 border-t border-gray-700/30">
+              {/* Subtext */}
+              <p className="text-sm text-gray-500 mt-6 max-w-2xl mx-auto">
+                Choose your path and discover Yellowknife your way - whether you're visiting, living here, or planning to move
+              </p>
+            </div>
+
+            {/* Sponsors Section */}
+            <div className="mt-16 pt-8 border-t border-gray-700/30">
               <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
             </div>
 
-            <footer className="mt-8 pt-4 border-t border-gray-700/30 text-center">
+            <footer className="mt-12 pt-6 border-t border-gray-700/30 text-center">
               <p className="text-xs text-gray-400">{t('footer')}</p>
             </footer>
           </div>
@@ -220,8 +230,23 @@ export default function Home() {
           }
         }
 
+        @keyframes pulse-slow {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.05);
+            opacity: 0.9;
+          }
+        }
+
         .animate-bounce-slow {
           animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 3s ease-in-out infinite;
         }
       `}</style>
     </>
