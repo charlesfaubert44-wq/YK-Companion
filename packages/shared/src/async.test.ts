@@ -368,12 +368,10 @@ describe('async utilities', () => {
 
   describe('sleep', () => {
     it('should resolve after specified delay', async () => {
-      const start = Date.now();
-      
       const sleepPromise = sleep(100);
       await vi.advanceTimersByTimeAsync(100);
       await sleepPromise;
-      
+
       // With fake timers, we just verify it completes
       expect(true).toBe(true);
     });
