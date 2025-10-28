@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { GarageSale, CreateGarageSaleInput } from '@/types/garage-sales.types';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { createClient } from '@/lib/supabase/client';
+import Header from '@/components/Header';
 
 // Dynamically import map to avoid SSR issues
 const MapView = dynamic(() => import('@/components/garage-sales/SimpleMap'), {
@@ -17,7 +17,7 @@ const MapView = dynamic(() => import('@/components/garage-sales/SimpleMap'), {
   ),
 });
 
-type ViewMode = 'list' | 'map' | 'calendar';
+type ViewMode = 'list' | 'map';
 
 export default function GarageSalesPage() {
   const { user } = useAuth();
@@ -28,43 +28,26 @@ export default function GarageSalesPage() {
   const [editingSale, setEditingSale] = useState<GarageSale | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Fetch garage sales from Supabase
+  // Fetch garage sales from Supabase Edge Function
   const fetchGarageSales = async () => {
     setLoading(true);
     try {
-      const supabase = createClient();
-      const today = new Date().toISOString().split('T')[0];
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const response = await fetch(`${supabaseUrl}/functions/v1/garage-sales-get?upcoming=true`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-      // Query garage sales with joined profile data for host_name
-      const { data, error } = await supabase
-        .from('garage_sales')
-        .select(`
-          *,
-          profiles!garage_sales_user_id_fkey (
-            full_name,
-            email
-          )
-        `)
-        .eq('status', 'active')
-        .eq('is_active', true)
-        .gte('sale_date', today)
-        .order('sale_date', { ascending: true });
-
-      if (error) {
-        console.error('Error fetching garage sales:', error);
+      if (response.ok) {
+        const data = await response.json();
+        setGarageSales(data);
+      } else {
+        console.error('Failed to fetch garage sales');
         // Fallback to mock data for demo
         loadMockData();
-        return;
       }
-
-      // Transform data to match GarageSale type with host_name
-      const transformedSales: GarageSale[] = (data || []).map((sale: any) => ({
-        ...sale,
-        host_name: sale.profiles?.full_name || 'Anonymous',
-        host_email: sale.profiles?.email,
-      }));
-
-      setGarageSales(transformedSales);
     } catch (error) {
       console.error('Error fetching garage sales:', error);
       // Fallback to mock data for demo
@@ -185,56 +168,66 @@ export default function GarageSalesPage() {
     if (!confirm('Are you sure you want to delete this garage sale?')) return;
 
     try {
-      const supabase = createClient();
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-      const { error } = await supabase
-        .from('garage_sales')
-        .delete()
-        .eq('id', saleId)
-        .eq('user_id', user.id); // Ensure user can only delete their own sales
+      const response = await fetch(`${supabaseUrl}/functions/v1/garage-sales-delete?id=${saleId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+        },
+      });
 
-      if (error) {
-        console.error('Error deleting garage sale:', error);
-        alert('Failed to delete garage sale');
-        return;
+      if (response.ok) {
+        setGarageSales(prev => prev.filter(s => s.id !== saleId));
       }
-
-      setGarageSales(prev => prev.filter(s => s.id !== saleId));
     } catch (error) {
       console.error('Error deleting garage sale:', error);
-      alert('Error deleting garage sale');
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-northern-midnight flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-aurora-green border-t-transparent mb-4"></div>
-          <p className="text-gray-400">Loading garage sales...</p>
+      <>
+        <Header />
+        <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20 flex items-center justify-center">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-aurora-green border-t-transparent mb-4"></div>
+            <p className="text-gray-400">Loading garage sales...</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-dark-900 via-dark-800 to-northern-midnight pb-20">
-      {/* Mobile-First Header */}
-      <div className="sticky top-0 z-30 bg-northern-midnight/95 backdrop-blur-lg border-b border-aurora-green/10">
-        <div className="px-4 py-4">
-          <Link
-            href="/living"
-            className="text-aurora-green hover:text-aurora-blue transition-colors inline-flex items-center gap-2 text-sm mb-3"
-          >
-            ← Living
-          </Link>
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
+        <div className="container mx-auto px-4 py-6">
+          {/* Breadcrumbs */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <Link href="/" className="hover:text-aurora-green transition-colors">
+                YK Buddy
+              </Link>
+              <span>›</span>
+              <Link href="/living" className="hover:text-aurora-green transition-colors">
+                Living
+              </Link>
+              <span>›</span>
+              <span className="text-white">Garage Sales</span>
+            </div>
+          </div>
 
-          <div className="flex items-center justify-between mb-4">
+          {/* Page Header */}
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
                 Garage Sales
               </h1>
-              <p className="text-sm text-gray-400 mt-1">
+              <p className="text-gray-400">
                 {filteredSales.length} active {filteredSales.length === 1 ? 'sale' : 'sales'}
               </p>
             </div>
@@ -248,7 +241,7 @@ export default function GarageSalesPage() {
           </div>
 
           {/* Search Bar */}
-          <div className="relative mb-4">
+          <div className="relative mb-6">
             <input
               type="text"
               placeholder="Search sales..."
@@ -262,7 +255,7 @@ export default function GarageSalesPage() {
           </div>
 
           {/* View Toggle */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 mb-6">
             <button
               onClick={() => setViewMode('list')}
               className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all ${
@@ -272,16 +265,6 @@ export default function GarageSalesPage() {
               }`}
             >
               📋 List
-            </button>
-            <button
-              onClick={() => setViewMode('calendar')}
-              className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all ${
-                viewMode === 'calendar'
-                  ? 'bg-aurora-green text-white'
-                  : 'bg-dark-800 text-gray-400 hover:text-white'
-              }`}
-            >
-              📅 Calendar
             </button>
             <button
               onClick={() => setViewMode('map')}
@@ -294,111 +277,95 @@ export default function GarageSalesPage() {
               🗺️ Map
             </button>
           </div>
-        </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="px-4 py-6">
-        {/* Add/Edit Form */}
-        {showAddForm && (
-          <AddEditSaleForm
-            sale={editingSale}
-            onClose={() => {
-              setShowAddForm(false);
-              setEditingSale(null);
-            }}
-            onSave={(sale) => {
-              if (editingSale) {
-                setGarageSales(prev => prev.map(s => s.id === sale.id ? sale : s));
-              } else {
-                setGarageSales(prev => [sale, ...prev]);
-              }
-              setShowAddForm(false);
-              setEditingSale(null);
-            }}
-          />
-        )}
+          {/* Main Content */}
+          <div>
+            {/* Add/Edit Form */}
+            {showAddForm && (
+              <AddEditSaleForm
+                sale={editingSale}
+                onClose={() => {
+                  setShowAddForm(false);
+                  setEditingSale(null);
+                }}
+                onSave={(sale) => {
+                  if (editingSale) {
+                    setGarageSales(prev => prev.map(s => s.id === sale.id ? sale : s));
+                  } else {
+                    setGarageSales(prev => [sale, ...prev]);
+                  }
+                  setShowAddForm(false);
+                  setEditingSale(null);
+                }}
+              />
+            )}
 
-        {/* List View */}
-        {viewMode === 'list' && (
-          <div className="space-y-4">
-            {filteredSales.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">📦</div>
-                <h3 className="text-xl font-bold text-white mb-2">No garage sales found</h3>
-                <p className="text-gray-400 mb-6">
-                  {searchQuery ? 'Try a different search' : 'Be the first to add one!'}
-                </p>
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="px-6 py-3 bg-dark-800 text-white rounded-lg hover:bg-dark-700 transition-all"
-                >
-                  Clear Search
-                </button>
+            {/* List View */}
+            {viewMode === 'list' && (
+              <div className="space-y-4">
+                {filteredSales.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">📦</div>
+                    <h3 className="text-xl font-bold text-white mb-2">No garage sales found</h3>
+                    <p className="text-gray-400 mb-6">
+                      {searchQuery ? 'Try a different search' : 'Be the first to add one!'}
+                    </p>
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="px-6 py-3 bg-dark-800 text-white rounded-lg hover:bg-dark-700 transition-all"
+                    >
+                      Clear Search
+                    </button>
+                  </div>
+                ) : (
+                  filteredSales.map(sale => (
+                    <SaleCard
+                      key={sale.id}
+                      sale={sale}
+                      currentUserId={user?.id}
+                      onEdit={() => handleEditSale(sale)}
+                      onDelete={() => handleDeleteSale(sale.id)}
+                    />
+                  ))
+                )}
               </div>
-            ) : (
-              filteredSales.map(sale => (
-                <div key={sale.id} id={`sale-${sale.id}`}>
-                  <SaleCard
-                    sale={sale}
-                    currentUserId={user?.id}
-                    onEdit={() => handleEditSale(sale)}
-                    onDelete={() => handleDeleteSale(sale.id)}
-                  />
+            )}
+
+            {/* Map View */}
+            {viewMode === 'map' && (
+              <div className="space-y-4">
+                <MapView sales={filteredSales} />
+
+                {/* Mini List Below Map */}
+                <div className="space-y-3">
+                  {filteredSales.map(sale => (
+                    <div key={sale.id} className="bg-dark-800 rounded-lg p-3 border border-gray-700">
+                      <h3 className="font-semibold text-white text-sm mb-1">{sale.title}</h3>
+                      <p className="text-xs text-gray-400 mb-2">{sale.address}</p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-aurora-green">
+                          {new Date(sale.sale_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          {' • '}
+                          {sale.start_time}
+                        </span>
+                        <a
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${sale.latitude},${sale.longitude}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-aurora-blue hover:underline"
+                        >
+                          Get Directions →
+                        </a>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))
+              </div>
             )}
           </div>
-        )}
-
-        {/* Calendar View */}
-        {viewMode === 'calendar' && (
-          <CalendarView
-            sales={filteredSales}
-            onSaleClick={(sale) => {
-              // Could open a modal or navigate to detail view
-              const saleCard = document.getElementById(`sale-${sale.id}`);
-              if (saleCard) {
-                setViewMode('list');
-                setTimeout(() => saleCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-              }
-            }}
-          />
-        )}
-
-        {/* Map View */}
-        {viewMode === 'map' && (
-          <div className="space-y-4">
-            <MapView sales={filteredSales} />
-
-            {/* Mini List Below Map */}
-            <div className="space-y-3">
-              {filteredSales.map(sale => (
-                <div key={sale.id} className="bg-dark-800 rounded-lg p-3 border border-gray-700">
-                  <h3 className="font-semibold text-white text-sm mb-1">{sale.title}</h3>
-                  <p className="text-xs text-gray-400 mb-2">{sale.address}</p>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-aurora-green">
-                      {new Date(sale.sale_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      {' • '}
-                      {sale.start_time}
-                    </span>
-                    <a
-                      href={`https://www.google.com/maps/dir/?api=1&destination=${sale.latitude},${sale.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-aurora-blue hover:underline"
-                    >
-                      Get Directions →
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -570,70 +537,29 @@ function AddEditSaleForm({
 
     setSaving(true);
     try {
-      const supabase = createClient();
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-      if (sale) {
-        // Update existing garage sale
-        const { data, error } = await supabase
-          .from('garage_sales')
-          .update({
-            ...formData,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', sale.id)
-          .eq('user_id', user.id) // Ensure user can only update their own sales
-          .select(`
-            *,
-            profiles!garage_sales_user_id_fkey (
-              full_name,
-              email
-            )
-          `)
-          .single();
+      const endpoint = sale
+        ? `${supabaseUrl}/functions/v1/garage-sales-update`
+        : `${supabaseUrl}/functions/v1/garage-sales-create`;
 
-        if (error) {
-          console.error('Error updating garage sale:', error);
-          alert('Failed to update garage sale');
-          return;
-        }
+      const body = sale ? { id: sale.id, ...formData } : formData;
 
-        const savedSale: GarageSale = {
-          ...data,
-          host_name: data.profiles?.full_name || 'Anonymous',
-          host_email: data.profiles?.email,
-        };
+      const response = await fetch(endpoint, {
+        method: sale ? 'PUT' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response.ok) {
+        const savedSale = await response.json();
         onSave(savedSale);
       } else {
-        // Create new garage sale
-        const { data, error } = await supabase
-          .from('garage_sales')
-          .insert({
-            ...formData,
-            user_id: user.id,
-            status: 'active',
-            is_active: true,
-          })
-          .select(`
-            *,
-            profiles!garage_sales_user_id_fkey (
-              full_name,
-              email
-            )
-          `)
-          .single();
-
-        if (error) {
-          console.error('Error creating garage sale:', error);
-          alert('Failed to create garage sale');
-          return;
-        }
-
-        const savedSale: GarageSale = {
-          ...data,
-          host_name: data.profiles?.full_name || 'Anonymous',
-          host_email: data.profiles?.email,
-        };
-        onSave(savedSale);
+        alert('Failed to save garage sale');
       }
     } catch (error) {
       console.error('Error saving garage sale:', error);
@@ -800,232 +726,6 @@ function AddEditSaleForm({
           </div>
         </form>
       </div>
-    </div>
-  );
-}
-
-// Calendar View Component
-function CalendarView({
-  sales,
-  onSaleClick,
-}: {
-  sales: GarageSale[];
-  onSaleClick: (sale: GarageSale) => void;
-}) {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-
-  // Get sales grouped by date
-  const salesByDate = sales.reduce((acc, sale) => {
-    const date = sale.sale_date;
-    if (!acc[date]) {
-      acc[date] = [];
-    }
-    acc[date].push(sale);
-    return acc;
-  }, {} as Record<string, GarageSale[]>);
-
-  // Get calendar days for current month
-  const year = currentMonth.getFullYear();
-  const month = currentMonth.getMonth();
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  const daysInMonth = lastDay.getDate();
-  const startingDayOfWeek = firstDay.getDay();
-
-  const days = [];
-  for (let i = 0; i < startingDayOfWeek; i++) {
-    days.push(null);
-  }
-  for (let i = 1; i <= daysInMonth; i++) {
-    days.push(i);
-  }
-
-  const goToPreviousMonth = () => {
-    setCurrentMonth(new Date(year, month - 1, 1));
-  };
-
-  const goToNextMonth = () => {
-    setCurrentMonth(new Date(year, month + 1, 1));
-  };
-
-  const formatDateKey = (day: number) => {
-    const date = new Date(year, month, day);
-    return date.toISOString().split('T')[0];
-  };
-
-  const isToday = (day: number) => {
-    const today = new Date();
-    return (
-      day === today.getDate() &&
-      month === today.getMonth() &&
-      year === today.getFullYear()
-    );
-  };
-
-  return (
-    <div className="space-y-4">
-      {/* Month Navigation */}
-      <div className="flex items-center justify-between bg-dark-800 rounded-xl p-4 border border-gray-700">
-        <button
-          onClick={goToPreviousMonth}
-          className="p-2 text-aurora-green hover:bg-dark-700 rounded-lg transition-all"
-        >
-          ← Previous
-        </button>
-        <h3 className="text-xl font-bold text-white">
-          {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-        </h3>
-        <button
-          onClick={goToNextMonth}
-          className="p-2 text-aurora-green hover:bg-dark-700 rounded-lg transition-all"
-        >
-          Next →
-        </button>
-      </div>
-
-      {/* Calendar Grid */}
-      <div className="bg-dark-800 rounded-xl p-4 border border-gray-700">
-        {/* Day Headers */}
-        <div className="grid grid-cols-7 gap-2 mb-2">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="text-center text-xs font-semibold text-gray-400 py-2">
-              {day}
-            </div>
-          ))}
-        </div>
-
-        {/* Calendar Days */}
-        <div className="grid grid-cols-7 gap-2">
-          {days.map((day, index) => {
-            if (day === null) {
-              return <div key={`empty-${index}`} className="aspect-square" />;
-            }
-
-            const dateKey = formatDateKey(day);
-            const daySales = salesByDate[dateKey] || [];
-            const hasMultipleSales = daySales.length > 1;
-
-            return (
-              <div
-                key={day}
-                className={`aspect-square relative rounded-lg border transition-all ${
-                  isToday(day)
-                    ? 'border-aurora-green bg-aurora-green/10'
-                    : daySales.length > 0
-                    ? 'border-aurora-blue bg-aurora-blue/10 cursor-pointer hover:bg-aurora-blue/20'
-                    : 'border-gray-700 bg-dark-700'
-                }`}
-              >
-                {/* Day Number */}
-                <div className="absolute top-1 left-1">
-                  <span
-                    className={`text-xs font-medium ${
-                      isToday(day)
-                        ? 'text-aurora-green'
-                        : daySales.length > 0
-                        ? 'text-white'
-                        : 'text-gray-500'
-                    }`}
-                  >
-                    {day}
-                  </span>
-                </div>
-
-                {/* Sale Indicators */}
-                {daySales.length > 0 && (
-                  <div className="absolute bottom-1 left-1 right-1">
-                    {hasMultipleSales ? (
-                      <div className="text-center">
-                        <span className="inline-block px-1.5 py-0.5 bg-aurora-blue text-white text-xs font-bold rounded">
-                          {daySales.length}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="text-center">
-                        <span className="text-aurora-blue text-lg">📦</span>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Click handler */}
-                {daySales.length > 0 && (
-                  <button
-                    onClick={() => {
-                      if (daySales.length === 1) {
-                        onSaleClick(daySales[0]);
-                      } else {
-                        // Show list of sales for this day
-                        const dayDiv = document.getElementById(`day-sales-${dateKey}`);
-                        if (dayDiv) {
-                          dayDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      }
-                    }}
-                    className="absolute inset-0"
-                    aria-label={`View ${daySales.length} sale${daySales.length > 1 ? 's' : ''} on ${day}`}
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Sales by Date Below Calendar */}
-      {Object.keys(salesByDate).length > 0 && (
-        <div className="space-y-6">
-          <h3 className="text-lg font-bold text-white">Upcoming Sales</h3>
-          {Object.entries(salesByDate)
-            .sort(([dateA], [dateB]) => dateA.localeCompare(dateB))
-            .map(([date, dateSales]) => {
-              const saleDate = new Date(date + 'T00:00:00');
-              return (
-                <div key={date} id={`day-sales-${date}`} className="space-y-3">
-                  <h4 className="text-md font-semibold text-aurora-green">
-                    {saleDate.toLocaleDateString('en-US', {
-                      weekday: 'long',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                    <span className="ml-2 text-sm text-gray-400">
-                      ({dateSales.length} sale{dateSales.length > 1 ? 's' : ''})
-                    </span>
-                  </h4>
-                  <div className="space-y-3">
-                    {dateSales.map(sale => (
-                      <div
-                        key={sale.id}
-                        className="bg-dark-700 rounded-lg p-3 border border-gray-700 hover:border-aurora-green/30 transition-all cursor-pointer"
-                        onClick={() => onSaleClick(sale)}
-                      >
-                        <h5 className="font-semibold text-white text-sm mb-1">{sale.title}</h5>
-                        <p className="text-xs text-gray-400 mb-2">{sale.address}</p>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-aurora-blue">
-                            🕐 {sale.start_time} - {sale.end_time}
-                          </span>
-                          <span className="text-gray-500">
-                            {sale.tags.slice(0, 2).join(', ')}
-                            {sale.tags.length > 2 && ' +' + (sale.tags.length - 2)}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-        </div>
-      )}
-
-      {Object.keys(salesByDate).length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-6xl mb-4">📅</div>
-          <h3 className="text-xl font-bold text-white mb-2">No garage sales this month</h3>
-          <p className="text-gray-400">Check back later or add one yourself!</p>
-        </div>
-      )}
     </div>
   );
 }
