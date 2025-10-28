@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     const { name, email, subject, message } = validationResult.data;
 
     // Save to database
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from('contact_submissions')
       .insert({

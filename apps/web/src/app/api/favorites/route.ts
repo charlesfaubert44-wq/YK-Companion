@@ -9,7 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 // GET - Fetch user's favorites
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 // POST - Add a favorite
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 // DELETE - Remove a favorite
 export async function DELETE(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

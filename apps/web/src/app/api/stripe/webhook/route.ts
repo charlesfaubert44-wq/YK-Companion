@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Handle different event types
     switch (event.type) {
@@ -179,10 +179,3 @@ async function handleRefund(charge: Stripe.Charge, supabase: any) {
 
   console.log(`Refund processed for payment: ${paymentIntentId}`);
 }
-
-// Disable body parsing for webhooks
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};

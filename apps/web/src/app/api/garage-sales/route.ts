@@ -27,7 +27,7 @@ const garageSaleSchema = z.object({
 // GET - Fetch all garage sales
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const searchParams = request.nextUrl.searchParams;
 
     // Query parameters
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
 // POST - Create a new garage sale
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
