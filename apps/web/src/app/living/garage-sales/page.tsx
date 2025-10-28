@@ -391,67 +391,24 @@ export default function GarageSalesPage() {
                   ))}
                 </div>
               </div>
-            ) : (
-              filteredSales.map(sale => (
-                <div key={sale.id} id={`sale-${sale.id}`}>
-                  <SaleCard
-                    sale={sale}
-                    currentUserId={user?.id}
-                    onEdit={() => handleEditSale(sale)}
-                    onDelete={() => handleDeleteSale(sale.id)}
-                  />
-                </div>
-              ))
+            )}
+
+            {/* Calendar View */}
+            {viewMode === 'calendar' && (
+              <CalendarView
+                sales={filteredSales}
+                onSaleClick={(sale) => {
+                  // Could open a modal or navigate to detail view
+                  const saleCard = document.getElementById(`sale-${sale.id}`);
+                  if (saleCard) {
+                    setViewMode('list');
+                    setTimeout(() => saleCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                  }
+                }}
+              />
             )}
           </div>
-        )}
-
-        {/* Calendar View */}
-        {viewMode === 'calendar' && (
-          <CalendarView
-            sales={filteredSales}
-            onSaleClick={(sale) => {
-              // Could open a modal or navigate to detail view
-              const saleCard = document.getElementById(`sale-${sale.id}`);
-              if (saleCard) {
-                setViewMode('list');
-                setTimeout(() => saleCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-              }
-            }}
-          />
-        )}
-
-        {/* Map View */}
-        {viewMode === 'map' && (
-          <div className="space-y-4">
-            <MapView sales={filteredSales} />
-
-            {/* Mini List Below Map */}
-            <div className="space-y-3">
-              {filteredSales.map(sale => (
-                <div key={sale.id} className="bg-dark-800 rounded-lg p-3 border border-gray-700">
-                  <h3 className="font-semibold text-white text-sm mb-1">{sale.title}</h3>
-                  <p className="text-xs text-gray-400 mb-2">{sale.address}</p>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-aurora-green">
-                      {new Date(sale.sale_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      {' • '}
-                      {sale.start_time}
-                    </span>
-                    <a
-                      href={`https://www.google.com/maps/dir/?api=1&destination=${sale.latitude},${sale.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-aurora-blue hover:underline"
-                    >
-                      Get Directions →
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </>
   );
