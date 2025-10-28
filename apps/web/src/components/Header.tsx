@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useWeather, getWeatherEmoji, getTempColor } from '@/hooks/useWeather';
 import AuthModal from './auth/AuthModal';
 import Modal from './Modal';
 import AboutContent from './AboutContent';
@@ -11,6 +12,7 @@ import ContactContent from './ContactContent';
 
 export default function Header() {
   const { user, profile, signOut } = useAuth();
+  const { weather, loading: weatherLoading } = useWeather({ refreshInterval: 600000, enableFallback: true });
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -78,6 +80,21 @@ export default function Header() {
                 )}
               </div>
             </Link>
+
+            {/* Temperature Badge - Desktop & Tablet */}
+            {weather && !weatherLoading && (
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-dark-800/80 to-dark-900/80 border border-aurora-blue/20 backdrop-blur-sm">
+                <span className="text-lg" title={weather.description}>
+                  {getWeatherEmoji(weather.condition, weather.icon)}
+                </span>
+                <span className={`text-sm font-bold ${getTempColor(weather.temp)}`}>
+                  {weather.temp}°C
+                </span>
+                {weather.isFallback && (
+                  <span className="text-[10px] text-gray-500" title="Estimated seasonal temperature">~</span>
+                )}
+              </div>
+            )}
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-2">

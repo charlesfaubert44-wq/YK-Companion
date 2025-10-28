@@ -1,83 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-
-interface WeatherData {
-  temp: number;
-  feels_like: number;
-  condition: string;
-  icon: string;
-  humidity: number;
-  wind_speed: number;
-  description: string;
-}
+import { useWeather, getWeatherEmoji, getTempColor } from '@/hooks/useWeather';
 
 export default function WeatherWidget() {
-  const { t, language } = useLanguage();
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        setLoading(true);
-        setError(false);
-
-        // Yellowknife coordinates
-        const lat = 62.4540;
-        const lon = -114.3718;
-
-        const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
-
-        if (!apiKey) {
-          console.warn('OpenWeatherMap API key not configured');
-          setError(true);
-          setLoading(false);
-          return;
-        }
-
-        // Use language code for API (OpenWeatherMap supports multilingual responses)
-        const langCode = language === 'zh' ? 'zh_cn' : language;
-
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=${langCode}&appid=${apiKey}`,
-          {
-            next: { revalidate: 600 } // Cache for 10 minutes
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error('Weather API request failed');
-        }
-
-        const data = await response.json();
-
-        setWeather({
-          temp: Math.round(data.main.temp),
-          feels_like: Math.round(data.main.feels_like),
-          condition: data.weather[0].main,
-          icon: data.weather[0].icon,
-          humidity: data.main.humidity,
-          wind_speed: Math.round(data.wind.speed * 3.6), // Convert m/s to km/h
-          description: data.weather[0].description,
-        });
-      } catch (err) {
-        console.error('Error fetching weather:', err);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWeather();
-
-    // Refresh weather every 10 minutes
-    const interval = setInterval(fetchWeather, 600000);
-
-    return () => clearInterval(interval);
-  }, [language]);
+  const { weather, loading, error } = useWeather({ refreshInterval: 600000, enableFallback: true });
 
   if (loading) {
     return (
@@ -93,7 +19,7 @@ export default function WeatherWidget() {
     );
   }
 
-  if (error || !weather) {
+  if (error && !weather) {
     return (
       <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg p-4 rounded-2xl border border-gray-700/30">
         <div className="flex items-center gap-3">
@@ -107,41 +33,9 @@ export default function WeatherWidget() {
     );
   }
 
-  // Get weather emoji based on condition
-  const getWeatherEmoji = (condition: string, iconCode: string) => {
-    const isNight = iconCode.includes('n');
-
-    switch (condition.toLowerCase()) {
-      case 'clear':
-        return isNight ? '🌙' : '☀️';
-      case 'clouds':
-        return isNight ? '☁️' : '⛅';
-      case 'rain':
-      case 'drizzle':
-        return '🌧️';
-      case 'thunderstorm':
-        return '⛈️';
-      case 'snow':
-        return '❄️';
-      case 'mist':
-      case 'fog':
-        return '🌫️';
-      default:
-        return '🌡️';
-    }
-  };
-
-  // Temperature color based on actual temperature (Celsius)
-  const getTempColor = (temp: number) => {
-    if (temp <= -30) return 'text-blue-300';
-    if (temp <= -20) return 'text-blue-200';
-    if (temp <= -10) return 'text-cyan-200';
-    if (temp <= 0) return 'text-cyan-300';
-    if (temp <= 10) return 'text-green-300';
-    if (temp <= 20) return 'text-yellow-300';
-    if (temp <= 30) return 'text-orange-300';
-    return 'text-red-300';
-  };
+  if (!weather) {
+    return null;
+  }
 
   return (
     <div className="bg-gradient-to-br from-aurora-blue/10 to-aurora-purple/10 backdrop-blur-lg p-4 rounded-2xl border border-aurora-blue/20 hover:border-aurora-blue/40 transition-all">
