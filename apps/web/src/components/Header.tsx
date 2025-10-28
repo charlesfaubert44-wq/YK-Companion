@@ -194,12 +194,22 @@ export default function Header() {
               )}
             </nav>
 
-            {/* Mobile Login and Menu Buttons */}
+            {/* Mobile Navigation - Always visible on small screens */}
             <div className="md:hidden flex items-center gap-2">
-              {!user && (
+              {/* Show Sign In button OR User avatar */}
+              {user ? (
+                <button
+                  onClick={() => setShowMenu(!showMenu)}
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-dark-800/80 border border-aurora-blue/30"
+                >
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple flex items-center justify-center text-xs font-bold">
+                    {profile?.full_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+                  </div>
+                </button>
+              ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="px-4 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white text-sm font-semibold rounded-lg hover:shadow-aurora transition-all duration-300"
+                  className="px-4 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white text-sm font-semibold rounded-lg hover:shadow-aurora transition-all duration-300 whitespace-nowrap"
                 >
                   Sign In
                 </button>
