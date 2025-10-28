@@ -1,0 +1,39 @@
+GARAGE SALES PAGE SYNTAX FIX - COMPLETED
+==========================================
+
+FILE: apps/web/src/app/living/garage-sales/page.tsx
+
+PROBLEM IDENTIFIED:
+- Lines 364-454 contained duplicate/conflicting code from a bad merge
+- TWO map view sections were defined
+- Incorrectly placed closing tags and malformed ternary operators
+- Build failures due to syntax errors
+
+ISSUES REMOVED:
+1. Removed duplicate Map View code block (original lines 424-454)
+2. Removed malformed ternary operator remnant (original lines 394-407)
+   - This had: ") : ( filteredSales.map(..." which was leftover from merge
+3. Removed extra closing brace/parenthesis pairs that broke nesting
+
+FINAL STRUCTURE (CORRECT):
+Line 312:     <div> Main Content Container
+Line 314-331:     Add/Edit Form Modal
+Line 333-362:     List View (viewMode === 'list')
+Line 364-394:     Map View (viewMode === 'map')
+Line 396-409:     Calendar View (viewMode === 'calendar')
+Line 410:     </div> Close Main Content
+Line 411:     </div> Close Container
+Line 412:     </div> Close Page Wrapper
+Line 413:     </> Close Fragment
+
+VALIDATION RESULTS:
+✓ All braces balanced (no extra/missing {})
+✓ All brackets balanced (no extra/missing [])
+✓ All parentheses balanced (no extra/missing ())
+✓ Only ONE Map View section (line 365)
+✓ Only ONE Calendar View section (line 397)
+✓ Only ONE List View section (line 334)
+✓ Proper JSX nesting hierarchy verified
+✓ No syntax errors detected
+
+STATUS: FIXED - File now compiles without syntax errors
