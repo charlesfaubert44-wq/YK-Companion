@@ -6,11 +6,13 @@
 import Stripe from 'stripe';
 import { stripeConfig } from './config';
 
-// Initialize Stripe with secret key
-export const stripe = new Stripe(stripeConfig.secretKey, {
-  apiVersion: stripeConfig.apiVersion,
-  typescript: true,
-});
+// Initialize Stripe with secret key (only if configured)
+export const stripe = stripeConfig.isConfigured
+  ? new Stripe(stripeConfig.secretKey, {
+      apiVersion: stripeConfig.apiVersion,
+      typescript: true,
+    })
+  : null;
 
 /**
  * Create a payment intent for sponsor checkout
@@ -24,6 +26,10 @@ export async function createPaymentIntent({
   currency?: string;
   metadata?: Stripe.MetadataParam;
 }): Promise<Stripe.PaymentIntent> {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
+  }
+
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents
@@ -53,6 +59,10 @@ export async function createOrRetrieveCustomer({
   name?: string;
   metadata?: Stripe.MetadataParam;
 }): Promise<Stripe.Customer> {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
+  }
+
   try {
     // Check if customer exists
     const existingCustomers = await stripe.customers.list({
@@ -85,6 +95,10 @@ export function verifyWebhookSignature(
   payload: string | Buffer,
   signature: string
 ): Stripe.Event {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
+  }
+
   try {
     return stripe.webhooks.constructEvent(
       payload,
@@ -104,6 +118,10 @@ export async function createRefund(
   paymentIntentId: string,
   amount?: number
 ): Promise<Stripe.Refund> {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
+  }
+
   try {
     const refund = await stripe.refunds.create({
       payment_intent: paymentIntentId,
@@ -123,6 +141,10 @@ export async function createRefund(
 export async function getPaymentIntent(
   paymentIntentId: string
 ): Promise<Stripe.PaymentIntent> {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
+  }
+
   try {
     return await stripe.paymentIntents.retrieve(paymentIntentId);
   } catch (error) {
