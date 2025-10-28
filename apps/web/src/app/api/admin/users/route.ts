@@ -97,6 +97,15 @@ export async function PATCH(request: NextRequest) {
     if (adminCheck instanceof NextResponse) return adminCheck;
 
     const { user: adminUser } = adminCheck;
+    
+    // Ensure adminUser exists
+    if (!adminUser) {
+      return NextResponse.json(
+        { error: 'Admin user not found' },
+        { status: 401 }
+      );
+    }
+    
     const supabase = await createClient();
     const body = await request.json();
 
