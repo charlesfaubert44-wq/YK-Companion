@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import Header from '@/components/Header';
+import InteractiveHeader from '@/components/InteractiveHeader';
 import Link from 'next/link';
 
 export default function SavedItemsPage() {
@@ -18,7 +18,7 @@ export default function SavedItemsPage() {
   if (loading) {
     return (
       <>
-        <Header />
+        <InteractiveHeader />
         <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
           <div className="container mx-auto px-4 py-12 flex items-center justify-center">
             <div className="text-white text-xl">Loading...</div>
@@ -30,7 +30,7 @@ export default function SavedItemsPage() {
 
   return (
     <>
-      <Header />
+      <InteractiveHeader />
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-6xl mx-auto">

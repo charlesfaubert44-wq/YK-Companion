@@ -158,12 +158,18 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                   transitionDelay: `${index * 100}ms`
                 }}
               >
-                {/* Card Background with Gradient */}
-                <div className={`relative h-[420px] sm:h-[460px] bg-gradient-to-br ${pathway.gradient} p-[2px] rounded-3xl`}>
+                {/* Card Background with Gradient - Pulsing border */}
+                <div
+                  className={`relative h-[420px] sm:h-[460px] bg-gradient-to-br ${pathway.gradient} p-[2px] rounded-3xl`}
+                  style={{
+                    animation: `glow-pulse-${index} 3s ease-in-out infinite`,
+                    animationDelay: `${index * 0.5}s`
+                  }}
+                >
                   <div className="relative h-full bg-dark-900 rounded-3xl overflow-hidden">
 
                     {/* Animated Background Pattern */}
-                    <div className="absolute inset-0 opacity-10">
+                    <div className="absolute inset-0 opacity-10 animate-pattern-shift">
                       {pathway.bgPattern === 'compass' && (
                         <svg className="w-full h-full" viewBox="0 0 200 200">
                           <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="1" fill="none" className="text-emerald-400" />
@@ -189,39 +195,76 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                       )}
                     </div>
 
-                    {/* Glow Effect on Hover */}
+                    {/* Auto-Pulsing Glow Effect - Always visible */}
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${pathway.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
+                      className={`absolute inset-0 bg-gradient-to-br ${pathway.gradient} animate-glow-pulse transition-opacity duration-500 group-hover:opacity-25`}
+                      style={{
+                        opacity: 0.1,
+                        animationDelay: `${index * 0.3}s`
+                      }}
                     />
 
-                    {/* Floating Particles */}
+                    {/* Always-Visible Floating Particles - Mobile Friendly */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                      {hoveredCard === pathway.id && [...Array(8)].map((_, i) => (
+                      {[...Array(6)].map((_, i) => (
                         <div
                           key={i}
                           className="absolute rounded-full"
                           style={{
+                            left: `${15 + (i * 15)}%`,
+                            top: `${20 + (i * 12)}%`,
+                            width: `${3 + (i % 3)}px`,
+                            height: `${3 + (i % 3)}px`,
+                            background: pathway.glowColor,
+                            animation: `float-up ${3 + (i % 3)}s ease-in-out infinite`,
+                            animationDelay: `${i * 0.4}s`,
+                            boxShadow: `0 0 10px ${pathway.glowColor}`,
+                            opacity: 0.6
+                          }}
+                        />
+                      ))}
+
+                      {/* Extra particles on hover (desktop) */}
+                      {hoveredCard === pathway.id && [...Array(4)].map((_, i) => (
+                        <div
+                          key={`hover-${i}`}
+                          className="absolute rounded-full hidden md:block"
+                          style={{
                             left: `${Math.random() * 100}%`,
                             top: `${Math.random() * 100}%`,
-                            width: `${3 + Math.random() * 4}px`,
-                            height: `${3 + Math.random() * 4}px`,
+                            width: `${4 + Math.random() * 3}px`,
+                            height: `${4 + Math.random() * 3}px`,
                             background: pathway.glowColor,
                             animation: `float-up ${2 + Math.random() * 2}s ease-in-out infinite`,
                             animationDelay: `${Math.random()}s`,
-                            boxShadow: `0 0 10px ${pathway.glowColor}`,
+                            boxShadow: `0 0 15px ${pathway.glowColor}`,
                           }}
                         />
                       ))}
                     </div>
 
+                    {/* Animated Gradient Shimmer */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-r ${pathway.gradient} opacity-0 animate-shimmer`}
+                      style={{
+                        animationDelay: `${index * 0.7}s`
+                      }}
+                    />
+
                     {/* Content */}
                     <div className="relative h-full flex flex-col justify-between p-8">
 
-                      {/* Top Section - Icon */}
+                      {/* Top Section - Icon with Auto-Animation */}
                       <div className="flex justify-center">
-                        <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${pathway.gradient} flex items-center justify-center shadow-lg transform transition-all duration-500 ${
-                          hoveredCard === pathway.id ? 'scale-110 rotate-12' : 'scale-100 rotate-0'
-                        }`}>
+                        <div
+                          className={`w-24 h-24 rounded-full bg-gradient-to-br ${pathway.gradient} flex items-center justify-center shadow-lg transform transition-all duration-500 ${
+                            hoveredCard === pathway.id ? 'scale-110 rotate-12' : 'scale-100 rotate-0'
+                          }`}
+                          style={{
+                            animation: `icon-pulse ${2 + index * 0.3}s ease-in-out infinite`,
+                            animationDelay: `${index * 0.2}s`
+                          }}
+                        >
                           <span className="text-5xl">{pathway.icon}</span>
                         </div>
                       </div>
@@ -268,9 +311,14 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                   </div>
                 </div>
 
-                {/* Outer Glow Ring */}
+                {/* Outer Glow Ring - Auto-Breathing */}
                 <div
-                  className={`absolute -inset-1 bg-gradient-to-br ${pathway.gradient} rounded-3xl opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-500 -z-10`}
+                  className={`absolute -inset-1 bg-gradient-to-br ${pathway.gradient} rounded-3xl blur-xl transition-opacity duration-500 -z-10 group-hover:opacity-60`}
+                  style={{
+                    animation: `breathe ${3 + index * 0.4}s ease-in-out infinite`,
+                    animationDelay: `${index * 0.3}s`,
+                    opacity: 0.3
+                  }}
                 />
               </button>
             ))}
@@ -335,6 +383,87 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
           }
         }
 
+        /* Mobile-Friendly Auto Animations */
+        @keyframes glow-pulse-0 {
+          0%, 100% {
+            opacity: 1;
+            filter: brightness(1);
+          }
+          50% {
+            opacity: 0.9;
+            filter: brightness(1.2);
+          }
+        }
+
+        @keyframes glow-pulse-1 {
+          0%, 100% {
+            opacity: 1;
+            filter: brightness(1);
+          }
+          50% {
+            opacity: 0.85;
+            filter: brightness(1.3);
+          }
+        }
+
+        @keyframes glow-pulse-2 {
+          0%, 100% {
+            opacity: 1;
+            filter: brightness(1);
+          }
+          50% {
+            opacity: 0.95;
+            filter: brightness(1.15);
+          }
+        }
+
+        @keyframes breathe {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(1.05);
+          }
+        }
+
+        @keyframes icon-pulse {
+          0%, 100% {
+            transform: scale(1);
+            filter: brightness(1);
+          }
+          50% {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+          }
+        }
+
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%);
+            opacity: 0;
+          }
+          50% {
+            opacity: 0.15;
+          }
+          100% {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+        }
+
+        @keyframes pattern-shift {
+          0%, 100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.1;
+          }
+          50% {
+            transform: scale(1.02) rotate(2deg);
+            opacity: 0.15;
+          }
+        }
+
         .animate-float {
           animation: float 3s ease-in-out infinite;
         }
@@ -345,6 +474,18 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
 
         .animate-aurora {
           animation: aurora 8s ease-in-out infinite;
+        }
+
+        .animate-glow-pulse {
+          animation: glow-pulse-0 4s ease-in-out infinite;
+        }
+
+        .animate-shimmer {
+          animation: shimmer 4s ease-in-out infinite;
+        }
+
+        .animate-pattern-shift {
+          animation: pattern-shift 8s ease-in-out infinite;
         }
       `}</style>
     </div>

@@ -8,7 +8,7 @@ import UserTypeSelector from '@/components/auth/UserTypeSelector';
 import PremiumSpotlight from '@/components/PremiumSpotlight';
 import PremiumSponsors from '@/components/sponsors/PremiumSponsors';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
-import ImprovedHeader from '@/components/ImprovedHeader';
+import InteractiveHeader from '@/components/InteractiveHeader';
 import OnboardingModal from '@/components/OnboardingModal';
 
 export default function Home() {
@@ -83,7 +83,7 @@ export default function Home() {
 
     return (
       <>
-        <ImprovedHeader />
+        <InteractiveHeader />
         <UserTypeSelector
           isOpen={showUserTypeSelector}
           onComplete={() => setShowUserTypeSelector(false)}
@@ -161,7 +161,7 @@ export default function Home() {
   // Default view for non-logged-in users or users without a selected type
   return (
     <>
-      <ImprovedHeader />
+      <InteractiveHeader />
       <UserTypeSelector
         isOpen={showUserTypeSelector}
         onComplete={() => setShowUserTypeSelector(false)}
