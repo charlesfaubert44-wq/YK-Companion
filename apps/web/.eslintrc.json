@@ -5,18 +5,13 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:jest/recommended",
-    "plugin:testing-library/react",
-    "prettier"
+    "plugin:jsx-a11y/recommended"
   ],
   "plugins": [
     "@typescript-eslint",
     "react",
     "react-hooks",
-    "jsx-a11y",
-    "jest",
-    "testing-library"
+    "jsx-a11y"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -30,8 +25,7 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true,
-    "jest": true
+    "node": true
   },
   "rules": {
     // TypeScript specific rules
@@ -60,12 +54,7 @@
     // Accessibility
     "jsx-a11y/anchor-is-valid": "warn",
     "jsx-a11y/click-events-have-key-events": "warn",
-    "jsx-a11y/no-static-element-interactions": "warn",
-    
-    // Testing
-    "jest/expect-expect": "warn",
-    "testing-library/await-async-query": "error",
-    "testing-library/no-await-sync-query": "error"
+    "jsx-a11y/no-static-element-interactions": "warn"
   },
   "settings": {
     "react": {

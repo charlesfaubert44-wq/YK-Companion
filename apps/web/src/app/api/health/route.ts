@@ -5,7 +5,17 @@ import { NextResponse } from 'next/server';
  * Used by monitoring services and load balancers
  */
 export async function GET() {
-  const healthCheck = {
+  const healthCheck: {
+    status: string;
+    timestamp: string;
+    uptime: number;
+    environment: string | undefined;
+    version: string;
+    checks: {
+      server: string;
+      database?: string;
+    };
+  } = {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
