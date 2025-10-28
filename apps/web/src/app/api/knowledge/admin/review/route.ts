@@ -11,6 +11,15 @@ export async function POST(request: NextRequest) {
     if (adminCheck instanceof NextResponse) return adminCheck;
 
     const { user } = adminCheck;
+    
+    // Ensure user exists
+    if (!user) {
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 401 }
+      );
+    }
+    
     const supabase = await createClient();
     const { submission_id, ...reviewInput }: ReviewSubmissionInput & { submission_id: string } = await request.json();
 
