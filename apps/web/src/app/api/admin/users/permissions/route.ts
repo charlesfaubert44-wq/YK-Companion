@@ -24,6 +24,15 @@ export async function POST(request: NextRequest) {
     }
 
     const { user: adminUser } = adminCheck;
+    
+    // Ensure adminUser exists
+    if (!adminUser) {
+      return NextResponse.json(
+        { error: 'Admin user not found' },
+        { status: 401 }
+      );
+    }
+    
     const supabase = await createClient();
     const body = await request.json();
 
@@ -121,6 +130,15 @@ export async function DELETE(request: NextRequest) {
     }
 
     const { user: adminUser } = adminCheck;
+    
+    // Ensure adminUser exists
+    if (!adminUser) {
+      return NextResponse.json(
+        { error: 'Admin user not found' },
+        { status: 401 }
+      );
+    }
+    
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
