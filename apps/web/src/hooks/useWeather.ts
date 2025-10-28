@@ -53,10 +53,17 @@ export function useWeather(options: UseWeatherOptions = {}) {
         // Use language code for API (OpenWeatherMap supports multilingual responses)
         const langCode = language === 'zh' ? 'zh_cn' : language;
 
+        // Add timestamp to prevent any caching issues
+        const timestamp = Date.now();
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=${langCode}&appid=${apiKey}`,
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=${langCode}&appid=${apiKey}&_t=${timestamp}`,
           {
-            cache: 'no-store' // Always fetch fresh data
+            cache: 'no-store', // Always fetch fresh data
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
           }
         );
 
@@ -66,7 +73,17 @@ export function useWeather(options: UseWeatherOptions = {}) {
 
         const data = await response.json();
 
-        setWeather({
+        // Log the actual API response for debugging
+        console.log('[useWeather] API Response:', {
+          temp: data.main.temp,
+          rounded: Math.round(data.main.temp),
+          feels_like: data.main.feels_like,
+          condition: data.weather[0].main,
+          timestamp: new Date().toLocaleString(),
+          location: data.name
+        });
+
+        const weatherData = {
           temp: Math.round(data.main.temp),
           feels_like: Math.round(data.main.feels_like),
           condition: data.weather[0].main,
@@ -75,7 +92,10 @@ export function useWeather(options: UseWeatherOptions = {}) {
           wind_speed: Math.round(data.wind.speed * 3.6), // Convert m/s to km/h
           description: data.weather[0].description,
           isFallback: false,
-        });
+        };
+
+        console.log('[useWeather] Setting weather:', weatherData);
+        setWeather(weatherData);
       } catch (err) {
         console.error('Error fetching weather:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch weather');
