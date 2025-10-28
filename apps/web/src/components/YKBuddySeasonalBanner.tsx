@@ -10,10 +10,6 @@ export default function YKBuddySeasonalBanner() {
 
   const BannerComponent = BANNER_THEMES[currentTheme];
 
-  if (loading || !weather) {
-    // Show banner with loading state
-    return <BannerComponent temperature={-30} weather={null} />;
-  }
-
-  return <BannerComponent temperature={weather.temp} weather={weather} />;
+  // Always pass weather data (will be fallback data if API fails)
+  return <BannerComponent temperature={weather?.temp || -28} weather={weather} />;
 }
