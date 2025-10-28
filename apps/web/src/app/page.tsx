@@ -18,24 +18,12 @@ export default function Home() {
   const [showUserTypeSelector, setShowUserTypeSelector] = useState(false);
 
   useEffect(() => {
-    console.log('Home page - Auth state:', {
-      loading,
-      hasUser: !!user,
-      hasProfile: !!profile,
-      userType: profile?.user_type
-    });
-  }, [loading, user, profile]);
-
-  useEffect(() => {
-    // Show user type selector if user is logged in but hasn't selected a type
     if (user && profile && !profile.user_type) {
-      console.log('Home page - Showing user type selector');
       setShowUserTypeSelector(true);
     }
   }, [user, profile]);
 
   if (loading) {
-    console.log('Home page - Rendering loading state');
     return (
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center">
         <div className="text-white text-xl">Loading...</div>
@@ -43,28 +31,26 @@ export default function Home() {
     );
   }
 
-  console.log('Home page - Rendering main content'); // Force rebuild
-
   // If user is logged in and has selected a type, show personalized content
   if (user && profile?.user_type) {
     const userTypeConfig = {
       visiting: {
         title: 'Welcome, Traveler!',
-        icon: <BushPlaneIcon className="transform group-hover:scale-110 transition-all duration-300" />,
+        icon: <BushPlaneIcon className="w-16 h-16" />,
         description: 'Ready to explore Yellowknife?',
         primaryLink: '/visiting',
         primaryText: 'Plan Your Trip'
       },
       living: {
         title: 'Welcome Home!',
-        icon: <NorthernCabinIcon className="transform group-hover:scale-110 transition-all duration-300" />,
+        icon: <NorthernCabinIcon className="w-16 h-16" />,
         description: 'Discover what\'s happening in your city',
         primaryLink: '/living',
         primaryText: 'Explore Yellowknife'
       },
       moving: {
         title: 'Welcome to Your New Journey!',
-        icon: <OldTruckIcon className="transform group-hover:scale-110 transition-all duration-300" />,
+        icon: <OldTruckIcon className="w-16 h-16" />,
         description: 'Let\'s get you settled in Yellowknife',
         primaryLink: '/moving',
         primaryText: 'Continue Planning'
@@ -80,35 +66,31 @@ export default function Home() {
           isOpen={showUserTypeSelector}
           onComplete={() => setShowUserTypeSelector(false)}
         />
-        <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
-          <div className="container mx-auto px-4 py-12">
-            <div className="max-w-6xl mx-auto">
-              {/* Premium Spotlight */}
-              <PremiumSpotlight position="home_top" />
+        <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
+          <div className="max-w-5xl mx-auto px-4 py-8">
+            <PremiumSpotlight position="home_top" />
 
-              <div className="flex items-center justify-center px-4 py-12">
-                <div className="max-w-3xl w-full text-center group">
-              <div className="mb-6 flex justify-center">{config.icon}</div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
+            <div className="text-center py-8">
+              <div className="mb-4 flex justify-center">{config.icon}</div>
+              <h1 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
                 {config.title}
               </h1>
-              <p className="text-xl text-gray-300 mb-8">{config.description}</p>
+              <p className="text-lg text-gray-300 mb-6">{config.description}</p>
 
               <Link href={config.primaryLink}>
-                <button className="px-8 py-4 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all transform hover:scale-105 mb-8">
+                <button className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all transform hover:scale-105">
                   {config.primaryText}
                 </button>
               </Link>
 
-              {/* Explore Other Pathways */}
-              <div className="mt-12 pt-8 border-t border-gray-700/30">
-                <p className="text-sm text-gray-400 mb-4">Explore other areas</p>
-                <div className="flex justify-center gap-4 flex-wrap">
+              <div className="mt-8 pt-6 border-t border-gray-700/30">
+                <p className="text-xs text-gray-400 mb-3">Explore other areas</p>
+                <div className="flex justify-center gap-3 flex-wrap">
                   {profile.user_type !== 'visiting' && (
                     <Link href="/visiting" className="group">
-                      <div className="px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green hover:bg-gray-800/80 transition-all transform hover:scale-105">
-                        <div className="flex items-center gap-3">
-                          <span className="text-3xl">🧭</span>
+                      <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green hover:bg-gray-800/80 transition-all">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">🧭</span>
                           <span className="text-gray-300 group-hover:text-aurora-green text-sm font-medium transition-colors">Visiting</span>
                         </div>
                       </div>
@@ -116,9 +98,9 @@ export default function Home() {
                   )}
                   {profile.user_type !== 'living' && (
                     <Link href="/living" className="group">
-                      <div className="px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-blue hover:bg-gray-800/80 transition-all transform hover:scale-105">
-                        <div className="flex items-center gap-3">
-                          <span className="text-3xl">🏔️</span>
+                      <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-blue hover:bg-gray-800/80 transition-all">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">🏔️</span>
                           <span className="text-gray-300 group-hover:text-aurora-blue text-sm font-medium transition-colors">Living</span>
                         </div>
                       </div>
@@ -126,9 +108,9 @@ export default function Home() {
                   )}
                   {profile.user_type !== 'moving' && (
                     <Link href="/moving" className="group">
-                      <div className="px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-purple hover:bg-gray-800/80 transition-all transform hover:scale-105">
-                        <div className="flex items-center gap-3">
-                          <span className="text-3xl">🎒</span>
+                      <div className="px-4 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-purple hover:bg-gray-800/80 transition-all">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">🎒</span>
                           <span className="text-gray-300 group-hover:text-aurora-purple text-sm font-medium transition-colors">Moving</span>
                         </div>
                       </div>
@@ -136,23 +118,15 @@ export default function Home() {
                   )}
                 </div>
               </div>
-
-              {/* Premium Sponsors Section */}
-              <div className="mt-12 pt-8 border-t border-gray-700/30">
-                <PremiumSponsors position="home_middle" maxSponsors={3} layout="grid" showPlaceholder={true} />
-              </div>
-
-              {/* Styled Footer */}
-              <footer className="mt-12 pt-6 border-t border-gray-700/30">
-                <div className="text-center space-y-2">
-                  <p className="text-sm text-gray-400">
-                    {t('footer')}
-                  </p>
-                </div>
-              </footer>
             </div>
-          </div>
+
+            <div className="mt-8 pt-6 border-t border-gray-700/30">
+              <PremiumSponsors position="home_middle" maxSponsors={3} layout="grid" showPlaceholder={true} />
             </div>
+
+            <footer className="mt-8 pt-4 border-t border-gray-700/30 text-center">
+              <p className="text-xs text-gray-400">{t('footer')}</p>
+            </footer>
           </div>
         </div>
       </>
@@ -167,35 +141,24 @@ export default function Home() {
         isOpen={showUserTypeSelector}
         onComplete={() => setShowUserTypeSelector(false)}
       />
-      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-6xl mx-auto">
-            {/* Premium Spotlight */}
-            <PremiumSpotlight position="home_top" />
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
+        <div className="max-w-5xl mx-auto px-4 py-8">
+          <PremiumSpotlight position="home_top" />
 
-            <div className="flex items-center justify-center px-4 py-12">
-              <div className="max-w-4xl w-full text-center">
-            {/* Interactive "Are You..." Section */}
+          <div className="py-6">
             <InteractiveAreYou />
 
-            {/* Enhanced Pathway Cards with Beautiful Wrapper */}
-            <EnhancedPathwayCards />
+            <div className="mt-8">
+              <EnhancedPathwayCards />
+            </div>
 
-            {/* Premium Sponsors Section */}
-            <div className="mt-24 pt-8 border-t border-gray-700/30">
+            <div className="mt-12 pt-6 border-t border-gray-700/30">
               <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
             </div>
 
-            {/* Styled Footer */}
-            <footer className="mt-12 pt-6 border-t border-gray-700/30">
-              <div className="text-center space-y-2">
-                <p className="text-sm text-gray-400">
-                  {t('footer')}
-                </p>
-              </div>
+            <footer className="mt-8 pt-4 border-t border-gray-700/30 text-center">
+              <p className="text-xs text-gray-400">{t('footer')}</p>
             </footer>
-          </div>
-        </div>
           </div>
         </div>
       </div>

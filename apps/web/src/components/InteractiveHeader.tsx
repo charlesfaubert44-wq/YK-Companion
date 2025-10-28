@@ -41,20 +41,7 @@ export default function InteractiveHeader() {
       {/* Navigation Bar - Fixed on top */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-northern-midnight/95 backdrop-blur-xl shadow-lg shadow-aurora-blue/10 safe-top">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-14">
-            {/* Logo - Smaller for nav bar */}
-            <Link href="/" className="flex items-center space-x-2 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                <div className="relative w-8 h-8 rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple flex items-center justify-center text-lg shadow-aurora">
-                  🌌
-                </div>
-              </div>
-              <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
-                YK Buddy
-              </span>
-            </Link>
-
+          <div className="flex justify-between items-center h-12">
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-2">
               {navItems.map((item) => (
@@ -182,7 +169,7 @@ export default function InteractiveHeader() {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden fixed inset-0 top-14 transition-all duration-300 ${
+          className={`md:hidden fixed inset-0 top-12 transition-all duration-300 ${
             showMenu ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         >
@@ -289,7 +276,7 @@ export default function InteractiveHeader() {
       </nav>
 
       {/* Interactive Banner with Weather and Slogan */}
-      <div className="pt-14">
+      <div className="pt-12">
         <YKBuddySeasonalBanner />
       </div>
 
