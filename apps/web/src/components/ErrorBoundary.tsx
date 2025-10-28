@@ -1,10 +1,12 @@
 'use client';
 
-import { Component, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { logError } from '@/lib/logger';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
 interface State {
@@ -14,20 +16,10 @@ interface State {
 
 /**
  * Error Boundary Component
- *
- * Catches React errors and displays a fallback UI instead of crashing the entire app.
- *
- * Architecture Reference: Arc42 Section 4.2 - Reliability Strategy
- * - Implements graceful degradation
- * - Prevents full app crashes
- * - Provides user-friendly error messages
- *
- * @example
- * <ErrorBoundary>
- *   <YourComponent />
- * </ErrorBoundary>
+ * Catches JavaScript errors anywhere in the child component tree
+ * Logs errors and displays a fallback UI
  */
-export default class ErrorBoundary extends Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
@@ -38,14 +30,15 @@ export default class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error to console in development
-    if (process.env.NODE_ENV === 'development') {
-      console.error('ErrorBoundary caught an error:', error, errorInfo);
-    }
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // Log the error to logging service
+    logError('React Error Boundary caught an error', error, {
+      componentStack: errorInfo.componentStack,
+      errorBoundary: true,
+    });
 
-    // TODO: Log to error tracking service (e.g., Sentry) in production
-    // This aligns with monitoring architecture from docs
+    // Call custom error handler if provided
+    this.props.onError?.(error, errorInfo);
   }
 
   render() {
@@ -55,62 +48,38 @@ export default class ErrorBoundary extends Component<Props, State> {
         return this.props.fallback;
       }
 
-      // Default fallback UI - matches YK Buddy aurora theme
+      // Default fallback UI
       return (
-        <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-dark-800/50 backdrop-blur-sm rounded-2xl border border-aurora-blue/30 p-8 text-center">
-            {/* Error Icon */}
+        <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center px-4">
+          <div className="max-w-md w-full bg-gray-800/50 border border-gray-700 rounded-lg p-8 text-center">
             <div className="text-6xl mb-4">❄️</div>
-
-            {/* Error Title */}
-            <h1 className="text-2xl font-bold text-white mb-3">
-              Something Went Wrong
+            <h1 className="text-2xl font-bold text-white mb-4">
+              Oops! Something went wrong
             </h1>
-
-            {/* Error Message */}
             <p className="text-gray-300 mb-6">
-              We encountered an unexpected error. Don't worry, your data is safe.
+              We encountered an unexpected error. Don't worry, it's not your fault!
             </p>
-
-            {/* Error Details (only in development) */}
+            <button
+              onClick={() => {
+                this.setState({ hasError: false, error: undefined });
+                window.location.href = '/';
+              }}
+              className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
+            >
+              Return to Home
+            </button>
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className="mb-6 text-left">
-                <summary className="text-red-400 cursor-pointer text-sm mb-2">
-                  Error Details (dev only)
-                </summary>
-                <pre className="text-xs text-red-300 bg-dark-900 p-3 rounded overflow-x-auto">
-                  {this.state.error.toString()}
-                </pre>
-              </details>
+              <div className="mt-6 text-left">
+                <details className="text-sm text-red-400">
+                  <summary className="cursor-pointer font-semibold mb-2">
+                    Error Details (Dev Only)
+                  </summary>
+                  <pre className="bg-gray-900 p-4 rounded overflow-auto text-xs">
+                    {this.state.error.stack}
+                  </pre>
+                </details>
+              </div>
             )}
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <button
-                onClick={() => window.location.href = '/'}
-                className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
-              >
-                Go to Homepage
-              </button>
-
-              <button
-                onClick={() => window.location.reload()}
-                className="px-6 py-3 bg-dark-700 text-white font-semibold rounded-lg hover:bg-dark-600 transition-all"
-              >
-                Try Again
-              </button>
-            </div>
-
-            {/* Help Text */}
-            <p className="text-sm text-gray-500 mt-6">
-              If this problem persists, please{' '}
-              <a
-                href="/contact"
-                className="text-aurora-blue hover:text-aurora-green transition-colors"
-              >
-                contact us
-              </a>
-            </p>
           </div>
         </div>
       );
@@ -118,4 +87,21 @@ export default class ErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
   }
+}
+
+/**
+ * Wrapper for async functions to catch errors
+ */
+export function withErrorHandler<T extends (...args: any[]) => Promise<any>>(
+  fn: T,
+  errorMessage = 'An error occurred'
+): T {
+  return (async (...args: any[]) => {
+    try {
+      return await fn(...args);
+    } catch (error) {
+      logError(errorMessage, error as Error, { function: fn.name });
+      throw error;
+    }
+  }) as T;
 }
