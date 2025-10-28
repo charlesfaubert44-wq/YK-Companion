@@ -15,17 +15,21 @@ enum Season {
 // EXPORTS - New Utility Modules
 // ============================================================
 
-// Note: Some exports commented out to avoid conflicts between modules
-// Import directly from specific modules if needed
-
-// Async and Promise utilities
-// export * from './async'; // Commented to avoid retryWithBackoff conflict
-
-// API retry logic with exponential backoff (Architecture: Reliability Strategy)
-export * from './retry';
+// Async and Promise utilities (excluding retryWithBackoff to avoid conflict)
+export {
+  debounce,
+  throttle,
+  asyncMap,
+  asyncFilter,
+  asyncForEach,
+  sleep,
+  timeout,
+  pollUntil,
+  asyncPool,
+} from './async';
 
 // Form validation and management utilities
-// export * from './forms'; // Commented to avoid ValidationResult conflict
+export * from './forms';
 
 // Query parameter and URL utilities
 export * from './query-params';
@@ -33,7 +37,17 @@ export * from './query-params';
 // Date and time utilities (Yellowknife-specific)
 export * from './datetime';
 
+// API retry logic with exponential backoff (Architecture: Reliability Strategy)
+// This is the improved version, replacing the one from async.ts
+export {
+  retryWithBackoff,
+  withRetry,
+  fetchWithRetry,
+  RetryOptions,
+} from './retry';
+
 // Input validation with Zod schemas (Architecture: Security Strategy)
+// Note: Exports ZodValidationResult (renamed to avoid conflict with forms ValidationResult)
 export * from './validation';
 
 // ============================================================
