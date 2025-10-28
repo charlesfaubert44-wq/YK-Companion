@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export interface FABAction {
   icon: string;
@@ -170,25 +172,28 @@ export default function FloatingActionButton({
 
   return (
     <div
-      className={`fixed ${positionClasses[position]} z-40 transition-all duration-300 ${
+      className={cn(
+        'fixed z-40 transition-all duration-300',
+        positionClasses[position],
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
-      }`}
+      )}
     >
       {/* Secondary actions (shown when expanded) */}
       {isExpanded && secondaryActions.length > 0 && (
         <div className="absolute bottom-20 right-0 flex flex-col gap-3 mb-3 animate-slide-up">
           {secondaryActions.map((action, index) => (
-            <button
+            <Button
               key={index}
               onClick={() => {
                 action.onClick();
                 setIsExpanded(false);
               }}
+              variant="secondary"
               className="group flex items-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-4 py-3 rounded-full shadow-lg transition-all transform hover:scale-105"
             >
               <span className="text-2xl">{action.icon}</span>
               <span className="text-sm font-semibold whitespace-nowrap">{action.label}</span>
-            </button>
+            </Button>
           ))}
         </div>
       )}
@@ -200,7 +205,7 @@ export default function FloatingActionButton({
             {primaryAction.label}
           </span>
         )}
-        <button
+        <Button
           onClick={() => {
             if (secondaryActions.length > 0) {
               setIsExpanded(!isExpanded);
@@ -208,15 +213,16 @@ export default function FloatingActionButton({
               primaryAction.onClick();
             }
           }}
-          className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-3xl transition-all transform hover:scale-110 ${
-            isExpanded
-              ? 'bg-gray-700 rotate-45'
-              : 'bg-gradient-to-r from-aurora-green to-aurora-blue hover:shadow-aurora'
-          }`}
+          variant="aurora"
+          size="icon"
+          className={cn(
+            'w-16 h-16 rounded-full shadow-2xl text-3xl transition-all transform hover:scale-110',
+            isExpanded && 'bg-gray-700 rotate-45'
+          )}
           aria-label={primaryAction.label}
         >
           {isExpanded ? '✕' : primaryAction.icon}
-        </button>
+        </Button>
       </div>
 
       {/* Backdrop when expanded */}

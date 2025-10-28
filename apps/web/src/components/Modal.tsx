@@ -1,74 +1,45 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import LanguageSelector from './LanguageSelector';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  description?: string;
   children: React.ReactNode;
 }
 
-export default function Modal({ isOpen, onClose, title, children }: ModalProps) {
-  // Close on ESC key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
+export default function Modal({ isOpen, onClose, title, description, children }: ModalProps) {
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn"
-      onClick={onClose}
-    >
-      {/* Modal Content */}
-      <div
-        className="relative w-full max-w-4xl max-h-[90vh] bg-gradient-to-b from-northern-midnight to-dark-900 rounded-2xl shadow-2xl border border-aurora-blue/30 overflow-hidden animate-slideUp"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-northern-midnight/95 backdrop-blur-sm border-b border-gray-700/50">
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
-            {title}
-          </h1>
-
-          <div className="flex items-center gap-4">
-            <LanguageSelector />
-
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/50 hover:bg-aurora-blue/20 border border-gray-700/50 hover:border-aurora-blue/50 transition-all group"
-              aria-label="Close"
-            >
-              <span className="text-gray-400 group-hover:text-aurora-blue text-2xl leading-none">×</span>
-            </button>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl max-h-[90vh] bg-gradient-to-b from-northern-midnight to-dark-900 border-aurora-blue/30 text-white">
+        <DialogHeader className="sticky top-0 z-10 flex flex-row items-center justify-between space-y-0 pb-4 border-b border-gray-700/50">
+          <div className="flex-1">
+            <DialogTitle className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
+              {title}
+            </DialogTitle>
+            {description && (
+              <DialogDescription className="text-gray-400 mt-2">
+                {description}
+              </DialogDescription>
+            )}
           </div>
-        </div>
+          <LanguageSelector />
+        </DialogHeader>
 
         {/* Scrollable Content */}
-        <div className="overflow-y-auto max-h-[calc(90vh-80px)] px-6 py-8 custom-scrollbar">
+        <div className="overflow-y-auto max-h-[calc(90vh-120px)] px-1 py-4 custom-scrollbar">
           {children}
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

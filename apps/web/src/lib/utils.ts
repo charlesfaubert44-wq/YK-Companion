@@ -1,5 +1,20 @@
 // Utility functions for YK Buddy
 
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+/**
+ * Combine CSS class names conditionally with Tailwind CSS support
+ * @param inputs - Class names, objects, or arrays to combine
+ * @returns Merged class string with proper Tailwind CSS precedence
+ * @example
+ * cn('px-2 py-1', 'px-4') // "py-1 px-4" (later px overrides)
+ * cn('text-white', isActive && 'text-blue-500') // "text-blue-500" (if isActive)
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 /**
  * Format a date string or Date object into a human-readable format
  * @param dateString - ISO date string or Date object
@@ -76,18 +91,6 @@ export function calculateDistance(
  */
 function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
-}
-
-/**
- * Combine CSS class names conditionally (className utility)
- * @param classes - Array of class names, booleans, or undefined values
- * @returns Combined class string with falsy values filtered out
- * @example
- * cn('base-class', isActive && 'active', undefined) // "base-class active"
- * cn('text-white', false, 'bg-blue') // "text-white bg-blue"
- */
-export function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
 }
 
 /**
