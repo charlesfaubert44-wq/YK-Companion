@@ -117,10 +117,14 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
           </div>
         )}
 
-        {/* Social Auth Buttons - OAuth providers enabled in Supabase
-            Configured in: Supabase Dashboard > Authentication > Providers
+        {/* Social Auth Buttons - Disabled until OAuth is configured
+            To enable:
+            1. Go to Supabase Dashboard > Authentication > Providers
+            2. Enable Google OAuth and add Client ID/Secret
+            3. Enable Apple OAuth and add credentials
+            4. Change 'false' to 'true' below
         */}
-        {true && (
+        {false && (
           <>
             <div className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-6">
               <button
