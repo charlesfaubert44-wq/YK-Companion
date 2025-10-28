@@ -23,7 +23,7 @@ app.get('/health', (req: Request, res: Response) => {
 app.get('/api/v1', (req: Request, res: Response) => {
   res.json({
     message: 'Welcome to Yellowknife Trip Planner API',
-    version: '1.0.0'
+    version: '1.0.0',
   });
 });
 

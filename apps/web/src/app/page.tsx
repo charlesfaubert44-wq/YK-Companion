@@ -14,6 +14,10 @@ import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/Nor
 import Modal from '@/components/Modal';
 import AboutContent from '@/components/AboutContent';
 import ContactContent from '@/components/ContactContent';
+import InteractiveMenu from '@/components/InteractiveMenu';
+import SloganConnector from '@/components/SloganConnector';
+import InteractiveAreYou from '@/components/InteractiveAreYou';
+import ModernPathwayCards from '@/components/ModernPathwayCards';
 
 export default function Home() {
   const { user, profile, loading, signOut } = useAuth();
@@ -77,68 +81,56 @@ export default function Home() {
       }
     };
 
-    const config = userTypeConfig[profile.user_type];
+    const config = userTypeConfig[profile.user_type as keyof typeof userTypeConfig];
 
     return (
       <>
+        <UserTypeSelector
+          isOpen={showUserTypeSelector}
+          onComplete={() => setShowUserTypeSelector(false)}
+        />
         <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-          {/* Language Selector - Top Right */}
+          {/* Top Right Navigation - User Menu and Language Selector */}
           <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
+            <button
+              onClick={signOut}
+              className="px-4 py-2 bg-gradient-to-r from-red-500/80 to-red-600/80 text-white text-sm font-semibold rounded-lg hover:shadow-lg transition-all duration-300"
+            >
+              Sign Out
+            </button>
             <LanguageSelector />
           </div>
 
           {/* YK Buddy Seasonal Banner */}
           <YKBuddySeasonalBanner />
 
-          {/* Navigation Menu */}
-          <div className="flex justify-center px-4 py-3">
-            <nav className="flex gap-4 text-xs">
-              <Link href="/" className="text-gray-500 hover:text-aurora-green transition-colors">
-                {t('home')}
-              </Link>
-              <span className="text-gray-700">•</span>
-              <button
-                onClick={() => setShowAboutModal(true)}
-                className="text-gray-500 hover:text-aurora-blue transition-colors"
-              >
-                {t('about')}
-              </button>
-              <span className="text-gray-700">•</span>
-              <button
-                onClick={() => setShowContactModal(true)}
-                className="text-gray-500 hover:text-aurora-purple transition-colors"
-              >
-                {t('contact')}
-              </button>
-            </nav>
-          </div>
-
-          {/* Development Version Indicator */}
-          <div className="flex justify-center px-4 pb-4">
-            <p className="text-xs text-yellow-500 font-semibold">* Development Version *</p>
-          </div>
+          {/* Interactive Navigation Menu */}
+          <InteractiveMenu
+            onAboutClick={() => setShowAboutModal(true)}
+            onContactClick={() => setShowContactModal(true)}
+          />
 
           {/* Premium Spotlight */}
           <PremiumSpotlight position="home_top" />
 
-          <div className="flex items-center justify-center px-4 py-12">
+          <div className="flex items-center justify-center px-3 sm:px-4 md:px-6 py-8 sm:py-10 md:py-12 safe-top safe-bottom">
             <div className="max-w-3xl w-full text-center group">
-              <div className="mb-6 flex justify-center">{config.icon}</div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
+              <div className="mb-4 sm:mb-5 md:mb-6 flex justify-center">{config.icon}</div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent px-2">
                 {config.title}
               </h1>
-              <p className="text-xl text-gray-300 mb-8">{config.description}</p>
+              <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8 px-2">{config.description}</p>
 
               <Link href={config.primaryLink}>
-                <button className="px-8 py-4 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all transform hover:scale-105 mb-8">
+                <button className="px-6 sm:px-8 py-3 sm:py-4 min-h-[48px] bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold text-base sm:text-lg rounded-lg hover:shadow-aurora transition-all transform hover:scale-105 mb-6 sm:mb-8 touch-manipulation">
                   {config.primaryText}
                 </button>
               </Link>
 
               {/* Explore Other Pathways */}
-              <div className="mt-12 pt-8 border-t border-gray-700/30">
-                <p className="text-sm text-gray-400 mb-4">Explore other areas</p>
-                <div className="flex justify-center gap-4 flex-wrap">
+              <div className="mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 border-t border-gray-700/30">
+                <p className="text-sm text-gray-400 mb-3 sm:mb-4">Explore other areas</p>
+                <div className="flex justify-center gap-3 sm:gap-4 flex-wrap px-2">
                   {profile.user_type !== 'visiting' && (
                     <Link href="/visiting" className="group">
                       <div className="px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg hover:border-aurora-green hover:bg-gray-800/80 transition-all transform hover:scale-105">
@@ -188,6 +180,24 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* About Modal */}
+        <Modal
+          isOpen={showAboutModal}
+          onClose={() => setShowAboutModal(false)}
+          title="About YK Buddy"
+        >
+          <AboutContent />
+        </Modal>
+
+        {/* Contact Modal */}
+        <Modal
+          isOpen={showContactModal}
+          onClose={() => setShowContactModal(false)}
+          title="Contact Us"
+        >
+          <ContactContent />
+        </Modal>
       </>
     );
   }
@@ -201,106 +211,46 @@ export default function Home() {
         onComplete={() => setShowUserTypeSelector(false)}
       />
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
-        {/* Language Selector - Top Right */}
+        {/* Top Right Navigation - Language Selector and Sign In */}
         <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
+          <button
+            onClick={() => setShowAuthModal(true)}
+            className="px-4 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white text-sm font-semibold rounded-lg hover:shadow-aurora transition-all duration-300"
+          >
+            Sign In
+          </button>
           <LanguageSelector />
         </div>
 
         {/* YK Buddy Seasonal Banner */}
         <YKBuddySeasonalBanner />
 
-        {/* Navigation Menu */}
-        <div className="flex justify-center px-4 py-3">
-          <nav className="flex gap-4 text-xs">
-            <Link href="/" className="text-gray-500 hover:text-aurora-green transition-colors">
-              {t('home')}
-            </Link>
-            <span className="text-gray-700">•</span>
-            <button
-              onClick={() => setShowAboutModal(true)}
-              className="text-gray-500 hover:text-aurora-blue transition-colors"
-            >
-              {t('about')}
-            </button>
-            <span className="text-gray-700">•</span>
-            <button
-              onClick={() => setShowContactModal(true)}
-              className="text-gray-500 hover:text-aurora-purple transition-colors"
-            >
-              {t('contact')}
-            </button>
-          </nav>
-        </div>
-
-        {/* Development Version Indicator */}
-        <div className="flex justify-center px-4 pb-4">
-          <p className="text-xs text-yellow-500 font-semibold">* Development Version *</p>
-        </div>
+        {/* Interactive Navigation Menu */}
+        <InteractiveMenu
+          onAboutClick={() => setShowAboutModal(true)}
+          onContactClick={() => setShowContactModal(true)}
+        />
 
         {/* Premium Spotlight */}
         <PremiumSpotlight position="home_top" />
 
-        <div className="flex items-center justify-center px-4 py-12">
+        <div className="flex items-center justify-center px-3 sm:px-4 md:px-6 py-6 sm:py-8 md:py-12 safe-top safe-bottom">
           <div className="max-w-4xl w-full text-center">
-            {/* Simple Question */}
-            <div className="mb-12">
-              <h2 className="text-2xl md:text-3xl font-semibold text-white mb-8">
-                {t('are_you')}
-              </h2>
+            {/* Interactive "Are You..." Section */}
+            <InteractiveAreYou />
 
-              {/* Three Big Buttons */}
-              <div className="grid md:grid-cols-3 gap-6">
-                <Link href="/visiting" className="group">
-                  <div className="bg-gradient-to-br from-aurora-green/20 to-aurora-green/5 backdrop-blur-lg p-8 rounded-3xl border-2 border-aurora-green/30 hover:border-aurora-green hover:shadow-aurora transition-all transform hover:scale-105 cursor-pointer">
-                    <div className="mb-4 flex justify-center">
-                      <BushPlaneIcon />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{t('visiting')}</h3>
-                    <p className="text-gray-400 text-sm mb-4">{t('plan_your_trip')}</p>
-                    <p className="text-gray-500 text-xs leading-relaxed">
-                      {t('visiting_desc')}
-                    </p>
-                  </div>
-                </Link>
-
-                <Link href="/living" className="group">
-                  <div className="bg-gradient-to-br from-aurora-blue/20 to-aurora-blue/5 backdrop-blur-lg p-8 rounded-3xl border-2 border-aurora-blue/30 hover:border-aurora-blue hover:shadow-glow transition-all transform hover:scale-105 cursor-pointer">
-                    <div className="mb-4 flex justify-center">
-                      <NorthernCabinIcon />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{t('living')}</h3>
-                    <p className="text-gray-400 text-sm mb-4">{t('explore_your_city')}</p>
-                    <p className="text-gray-500 text-xs leading-relaxed">
-                      {t('living_desc')}
-                    </p>
-                  </div>
-                </Link>
-
-                <Link href="/moving" className="group">
-                  <div className="bg-gradient-to-br from-aurora-purple/20 to-aurora-purple/5 backdrop-blur-lg p-8 rounded-3xl border-2 border-aurora-purple/30 hover:border-aurora-purple transition-all transform hover:scale-105 cursor-pointer">
-                    <div className="mb-4 flex justify-center">
-                      <OldTruckIcon />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{t('moving')}</h3>
-                    <p className="text-gray-400 text-sm mb-4">{t('start_your_move')}</p>
-                    <p className="text-gray-500 text-xs leading-relaxed">
-                      {t('moving_desc')}
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            </div>
+            {/* Modern Pathway Cards */}
+            <ModernPathwayCards />
 
             {/* Premium Sponsors Section */}
-            <div className="mt-12 pt-8 border-t border-gray-700/30">
-              <h2 className="text-2xl font-bold text-white mb-6 text-center">Our Premium Sponsors</h2>
+            <div className="mt-12 sm:mt-16 md:mt-24 pt-6 sm:pt-8 border-t border-gray-700/30 px-2">
               <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
             </div>
 
             {/* Styled Footer */}
-            <footer className="mt-12 pt-6 border-t border-gray-700/30">
-              <div className="text-center space-y-2">
-                <p className="text-sm text-gray-400">
+            <footer className="mt-8 sm:mt-10 md:mt-12 pt-6 border-t border-gray-700/30 safe-bottom">
+              <div className="text-center space-y-2 px-2">
+                <p className="text-xs sm:text-sm text-gray-400">
                   {t('footer')}
                 </p>
               </div>

@@ -1,28 +1,30 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import type { ReviewSubmissionInput } from '@/types/knowledge.types';
+import { requirePermission, logAdminActivity } from '@/lib/auth/admin';
+
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
 
 // POST /api/knowledge/admin/review - Review a submission (admin only)
 export async function POST(request: NextRequest) {
   try {
+    // Check admin authentication with content management permission
+    const adminCheck = await requirePermission('can_manage_content');
+    if (adminCheck instanceof NextResponse) return adminCheck;
+
+    const { user } = adminCheck;
+    
+    // Ensure user exists
+    if (!user) {
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 401 }
+      );
+    }
+    
     const supabase = await createClient();
     const { submission_id, ...reviewInput }: ReviewSubmissionInput & { submission_id: string } = await request.json();
-
-    // Check authentication and admin status
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('is_admin')
-      .eq('id', user.id)
-      .single();
-
-    if (!profile?.is_admin) {
-      return NextResponse.json({ error: 'Forbidden - Admin only' }, { status: 403 });
-    }
 
     // Validate input
     if (!submission_id || !reviewInput.status) {
@@ -50,6 +52,14 @@ export async function POST(request: NextRequest) {
       console.error('Error reviewing submission:', error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
+
+    // Log admin activity
+    await logAdminActivity(
+      'review_knowledge_submission',
+      'knowledge_submission',
+      submission_id,
+      { status: reviewInput.status }
+    );
 
     return NextResponse.json({
       message: `Submission ${reviewInput.status} successfully`,

@@ -1,15 +1,71 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { yellowknifeSlogans } from '@/data/yellowknifeSlogans';
+import LiveWeatherEffects from '@/components/LiveWeatherEffects';
+import { useSlogan } from '@/contexts/SloganContext';
+
+interface WeatherData {
+  temp: number;
+  feels_like: number;
+  condition: string;
+  icon: string;
+  humidity: number;
+  wind_speed: number;
+  description: string;
+  isFallback?: boolean;
+}
 
 interface BannerProps {
   temperature: number;
+  weather?: WeatherData | null;
 }
 
+// Get weather emoji based on condition
+const getWeatherEmoji = (condition: string, iconCode: string) => {
+  const isNight = iconCode.includes('n');
+
+  switch (condition.toLowerCase()) {
+    case 'clear':
+      return isNight ? '🌙' : '☀️';
+    case 'clouds':
+      return isNight ? '☁️' : '⛅';
+    case 'rain':
+    case 'drizzle':
+      return '🌧️';
+    case 'thunderstorm':
+      return '⛈️';
+    case 'snow':
+      return '❄️';
+    case 'mist':
+    case 'fog':
+      return '🌫️';
+    default:
+      return '🌡️';
+  }
+};
+
+// Custom hook for random slogan on page load
+const useRotatingSlogan = () => {
+  const { setCurrentSlogan: setGlobalSlogan } = useSlogan();
+  const [currentSlogan, setCurrentSlogan] = useState('');
+
+  useEffect(() => {
+    // Set random slogan once on page load
+    const randomSlogan = yellowknifeSlogans[Math.floor(Math.random() * yellowknifeSlogans.length)];
+    setCurrentSlogan(randomSlogan);
+    setGlobalSlogan(randomSlogan);
+  }, [setGlobalSlogan]);
+
+  return currentSlogan;
+};
+
 // WINTER - Robbie Craig Style: Aurora and Frozen Wilderness
-export const WinterBanner = ({ temperature }: BannerProps) => {
+export const WinterBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [weatherHovered, setWeatherHovered] = useState(false);
   const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -132,43 +188,195 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
           </div>
         </div>
 
-        {/* Temperature badge */}
+        {/* Interactive Weather Display */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-400/40 transition-all duration-300"
+          className="absolute top-4 left-3 md:top-6 md:left-4 bg-slate-900/90 backdrop-blur-md px-2 py-1.5 md:px-3 md:py-2 rounded-xl border border-emerald-400/40 transition-all duration-300 cursor-pointer"
+          onMouseEnter={() => setWeatherHovered(true)}
+          onMouseLeave={() => setWeatherHovered(false)}
           style={{
-            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-            boxShadow: isHovered ? '0 0 30px rgba(16, 185, 129, 0.3)' : 'none',
+            transform: weatherHovered ? 'scale(1.05)' : 'scale(1)',
+            boxShadow: weatherHovered ? '0 0 30px rgba(16, 185, 129, 0.4), 0 0 60px rgba(16, 185, 129, 0.15)' : '0 0 15px rgba(16, 185, 129, 0.15)',
           }}
         >
-          <div className="text-xl md:text-3xl font-black text-emerald-300">{temperature}°C</div>
+          <div className="flex items-center gap-2">
+            {/* Weather Emoji Icon */}
+            {weather && (
+              <div className="text-xl md:text-2xl transition-transform duration-300" style={{ transform: weatherHovered ? 'scale(1.1) rotate(10deg)' : 'scale(1)' }}>
+                {getWeatherEmoji(weather.condition, weather.icon)}
+              </div>
+            )}
+
+            {/* Temperature */}
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <div className="text-xl md:text-2xl font-black text-emerald-300 leading-none">
+                  {temperature}°C
+                </div>
+                {weather?.isFallback && (
+                  <span className="text-[8px] px-1 py-0.5 bg-emerald-500/20 text-emerald-300/70 rounded border border-emerald-400/30 font-medium">
+                    AVG
+                  </span>
+                )}
+              </div>
+              {weather && weatherHovered && (
+                <div className="text-[10px] text-emerald-400/80 mt-0.5 animate-fadeIn">
+                  {weather.isFallback ? (
+                    <>seasonal avg</>
+                  ) : (
+                    <>feels {weather.feels_like}°C</>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Extended Weather Info - Shows on Hover */}
+          {weather && weatherHovered && (
+            <div className="mt-2 pt-2 border-t border-emerald-400/20 space-y-1 animate-fadeIn">
+              <div className="text-[10px] text-emerald-200/90 capitalize">
+                {weather.description}
+              </div>
+              <div className="flex items-center gap-3 text-[10px] text-emerald-300/80">
+                <div className="flex items-center gap-1">
+                  <span>💧</span>
+                  <span>{weather.humidity}%</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span>💨</span>
+                  <span>{weather.wind_speed} km/h</span>
+                </div>
+              </div>
+              {temperature <= -30 && (
+                <div className="flex items-center gap-1 text-[10px] text-cyan-300 font-semibold pt-0.5">
+                  <span>⚠️</span>
+                  <span>Extreme Cold</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Logo and slogan */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3">
-              <h1
-                className="text-7xl font-black tracking-tight text-white transition-all duration-500"
+        {/* Logo */}
+        <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-8 md:px-40">
+          <div className="text-center w-full">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight transition-all duration-500 animate-glow flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-1"
                 style={{
                   textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
                 }}>
-                YK <span className="text-emerald-300">BUDDY</span>
-              </h1>
-              {isDev && (
-                <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
-                  DEV
-                </span>
-              )}
-            </div>
-            <p
-              className="text-cyan-100 text-sm mt-3 opacity-90 transition-opacity duration-300"
-              style={{ opacity: isHovered ? 1 : 0.9 }}
-            >
-              Surviving the North, One Buddy at a Time
-            </p>
+                YK
+              </span>
+              <span
+                className="inline-block transition-all duration-700 animate-color-shift-2"
+                style={{
+                  textShadow: '0 0 40px rgba(16, 185, 129, 0.7), 4px 4px 0px rgba(15, 23, 42, 0.8)',
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                }}>
+                BUDDY
+              </span>
+            </h1>
           </div>
         </div>
+
+        {/* Slogan at bottom on snowy ground */}
+        {currentSlogan && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center px-4 z-20">
+            <p
+              className="text-sm md:text-base font-medium text-center transition-all duration-500 px-4 max-w-2xl animate-color-shift-slogan"
+              style={{
+                textShadow: '0 0 20px rgba(16, 185, 129, 0.4), 2px 2px 0px rgba(15, 23, 42, 0.6)',
+                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+              }}
+            >
+              {currentSlogan}
+            </p>
+          </div>
+        )}
+
+        <style jsx>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+          }
+          @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.1); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
+          }
+          @keyframes color-shift-1 {
+            0%, 100% {
+              color: #ffffff;
+              filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+            }
+            25% {
+              color: #d1fae5;
+              filter: drop-shadow(0 0 25px rgba(52, 211, 153, 0.7));
+            }
+            50% {
+              color: #a7f3d0;
+              filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6));
+            }
+            75% {
+              color: #d1fae5;
+              filter: drop-shadow(0 0 25px rgba(139, 92, 246, 0.5));
+            }
+          }
+          @keyframes color-shift-2 {
+            0%, 100% {
+              color: #6ee7b7;
+              filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.7));
+            }
+            25% {
+              color: #86efac;
+              filter: drop-shadow(0 0 25px rgba(139, 92, 246, 0.6));
+            }
+            50% {
+              color: #5eead4;
+              filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.7));
+            }
+            75% {
+              color: #6ee7b7;
+              filter: drop-shadow(0 0 25px rgba(52, 211, 153, 0.6));
+            }
+          }
+          .animate-glow {
+            animation: glow 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-1 {
+            animation: color-shift-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-2 {
+            animation: color-shift-2 8s ease-in-out infinite 0.5s;
+          }
+          @keyframes color-shift-slogan {
+            0%, 100% {
+              color: #a7f3d0;
+            }
+            33% {
+              color: #86efac;
+            }
+            66% {
+              color: #6ee7b7;
+            }
+          }
+          .animate-color-shift-slogan {
+            animation: color-shift-slogan 8s ease-in-out infinite 1s;
+          }
+        `}</style>
+
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
 
         {/* Atmospheric vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-indigo-950/40 pointer-events-none" />
@@ -178,9 +386,11 @@ export const WinterBanner = ({ temperature }: BannerProps) => {
 };
 
 // SPRING - Ice Breakup and Renewal
-export const SpringBanner = ({ temperature }: BannerProps) => {
+export const SpringBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [weatherHovered, setWeatherHovered] = useState(false);
   const isDev = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENV === 'dev';
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -286,53 +496,125 @@ export const SpringBanner = ({ temperature }: BannerProps) => {
 
         {/* Temperature badge */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-500/50 transition-all duration-300"
+          className="absolute top-8 left-4 md:top-12 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-emerald-500/50 transition-all duration-300"
           style={{
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
           }}
         >
-          <div className="text-xl md:text-3xl font-black text-emerald-700">{temperature}°C</div>
+          <div className="flex items-center gap-2">
+            <div className="text-xl md:text-3xl font-black text-emerald-700">{temperature}°C</div>
+            {weather?.isFallback && (
+              <span className="text-[10px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-700/70 rounded border border-emerald-500/40 font-medium">
+                AVG
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3">
-              <h1
-                className="text-7xl font-black text-slate-800 transition-all duration-500"
-                style={{
-                  textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
-                  transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
-                YK <span className="text-emerald-600">BUDDY</span>
-              </h1>
-              {isDev && (
-                <span className="px-3 py-1 bg-yellow-500 text-black text-sm font-bold rounded-md">
-                  DEV
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="text-center w-full">
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-spring flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-spring-1"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  YK
                 </span>
-              )}
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-spring-2"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(16, 185, 129, 0.4)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  BUDDY
+                </span>
+              </h1>
+              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
             </div>
-            <p className="text-slate-700 text-sm mt-3 opacity-90">
-              Surviving the North, One Buddy at a Time
-            </p>
           </div>
         </div>
-      </div>
 
-      <style jsx>{`
-        @keyframes fly {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-        }
-        .animate-fly { animation: fly 3s ease-in-out infinite; }
-      `}</style>
+        <style jsx>{`
+          @keyframes fly {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+          }
+          .animate-fly { animation: fly 3s ease-in-out infinite; }
+          @keyframes glow-spring {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.08); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
+          }
+          @keyframes color-shift-spring-1 {
+            0%, 100% {
+              color: #1e293b;
+              filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.5));
+            }
+            25% {
+              color: #334155;
+              filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.6));
+            }
+            50% {
+              color: #475569;
+              filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.5));
+            }
+            75% {
+              color: #334155;
+              filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.6));
+            }
+          }
+          @keyframes color-shift-spring-2 {
+            0%, 100% {
+              color: #059669;
+              filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+            }
+            25% {
+              color: #10b981;
+              filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.7));
+            }
+            50% {
+              color: #14b8a6;
+              filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6));
+            }
+            75% {
+              color: #10b981;
+              filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.7));
+            }
+          }
+          .animate-glow-spring {
+            animation: glow-spring 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-spring-1 {
+            animation: color-shift-spring-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-spring-2 {
+            animation: color-shift-spring-2 8s ease-in-out infinite 0.5s;
+          }
+        `}</style>
+
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
+      </div>
     </div>
   );
 };
 
 // SUMMER - Midnight Sun Glory
-export const SummerBanner = ({ temperature }: BannerProps) => {
+export const SummerBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -452,41 +734,120 @@ export const SummerBanner = ({ temperature }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-100/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-500/60 transition-all duration-300"
+          className="absolute top-8 left-4 md:top-12 md:left-6 bg-orange-100/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-500/60 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
-          <div className="text-xl md:text-3xl font-black text-orange-700">{temperature}°C</div>
+          <div className="flex items-center gap-2">
+            <div className="text-xl md:text-3xl font-black text-orange-700">{temperature}°C</div>
+            {weather?.isFallback && (
+              <span className="text-[10px] px-1.5 py-0.5 bg-orange-500/20 text-orange-700/70 rounded border border-orange-500/40 font-medium">
+                AVG
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <h1
-              className="text-7xl font-black text-orange-700 transition-all duration-500"
-              style={{
-                textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
-                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              }}>
-              YK <span className="text-yellow-500">BUDDY</span>
-            </h1>
-            <p className="text-orange-800 text-sm mt-3 opacity-90">
-              Surviving the North, One Buddy at a Time
-            </p>
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="text-center w-full">
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-summer flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-summer-1"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  YK
+                </span>
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-summer-2"
+                  style={{
+                    textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(234, 179, 8, 0.5)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  BUDDY
+                </span>
+              </h1>
+              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <style jsx>{`
-        @keyframes spin-slow { to { transform: rotate(360deg); } }
-        .animate-spin-slow { animation: spin-slow 30s linear infinite; }
-      `}</style>
+        <style jsx>{`
+          @keyframes spin-slow { to { transform: rotate(360deg); } }
+          .animate-spin-slow { animation: spin-slow 30s linear infinite; }
+          @keyframes glow-summer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.1); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
+          }
+          @keyframes color-shift-summer-1 {
+            0%, 100% {
+              color: #c2410c;
+              filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.6));
+            }
+            25% {
+              color: #ea580c;
+              filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.7));
+            }
+            50% {
+              color: #f97316;
+              filter: drop-shadow(0 0 30px rgba(234, 179, 8, 0.6));
+            }
+            75% {
+              color: #ea580c;
+              filter: drop-shadow(0 0 25px rgba(249, 115, 22, 0.7));
+            }
+          }
+          @keyframes color-shift-summer-2 {
+            0%, 100% {
+              color: #eab308;
+              filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.7));
+            }
+            25% {
+              color: #facc15;
+              filter: drop-shadow(0 0 25px rgba(249, 115, 22, 0.6));
+            }
+            50% {
+              color: #fde047;
+              filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.7));
+            }
+            75% {
+              color: #facc15;
+              filter: drop-shadow(0 0 25px rgba(234, 179, 8, 0.7));
+            }
+          }
+          .animate-glow-summer {
+            animation: glow-summer 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-summer-1 {
+            animation: color-shift-summer-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-summer-2 {
+            animation: color-shift-summer-2 8s ease-in-out infinite 0.5s;
+          }
+        `}</style>
+
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
+      </div>
     </div>
   );
 };
 
 // FALL - Autumn Majesty
-export const FallBanner = ({ temperature }: BannerProps) => {
+export const FallBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const currentSlogan = useRotatingSlogan();
 
   return (
     <div
@@ -564,45 +925,123 @@ export const FallBanner = ({ temperature }: BannerProps) => {
 
         {/* Temperature */}
         <div
-          className="absolute top-4 left-4 md:top-6 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50 transition-all duration-300"
+          className="absolute top-8 left-4 md:top-12 md:left-6 bg-amber-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50 transition-all duration-300"
           style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
         >
-          <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
+          <div className="flex items-center gap-2">
+            <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
+            {weather?.isFallback && (
+              <span className="text-[10px] px-1.5 py-0.5 bg-orange-500/20 text-orange-300/70 rounded border border-orange-400/40 font-medium">
+                AVG
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Logo */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-center">
-            <h1
-              className="text-7xl font-black text-white transition-all duration-500"
-              style={{
-                textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
-                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-              }}>
-              YK <span className="text-yellow-300">BUDDY</span>
-            </h1>
-            <p className="text-amber-100 text-sm mt-3 opacity-90">
-              Surviving the North, One Buddy at a Time
-            </p>
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="text-center w-full">
+            <div className="flex items-center justify-center gap-3 md:gap-4 flex-wrap">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl font-black transition-all duration-500 animate-glow-fall flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-fall-1"
+                  style={{
+                    textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  YK
+                </span>
+                <span
+                  className="inline-block transition-all duration-700 animate-color-shift-fall-2"
+                  style={{
+                    textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(253, 224, 71, 0.6)',
+                    transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+                  }}>
+                  BUDDY
+                </span>
+              </h1>
+              <span className="px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500 text-black text-sm md:text-base font-bold rounded-md animate-pulse-subtle">
+                BETA
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <style jsx>{`
-        @keyframes fall {
-          0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
-        }
-        .animate-fall { animation: fall linear forwards; }
-      `}</style>
+        <style jsx>{`
+          @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+          }
+          .animate-fall { animation: fall linear forwards; }
+          @keyframes glow-fall {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.08); }
+          }
+          @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.95; }
+          }
+          @keyframes color-shift-fall-1 {
+            0%, 100% {
+              color: #ffffff;
+              filter: drop-shadow(0 0 20px rgba(234, 88, 12, 0.6));
+            }
+            25% {
+              color: #fef3c7;
+              filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.7));
+            }
+            50% {
+              color: #fde68a;
+              filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.6));
+            }
+            75% {
+              color: #fef3c7;
+              filter: drop-shadow(0 0 25px rgba(234, 88, 12, 0.7));
+            }
+          }
+          @keyframes color-shift-fall-2 {
+            0%, 100% {
+              color: #fde047;
+              filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.7));
+            }
+            25% {
+              color: #fcd34d;
+              filter: drop-shadow(0 0 25px rgba(234, 88, 12, 0.6));
+            }
+            50% {
+              color: #fbbf24;
+              filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.7));
+            }
+            75% {
+              color: #fcd34d;
+              filter: drop-shadow(0 0 25px rgba(253, 224, 71, 0.7));
+            }
+          }
+          .animate-glow-fall {
+            animation: glow-fall 3s ease-in-out infinite;
+          }
+          .animate-pulse-subtle {
+            animation: pulse-subtle 2s ease-in-out infinite;
+          }
+          .animate-color-shift-fall-1 {
+            animation: color-shift-fall-1 8s ease-in-out infinite;
+          }
+          .animate-color-shift-fall-2 {
+            animation: color-shift-fall-2 8s ease-in-out infinite 0.5s;
+          }
+        `}</style>
+
+        {/* Live Weather Effects */}
+        <LiveWeatherEffects weather={weather} />
+      </div>
     </div>
   );
 };
 
 // HALLOWEEN - Spooky Aurora
-export const HalloweenBanner = ({ temperature }: BannerProps) => {
+export const HalloweenBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -636,7 +1075,7 @@ export const HalloweenBanner = ({ temperature }: BannerProps) => {
 };
 
 // REMEMBRANCE DAY
-export const RemembranceBanner = ({ temperature }: BannerProps) => {
+export const RemembranceBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -664,7 +1103,7 @@ export const RemembranceBanner = ({ temperature }: BannerProps) => {
 };
 
 // CHRISTMAS
-export const ChristmasBanner = ({ temperature }: BannerProps) => {
+export const ChristmasBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -702,7 +1141,7 @@ export const ChristmasBanner = ({ temperature }: BannerProps) => {
 };
 
 // NEW YEAR
-export const NewYearBanner = ({ temperature }: BannerProps) => {
+export const NewYearBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -731,7 +1170,7 @@ export const NewYearBanner = ({ temperature }: BannerProps) => {
 };
 
 // CANADA DAY
-export const CanadaDayBanner = ({ temperature }: BannerProps) => {
+export const CanadaDayBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -759,7 +1198,7 @@ export const CanadaDayBanner = ({ temperature }: BannerProps) => {
 };
 
 // INDIGENOUS PEOPLES DAY
-export const IndigenousBanner = ({ temperature }: BannerProps) => {
+export const IndigenousBanner = ({ temperature, weather }: BannerProps) => {
   return (
     <div className="relative w-full h-64 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-amber-700 via-red-700 to-yellow-700">
@@ -784,7 +1223,7 @@ export const IndigenousBanner = ({ temperature }: BannerProps) => {
 };
 
 // EASTER
-export const EasterBanner = ({ temperature }: BannerProps) => {
+export const EasterBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (

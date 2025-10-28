@@ -1,11 +1,45 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSelector from '@/components/LanguageSelector';
 
+interface TeamMember {
+  name: string;
+  role: string;
+  emoji: string;
+  bio: string;
+}
+
+const teamMembers: TeamMember[] = [
+  {
+    name: 'Sarah Johnson',
+    role: 'Founder & Community Lead',
+    emoji: '👩‍💼',
+    bio: 'Born and raised in Yellowknife, Sarah has spent over a decade connecting visitors with authentic Northern experiences. She started YK Buddy after realizing how scattered information about the city really was.',
+  },
+  {
+    name: 'Mike Chen',
+    role: 'Developer & UX Designer',
+    emoji: '👨‍💻',
+    bio: 'Building tech solutions that actually work at -40°C. Mike moved to Yellowknife for a tech job and fell in love with the community. Now he\'s dedicated to creating digital tools that make life easier for everyone.',
+  },
+  {
+    name: 'Emma Wilson',
+    role: 'Content Creator & Aurora Photographer',
+    emoji: '✍️',
+    bio: 'Storyteller, aurora chaser, and community connector. Emma documents the magic of the North through photography and writing, helping visitors and residents alike discover hidden gems.',
+  },
+];
+
 export default function AboutPage() {
   const { t } = useLanguage();
+  const [expandedMember, setExpandedMember] = useState<number | null>(null);
+
+  const toggleMember = (index: number) => {
+    setExpandedMember(expandedMember === index ? null : index);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
@@ -17,10 +51,15 @@ export default function AboutPage() {
         <LanguageSelector />
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-20">
-        {/* Header */}
+      <div className="max-w-5xl mx-auto px-6 py-20">
+        {/* Header with Logo */}
         <div className="text-center mb-16">
-          <div className="text-7xl mb-6">❄️</div>
+          <div className="relative inline-block mb-6">
+            <div className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-aurora-green/30 to-aurora-blue/30 rounded-full flex items-center justify-center border-4 border-aurora-green">
+              <span className="text-5xl md:text-6xl font-bold text-aurora-green">YK</span>
+            </div>
+            <div className="absolute inset-0 w-24 h-24 md:w-32 md:h-32 bg-aurora-green/20 rounded-full blur-xl -z-10 animate-pulse"></div>
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
             About YK Buddy
           </h1>
@@ -32,7 +71,7 @@ export default function AboutPage() {
         {/* Main Content */}
         <div className="space-y-8 text-gray-300 leading-relaxed">
           {/* The Reality */}
-          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-gray-600/50 transition-all">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <span className="text-3xl">🥶</span> The Reality
             </h2>
@@ -45,7 +84,7 @@ export default function AboutPage() {
           </section>
 
           {/* The Problem */}
-          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-gray-600/50 transition-all">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <span className="text-3xl">🤔</span> The Problem
             </h2>
@@ -58,7 +97,7 @@ export default function AboutPage() {
           </section>
 
           {/* The Solution */}
-          <section className="bg-gradient-to-br from-aurora-green/20 to-aurora-blue/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-aurora-green/30">
+          <section className="bg-gradient-to-br from-aurora-green/20 to-aurora-blue/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-aurora-green/30 hover:border-aurora-green/50 transition-all">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <span className="text-3xl">💡</span> Enter YK Buddy
             </h2>
@@ -87,8 +126,69 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* The Mission */}
+          {/* Meet the Team */}
           <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Meet the Team</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {teamMembers.map((member, index) => (
+                <div
+                  key={index}
+                  className="group cursor-pointer"
+                  onClick={() => toggleMember(index)}
+                >
+                  <div className={`bg-gradient-to-br from-aurora-green/10 to-aurora-blue/10 rounded-xl p-6 border-2 transition-all ${
+                    expandedMember === index
+                      ? 'border-aurora-green shadow-aurora'
+                      : 'border-gray-700/50 hover:border-aurora-green/50'
+                  }`}>
+                    <div className="text-center mb-4">
+                      <div className="text-5xl mb-3">{member.emoji}</div>
+                      <h3 className="text-lg font-bold text-white">{member.name}</h3>
+                      <p className="text-sm text-aurora-green">{member.role}</p>
+                    </div>
+                    <div className={`overflow-hidden transition-all duration-300 ${
+                      expandedMember === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}>
+                      <div className="pt-4 border-t border-gray-700/50">
+                        <p className="text-sm text-gray-400 leading-relaxed">{member.bio}</p>
+                      </div>
+                    </div>
+                    <div className="text-center mt-4">
+                      <span className="text-2xl text-aurora-green group-hover:scale-125 transition-transform inline-block">
+                        {expandedMember === index ? '−' : '+'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Stats */}
+          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">By the Numbers</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="text-center p-6 bg-gradient-to-br from-aurora-green/20 to-aurora-green/5 rounded-xl border border-aurora-green/30">
+                <div className="text-4xl font-bold text-aurora-green mb-2">2,500+</div>
+                <div className="text-sm text-gray-400">Active Users</div>
+              </div>
+              <div className="text-center p-6 bg-gradient-to-br from-aurora-blue/20 to-aurora-blue/5 rounded-xl border border-aurora-blue/30">
+                <div className="text-4xl font-bold text-aurora-blue mb-2">150+</div>
+                <div className="text-sm text-gray-400">Activities</div>
+              </div>
+              <div className="text-center p-6 bg-gradient-to-br from-aurora-purple/20 to-aurora-purple/5 rounded-xl border border-aurora-purple/30">
+                <div className="text-4xl font-bold text-aurora-purple mb-2">50+</div>
+                <div className="text-sm text-gray-400">Local Partners</div>
+              </div>
+              <div className="text-center p-6 bg-gradient-to-br from-aurora-pink/20 to-aurora-pink/5 rounded-xl border border-aurora-pink/30">
+                <div className="text-4xl font-bold text-aurora-pink mb-2">-40°C</div>
+                <div className="text-sm text-gray-400">Still Works!</div>
+              </div>
+            </div>
+          </section>
+
+          {/* The Mission */}
+          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-gray-600/50 transition-all">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <span className="text-3xl">🎯</span> Our Mission
             </h2>
@@ -101,7 +201,7 @@ export default function AboutPage() {
           </section>
 
           {/* The Promise */}
-          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-gray-600/50 transition-all">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <span className="text-3xl">🤝</span> The Promise
             </h2>
@@ -115,7 +215,7 @@ export default function AboutPage() {
           </section>
 
           {/* The Truth */}
-          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+          <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-gray-600/50 transition-all">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
               <span className="text-3xl">💬</span> The Truth
             </h2>
@@ -128,7 +228,7 @@ export default function AboutPage() {
           </section>
 
           {/* The Invitation */}
-          <section className="bg-gradient-to-br from-aurora-blue/20 to-aurora-purple/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-aurora-blue/30 text-center">
+          <section className="bg-gradient-to-br from-aurora-blue/20 to-aurora-purple/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-aurora-blue/30 text-center hover:border-aurora-blue/50 transition-all">
             <h2 className="text-2xl font-bold text-white mb-4">
               So Welcome, Friend
             </h2>
@@ -167,10 +267,13 @@ export default function AboutPage() {
         <footer className="mt-16 pt-8 border-t border-gray-700/30">
           <div className="text-center space-y-2">
             <p className="text-sm text-gray-400">
-              {t('footer')}
+              Made with ❤️ in Yellowknife, Northwest Territories
             </p>
             <p className="text-xs text-gray-500">
-              {t('frozen_shield')}
+              On the traditional territory of the Yellowknives Dene First Nation
+            </p>
+            <p className="text-xs text-gray-500 mt-2">
+              © 2025 YK Buddy. All rights reserved.
             </p>
           </div>
         </footer>

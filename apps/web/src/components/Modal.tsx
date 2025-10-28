@@ -36,36 +36,36 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm animate-fadeIn"
       onClick={onClose}
     >
-      {/* Modal Content */}
+      {/* Modal Content - Better mobile sizing */}
       <div
-        className="relative w-full max-w-4xl max-h-[90vh] bg-gradient-to-b from-northern-midnight to-dark-900 rounded-2xl shadow-2xl border border-aurora-blue/30 overflow-hidden animate-slideUp"
+        className="relative w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] bg-gradient-to-b from-northern-midnight to-dark-900 rounded-xl sm:rounded-2xl shadow-2xl border border-aurora-blue/30 overflow-hidden animate-slideUp"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-northern-midnight/95 backdrop-blur-sm border-b border-gray-700/50">
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
+        {/* Header - Compact on mobile */}
+        <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-northern-midnight/95 backdrop-blur-sm border-b border-gray-700/50">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
             {title}
           </h1>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <LanguageSelector />
 
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/50 hover:bg-aurora-blue/20 border border-gray-700/50 hover:border-aurora-blue/50 transition-all group"
+              className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800/50 hover:bg-aurora-blue/20 border border-gray-700/50 hover:border-aurora-blue/50 transition-all group"
               aria-label="Close"
             >
-              <span className="text-gray-400 group-hover:text-aurora-blue text-2xl leading-none">×</span>
+              <span className="text-gray-400 group-hover:text-aurora-blue text-xl sm:text-2xl leading-none">×</span>
             </button>
           </div>
         </div>
 
-        {/* Scrollable Content */}
-        <div className="overflow-y-auto max-h-[calc(90vh-80px)] px-6 py-8 custom-scrollbar">
+        {/* Scrollable Content - Better mobile spacing */}
+        <div className="overflow-y-auto max-h-[calc(85vh-60px)] sm:max-h-[calc(90vh-80px)] px-4 sm:px-6 py-4 sm:py-6 custom-scrollbar">
           {children}
         </div>
       </div>

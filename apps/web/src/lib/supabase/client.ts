@@ -28,8 +28,8 @@ export function createClient() {
         fetch: (url, options = {}) => {
           return fetch(url, {
             ...options,
-            // Reduce timeout from default 30s to 5s
-            signal: AbortSignal.timeout(5000),
+            // 30 second timeout for all requests
+            signal: AbortSignal.timeout(30000),
           });
         },
       },

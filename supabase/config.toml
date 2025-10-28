@@ -1,0 +1,91 @@
+# Supabase Configuration File
+# https://supabase.com/docs/guides/cli/config
+
+[project]
+name = "yk-companion"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+smtp_port = 54325
+pop3_port = 54326
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:3002"
+additional_redirect_urls = ["https://localhost:3002"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+# Edge Functions configuration
+[functions.garage-sales-get]
+verify_jwt = false
+
+[functions.garage-sales-create]
+verify_jwt = true
+
+[functions.garage-sales-update]
+verify_jwt = true
+
+[functions.garage-sales-delete]
+verify_jwt = true
+
+[functions.aurora-photos-upload]
+verify_jwt = true
+
+[functions.aurora-photos-feed]
+verify_jwt = false
+
+[functions.aurora-photos-like]
+verify_jwt = true
+
+[functions.aurora-forecasts-get]
+verify_jwt = false
+
+[functions.email-digest-subscribe]
+verify_jwt = true
+
+[functions.email-digest-unsubscribe]
+verify_jwt = false
+
+[functions.push-notification-subscribe]
+verify_jwt = false
+
+[functions.push-notification-unsubscribe]
+verify_jwt = false
+
+[functions.knowledge-submissions-get]
+verify_jwt = false
+
+[functions.knowledge-submissions-create]
+verify_jwt = true
+
+[functions.knowledge-likes-toggle]
+verify_jwt = true
+
+[functions.knowledge-comments-create]
+verify_jwt = true

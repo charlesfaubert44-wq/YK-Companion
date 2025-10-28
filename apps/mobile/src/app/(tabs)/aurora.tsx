@@ -21,9 +21,7 @@ export default function AuroraScreen() {
         <Text style={styles.currentLabel}>Current Activity</Text>
         <Text style={styles.currentKp}>KP 5</Text>
         <Text style={styles.currentStatus}>MODERATE</Text>
-        <Text style={styles.currentDescription}>
-          Good aurora visibility expected tonight
-        </Text>
+        <Text style={styles.currentDescription}>Good aurora visibility expected tonight</Text>
       </View>
 
       {/* Viewing Conditions */}
@@ -60,12 +58,7 @@ export default function AuroraScreen() {
           <View key={index} style={styles.forecastItem}>
             <Text style={styles.forecastTime}>{item.time}</Text>
             <View style={styles.forecastBar}>
-              <View
-                style={[
-                  styles.forecastBarFill,
-                  { width: `${(item.kp / 9) * 100}%` }
-                ]}
-              />
+              <View style={[styles.forecastBarFill, { width: `${(item.kp / 9) * 100}%` }]} />
             </View>
             <Text style={styles.forecastKp}>KP {item.kp}</Text>
           </View>
@@ -77,9 +70,7 @@ export default function AuroraScreen() {
         <Text style={styles.sectionTitle}>Best Viewing Times</Text>
         <View style={styles.viewingCard}>
           <Text style={styles.viewingTime}>10:00 PM - 2:00 AM</Text>
-          <Text style={styles.viewingDescription}>
-            Peak activity expected around midnight
-          </Text>
+          <Text style={styles.viewingDescription}>Peak activity expected around midnight</Text>
         </View>
       </View>
 
@@ -88,9 +79,7 @@ export default function AuroraScreen() {
         <Text style={styles.sectionTitle}>Aurora Alerts</Text>
         <View style={styles.alertCard}>
           <Text style={styles.alertEmoji}>🔔</Text>
-          <Text style={styles.alertText}>
-            Get notified when aurora activity increases
-          </Text>
+          <Text style={styles.alertText}>Get notified when aurora activity increases</Text>
         </View>
         <TouchableOpacity style={styles.enableButton}>
           <Text style={styles.enableButtonText}>Enable Alerts</Text>

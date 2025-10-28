@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#0a1128"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.truenorthtrips.app",
@@ -45,7 +43,8 @@
     "plugins": [
       "expo-router",
       "expo-location",
-      "expo-notifications"
+      "expo-notifications",
+      "react-native-reanimated/plugin"
     ],
     "scheme": "truenorthtrips",
     "extra": {

@@ -1,4 +1,62 @@
-import { Season } from '@yk-trip-planner/types';
+/**
+ * YK Companion Shared Utilities
+ * Core utilities and helpers shared across web, mobile, and API apps
+ */
+
+// Define Season enum locally (was imported from types package)
+enum Season {
+  WINTER = 'winter',
+  SPRING = 'spring',
+  SUMMER = 'summer',
+  FALL = 'fall',
+}
+
+// ============================================================
+// EXPORTS - New Utility Modules
+// ============================================================
+
+// Async and Promise utilities (excluding retryWithBackoff to avoid conflict)
+export {
+  safeAsync,
+  asyncPool,
+  asyncSequential,
+  withTimeout,
+  debounceAsync,
+  throttleAsync,
+  sleep,
+  pollUntil,
+  asyncCache,
+  asyncAllSettled,
+  asyncBatch,
+  AsyncResult,
+} from './async';
+
+// Form validation and management utilities
+export * from './forms';
+
+// Query parameter and URL utilities
+export * from './query-params';
+
+// Date and time utilities (Yellowknife-specific)
+export * from './datetime';
+
+// API retry logic with exponential backoff (Architecture: Reliability Strategy)
+// This is the improved version, replacing the one from async.ts
+export {
+  retryWithBackoff,
+  withRetry,
+  fetchWithRetry,
+  RetryOptions,
+} from './retry';
+
+// Input validation with Zod schemas (Architecture: Security Strategy)
+// Note: Exports ZodValidationResult (renamed to avoid conflict with forms ValidationResult)
+export * from './validation';
+
+// ============================================================
+// LEGACY UTILITIES (backward compatibility)
+// Keeping these for existing code that imports them
+// ============================================================
 
 /**
  * Get the current season based on the date

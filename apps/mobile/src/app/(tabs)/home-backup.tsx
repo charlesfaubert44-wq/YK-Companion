@@ -63,7 +63,10 @@ export default function HomeScreen() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton} onPress={() => router.push('/(tabs)/explore')}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => router.push('/(tabs)/explore')}
+        >
           <View style={styles.actionContent}>
             <Text style={styles.actionEmoji}>🎯</Text>
             <View style={styles.actionText}>

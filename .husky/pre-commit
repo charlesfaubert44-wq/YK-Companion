@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run prettier formatting only (ESLint disabled due to config issue)
+npx prettier --write "apps/web/src/**/*.{ts,tsx,js,jsx}"
+

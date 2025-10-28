@@ -174,17 +174,37 @@ export default function AdminPricingPlansPage() {
         </div>
 
         {/* Pricing Calculator Preview */}
-        <div className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/30 rounded-2xl p-6 mb-8">
-          <h3 className="text-xl font-bold text-yellow-400 mb-4">💡 Pricing Calculator</h3>
-          <p className="text-gray-300 mb-4">
-            Premium Spotlight pricing is based on:
-          </p>
-          <ul className="space-y-2 text-gray-300">
-            <li>• <strong>Position:</strong> Prime positions (home_top) cost more than lower positions</li>
-            <li>• <strong>Duration:</strong> Longer commitments get volume discounts (7+, 30+, 90+ days)</li>
-            <li>• <strong>Plan Type:</strong> Basic, Premium, or Enterprise tiers with different features</li>
-            <li>• <strong>Formula:</strong> (Base Price × Days × Position Multiplier) × (1 - Volume Discount)</li>
-          </ul>
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/30 rounded-2xl p-6">
+            <h3 className="text-xl font-bold text-yellow-400 mb-4">💡 Pricing Formula</h3>
+            <p className="text-gray-300 mb-4">
+              Premium Spotlight pricing is based on:
+            </p>
+            <ul className="space-y-2 text-gray-300 text-sm">
+              <li>• <strong>Position:</strong> Prime positions (home_top) cost more</li>
+              <li>• <strong>Duration:</strong> Longer = bigger discounts (7+, 30+, 90+ days)</li>
+              <li>• <strong>Plan Type:</strong> Basic, Premium, or Enterprise tiers</li>
+              <li>• <strong>Formula:</strong> (Base Price × Days) × (1 - Volume Discount)</li>
+            </ul>
+          </div>
+
+          <div className="bg-gradient-to-br from-aurora-blue/10 to-aurora-purple/10 border-2 border-aurora-blue/30 rounded-2xl p-6">
+            <h3 className="text-xl font-bold text-aurora-blue mb-4">📊 Example Pricing</h3>
+            <div className="space-y-3 text-sm">
+              <div className="bg-gray-900/30 rounded-lg p-3">
+                <div className="text-gray-400 mb-1">7 days @ $15/day (5% discount)</div>
+                <div className="text-white font-bold">= $99.75 CAD</div>
+              </div>
+              <div className="bg-gray-900/30 rounded-lg p-3">
+                <div className="text-gray-400 mb-1">30 days @ $15/day (15% discount)</div>
+                <div className="text-white font-bold">= $382.50 CAD</div>
+              </div>
+              <div className="bg-gray-900/30 rounded-lg p-3">
+                <div className="text-gray-400 mb-1">90 days @ $15/day (25% discount)</div>
+                <div className="text-white font-bold">= $1,012.50 CAD</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Form */}

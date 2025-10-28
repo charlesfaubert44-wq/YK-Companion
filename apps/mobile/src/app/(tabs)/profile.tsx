@@ -1,20 +1,48 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native';
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { colors } from '../../theme/colors';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function ProfileScreen() {
+  const router = useRouter();
+  const { user, signOut } = useAuth();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [auroraAlerts, setAuroraAlerts] = useState(true);
   const [weatherAlerts, setWeatherAlerts] = useState(false);
 
+  const handleSignOut = async () => {
+    Alert.alert(
+      'Sign Out',
+      'Are you sure you want to sign out?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Sign Out',
+          style: 'destructive',
+          onPress: async () => {
+            const { error } = await signOut();
+            if (error) {
+              Alert.alert('Error', 'Failed to sign out. Please try again.');
+            } else {
+              router.replace('/(auth)/login');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <ScrollView style={styles.container}>
+      <StatusBar style="light" />
       <View style={styles.header}>
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>👤</Text>
         </View>
-        <Text style={styles.name}>Traveler</Text>
-        <Text style={styles.userType}>Visiting Yellowknife</Text>
+        <Text style={styles.name}>{user?.email?.split('@')[0] || 'Traveler'}</Text>
+        <Text style={styles.userType}>{user?.email || 'Visiting Yellowknife'}</Text>
       </View>
 
       {/* Profile Type */}
@@ -118,20 +146,26 @@ export default function ProfileScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>About</Text>
 
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => router.push('/(features)/about')}
+        >
           <Text style={styles.settingEmoji}>ℹ️</Text>
           <View style={styles.settingText}>
-            <Text style={styles.settingLabel}>About TRUE NORTH TRIPS</Text>
-            <Text style={styles.settingDescription}>Version 1.0.0</Text>
+            <Text style={styles.settingLabel}>About YK Buddy</Text>
+            <Text style={styles.settingDescription}>Our story and mission</Text>
           </View>
           <Text style={styles.settingArrow}>→</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => router.push('/(features)/contact')}
+        >
           <Text style={styles.settingEmoji}>📧</Text>
           <View style={styles.settingText}>
-            <Text style={styles.settingLabel}>Contact Support</Text>
-            <Text style={styles.settingDescription}>Get help</Text>
+            <Text style={styles.settingLabel}>Contact Us</Text>
+            <Text style={styles.settingDescription}>Get in touch with our team</Text>
           </View>
           <Text style={styles.settingArrow}>→</Text>
         </TouchableOpacity>
@@ -144,6 +178,14 @@ export default function ProfileScreen() {
           </View>
           <Text style={styles.settingArrow}>→</Text>
         </TouchableOpacity>
+      </View>
+
+      {/* Sign Out */}
+      <View style={styles.section}>
+        <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
+          <Text style={styles.signOutText}>Sign Out</Text>
+        </TouchableOpacity>
+        <Text style={styles.versionText}>YK Buddy v1.0.0</Text>
       </View>
     </ScrollView>
   );
@@ -272,5 +314,25 @@ const styles = StyleSheet.create({
   settingArrow: {
     fontSize: 20,
     color: colors.aurora.green,
+  },
+  signOutButton: {
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    borderWidth: 2,
+    borderColor: '#EF4444',
+    borderRadius: 12,
+    padding: 16,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  signOutText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#EF4444',
+  },
+  versionText: {
+    fontSize: 12,
+    color: colors.text.secondary,
+    textAlign: 'center',
+    marginBottom: 20,
   },
 });

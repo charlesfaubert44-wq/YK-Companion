@@ -1,13 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useBannerSettings } from '@/lib/banners/useBannerSettings';
 import { BANNER_THEMES, BannerTheme } from '@/components/banners/BannerThemes';
+import { createClient } from '@/lib/supabase/client';
 
 export default function BannerShowcasePage() {
   const { currentTheme, settings, setActiveTheme, toggleAutoDetect } = useBannerSettings();
   const [previewTheme, setPreviewTheme] = useState<BannerTheme>(currentTheme);
+  const [weatherSettings, setWeatherSettings] = useState<Record<string, any>>({});
+  const [savingWeather, setSavingWeather] = useState(false);
 
   const bannerVariations = [
     // Seasonal Banners
@@ -31,9 +34,60 @@ export default function BannerShowcasePage() {
     holiday: bannerVariations.filter(b => b.category === 'holiday'),
   };
 
+  // Fetch weather settings on mount
+  useEffect(() => {
+    const fetchWeatherSettings = async () => {
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from('site_settings')
+          .select('key, value')
+          .eq('category', 'banner');
+
+        if (data && !error) {
+          const settingsObj: Record<string, any> = {};
+          data.forEach((setting: any) => {
+            settingsObj[setting.key] = setting.value;
+          });
+          setWeatherSettings(settingsObj);
+        }
+      } catch (err) {
+        console.error('Error fetching weather settings:', err);
+      }
+    };
+
+    fetchWeatherSettings();
+  }, []);
+
   const handleSetActive = () => {
     setActiveTheme(previewTheme);
     alert(`Banner set to: ${bannerVariations.find(b => b.id === previewTheme)?.name}`);
+  };
+
+  const handleSaveWeatherSettings = async () => {
+    setSavingWeather(true);
+    try {
+      const supabase = createClient();
+      const updates = Object.keys(weatherSettings).map(key => ({
+        key,
+        value: weatherSettings[key],
+        updated_at: new Date().toISOString()
+      }));
+
+      const { error } = await supabase
+        .from('site_settings')
+        .upsert(updates, { onConflict: 'key' });
+
+      if (!error) {
+        alert('Weather settings saved successfully!');
+      } else {
+        alert('Error saving weather settings: ' + error.message);
+      }
+    } catch (err) {
+      alert('Error saving weather settings: ' + err);
+    } finally {
+      setSavingWeather(false);
+    }
   };
 
   const PreviewBanner = BANNER_THEMES[previewTheme];
@@ -202,6 +256,214 @@ export default function BannerShowcasePage() {
                     <span>Manual mode lets you pick any theme</span>
                   </li>
                 </ul>
+              </div>
+            </div>
+
+            {/* Weather Effects Controls */}
+            <div className="bg-dark-800 rounded-xl p-6 border border-aurora-green/20 mt-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-white">Weather Effects</h3>
+                  <p className="text-gray-400 text-sm mt-1">
+                    Control live weather effects on seasonal banners
+                  </p>
+                </div>
+                <button
+                  onClick={handleSaveWeatherSettings}
+                  disabled={savingWeather}
+                  className="px-4 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all disabled:opacity-50"
+                >
+                  {savingWeather ? 'Saving...' : 'Save Weather Settings'}
+                </button>
+              </div>
+
+              {/* Force Weather Override */}
+              <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <span>⚡</span>
+                  Force Weather Override
+                </h4>
+                <p className="text-gray-300 text-sm mb-4">
+                  Override live weather data and manually display specific weather effects
+                </p>
+
+                <div className="flex items-center gap-4 flex-wrap">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={weatherSettings.weather_force_enabled === true}
+                      onChange={(e) => setWeatherSettings({
+                        ...weatherSettings,
+                        weather_force_enabled: e.target.checked
+                      })}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-white font-medium">Enable Force Weather</span>
+                  </label>
+
+                  {weatherSettings.weather_force_enabled && (
+                    <select
+                      value={weatherSettings.weather_force_condition || 'none'}
+                      onChange={(e) => setWeatherSettings({
+                        ...weatherSettings,
+                        weather_force_condition: e.target.value
+                      })}
+                      className="flex-1 min-w-[200px] px-4 py-2 bg-dark-700 border border-aurora-green/30 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
+                    >
+                      <option value="none">None (Use Live Weather)</option>
+                      <option value="snow">❄️ Snow</option>
+                      <option value="rain">🌧️ Rain</option>
+                      <option value="drizzle">🌦️ Drizzle</option>
+                      <option value="thunderstorm">⛈️ Thunderstorm</option>
+                      <option value="fog">🌫️ Fog</option>
+                      <option value="mist">🌫️ Mist</option>
+                      <option value="haze">🌫️ Haze</option>
+                      <option value="clouds">☁️ Clouds</option>
+                      <option value="clear">☀️ Clear Sky</option>
+                    </select>
+                  )}
+                </div>
+              </div>
+
+              {/* Master Toggle */}
+              <div className="mb-6 pb-6 border-b border-gray-700">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_enabled !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_enabled: e.target.checked
+                    })}
+                    className="w-5 h-5"
+                  />
+                  <div>
+                    <div className="text-white font-medium">Enable All Weather Effects</div>
+                    <div className="text-sm text-gray-400">Master toggle for all weather effects on banners</div>
+                  </div>
+                </label>
+              </div>
+
+              {/* Individual Effect Toggles */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <label className="flex items-center gap-3 cursor-pointer p-3 bg-dark-700/50 rounded-lg hover:bg-dark-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_snow !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_snow: e.target.checked
+                    })}
+                    disabled={weatherSettings.weather_effects_enabled === false}
+                    className="w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <div className="text-white text-sm font-medium">❄️ Snow</div>
+                    <div className="text-xs text-gray-500">80 particles</div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer p-3 bg-dark-700/50 rounded-lg hover:bg-dark-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_rain !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_rain: e.target.checked
+                    })}
+                    disabled={weatherSettings.weather_effects_enabled === false}
+                    className="w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <div className="text-white text-sm font-medium">🌧️ Rain</div>
+                    <div className="text-xs text-gray-500">Intensity-based</div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer p-3 bg-dark-700/50 rounded-lg hover:bg-dark-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_thunderstorm !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_thunderstorm: e.target.checked
+                    })}
+                    disabled={weatherSettings.weather_effects_enabled === false}
+                    className="w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <div className="text-white text-sm font-medium">⛈️ Storm</div>
+                    <div className="text-xs text-gray-500">Lightning</div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer p-3 bg-dark-700/50 rounded-lg hover:bg-dark-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_fog !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_fog: e.target.checked
+                    })}
+                    disabled={weatherSettings.weather_effects_enabled === false}
+                    className="w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <div className="text-white text-sm font-medium">🌫️ Fog</div>
+                    <div className="text-xs text-gray-500">Drifting layers</div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer p-3 bg-dark-700/50 rounded-lg hover:bg-dark-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_clouds !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_clouds: e.target.checked
+                    })}
+                    disabled={weatherSettings.weather_effects_enabled === false}
+                    className="w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <div className="text-white text-sm font-medium">☁️ Clouds</div>
+                    <div className="text-xs text-gray-500">Drifting shapes</div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer p-3 bg-dark-700/50 rounded-lg hover:bg-dark-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_wind !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_wind: e.target.checked
+                    })}
+                    disabled={weatherSettings.weather_effects_enabled === false}
+                    className="w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <div className="text-white text-sm font-medium">💨 Wind</div>
+                    <div className="text-xs text-gray-500">&gt;20 km/h</div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 cursor-pointer p-3 bg-dark-700/50 rounded-lg hover:bg-dark-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={weatherSettings.weather_effects_clear !== false}
+                    onChange={(e) => setWeatherSettings({
+                      ...weatherSettings,
+                      weather_effects_clear: e.target.checked
+                    })}
+                    disabled={weatherSettings.weather_effects_enabled === false}
+                    className="w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <div className="text-white text-sm font-medium">✨ Clear</div>
+                    <div className="text-xs text-gray-500">Sparkles</div>
+                  </div>
+                </label>
               </div>
             </div>
           </div>
