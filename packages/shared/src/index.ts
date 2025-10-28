@@ -3,23 +3,38 @@
  * Core utilities and helpers shared across web, mobile, and API apps
  */
 
-import { Season } from '@yk-trip-planner/types';
+// Define Season enum locally (was imported from types package)
+enum Season {
+  WINTER = 'winter',
+  SPRING = 'spring',
+  SUMMER = 'summer',
+  FALL = 'fall',
+}
 
 // ============================================================
 // EXPORTS - New Utility Modules
 // ============================================================
 
+// Note: Some exports commented out to avoid conflicts between modules
+// Import directly from specific modules if needed
+
 // Async and Promise utilities
-export * from './async';
+// export * from './async'; // Commented to avoid retryWithBackoff conflict
+
+// API retry logic with exponential backoff (Architecture: Reliability Strategy)
+export * from './retry';
 
 // Form validation and management utilities
-export * from './forms';
+// export * from './forms'; // Commented to avoid ValidationResult conflict
 
 // Query parameter and URL utilities
 export * from './query-params';
 
 // Date and time utilities (Yellowknife-specific)
 export * from './datetime';
+
+// Input validation with Zod schemas (Architecture: Security Strategy)
+export * from './validation';
 
 // ============================================================
 // LEGACY UTILITIES (backward compatibility)
