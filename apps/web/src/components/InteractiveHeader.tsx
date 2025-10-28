@@ -31,6 +31,11 @@ export default function InteractiveHeader() {
     { href: '/moving', label: 'Moving', icon: '📦' },
   ];
 
+  // Add Admin link if user is admin
+  const allNavItems = profile?.is_admin
+    ? [...navItems, { href: '/admin', label: 'Admin', icon: '⚙️' }]
+    : navItems;
+
   const userMenuItems = [
     { href: '/profile', label: 'Profile', icon: '👤' },
     { href: '/saved', label: 'Saved Items', icon: '🔖' },
@@ -220,7 +225,7 @@ export default function InteractiveHeader() {
                   <div className="px-4 py-1">
                     <span className="text-xs font-bold text-gray-500 uppercase">Pathways</span>
                   </div>
-                  {navItems.map((item) => (
+                  {allNavItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
