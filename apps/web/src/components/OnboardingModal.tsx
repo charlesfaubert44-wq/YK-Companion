@@ -62,50 +62,35 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
     {
       id: 'visiting',
       title: 'Visiting',
-      subtitle: 'Explorer',
-      description: 'Discover the magic of the North',
-      gradient: 'from-emerald-400 via-teal-400 to-cyan-400',
-      darkGradient: 'from-emerald-900 via-teal-900 to-cyan-900',
-      solidBg: 'bg-gradient-to-br from-emerald-950 via-teal-950 to-cyan-950',
-      borderColor: 'border-emerald-500/50',
+      subtitle: 'I\'m exploring Yellowknife',
+      description: 'Plan your trip and discover the best of the North',
+      bgColor: 'bg-slate-800',
+      borderColor: 'border-emerald-500/30',
       accentColor: 'bg-emerald-500',
-      textColor: 'text-emerald-400',
-      glowColor: 'rgba(16, 185, 129, 0.4)',
-      icon: '🧭',
-      bgPattern: 'compass',
-      features: ['Trip Planning', 'Aurora Tours', 'Hidden Gems']
+      hoverBorder: 'hover:border-emerald-400',
+      iconColor: 'text-emerald-400'
     },
     {
       id: 'living',
       title: 'Living',
-      subtitle: 'Resident',
-      description: 'Embrace life in Yellowknife',
-      gradient: 'from-blue-400 via-indigo-400 to-violet-400',
-      darkGradient: 'from-blue-900 via-indigo-900 to-violet-900',
-      solidBg: 'bg-gradient-to-br from-blue-950 via-indigo-950 to-violet-950',
-      borderColor: 'border-blue-500/50',
+      subtitle: 'I\'m a local resident',
+      description: 'Stay connected with your community and local events',
+      bgColor: 'bg-slate-800',
+      borderColor: 'border-blue-500/30',
       accentColor: 'bg-blue-500',
-      textColor: 'text-blue-400',
-      glowColor: 'rgba(59, 130, 246, 0.4)',
-      icon: '🏔️',
-      bgPattern: 'mountain',
-      features: ['Local Events', 'Community', 'Activities']
+      hoverBorder: 'hover:border-blue-400',
+      iconColor: 'text-blue-400'
     },
     {
       id: 'moving',
       title: 'Moving',
-      subtitle: 'New Arrival',
-      description: 'Start your Northern journey',
-      gradient: 'from-purple-400 via-fuchsia-400 to-pink-400',
-      darkGradient: 'from-purple-900 via-fuchsia-900 to-pink-900',
-      solidBg: 'bg-gradient-to-br from-purple-950 via-fuchsia-950 to-pink-950',
-      borderColor: 'border-purple-500/50',
+      subtitle: 'I\'m moving to Yellowknife',
+      description: 'Get everything you need to start your life up North',
+      bgColor: 'bg-slate-800',
+      borderColor: 'border-purple-500/30',
       accentColor: 'bg-purple-500',
-      textColor: 'text-purple-400',
-      glowColor: 'rgba(168, 85, 247, 0.4)',
-      icon: '🎒',
-      bgPattern: 'path',
-      features: ['Housing', 'Jobs', 'Essentials']
+      hoverBorder: 'hover:border-purple-400',
+      iconColor: 'text-purple-400'
     }
   ];
 
@@ -149,129 +134,101 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
             </p>
           </div>
 
-          {/* Elegant Interactive CTA Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          {/* Simplified CTA Buttons with Northern Visuals */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {pathways.map((pathway, index) => (
               <button
                 key={pathway.id}
                 onClick={() => handleSelectPath(pathway.id as 'visiting' | 'living' | 'moving')}
                 onMouseEnter={() => setHoveredCard(pathway.id)}
                 onMouseLeave={() => setHoveredCard(null)}
-                className={`group relative overflow-hidden rounded-3xl transition-all duration-500 transform ${
-                  hoveredCard === pathway.id ? 'scale-105 -translate-y-2' : 'scale-100'
-                } ${
+                className={`group relative ${pathway.bgColor} border-2 ${pathway.borderColor} ${pathway.hoverBorder} rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${
                   isAnimatingOut && selectedCard === pathway.id
                     ? 'scale-110 opacity-100 z-50'
                     : isAnimatingOut
                     ? 'scale-95 opacity-0'
                     : 'opacity-100'
                 }`}
-                style={{
-                  transitionDelay: `${index * 100}ms`
-                }}
               >
-                {/* Card Background - Solid Dark Theme with Border */}
-                <div
-                  className={`relative h-[420px] sm:h-[460px] ${pathway.solidBg} border-2 ${pathway.borderColor} rounded-3xl overflow-hidden transition-all duration-500 ${
-                    hoveredCard === pathway.id ? 'border-opacity-100' : 'border-opacity-50'
-                  }`}
-                  style={{
-                    animation: `subtle-glow-${index} 3s ease-in-out infinite`,
-                    animationDelay: `${index * 0.5}s`
-                  }}
-                >
-                  <div className="relative h-full rounded-3xl overflow-hidden">
+                {/* Northern Visual */}
+                <div className="mb-6">
+                  {pathway.id === 'visiting' && (
+                    <svg className={`w-full h-40 ${pathway.iconColor}`} viewBox="0 0 200 120" fill="none">
+                      {/* Aurora Borealis Waves */}
+                      <path d="M0,60 Q25,40 50,55 T100,50 T150,60 T200,45" stroke="currentColor" strokeWidth="3" opacity="0.8" fill="none" className="animate-aurora-wave"/>
+                      <path d="M0,70 Q25,50 50,65 T100,60 T150,70 T200,55" stroke="currentColor" strokeWidth="2" opacity="0.6" fill="none" className="animate-aurora-wave-2"/>
+                      <path d="M0,80 Q25,60 50,75 T100,70 T150,80 T200,65" stroke="currentColor" strokeWidth="2" opacity="0.4" fill="none" className="animate-aurora-wave-3"/>
+                      {/* Stars */}
+                      <circle cx="30" cy="20" r="2" fill="currentColor" opacity="0.8" className="animate-twinkle"/>
+                      <circle cx="70" cy="15" r="1.5" fill="currentColor" opacity="0.6" className="animate-twinkle-2"/>
+                      <circle cx="120" cy="25" r="2" fill="currentColor" opacity="0.7" className="animate-twinkle-3"/>
+                      <circle cx="160" cy="18" r="1.5" fill="currentColor" opacity="0.9" className="animate-twinkle"/>
+                      <circle cx="180" cy="30" r="2" fill="currentColor" opacity="0.6" className="animate-twinkle-2"/>
+                      {/* Northern Star */}
+                      <circle cx="100" cy="25" r="3" fill="currentColor" opacity="1"/>
+                      <path d="M100,15 L102,23 L110,23 L104,28 L106,36 L100,31 L94,36 L96,28 L90,23 L98,23 Z" fill="currentColor" opacity="0.9"/>
+                    </svg>
+                  )}
 
-                    {/* Subtle Background Pattern - Simplified */}
-                    <div className="absolute inset-0 opacity-5">
-                      {pathway.bgPattern === 'compass' && (
-                        <svg className="w-full h-full" viewBox="0 0 200 200">
-                          <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="2" fill="none" className={pathway.textColor} />
-                          <circle cx="100" cy="100" r="60" stroke="currentColor" strokeWidth="1" fill="none" className={pathway.textColor} />
-                          <line x1="100" y1="20" x2="100" y2="180" stroke="currentColor" strokeWidth="2" className={pathway.textColor} />
-                          <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2" className={pathway.textColor} />
-                        </svg>
-                      )}
-                      {pathway.bgPattern === 'mountain' && (
-                        <svg className="w-full h-full" viewBox="0 0 200 200" preserveAspectRatio="none">
-                          <path d="M0,150 L40,100 L70,120 L100,60 L130,90 L160,70 L200,110 L200,200 L0,200 Z" fill="currentColor" className={pathway.textColor} opacity="0.5" />
-                          <path d="M0,170 L50,130 L80,145 L120,100 L150,120 L180,105 L200,130 L200,200 L0,200 Z" fill="currentColor" className={pathway.textColor} opacity="0.3" />
-                        </svg>
-                      )}
-                      {pathway.bgPattern === 'path' && (
-                        <svg className="w-full h-full" viewBox="0 0 200 200">
-                          <path d="M20,180 Q50,150 80,160 T140,140 T180,150" stroke="currentColor" strokeWidth="3" fill="none" className={pathway.textColor} strokeDasharray="5,5" />
-                          <path d="M30,160 Q60,130 90,140 T150,120 T190,130" stroke="currentColor" strokeWidth="3" fill="none" className={pathway.textColor} strokeDasharray="5,5" />
-                        </svg>
-                      )}
-                    </div>
+                  {pathway.id === 'living' && (
+                    <svg className={`w-full h-40 ${pathway.iconColor}`} viewBox="0 0 200 120" fill="none">
+                      {/* Northern Trees Forest */}
+                      <path d="M40,90 L50,60 L45,60 L55,35 L50,35 L60,10 L70,35 L65,35 L75,60 L70,60 L80,90 Z" fill="currentColor" opacity="0.7"/>
+                      <path d="M80,95 L88,70 L84,70 L92,50 L88,50 L96,30 L104,50 L100,50 L108,70 L104,70 L112,95 Z" fill="currentColor" opacity="0.85"/>
+                      <path d="M120,90 L128,65 L124,65 L132,45 L128,45 L136,25 L144,45 L140,45 L148,65 L144,65 L152,90 Z" fill="currentColor" opacity="0.7"/>
+                      {/* Cabin */}
+                      <rect x="10" y="75" width="25" height="20" fill="currentColor" opacity="0.6" stroke="currentColor" strokeWidth="1"/>
+                      <path d="M7,75 L22.5,60 L38,75 Z" fill="currentColor" opacity="0.7" stroke="currentColor" strokeWidth="1"/>
+                      {/* Cabin Window */}
+                      <rect x="15" y="82" width="6" height="6" fill="#FCD34D" opacity="0.9"/>
+                      <rect x="24" y="82" width="6" height="6" fill="#FCD34D" opacity="0.9"/>
+                      {/* Smoke */}
+                      <circle cx="28" cy="58" r="2" fill="currentColor" opacity="0.3" className="animate-float"/>
+                      <circle cx="30" cy="52" r="2.5" fill="currentColor" opacity="0.2" className="animate-float"/>
+                    </svg>
+                  )}
 
-                    {/* Subtle Hover Overlay */}
-                    <div
-                      className={`absolute inset-0 bg-white transition-opacity duration-500 ${
-                        hoveredCard === pathway.id ? 'opacity-5' : 'opacity-0'
-                      }`}
-                    />
-
-                    {/* Content */}
-                    <div className="relative h-full flex flex-col justify-between p-8">
-
-                      {/* Top Section - Icon */}
-                      <div className="flex justify-center">
-                        <div
-                          className={`w-28 h-28 rounded-2xl bg-white/10 backdrop-blur-sm border-2 ${pathway.borderColor} flex items-center justify-center shadow-xl transform transition-all duration-500 ${
-                            hoveredCard === pathway.id ? 'scale-110 bg-white/20' : 'scale-100'
-                          }`}
-                        >
-                          <span className="text-6xl">{pathway.icon}</span>
-                        </div>
-                      </div>
-
-                      {/* Middle Section - Text */}
-                      <div className="text-center space-y-4">
-                        <div className={`inline-block px-5 py-2 rounded-full ${pathway.accentColor} text-white text-xs font-bold uppercase tracking-wider shadow-lg`}>
-                          {pathway.subtitle}
-                        </div>
-                        <h3 className="text-4xl sm:text-5xl font-black text-white leading-tight">
-                          {pathway.title}
-                        </h3>
-                        <p className="text-gray-300 text-base leading-relaxed">
-                          {pathway.description}
-                        </p>
-                      </div>
-
-                      {/* Bottom Section - Features & CTA */}
-                      <div className="space-y-5">
-                        {/* Features */}
-                        <div className="flex justify-center gap-2 flex-wrap">
-                          {pathway.features.map((feature, idx) => (
-                            <span
-                              key={idx}
-                              className={`px-4 py-2 bg-white/10 border ${pathway.borderColor} rounded-lg text-sm text-white font-medium backdrop-blur-sm`}
-                            >
-                              {feature}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* CTA Button */}
-                        <div className={`h-14 rounded-xl ${pathway.accentColor} flex items-center justify-center font-bold text-white text-lg transition-all duration-300 shadow-xl ${
-                          hoveredCard === pathway.id ? 'scale-105 shadow-2xl' : 'scale-100'
-                        }`}>
-                          <span className="mr-2">Start Exploring</span>
-                          <span className={`text-2xl transition-transform duration-300 ${hoveredCard === pathway.id ? 'translate-x-2' : ''}`}>→</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {pathway.id === 'moving' && (
+                    <svg className={`w-full h-40 ${pathway.iconColor}`} viewBox="0 0 200 120" fill="none">
+                      {/* Signpost */}
+                      <rect x="95" y="30" width="10" height="70" fill="currentColor" opacity="0.8"/>
+                      {/* Sign boards pointing different directions */}
+                      <path d="M100,35 L160,35 L165,40 L160,45 L100,45 Z" fill="currentColor" opacity="0.7" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M100,55 L40,55 L35,60 L40,65 L100,65 Z" fill="currentColor" opacity="0.7" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M100,75 L150,75 L155,80 L150,85 L100,85 Z" fill="currentColor" opacity="0.7" stroke="currentColor" strokeWidth="1.5"/>
+                      {/* Text lines on signs */}
+                      <line x1="110" y1="40" x2="150" y2="40" stroke="currentColor" strokeWidth="2" opacity="0.9"/>
+                      <line x1="50" y1="60" x2="90" y2="60" stroke="currentColor" strokeWidth="2" opacity="0.9"/>
+                      <line x1="110" y1="80" x2="140" y2="80" stroke="currentColor" strokeWidth="2" opacity="0.9"/>
+                      {/* Trail/Path leading forward */}
+                      <ellipse cx="100" cy="105" rx="60" ry="8" fill="currentColor" opacity="0.2"/>
+                      <path d="M80,105 Q100,95 120,105" stroke="currentColor" strokeWidth="2" opacity="0.4" strokeDasharray="5,5"/>
+                      {/* Mountains in background */}
+                      <path d="M0,50 L30,20 L60,45 L0,45 Z" fill="currentColor" opacity="0.15"/>
+                      <path d="M140,50 L170,25 L200,45 L140,45 Z" fill="currentColor" opacity="0.15"/>
+                    </svg>
+                  )}
                 </div>
 
-                {/* Subtle Outer Glow - On Hover */}
-                <div
-                  className={`absolute -inset-1 ${pathway.solidBg} rounded-3xl blur-2xl transition-opacity duration-500 -z-10 ${
-                    hoveredCard === pathway.id ? 'opacity-50' : 'opacity-0'
-                  }`}
-                />
+                {/* Text Content */}
+                <div className="text-center space-y-3 mb-6">
+                  <h3 className="text-2xl font-bold text-white">
+                    {pathway.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 font-medium">
+                    {pathway.subtitle}
+                  </p>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {pathway.description}
+                  </p>
+                </div>
+
+                {/* CTA Button */}
+                <div className={`w-full py-3 px-6 ${pathway.accentColor} text-white font-semibold rounded-lg transition-all duration-300 ${
+                  hoveredCard === pathway.id ? 'shadow-lg scale-105' : ''
+                }`}>
+                  Select
+                </div>
               </button>
             ))}
           </div>
@@ -292,10 +249,12 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
       <style jsx>{`
         @keyframes float {
           0%, 100% {
-            transform: translateY(0) rotate(0deg);
+            transform: translateY(0);
+            opacity: 0.3;
           }
           50% {
-            transform: translateY(-10px) rotate(5deg);
+            transform: translateY(-15px);
+            opacity: 0.2;
           }
         }
 
@@ -321,36 +280,76 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
           }
         }
 
-        /* Subtle border glow animations */
-        @keyframes subtle-glow-0 {
+        /* Aurora wave animations for northern lights */
+        @keyframes aurora-wave {
           0%, 100% {
-            filter: brightness(1);
+            transform: translateY(0);
+            opacity: 0.8;
           }
           50% {
-            filter: brightness(1.1);
+            transform: translateY(-5px);
+            opacity: 1;
           }
         }
 
-        @keyframes subtle-glow-1 {
+        @keyframes aurora-wave-2 {
           0%, 100% {
-            filter: brightness(1);
+            transform: translateY(0);
+            opacity: 0.6;
           }
           50% {
-            filter: brightness(1.15);
+            transform: translateY(-3px);
+            opacity: 0.9;
           }
         }
 
-        @keyframes subtle-glow-2 {
+        @keyframes aurora-wave-3 {
           0%, 100% {
-            filter: brightness(1);
+            transform: translateY(0);
+            opacity: 0.4;
           }
           50% {
-            filter: brightness(1.08);
+            transform: translateY(-2px);
+            opacity: 0.7;
+          }
+        }
+
+        /* Star twinkling animations */
+        @keyframes twinkle {
+          0%, 100% {
+            opacity: 0.8;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+        }
+
+        @keyframes twinkle-2 {
+          0%, 100% {
+            opacity: 0.6;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.9;
+            transform: scale(1.2);
+          }
+        }
+
+        @keyframes twinkle-3 {
+          0%, 100% {
+            opacity: 0.7;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.4;
+            transform: scale(0.9);
           }
         }
 
         .animate-float {
-          animation: float 3s ease-in-out infinite;
+          animation: float 4s ease-in-out infinite;
         }
 
         .animate-pulse-slow {
@@ -359,6 +358,30 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
 
         .animate-aurora {
           animation: aurora 8s ease-in-out infinite;
+        }
+
+        .animate-aurora-wave {
+          animation: aurora-wave 4s ease-in-out infinite;
+        }
+
+        .animate-aurora-wave-2 {
+          animation: aurora-wave-2 5s ease-in-out infinite;
+        }
+
+        .animate-aurora-wave-3 {
+          animation: aurora-wave-3 6s ease-in-out infinite;
+        }
+
+        .animate-twinkle {
+          animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .animate-twinkle-2 {
+          animation: twinkle-2 2.5s ease-in-out infinite;
+        }
+
+        .animate-twinkle-3 {
+          animation: twinkle-3 3.5s ease-in-out infinite;
         }
       `}</style>
     </div>
