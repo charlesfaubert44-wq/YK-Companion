@@ -65,8 +65,12 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
       subtitle: 'Explorer',
       description: 'Discover the magic of the North',
       gradient: 'from-emerald-400 via-teal-400 to-cyan-400',
-      darkGradient: 'from-emerald-600 via-teal-600 to-cyan-600',
-      glowColor: 'rgba(16, 185, 129, 0.6)',
+      darkGradient: 'from-emerald-900 via-teal-900 to-cyan-900',
+      solidBg: 'bg-gradient-to-br from-emerald-950 via-teal-950 to-cyan-950',
+      borderColor: 'border-emerald-500/50',
+      accentColor: 'bg-emerald-500',
+      textColor: 'text-emerald-400',
+      glowColor: 'rgba(16, 185, 129, 0.4)',
       icon: '🧭',
       bgPattern: 'compass',
       features: ['Trip Planning', 'Aurora Tours', 'Hidden Gems']
@@ -77,8 +81,12 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
       subtitle: 'Resident',
       description: 'Embrace life in Yellowknife',
       gradient: 'from-blue-400 via-indigo-400 to-violet-400',
-      darkGradient: 'from-blue-600 via-indigo-600 to-violet-600',
-      glowColor: 'rgba(59, 130, 246, 0.6)',
+      darkGradient: 'from-blue-900 via-indigo-900 to-violet-900',
+      solidBg: 'bg-gradient-to-br from-blue-950 via-indigo-950 to-violet-950',
+      borderColor: 'border-blue-500/50',
+      accentColor: 'bg-blue-500',
+      textColor: 'text-blue-400',
+      glowColor: 'rgba(59, 130, 246, 0.4)',
       icon: '🏔️',
       bgPattern: 'mountain',
       features: ['Local Events', 'Community', 'Activities']
@@ -89,8 +97,12 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
       subtitle: 'New Arrival',
       description: 'Start your Northern journey',
       gradient: 'from-purple-400 via-fuchsia-400 to-pink-400',
-      darkGradient: 'from-purple-600 via-fuchsia-600 to-pink-600',
-      glowColor: 'rgba(168, 85, 247, 0.6)',
+      darkGradient: 'from-purple-900 via-fuchsia-900 to-pink-900',
+      solidBg: 'bg-gradient-to-br from-purple-950 via-fuchsia-950 to-pink-950',
+      borderColor: 'border-purple-500/50',
+      accentColor: 'bg-purple-500',
+      textColor: 'text-purple-400',
+      glowColor: 'rgba(168, 85, 247, 0.4)',
       icon: '🎒',
       bgPattern: 'path',
       features: ['Housing', 'Jobs', 'Essentials']
@@ -158,138 +170,84 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                   transitionDelay: `${index * 100}ms`
                 }}
               >
-                {/* Card Background with Gradient - Pulsing border */}
+                {/* Card Background - Solid Dark Theme with Border */}
                 <div
-                  className={`relative h-[420px] sm:h-[460px] bg-gradient-to-br ${pathway.gradient} p-[2px] rounded-3xl`}
+                  className={`relative h-[420px] sm:h-[460px] ${pathway.solidBg} border-2 ${pathway.borderColor} rounded-3xl overflow-hidden transition-all duration-500 ${
+                    hoveredCard === pathway.id ? 'border-opacity-100' : 'border-opacity-50'
+                  }`}
                   style={{
-                    animation: `glow-pulse-${index} 3s ease-in-out infinite`,
+                    animation: `subtle-glow-${index} 3s ease-in-out infinite`,
                     animationDelay: `${index * 0.5}s`
                   }}
                 >
-                  <div className="relative h-full bg-dark-900 rounded-3xl overflow-hidden">
+                  <div className="relative h-full rounded-3xl overflow-hidden">
 
-                    {/* Animated Background Pattern */}
-                    <div className="absolute inset-0 opacity-10 animate-pattern-shift">
+                    {/* Subtle Background Pattern - Simplified */}
+                    <div className="absolute inset-0 opacity-5">
                       {pathway.bgPattern === 'compass' && (
                         <svg className="w-full h-full" viewBox="0 0 200 200">
-                          <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="1" fill="none" className="text-emerald-400" />
-                          <circle cx="100" cy="100" r="60" stroke="currentColor" strokeWidth="1" fill="none" className="text-emerald-400" />
-                          <line x1="100" y1="20" x2="100" y2="180" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-                          <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2" className="text-emerald-400" />
-                          <polygon points="100,30 95,50 105,50" fill="currentColor" className="text-emerald-500" />
+                          <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="2" fill="none" className={pathway.textColor} />
+                          <circle cx="100" cy="100" r="60" stroke="currentColor" strokeWidth="1" fill="none" className={pathway.textColor} />
+                          <line x1="100" y1="20" x2="100" y2="180" stroke="currentColor" strokeWidth="2" className={pathway.textColor} />
+                          <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2" className={pathway.textColor} />
                         </svg>
                       )}
                       {pathway.bgPattern === 'mountain' && (
                         <svg className="w-full h-full" viewBox="0 0 200 200" preserveAspectRatio="none">
-                          <path d="M0,150 L40,100 L70,120 L100,60 L130,90 L160,70 L200,110 L200,200 L0,200 Z" fill="currentColor" className="text-blue-400" opacity="0.3" />
-                          <path d="M0,170 L50,130 L80,145 L120,100 L150,120 L180,105 L200,130 L200,200 L0,200 Z" fill="currentColor" className="text-blue-500" opacity="0.2" />
+                          <path d="M0,150 L40,100 L70,120 L100,60 L130,90 L160,70 L200,110 L200,200 L0,200 Z" fill="currentColor" className={pathway.textColor} opacity="0.5" />
+                          <path d="M0,170 L50,130 L80,145 L120,100 L150,120 L180,105 L200,130 L200,200 L0,200 Z" fill="currentColor" className={pathway.textColor} opacity="0.3" />
                         </svg>
                       )}
                       {pathway.bgPattern === 'path' && (
                         <svg className="w-full h-full" viewBox="0 0 200 200">
-                          <path d="M20,180 Q50,150 80,160 T140,140 T180,150" stroke="currentColor" strokeWidth="3" fill="none" className="text-purple-400" strokeDasharray="5,5" />
-                          <path d="M30,160 Q60,130 90,140 T150,120 T190,130" stroke="currentColor" strokeWidth="3" fill="none" className="text-purple-500" strokeDasharray="5,5" />
-                          <circle cx="20" cy="180" r="4" fill="currentColor" className="text-purple-400" />
-                          <circle cx="180" cy="150" r="4" fill="currentColor" className="text-purple-400" />
+                          <path d="M20,180 Q50,150 80,160 T140,140 T180,150" stroke="currentColor" strokeWidth="3" fill="none" className={pathway.textColor} strokeDasharray="5,5" />
+                          <path d="M30,160 Q60,130 90,140 T150,120 T190,130" stroke="currentColor" strokeWidth="3" fill="none" className={pathway.textColor} strokeDasharray="5,5" />
                         </svg>
                       )}
                     </div>
 
-                    {/* Auto-Pulsing Glow Effect - Always visible */}
+                    {/* Subtle Hover Overlay */}
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${pathway.gradient} animate-glow-pulse transition-opacity duration-500 group-hover:opacity-25`}
-                      style={{
-                        opacity: 0.1,
-                        animationDelay: `${index * 0.3}s`
-                      }}
-                    />
-
-                    {/* Always-Visible Floating Particles - Mobile Friendly */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                      {[...Array(6)].map((_, i) => (
-                        <div
-                          key={i}
-                          className="absolute rounded-full"
-                          style={{
-                            left: `${15 + (i * 15)}%`,
-                            top: `${20 + (i * 12)}%`,
-                            width: `${3 + (i % 3)}px`,
-                            height: `${3 + (i % 3)}px`,
-                            background: pathway.glowColor,
-                            animation: `float-up ${3 + (i % 3)}s ease-in-out infinite`,
-                            animationDelay: `${i * 0.4}s`,
-                            boxShadow: `0 0 10px ${pathway.glowColor}`,
-                            opacity: 0.6
-                          }}
-                        />
-                      ))}
-
-                      {/* Extra particles on hover (desktop) */}
-                      {hoveredCard === pathway.id && [...Array(4)].map((_, i) => (
-                        <div
-                          key={`hover-${i}`}
-                          className="absolute rounded-full hidden md:block"
-                          style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                            width: `${4 + Math.random() * 3}px`,
-                            height: `${4 + Math.random() * 3}px`,
-                            background: pathway.glowColor,
-                            animation: `float-up ${2 + Math.random() * 2}s ease-in-out infinite`,
-                            animationDelay: `${Math.random()}s`,
-                            boxShadow: `0 0 15px ${pathway.glowColor}`,
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Animated Gradient Shimmer */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-r ${pathway.gradient} opacity-0 animate-shimmer`}
-                      style={{
-                        animationDelay: `${index * 0.7}s`
-                      }}
+                      className={`absolute inset-0 bg-white transition-opacity duration-500 ${
+                        hoveredCard === pathway.id ? 'opacity-5' : 'opacity-0'
+                      }`}
                     />
 
                     {/* Content */}
                     <div className="relative h-full flex flex-col justify-between p-8">
 
-                      {/* Top Section - Icon with Auto-Animation */}
+                      {/* Top Section - Icon */}
                       <div className="flex justify-center">
                         <div
-                          className={`w-24 h-24 rounded-full bg-gradient-to-br ${pathway.gradient} flex items-center justify-center shadow-lg transform transition-all duration-500 ${
-                            hoveredCard === pathway.id ? 'scale-110 rotate-12' : 'scale-100 rotate-0'
+                          className={`w-28 h-28 rounded-2xl bg-white/10 backdrop-blur-sm border-2 ${pathway.borderColor} flex items-center justify-center shadow-xl transform transition-all duration-500 ${
+                            hoveredCard === pathway.id ? 'scale-110 bg-white/20' : 'scale-100'
                           }`}
-                          style={{
-                            animation: `icon-pulse ${2 + index * 0.3}s ease-in-out infinite`,
-                            animationDelay: `${index * 0.2}s`
-                          }}
                         >
-                          <span className="text-5xl">{pathway.icon}</span>
+                          <span className="text-6xl">{pathway.icon}</span>
                         </div>
                       </div>
 
                       {/* Middle Section - Text */}
-                      <div className="text-center space-y-3">
-                        <div className={`inline-block px-4 py-1 rounded-full bg-gradient-to-r ${pathway.gradient} text-dark-900 text-xs font-bold uppercase tracking-wider`}>
+                      <div className="text-center space-y-4">
+                        <div className={`inline-block px-5 py-2 rounded-full ${pathway.accentColor} text-white text-xs font-bold uppercase tracking-wider shadow-lg`}>
                           {pathway.subtitle}
                         </div>
-                        <h3 className={`text-3xl sm:text-4xl font-black bg-gradient-to-br ${pathway.gradient} bg-clip-text text-transparent`}>
+                        <h3 className="text-4xl sm:text-5xl font-black text-white leading-tight">
                           {pathway.title}
                         </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-gray-300 text-base leading-relaxed">
                           {pathway.description}
                         </p>
                       </div>
 
                       {/* Bottom Section - Features & CTA */}
-                      <div className="space-y-4">
+                      <div className="space-y-5">
                         {/* Features */}
                         <div className="flex justify-center gap-2 flex-wrap">
                           {pathway.features.map((feature, idx) => (
                             <span
                               key={idx}
-                              className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-gray-400 backdrop-blur-sm"
+                              className={`px-4 py-2 bg-white/10 border ${pathway.borderColor} rounded-lg text-sm text-white font-medium backdrop-blur-sm`}
                             >
                               {feature}
                             </span>
@@ -297,28 +255,22 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                         </div>
 
                         {/* CTA Button */}
-                        <div className={`h-12 rounded-xl bg-gradient-to-r ${pathway.gradient} flex items-center justify-center font-bold text-dark-900 text-lg transition-all duration-300 ${
-                          hoveredCard === pathway.id ? 'shadow-2xl' : 'shadow-lg'
-                        }`}
-                        style={{
-                          boxShadow: hoveredCard === pathway.id ? `0 10px 40px ${pathway.glowColor}` : 'none'
-                        }}>
+                        <div className={`h-14 rounded-xl ${pathway.accentColor} flex items-center justify-center font-bold text-white text-lg transition-all duration-300 shadow-xl ${
+                          hoveredCard === pathway.id ? 'scale-105 shadow-2xl' : 'scale-100'
+                        }`}>
                           <span className="mr-2">Start Exploring</span>
-                          <span className={`transition-transform duration-300 ${hoveredCard === pathway.id ? 'translate-x-1' : ''}`}>→</span>
+                          <span className={`text-2xl transition-transform duration-300 ${hoveredCard === pathway.id ? 'translate-x-2' : ''}`}>→</span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Outer Glow Ring - Auto-Breathing */}
+                {/* Subtle Outer Glow - On Hover */}
                 <div
-                  className={`absolute -inset-1 bg-gradient-to-br ${pathway.gradient} rounded-3xl blur-xl transition-opacity duration-500 -z-10 group-hover:opacity-60`}
-                  style={{
-                    animation: `breathe ${3 + index * 0.4}s ease-in-out infinite`,
-                    animationDelay: `${index * 0.3}s`,
-                    opacity: 0.3
-                  }}
+                  className={`absolute -inset-1 ${pathway.solidBg} rounded-3xl blur-2xl transition-opacity duration-500 -z-10 ${
+                    hoveredCard === pathway.id ? 'opacity-50' : 'opacity-0'
+                  }`}
                 />
               </button>
             ))}
@@ -347,20 +299,6 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
           }
         }
 
-        @keyframes float-up {
-          0% {
-            transform: translateY(0) scale(0);
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-100px) scale(1);
-            opacity: 0;
-          }
-        }
-
         @keyframes pulse-slow {
           0%, 100% {
             transform: scale(1);
@@ -383,84 +321,31 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
           }
         }
 
-        /* Mobile-Friendly Auto Animations */
-        @keyframes glow-pulse-0 {
+        /* Subtle border glow animations */
+        @keyframes subtle-glow-0 {
           0%, 100% {
-            opacity: 1;
             filter: brightness(1);
           }
           50% {
-            opacity: 0.9;
-            filter: brightness(1.2);
-          }
-        }
-
-        @keyframes glow-pulse-1 {
-          0%, 100% {
-            opacity: 1;
-            filter: brightness(1);
-          }
-          50% {
-            opacity: 0.85;
-            filter: brightness(1.3);
-          }
-        }
-
-        @keyframes glow-pulse-2 {
-          0%, 100% {
-            opacity: 1;
-            filter: brightness(1);
-          }
-          50% {
-            opacity: 0.95;
-            filter: brightness(1.15);
-          }
-        }
-
-        @keyframes breathe {
-          0%, 100% {
-            opacity: 0.3;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.5;
-            transform: scale(1.05);
-          }
-        }
-
-        @keyframes icon-pulse {
-          0%, 100% {
-            transform: scale(1);
-            filter: brightness(1);
-          }
-          50% {
-            transform: scale(1.05);
             filter: brightness(1.1);
           }
         }
 
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-            opacity: 0;
+        @keyframes subtle-glow-1 {
+          0%, 100% {
+            filter: brightness(1);
           }
           50% {
-            opacity: 0.15;
-          }
-          100% {
-            transform: translateX(100%);
-            opacity: 0;
+            filter: brightness(1.15);
           }
         }
 
-        @keyframes pattern-shift {
+        @keyframes subtle-glow-2 {
           0%, 100% {
-            transform: scale(1) rotate(0deg);
-            opacity: 0.1;
+            filter: brightness(1);
           }
           50% {
-            transform: scale(1.02) rotate(2deg);
-            opacity: 0.15;
+            filter: brightness(1.08);
           }
         }
 
@@ -474,18 +359,6 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
 
         .animate-aurora {
           animation: aurora 8s ease-in-out infinite;
-        }
-
-        .animate-glow-pulse {
-          animation: glow-pulse-0 4s ease-in-out infinite;
-        }
-
-        .animate-shimmer {
-          animation: shimmer 4s ease-in-out infinite;
-        }
-
-        .animate-pattern-shift {
-          animation: pattern-shift 8s ease-in-out infinite;
         }
       `}</style>
     </div>
