@@ -1,0 +1,19 @@
+{
+  "apps/web/**/*.{js,jsx,ts,tsx}": [
+    "eslint --fix",
+    "prettier --write"
+  ],
+  "apps/web/**/*.{json,md,css,scss}": [
+    "prettier --write"
+  ],
+  "apps/mobile/**/*.{js,jsx,ts,tsx}": [
+    "eslint --fix",
+    "prettier --write"
+  ],
+  "apps/api/**/*.{js,ts}": [
+    "eslint --fix",
+    "prettier --write"
+  ]
+}
+
+
