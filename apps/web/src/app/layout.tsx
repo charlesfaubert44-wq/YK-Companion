@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { SloganProvider } from '@/contexts/SloganContext'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const inter = Inter({ 
@@ -86,7 +87,9 @@ export default function RootLayout({
         <ErrorBoundary>
           <AuthProvider>
             <LanguageProvider>
-              {children}
+              <SloganProvider>
+                {children}
+              </SloganProvider>
             </LanguageProvider>
           </AuthProvider>
         </ErrorBoundary>
