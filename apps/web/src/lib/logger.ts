@@ -1,7 +1,11 @@
 /**
  * Centralized logging utility
- * Replaces console.log with structured logging
- * Easy to integrate with services like Sentry, LogRocket, etc.
+ * 
+ * Replaces console.log with structured logging that can be easily integrated
+ * with monitoring services like Sentry or LogRocket. Automatically suppresses
+ * debug logs in production and includes context information.
+ * 
+ * @module logger
  */
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error'

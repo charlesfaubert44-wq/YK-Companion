@@ -9,6 +9,7 @@ import GoogleAnalytics from '@/components/GoogleAnalytics';
 import StructuredData from '@/components/StructuredData';
 import { Analytics } from '@vercel/analytics/react';
 import { defaultMetadata, googleSiteVerification } from '@/lib/seo';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const inter = Inter({ subsets: ['latin'] });
 const pressStart2P = Press_Start_2P({
@@ -51,15 +52,17 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className={`${inter.className} overflow-x-hidden`}>
-        <LanguageProvider>
-          <AuthProvider>
-            <SloganProvider>
-              {children}
-              <PWAInstaller />
-              <Analytics />
-            </SloganProvider>
-          </AuthProvider>
-        </LanguageProvider>
+        <ErrorBoundary>
+          <LanguageProvider>
+            <AuthProvider>
+              <SloganProvider>
+                {children}
+                <PWAInstaller />
+                <Analytics />
+              </SloganProvider>
+            </AuthProvider>
+          </LanguageProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
