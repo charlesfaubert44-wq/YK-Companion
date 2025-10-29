@@ -1,43 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable React strict mode for better development experience
   reactStrictMode: true,
-  
-  // Image optimization
+
+  // Image optimization configuration
   images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
+    domains: [
+      'api.mapbox.com',
+      'images.unsplash.com',
+      // Add your Supabase storage domain if using Supabase Storage
+      process.env.NEXT_PUBLIC_SUPABASE_URL?.replace('https://', '') || '',
     ],
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60,
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  
-  // Environment variables
-  env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
-    NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-  },
-  
-  // Compiler optimizations
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn'],
-    } : false,
-  },
-  
-  // Production optimizations
-  swcMinify: true,
-  compress: true,
-  
-  // Security headers
+
+  // Security headers (additional to middleware)
   async headers() {
     return [
       {
@@ -45,34 +22,71 @@ const nextConfig = {
         headers: [
           {
             key: 'X-DNS-Prefetch-Control',
-            value: 'on'
+            value: 'on',
           },
           {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload'
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
           },
         ],
       },
-    ]
+    ];
   },
-  
-  // Redirects for SEO and UX
+
+  // Webpack configuration
+  webpack: (config, { isServer }) => {
+    // Fix for canvas module (if used by dependencies)
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        canvas: false,
+        fs: false,
+      };
+    }
+
+    return config;
+  },
+
+  // Enable SWC minification for faster builds
+  swcMinify: true,
+
+  // Experimental features
+  experimental: {
+    // Enable optimistic client cache
+    optimisticClientCache: true,
+  },
+
+  // Redirects
   async redirects() {
     return [
+      // Redirect /admin to /admin/dashboard or login
       {
-        source: '/home',
-        destination: '/',
-        permanent: true,
+        source: '/admin',
+        destination: '/admin/sponsors',
+        permanent: false,
       },
-    ]
+    ];
   },
-  
-  // Performance monitoring
+
+  // Environment variables to expose to the browser
+  env: {
+    NEXT_PUBLIC_APP_NAME: 'YK Buddy',
+    NEXT_PUBLIC_APP_VERSION: '1.0.0',
+  },
+
+  // Performance optimizations
+  compress: true,
+
+  // Disable x-powered-by header
   poweredByHeader: false,
-  generateEtags: true,
-  
-  // Production build optimization
-  productionBrowserSourceMaps: false,
 };
 
 module.exports = nextConfig;
