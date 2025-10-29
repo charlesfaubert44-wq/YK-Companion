@@ -214,7 +214,7 @@ export function checkRateLimit(
   const identifier = getClientIdentifier(request, userId);
   const result = rateLimiter.check(identifier, config);
 
-  const headers = {
+  const headers: Record<string, string> = {
     'X-RateLimit-Limit': config.maxRequests.toString(),
     'X-RateLimit-Remaining': result.remaining.toString(),
     'X-RateLimit-Reset': new Date(result.resetTime).toISOString(),

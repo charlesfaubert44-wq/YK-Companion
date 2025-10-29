@@ -34,10 +34,7 @@ export function initializeSentry() {
     
     // Release tracking
     release: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
-    
-    // Performance monitoring
-    enableTracing: true,
-    
+
     // Session replay (useful for debugging)
     replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,

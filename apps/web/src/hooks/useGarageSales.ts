@@ -408,7 +408,7 @@ export function useGarageSales(userLocation?: Coordinates) {
 
       if (error) throw error;
 
-      return data.map(item => item.sale_id);
+      return data.map((item: { sale_id: string }) => item.sale_id);
     } catch (error) {
       console.error('Error fetching favorites:', error);
       return [];

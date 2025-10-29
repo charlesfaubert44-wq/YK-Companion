@@ -47,8 +47,8 @@ interface MetricsResponse {
  */
 async function isAdmin(request: NextRequest): Promise<boolean> {
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -74,7 +74,7 @@ async function isAdmin(request: NextRequest): Promise<boolean> {
  */
 async function getDatabaseMetrics() {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Get counts in parallel
     const [usersResult, profilesResult, salesResult, sponsorsResult] = await Promise.all([

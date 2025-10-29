@@ -50,8 +50,8 @@ export async function generateGarageSaleMetadata(
   saleId: string
 ): Promise<Metadata> {
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     const { data: sale, error } = await supabase
       .from('garage_sales')
       .select('*')
@@ -119,8 +119,8 @@ export async function generateKnowledgeArticleMetadata(
   articleId: string
 ): Promise<Metadata> {
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     const { data: article, error } = await supabase
       .from('knowledge_base')
       .select('*')
@@ -179,8 +179,8 @@ export async function generateKnowledgeArticleMetadata(
  */
 export async function fetchGarageSaleForSchema(saleId: string): Promise<GarageSale | null> {
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     const { data, error } = await supabase
       .from('garage_sales')
       .select('*')
@@ -206,8 +206,8 @@ export async function fetchKnowledgeArticleForSchema(
   articleId: string
 ): Promise<KnowledgeArticle | null> {
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     const { data, error } = await supabase
       .from('knowledge_base')
       .select('*')
@@ -235,8 +235,8 @@ export async function getGarageSalesForSitemap(): Promise<Array<{
   updated_at: string;
 }>> {
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     // Get sales from last 30 days and future sales
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -267,8 +267,8 @@ export async function getKnowledgeArticlesForSitemap(): Promise<Array<{
   updated_at: string;
 }>> {
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     const { data, error } = await supabase
       .from('knowledge_base')
       .select('id, updated_at')

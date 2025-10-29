@@ -97,7 +97,7 @@ async function applyRateLimiting(
   const ip = getClientIP(request);
 
   // Determine rate limit config based on route
-  let config = RATE_LIMITS.PUBLIC;
+  let config: { interval: number; maxRequests: number } = RATE_LIMITS.PUBLIC;
 
   if (pathname.includes('/auth/') || pathname.includes('sign-in') || pathname.includes('sign-up')) {
     config = RATE_LIMITS.AUTH;

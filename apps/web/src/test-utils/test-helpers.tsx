@@ -6,6 +6,7 @@
 
 import { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
+import { vi } from 'vitest';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 

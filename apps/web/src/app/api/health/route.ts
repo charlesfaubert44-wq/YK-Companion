@@ -39,8 +39,8 @@ async function checkDatabase(): Promise<HealthStatus> {
   const startTime = Date.now();
   
   try {
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     // Simple query to check database connection
     const { error } = await supabase
       .from('profiles')
@@ -100,8 +100,8 @@ async function checkSupabase(): Promise<HealthStatus> {
       };
     }
 
-    const supabase = createClient();
-    
+    const supabase = await createClient();
+
     // Check authentication service
     const { error } = await supabase.auth.getSession();
 

@@ -315,10 +315,13 @@ export default function MapView({
       }
 
       // Show/hide popup based on highlight
-      if (isHighlighted && !marker.getPopup().isOpen()) {
-        marker.togglePopup();
-      } else if (!isHighlighted && marker.getPopup().isOpen()) {
-        marker.togglePopup();
+      const popup = marker.getPopup();
+      if (popup) {
+        if (isHighlighted && !popup.isOpen()) {
+          marker.togglePopup();
+        } else if (!isHighlighted && popup.isOpen()) {
+          marker.togglePopup();
+        }
       }
     });
   }, [highlightedSaleId, sales, mapReady]);
