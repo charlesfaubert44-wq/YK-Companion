@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YK Buddy - Facebook Profile Picture (180×180px)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0d1b2a 0%, #1e3a5f 50%, #2c5f7f 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+                        0 0 0 4px rgba(59, 130, 246, 0.3);
+            margin: 0 auto 20px auto;
+        }
+
+        /* Aurora effect */
+        .aurora-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 30%,
+                rgba(16, 185, 129, 0.4) 0%,
+                rgba(59, 130, 246, 0.3) 40%,
+                rgba(139, 92, 246, 0.3) 70%,
+                transparent 100%);
+            animation: aurora-rotate 10s linear infinite;
+        }
+
+        @keyframes aurora-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Logo */
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .logo-text {
+            font-size: 38px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 40%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.08em;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8))
+                    drop-shadow(0 0 12px rgba(16, 185, 129, 0.4));
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .logo-subtitle {
+            font-size: 9px;
+            color: #f0f9ff;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+        }
+
+        /* Small aurora element at bottom */
+        .aurora-accent {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background: radial-gradient(ellipse at center,
+                rgba(16, 185, 129, 0.6) 0%,
+                rgba(59, 130, 246, 0.4) 50%,
+                transparent 100%);
+            border-radius: 50%;
+            filter: blur(4px);
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        .star-1 { top: 15px; left: 30px; width: 2px; height: 2px; animation-delay: 0s; }
+        .star-2 { top: 35px; right: 25px; width: 1.5px; height: 1.5px; animation-delay: 0.7s; }
+        .star-3 { top: 55px; left: 20px; width: 2px; height: 2px; animation-delay: 1.4s; }
+        .star-4 { bottom: 40px; right: 30px; width: 1.5px; height: 1.5px; animation-delay: 2.1s; }
+        .star-5 { bottom: 25px; left: 35px; width: 2px; height: 2px; animation-delay: 2.8s; }
+
+        .instructions {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .download-button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .preview-container {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .preview-title {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .preview-sizes {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .preview-item {
+            text-align: center;
+        }
+
+        .preview-label {
+            color: #64748b;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        /* Alternative gradient version */
+        .profile-pic.gradient-alt {
+            background: radial-gradient(circle at 30% 30%,
+                rgba(16, 185, 129, 0.3) 0%,
+                #0d1b2a 60%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-pic" id="profilePic">
+            <!-- Aurora background -->
+            <div class="aurora-circle"></div>
+
+            <!-- Stars -->
+            <div class="star star-1"></div>
+            <div class="star star-2"></div>
+            <div class="star star-3"></div>
+            <div class="star star-4"></div>
+            <div class="star star-5"></div>
+
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="logo-text">YK</div>
+                <div class="logo-subtitle">BUDDY</div>
+            </div>
+
+            <!-- Aurora accent -->
+            <div class="aurora-accent"></div>
+        </div>
+
+        <div class="instructions">
+            <strong>Facebook Profile Picture</strong> • 180×180px<br>
+            Right-click the image above and "Save Image As..."
+            <br>
+            <button class="download-button" onclick="downloadProfile()">📥 Download Profile Picture</button>
+        </div>
+
+        <div class="preview-container">
+            <div class="preview-title">Preview at Different Sizes:</div>
+            <div class="preview-sizes">
+                <div class="preview-item">
+                    <div class="preview-label">Large (180px)</div>
+                    <div class="profile-pic" style="width: 180px; height: 180px; margin: 0;">
+                        <div class="aurora-circle"></div>
+                        <div class="star star-1"></div>
+                        <div class="star star-2"></div>
+                        <div class="star star-3"></div>
+                        <div class="star star-4"></div>
+                        <div class="star star-5"></div>
+                        <div class="logo-container">
+                            <div class="logo-text">YK</div>
+                            <div class="logo-subtitle">BUDDY</div>
+                        </div>
+                        <div class="aurora-accent"></div>
+                    </div>
+                </div>
+
+                <div class="preview-item">
+                    <div class="preview-label">Medium (96px)</div>
+                    <div class="profile-pic" style="width: 96px; height: 96px; margin: 0;">
+                        <div class="aurora-circle"></div>
+                        <div class="logo-container">
+                            <div class="logo-text" style="font-size: 20px;">YK</div>
+                            <div class="logo-subtitle" style="font-size: 5px;">BUDDY</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-item">
+                    <div class="preview-label">Small (40px)</div>
+                    <div class="profile-pic" style="width: 40px; height: 40px; margin: 0;">
+                        <div class="aurora-circle"></div>
+                        <div class="logo-container">
+                            <div class="logo-text" style="font-size: 10px;">YK</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadProfile() {
+            alert('To download:\n\n1. Right-click on the profile picture above\n2. Select "Save Image As..."\n3. Save as "yk-buddy-facebook-profile.png"\n\nFor best quality, take a screenshot at exactly 180×180px');
+        }
+    </script>
+</body>
+</html>

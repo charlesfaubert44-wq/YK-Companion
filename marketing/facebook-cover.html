@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YK Buddy - Facebook Cover Photo (820×312px)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .cover {
+            width: 820px;
+            height: 312px;
+            background: linear-gradient(180deg, #0d1b2a 0%, #1e3a5f 40%, #2c5f7f 70%, #0d1b2a 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Aurora Background */
+        .aurora {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .aurora-wave {
+            position: absolute;
+            width: 120%;
+            height: 100%;
+            opacity: 0.5;
+        }
+
+        .aurora-wave-1 {
+            background: radial-gradient(ellipse 60% 40% at 20% 30%,
+                rgba(16, 185, 129, 0.4) 0%,
+                rgba(16, 185, 129, 0.2) 40%,
+                transparent 70%);
+            animation: float1 20s ease-in-out infinite;
+        }
+
+        .aurora-wave-2 {
+            background: radial-gradient(ellipse 55% 35% at 50% 35%,
+                rgba(59, 130, 246, 0.5) 0%,
+                rgba(59, 130, 246, 0.2) 45%,
+                transparent 75%);
+            animation: float2 18s ease-in-out infinite;
+        }
+
+        .aurora-wave-3 {
+            background: radial-gradient(ellipse 50% 30% at 75% 40%,
+                rgba(139, 92, 246, 0.4) 0%,
+                rgba(139, 92, 246, 0.2) 40%,
+                transparent 70%);
+            animation: float3 22s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, 10px); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -10px); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-15px, 8px); }
+        }
+
+        /* Scenery */
+        .scenery {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            z-index: 2;
+        }
+
+        .water {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(180deg,
+                rgba(30, 58, 95, 0.7) 0%,
+                rgba(13, 27, 42, 0.9) 100%);
+        }
+
+        .houseboat {
+            position: absolute;
+            bottom: 20px;
+        }
+
+        .houseboat-main {
+            left: 120px;
+            width: 80px;
+            height: 52px;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .window {
+            position: absolute;
+            background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+            border-radius: 1px;
+            box-shadow: 0 0 8px rgba(255, 165, 0, 0.8);
+        }
+
+        .window-1 {
+            top: 8px;
+            left: 8px;
+            width: 14px;
+            height: 20px;
+        }
+
+        .window-2 {
+            top: 8px;
+            right: 12px;
+            width: 12px;
+            height: 18px;
+        }
+
+        .chimney {
+            position: absolute;
+            top: -10px;
+            right: 18px;
+            width: 5px;
+            height: 12px;
+            background: linear-gradient(135deg, #3d4f5f 0%, #2d3e50 100%);
+        }
+
+        .smoke {
+            position: absolute;
+            top: -20px;
+            right: 16px;
+            width: 10px;
+            height: 18px;
+            background: radial-gradient(ellipse at center,
+                rgba(200, 220, 240, 0.3) 0%,
+                transparent 70%);
+            filter: blur(2px);
+        }
+
+        .roof {
+            position: absolute;
+            top: -12px;
+            left: -3px;
+            width: 86px;
+            height: 0;
+            border-left: 43px solid transparent;
+            border-right: 43px solid transparent;
+            border-bottom: 14px solid #5a7389;
+        }
+
+        .houseboat-base {
+            position: absolute;
+            bottom: -15px;
+            left: -6px;
+            width: 92px;
+            height: 18px;
+            background: linear-gradient(135deg, #4a6278 0%, #3d5266 100%);
+            border-radius: 10px 10px 3px 3px;
+        }
+
+        /* Small houseboat */
+        .houseboat-small {
+            left: 50%;
+            width: 50px;
+            height: 38px;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            border-radius: 2px 2px 0 0;
+            box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .houseboat-small .window {
+            top: 8px;
+            left: 10px;
+            width: 10px;
+            height: 14px;
+        }
+
+        .houseboat-small .houseboat-base {
+            width: 56px;
+            height: 14px;
+            bottom: -12px;
+            left: -3px;
+        }
+
+        /* Tiny houseboat */
+        .houseboat-tiny {
+            right: 150px;
+            width: 38px;
+            height: 28px;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .houseboat-tiny .window {
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 10px;
+        }
+
+        .houseboat-tiny .houseboat-base {
+            width: 42px;
+            height: 10px;
+            bottom: -9px;
+            left: -2px;
+        }
+
+        /* Ice chunks */
+        .ice {
+            position: absolute;
+            bottom: 12px;
+            background: linear-gradient(135deg, rgba(174, 214, 241, 0.5) 0%, rgba(133, 193, 233, 0.4) 100%);
+            border-radius: 50% 40% 45% 50%;
+        }
+
+        .ice-1 {
+            left: 40px;
+            width: 45px;
+            height: 10px;
+        }
+
+        .ice-2 {
+            left: 55%;
+            width: 52px;
+            height: 12px;
+        }
+
+        .ice-3 {
+            right: 60px;
+            width: 38px;
+            height: 9px;
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .star-1 { top: 20px; left: 80px; width: 2px; height: 2px; animation-delay: 0s; }
+        .star-2 { top: 40px; left: 200px; width: 2.5px; height: 2.5px; animation-delay: 1s; }
+        .star-3 { top: 30px; right: 180px; width: 2px; height: 2px; animation-delay: 2s; }
+        .star-4 { top: 50px; right: 100px; width: 2.5px; height: 2.5px; animation-delay: 0.5s; }
+        .star-5 { top: 25px; left: 400px; width: 2px; height: 2px; animation-delay: 1.5s; }
+        .star-6 { top: 45px; right: 300px; width: 2px; height: 2px; animation-delay: 2.5s; }
+
+        /* Content */
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 60px;
+        }
+
+        .logo {
+            font-size: 68px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 30%, #3b82f6 70%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5))
+                    drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
+            animation: glow 4s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 20px rgba(16, 185, 129, 0.3)); }
+            50% { filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(59, 130, 246, 0.5)); }
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: #f9fafb;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .description {
+            font-size: 15px;
+            color: #cbd5e1;
+            font-style: italic;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 18px;
+        }
+
+        .url-badge {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            padding: 8px 24px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .url {
+            font-size: 18px;
+            color: #60a5fa;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            padding: 20px;
+        }
+
+        .download-button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <div class="cover" id="cover">
+            <!-- Aurora Background -->
+            <div class="aurora">
+                <div class="aurora-wave aurora-wave-1"></div>
+                <div class="aurora-wave aurora-wave-2"></div>
+                <div class="aurora-wave aurora-wave-3"></div>
+            </div>
+
+            <!-- Stars -->
+            <div class="star star-1"></div>
+            <div class="star star-2"></div>
+            <div class="star star-3"></div>
+            <div class="star star-4"></div>
+            <div class="star star-5"></div>
+            <div class="star star-6"></div>
+
+            <!-- Scenery -->
+            <div class="scenery">
+                <div class="water"></div>
+
+                <!-- Main Houseboat -->
+                <div class="houseboat houseboat-main">
+                    <div class="chimney"></div>
+                    <div class="smoke"></div>
+                    <div class="window window-1"></div>
+                    <div class="window window-2"></div>
+                    <div class="roof"></div>
+                    <div class="houseboat-base"></div>
+                </div>
+
+                <!-- Small Houseboat -->
+                <div class="houseboat houseboat-small">
+                    <div class="window"></div>
+                    <div class="houseboat-base"></div>
+                </div>
+
+                <!-- Tiny Houseboat -->
+                <div class="houseboat houseboat-tiny">
+                    <div class="window"></div>
+                    <div class="houseboat-base"></div>
+                </div>
+
+                <!-- Ice chunks -->
+                <div class="ice ice-1"></div>
+                <div class="ice ice-2"></div>
+                <div class="ice ice-3"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <h1 class="logo">YK BUDDY</h1>
+                <p class="tagline">Your Yellowknife Companion</p>
+                <p class="description">Aurora Forecasts • Garage Sales • Local Knowledge</p>
+                <div class="url-badge">
+                    <span class="url">ykbuddy.com</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <strong>Facebook Cover Photo</strong> • 820×312px<br>
+            Right-click the image above and "Save Image As..." or use the button below
+            <br>
+            <button class="download-button" onclick="downloadCover()">📥 Download Cover Photo</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadCover() {
+            // Create canvas
+            const cover = document.getElementById('cover');
+            const canvas = document.createElement('canvas');
+            canvas.width = 820;
+            canvas.height = 312;
+            const ctx = canvas.getContext('2d');
+
+            // Use html2canvas or manual screenshot
+            alert('To download:\n\n1. Right-click on the cover image above\n2. Select "Save Image As..."\n3. Save as "yk-buddy-facebook-cover.png"\n\nFor best quality, take a screenshot at 820×312px');
+        }
+    </script>
+</body>
+</html>

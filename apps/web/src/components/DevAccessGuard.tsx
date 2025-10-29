@@ -7,24 +7,45 @@ export default function DevAccessGuard({ children }: { children: React.ReactNode
   const pathname = usePathname();
   const router = useRouter();
   const [hasAccess, setHasAccess] = useState<boolean | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Check if dev access guard should be enabled (only in development or specific envs)
+  const isDevAccessEnabled = process.env.NEXT_PUBLIC_DEV_ACCESS_ENABLED === 'true';
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    // Skip guard if not enabled or not mounted yet
+    if (!isDevAccessEnabled || !isMounted) {
+      setHasAccess(true);
+      return;
+    }
+
     // Don't guard the dev-access page itself
     if (pathname === '/dev-access') {
       setHasAccess(true);
       return;
     }
 
-    // Check if user has access
-    const access = localStorage.getItem('yk_dev_access');
+    // Check if user has access (only run on client)
+    if (typeof window !== 'undefined') {
+      const access = localStorage.getItem('yk_dev_access');
 
-    if (access === 'granted') {
-      setHasAccess(true);
-    } else {
-      // Redirect to dev access page
-      router.push('/dev-access');
+      if (access === 'granted') {
+        setHasAccess(true);
+      } else {
+        // Redirect to dev access page
+        router.push('/dev-access');
+      }
     }
-  }, [pathname, router]);
+  }, [pathname, router, isDevAccessEnabled, isMounted]);
+
+  // For production or SSR, always show children
+  if (!isDevAccessEnabled || !isMounted) {
+    return <>{children}</>;
+  }
 
   // Show loading state while checking access
   if (hasAccess === null) {

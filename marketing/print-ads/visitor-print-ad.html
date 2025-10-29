@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YK Buddy - Visitor Print Ad (8.5" x 11")</title>
+    <style>
+        @page {
+            size: 8.5in 11in;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 8.5in;
+            height: 11in;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #0d1b2a 0%, #1e3a5f 30%, #2c5f7f 60%, #0d1b2a 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Aurora Background */
+        .aurora {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            pointer-events: none;
+        }
+
+        .aurora-wave {
+            position: absolute;
+            width: 120%;
+            height: 100%;
+            opacity: 0.6;
+        }
+
+        .aurora-wave-1 {
+            background: radial-gradient(ellipse 80% 50% at 30% 20%,
+                rgba(16, 185, 129, 0.4) 0%,
+                rgba(16, 185, 129, 0.2) 30%,
+                transparent 60%);
+            left: -10%;
+        }
+
+        .aurora-wave-2 {
+            background: radial-gradient(ellipse 70% 40% at 60% 30%,
+                rgba(59, 130, 246, 0.5) 0%,
+                rgba(59, 130, 246, 0.2) 40%,
+                transparent 70%);
+            left: -5%;
+        }
+
+        .aurora-wave-3 {
+            background: radial-gradient(ellipse 60% 35% at 80% 25%,
+                rgba(139, 92, 246, 0.4) 0%,
+                rgba(139, 92, 246, 0.2) 35%,
+                transparent 65%);
+            left: 0;
+        }
+
+        /* Scenery - Houseboats and landscape */
+        .scenery {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            z-index: 2;
+        }
+
+        .water {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(180deg,
+                rgba(30, 58, 95, 0.8) 0%,
+                rgba(13, 27, 42, 0.95) 100%);
+        }
+
+        .houseboat {
+            position: absolute;
+            bottom: 15%;
+        }
+
+        .houseboat-main {
+            left: 35%;
+            width: 140px;
+            height: 90px;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            border-radius: 5px 5px 0 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .houseboat-main::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 25px;
+            height: 35px;
+            background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.8);
+        }
+
+        .houseboat-main::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 20px;
+            height: 30px;
+            background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.8);
+        }
+
+        .chimney {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            width: 8px;
+            height: 20px;
+            background: linear-gradient(135deg, #3d4f5f 0%, #2d3e50 100%);
+        }
+
+        .smoke {
+            position: absolute;
+            top: -35px;
+            right: 28px;
+            width: 15px;
+            height: 30px;
+            background: radial-gradient(ellipse at center,
+                rgba(200, 220, 240, 0.4) 0%,
+                transparent 70%);
+            filter: blur(3px);
+        }
+
+        .roof {
+            position: absolute;
+            top: -20px;
+            left: -5px;
+            width: 150px;
+            height: 0;
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 25px solid #5a7389;
+        }
+
+        .houseboat-base {
+            position: absolute;
+            bottom: -25px;
+            left: -10px;
+            width: 160px;
+            height: 30px;
+            background: linear-gradient(135deg, #4a6278 0%, #3d5266 100%);
+            border-radius: 15px 15px 5px 5px;
+        }
+
+        /* Small houseboat */
+        .houseboat-small {
+            left: 65%;
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .houseboat-small .window {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 15px;
+            height: 20px;
+            background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+            border-radius: 2px;
+            box-shadow: 0 0 12px rgba(255, 165, 0, 0.7);
+        }
+
+        .houseboat-small .houseboat-base {
+            width: 90px;
+            height: 20px;
+            bottom: -18px;
+            left: -5px;
+        }
+
+        /* Snow/Ice chunks */
+        .ice {
+            position: absolute;
+            bottom: 8%;
+            background: linear-gradient(135deg, rgba(174, 214, 241, 0.6) 0%, rgba(133, 193, 233, 0.5) 100%);
+            border-radius: 50% 40% 45% 50%;
+        }
+
+        .ice-1 {
+            left: 15%;
+            width: 70px;
+            height: 15px;
+        }
+
+        .ice-2 {
+            left: 78%;
+            width: 85px;
+            height: 18px;
+        }
+
+        .ice-3 {
+            right: 5%;
+            width: 60px;
+            height: 12px;
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .star-1 { top: 8%; left: 12%; width: 2px; height: 2px; }
+        .star-2 { top: 15%; left: 25%; width: 3px; height: 3px; }
+        .star-3 { top: 10%; right: 20%; width: 2px; height: 2px; }
+        .star-4 { top: 18%; right: 35%; width: 2.5px; height: 2.5px; }
+        .star-5 { top: 12%; left: 45%; width: 2px; height: 2px; }
+        .star-6 { top: 20%; right: 10%; width: 3px; height: 3px; }
+
+        /* Content */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 0.5in 0.5in 0.4in 0.5in;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 0.2in;
+        }
+
+        .logo {
+            font-size: 78pt;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 30%, #3b82f6 70%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.05in;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .tagline {
+            font-size: 22pt;
+            color: #f9fafb;
+            font-weight: 300;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.15in;
+        }
+
+        .headline {
+            font-size: 48pt;
+            font-weight: 700;
+            color: #e0f2fe;
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 0.25in;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .headline-line1 {
+            display: block;
+            font-size: 52pt;
+        }
+
+        .headline-line2 {
+            display: block;
+            font-size: 44pt;
+            color: #bae6fd;
+        }
+
+        .features {
+            list-style: none;
+            margin: 0 auto 0.3in auto;
+            max-width: 6in;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.15in;
+            margin-bottom: 0.18in;
+            font-size: 18pt;
+            color: #f0f9ff;
+        }
+
+        .feature-icon {
+            font-size: 24pt;
+            width: 0.4in;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 0.2in;
+        }
+
+        .qr-wrapper {
+            display: inline-block;
+            background: white;
+            padding: 0.2in;
+            border-radius: 0.15in;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        0 0 0 3px rgba(59, 130, 246, 0.3),
+                        0 0 0 6px rgba(16, 185, 129, 0.2);
+            margin-bottom: 0.15in;
+        }
+
+        .qr-code {
+            width: 1.8in;
+            height: 1.8in;
+            display: block;
+        }
+
+        .url {
+            font-size: 20pt;
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 0.1in;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-tagline {
+            font-size: 16pt;
+            color: #cbd5e1;
+            font-style: italic;
+            margin-top: 0.05in;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <!-- Aurora Background -->
+        <div class="aurora">
+            <div class="aurora-wave aurora-wave-1"></div>
+            <div class="aurora-wave aurora-wave-2"></div>
+            <div class="aurora-wave aurora-wave-3"></div>
+        </div>
+
+        <!-- Stars -->
+        <div class="star star-1"></div>
+        <div class="star star-2"></div>
+        <div class="star star-3"></div>
+        <div class="star star-4"></div>
+        <div class="star star-5"></div>
+        <div class="star star-6"></div>
+
+        <!-- Scenery -->
+        <div class="scenery">
+            <div class="water"></div>
+
+            <!-- Main Houseboat -->
+            <div class="houseboat houseboat-main">
+                <div class="chimney"></div>
+                <div class="smoke"></div>
+                <div class="roof"></div>
+                <div class="houseboat-base"></div>
+            </div>
+
+            <!-- Small Houseboat -->
+            <div class="houseboat houseboat-small">
+                <div class="window"></div>
+                <div class="houseboat-base"></div>
+            </div>
+
+            <!-- Ice chunks -->
+            <div class="ice ice-1"></div>
+            <div class="ice ice-2"></div>
+            <div class="ice ice-3"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="header">
+                <h1 class="logo">YK BUDDY</h1>
+                <p class="tagline">Your Yellowknife Companion</p>
+            </div>
+
+            <h2 class="headline">
+                <span class="headline-line1">JUST LANDED?</span>
+                <span class="headline-line2">YOUR YK GUIDE IS READY.</span>
+            </h2>
+
+            <ul class="features">
+                <li class="feature">
+                    <span class="feature-icon">✓</span>
+                    <span>Find tonight's best aurora spots</span>
+                </li>
+                <li class="feature">
+                    <span class="feature-icon">✓</span>
+                    <span>Discover local favorites (not tourist traps)</span>
+                </li>
+                <li class="feature">
+                    <span class="feature-icon">✓</span>
+                    <span>Get insider tips from locals</span>
+                </li>
+                <li class="feature">
+                    <span class="feature-icon">✓</span>
+                    <span>Available in 9 languages</span>
+                </li>
+            </ul>
+
+            <div class="qr-container">
+                <div class="qr-wrapper">
+                    <svg class="qr-code" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- QR Code Pattern -->
+                        <rect width="100" height="100" fill="white"/>
+                        <!-- Top-left finder pattern -->
+                        <rect x="5" y="5" width="25" height="25" fill="none" stroke="black" stroke-width="3"/>
+                        <rect x="10" y="10" width="15" height="15" fill="black"/>
+                        <!-- Top-right finder pattern -->
+                        <rect x="70" y="5" width="25" height="25" fill="none" stroke="black" stroke-width="3"/>
+                        <rect x="75" y="10" width="15" height="15" fill="black"/>
+                        <!-- Bottom-left finder pattern -->
+                        <rect x="5" y="70" width="25" height="25" fill="none" stroke="black" stroke-width="3"/>
+                        <rect x="10" y="75" width="15" height="15" fill="black"/>
+                        <!-- Data pattern (simplified) -->
+                        <rect x="35" y="10" width="3" height="3" fill="black"/>
+                        <rect x="40" y="10" width="3" height="3" fill="black"/>
+                        <rect x="50" y="10" width="3" height="3" fill="black"/>
+                        <rect x="35" y="15" width="3" height="3" fill="black"/>
+                        <rect x="45" y="15" width="3" height="3" fill="black"/>
+                        <rect x="55" y="15" width="3" height="3" fill="black"/>
+                        <rect x="35" y="20" width="3" height="3" fill="black"/>
+                        <rect x="50" y="20" width="3" height="3" fill="black"/>
+                        <rect x="60" y="20" width="3" height="3" fill="black"/>
+                        <!-- More data patterns -->
+                        <rect x="10" y="35" width="3" height="3" fill="black"/>
+                        <rect x="15" y="35" width="3" height="3" fill="black"/>
+                        <rect x="25" y="35" width="3" height="3" fill="black"/>
+                        <rect x="10" y="40" width="3" height="3" fill="black"/>
+                        <rect x="20" y="40" width="3" height="3" fill="black"/>
+                        <rect x="10" y="45" width="3" height="3" fill="black"/>
+                        <rect x="25" y="45" width="3" height="3" fill="black"/>
+                        <!-- Center area -->
+                        <rect x="35" y="35" width="3" height="3" fill="black"/>
+                        <rect x="40" y="35" width="3" height="3" fill="black"/>
+                        <rect x="45" y="40" width="3" height="3" fill="black"/>
+                        <rect x="50" y="35" width="3" height="3" fill="black"/>
+                        <rect x="55" y="40" width="3" height="3" fill="black"/>
+                        <rect x="60" y="35" width="3" height="3" fill="black"/>
+                        <rect x="65" y="40" width="3" height="3" fill="black"/>
+                        <rect x="40" y="45" width="3" height="3" fill="black"/>
+                        <rect x="50" y="45" width="3" height="3" fill="black"/>
+                        <rect x="60" y="45" width="3" height="3" fill="black"/>
+                        <!-- Right side -->
+                        <rect x="70" y="35" width="3" height="3" fill="black"/>
+                        <rect x="75" y="40" width="3" height="3" fill="black"/>
+                        <rect x="80" y="35" width="3" height="3" fill="black"/>
+                        <rect x="85" y="40" width="3" height="3" fill="black"/>
+                        <rect x="75" y="45" width="3" height="3" fill="black"/>
+                        <rect x="85" y="45" width="3" height="3" fill="black"/>
+                        <!-- Bottom area -->
+                        <rect x="35" y="55" width="3" height="3" fill="black"/>
+                        <rect x="45" y="55" width="3" height="3" fill="black"/>
+                        <rect x="55" y="55" width="3" height="3" fill="black"/>
+                        <rect x="40" y="60" width="3" height="3" fill="black"/>
+                        <rect x="50" y="60" width="3" height="3" fill="black"/>
+                        <rect x="60" y="60" width="3" height="3" fill="black"/>
+                        <rect x="35" y="65" width="3" height="3" fill="black"/>
+                        <rect x="45" y="65" width="3" height="3" fill="black"/>
+                        <rect x="55" y="65" width="3" height="3" fill="black"/>
+                        <!-- Right bottom -->
+                        <rect x="70" y="55" width="3" height="3" fill="black"/>
+                        <rect x="80" y="55" width="3" height="3" fill="black"/>
+                        <rect x="75" y="60" width="3" height="3" fill="black"/>
+                        <rect x="85" y="60" width="3" height="3" fill="black"/>
+                        <rect x="70" y="65" width="3" height="3" fill="black"/>
+                        <rect x="80" y="65" width="3" height="3" fill="black"/>
+                        <!-- Bottom left area near finder -->
+                        <rect x="35" y="75" width="3" height="3" fill="black"/>
+                        <rect x="40" y="80" width="3" height="3" fill="black"/>
+                        <rect x="45" y="75" width="3" height="3" fill="black"/>
+                        <rect x="50" y="80" width="3" height="3" fill="black"/>
+                        <rect x="55" y="75" width="3" height="3" fill="black"/>
+                        <rect x="60" y="80" width="3" height="3" fill="black"/>
+                    </svg>
+                </div>
+                <p class="url">ykbuddy.com</p>
+                <p class="footer-tagline">Because Nobody Should Face -40° Alone</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Instructions for printing
+        window.addEventListener('load', function() {
+            console.log('Print Instructions:');
+            console.log('1. Press Ctrl+P (or Cmd+P on Mac)');
+            console.log('2. Select "Letter" or "A4" paper size');
+            console.log('3. Set margins to "None"');
+            console.log('4. Enable "Background graphics"');
+            console.log('5. Print or Save as PDF');
+        });
+    </script>
+</body>
+</html>

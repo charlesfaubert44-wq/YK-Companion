@@ -10,10 +10,12 @@ export default function DevAccessPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if already has access
-    const hasAccess = localStorage.getItem('yk_dev_access');
-    if (hasAccess === 'granted') {
-      router.push('/');
+    // Check if already has access (only on client)
+    if (typeof window !== 'undefined') {
+      const hasAccess = localStorage.getItem('yk_dev_access');
+      if (hasAccess === 'granted') {
+        router.push('/');
+      }
     }
   }, [router]);
 
@@ -105,7 +107,6 @@ export default function DevAccessPage() {
                   isShaking ? 'animate-shake' : ''
                 }`}
                 placeholder="Enter code"
-                autoFocus
               />
               {error && (
                 <p className="mt-2 text-sm text-red-400 flex items-center gap-1">

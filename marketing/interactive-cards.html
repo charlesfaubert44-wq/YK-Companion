@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YK Buddy - Your Yellowknife Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --aurora-green: #10B981;
+            --aurora-blue: #3B82F6;
+            --aurora-purple: #8B5CF6;
+            --aurora-teal: #14B8A6;
+            --northern-midnight: #0A1128;
+            --deep-blue: #1e3a8a;
+            --buddy-gold: #FFD700;
+            --snow-white: #F9FAFB;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #0A1128 0%, #1e3a8a 50%, #0A1128 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Aurora Background Animation */
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .aurora-wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            opacity: 0.3;
+        }
+
+        .aurora-wave-1 {
+            background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.4), transparent 60%);
+            animation: aurora-flow-1 15s ease-in-out infinite;
+        }
+
+        .aurora-wave-2 {
+            background: radial-gradient(ellipse at 30% 30%, rgba(59, 130, 246, 0.3), transparent 60%);
+            animation: aurora-flow-2 20s ease-in-out infinite;
+        }
+
+        .aurora-wave-3 {
+            background: radial-gradient(ellipse at 70% 20%, rgba(139, 92, 246, 0.3), transparent 60%);
+            animation: aurora-flow-3 18s ease-in-out infinite;
+        }
+
+        @keyframes aurora-flow-1 {
+            0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            50% { transform: translateX(-30%) translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes aurora-flow-2 {
+            0%, 100% { transform: translateX(-40%) translateY(0) rotate(-5deg); }
+            50% { transform: translateX(-60%) translateY(30px) rotate(5deg); }
+        }
+
+        @keyframes aurora-flow-3 {
+            0%, 100% { transform: translateX(-20%) translateY(0) rotate(3deg); }
+            50% { transform: translateX(-40%) translateY(-25px) rotate(-3deg); }
+        }
+
+        /* Snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1em;
+            animation: fall linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .logo {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--aurora-teal), var(--aurora-green), var(--aurora-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.8)); }
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--snow-white);
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--aurora-teal);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Desktop: 3 columns */
+        @media (min-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        /* Tablet: 2 columns */
+        @media (min-width: 640px) and (max-width: 1023px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mobile: 1 column, compact */
+        @media (max-width: 639px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            position: relative;
+            background: rgba(10, 17, 40, 0.8);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.8s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, transparent, var(--card-color), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Card specific colors */
+        .card-visitor {
+            --card-color: var(--aurora-blue);
+        }
+
+        .card-resident {
+            --card-color: var(--aurora-green);
+        }
+
+        .card-newcomer {
+            --card-color: var(--aurora-purple);
+        }
+
+        /* Card Header with Aurora Background */
+        .card-header {
+            position: relative;
+            padding: 2rem 1.5rem;
+            background: linear-gradient(135deg, var(--card-color-start), var(--card-color-end));
+            overflow: hidden;
+        }
+
+        .card-visitor .card-header {
+            --card-color-start: rgba(59, 130, 246, 0.3);
+            --card-color-end: rgba(139, 92, 246, 0.3);
+        }
+
+        .card-resident .card-header {
+            --card-color-start: rgba(16, 185, 129, 0.3);
+            --card-color-end: rgba(59, 130, 246, 0.3);
+        }
+
+        .card-newcomer .card-header {
+            --card-color-start: rgba(139, 92, 246, 0.3);
+            --card-color-end: rgba(255, 215, 0, 0.3);
+        }
+
+        /* Mobile: Compact header */
+        @media (max-width: 639px) {
+            .card-header {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        .card-icon {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 0.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--snow-white);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        @media (max-width: 639px) {
+            .card-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        .card-subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: rgba(249, 250, 251, 0.8);
+            font-weight: 300;
+        }
+
+        @media (max-width: 639px) {
+            .card-subtitle {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 2rem 1.5rem;
+        }
+
+        @media (max-width: 639px) {
+            .card-body {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            animation: slideIn 0.5s ease;
+        }
+
+        @media (max-width: 639px) {
+            .feature {
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+        }
+
+        .feature-icon {
+            color: var(--card-color);
+            font-size: 1.25rem;
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 639px) {
+            .feature-icon {
+                font-size: 1rem;
+            }
+        }
+
+        .feature-text {
+            color: rgba(249, 250, 251, 0.9);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 639px) {
+            .feature-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(249, 250, 251, 0.05);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 639px) {
+            .qr-section {
+                padding: 1rem;
+            }
+        }
+
+        .qr-section:hover {
+            background: rgba(249, 250, 251, 0.1);
+            transform: scale(1.05);
+        }
+
+        .qr-code {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1rem;
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 639px) {
+            .qr-code {
+                width: 100px;
+                height: 100px;
+                padding: 8px;
+            }
+        }
+
+        .qr-code:hover {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .scan-text {
+            color: var(--card-color);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .url-text {
+            color: rgba(249, 250, 251, 0.6);
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 639px) {
+            .url-text {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, var(--card-color), transparent);
+            border: 2px solid var(--card-color);
+            border-radius: 12px;
+            color: white;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        @media (max-width: 639px) {
+            .cta-button {
+                padding: 0.75rem;
+            }
+        }
+
+        .cta-button:hover {
+            background: var(--card-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: rgba(249, 250, 251, 0.7);
+            animation: fadeIn 1.5s ease;
+        }
+
+        @media (max-width: 639px) {
+            .footer {
+                padding: 2rem 1rem;
+            }
+        }
+
+        .footer-tagline {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .footer-link {
+            color: var(--aurora-teal);
+            text-decoration: none;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--aurora-blue);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Stagger animation for cards */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Interactive particle effect on hover */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--card-color), transparent);
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+        }
+
+        .card:hover::after {
+            width: 400px;
+            height: 400px;
+            opacity: 0.1;
+        }
+
+        /* Loading animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Aurora Background -->
+    <div class="aurora-background">
+        <div class="aurora-wave aurora-wave-1"></div>
+        <div class="aurora-wave aurora-wave-2"></div>
+        <div class="aurora-wave aurora-wave-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">YK BUDDY</h1>
+            <p class="tagline">Your Yellowknife Companion</p>
+            <p class="subtitle">Explore, Connect, Thrive in the North</p>
+        </header>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <!-- Visitor Card -->
+            <div class="card card-visitor">
+                <div class="card-header">
+                    <div class="card-icon">✈️</div>
+                    <h2 class="card-title">JUST LANDED?</h2>
+                    <p class="card-subtitle">YOUR YK GUIDE IS READY</p>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li class="feature">
+                            <span class="feature-icon">🌌</span>
+                            <span class="feature-text">Find tonight's best aurora spots</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">🏔️</span>
+                            <span class="feature-text">Discover local favorites (not tourist traps)</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">💡</span>
+                            <span class="feature-text">Get insider tips from locals</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">🌍</span>
+                            <span class="feature-text">Available in 9 languages</span>
+                        </li>
+                    </ul>
+                    <div class="qr-section">
+                        <div class="qr-code">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23000' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-size='12'%3EQR CODE%3C/text%3E%3C/svg%3E" alt="QR Code">
+                        </div>
+                        <p class="scan-text">Scan to Explore</p>
+                        <p class="url-text">ykbuddy.com</p>
+                    </div>
+                    <button class="cta-button" onclick="alert('Opening visitor guide...')">
+                        Start Exploring →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resident Card -->
+            <div class="card card-resident">
+                <div class="card-header">
+                    <div class="card-icon">🏘️</div>
+                    <h2 class="card-title">YOUR NEIGHBOR JUST</h2>
+                    <p class="card-subtitle">LISTED A GARAGE SALE</p>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li class="feature">
+                            <span class="feature-icon">🗺️</span>
+                            <span class="feature-text">Interactive garage sale map</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">🚗</span>
+                            <span class="feature-text">Optimized route planning</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">⭐</span>
+                            <span class="feature-text">Save your favorite sales</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">💬</span>
+                            <span class="feature-text">Community knowledge sharing</span>
+                        </li>
+                    </ul>
+                    <div class="qr-section">
+                        <div class="qr-code">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23000' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-size='12'%3EQR CODE%3C/text%3E%3C/svg%3E" alt="QR Code">
+                        </div>
+                        <p class="scan-text">Scan to Connect</p>
+                        <p class="url-text">ykbuddy.com</p>
+                    </div>
+                    <button class="cta-button" onclick="alert('Opening community features...')">
+                        Join Your Community →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Newcomer Card -->
+            <div class="card card-newcomer">
+                <div class="card-header">
+                    <div class="card-icon">📦</div>
+                    <h2 class="card-title">MOVING TO -40°?</h2>
+                    <p class="card-subtitle">WE'VE GOT YOU COVERED</p>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li class="feature">
+                            <span class="feature-icon">🏠</span>
+                            <span class="feature-text">Housing market insights</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">💰</span>
+                            <span class="feature-text">Cost of living calculator</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Moving checklists & guides</span>
+                        </li>
+                        <li class="feature">
+                            <span class="feature-icon">🤝</span>
+                            <span class="feature-text">Connect with other newcomers</span>
+                        </li>
+                    </ul>
+                    <div class="qr-section">
+                        <div class="qr-code">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23000' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-size='12'%3EQR CODE%3C/text%3E%3C/svg%3E" alt="QR Code">
+                        </div>
+                        <p class="scan-text">Scan to Begin</p>
+                        <p class="url-text">ykbuddy.com</p>
+                    </div>
+                    <button class="cta-button" onclick="alert('Opening newcomer resources...')">
+                        Start Your Journey →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-tagline">"Because Nobody Should Face -40° Alone"</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Features</a>
+                <a href="#" class="footer-link">Community</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Create snowflakes
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            snowflake.style.opacity = Math.random();
+            document.querySelector('.aurora-background').appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        // Generate snowflakes
+        setInterval(createSnowflake, 300);
+
+        // Add parallax effect to cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.card');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            cards.forEach((card, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+
+                if (window.innerWidth > 1024) { // Only on desktop
+                    card.style.transform = `translate(${x}px, ${y}px)`;
+                }
+            });
+        });
+
+        // Add click ripple effect
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    animation: ripple 0.6s ease-out;
+                `;
+
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                from {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

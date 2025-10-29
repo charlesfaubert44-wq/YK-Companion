@@ -46,7 +46,7 @@ export default function AddLogbookEntryModal({
   // Pre-fill name from profile
   useEffect(() => {
     if (profile?.full_name) {
-      setFormData((prev) => ({ ...prev, visitor_name: profile.full_name }));
+      setFormData((prev) => ({ ...prev, visitor_name: profile.full_name || '' }));
     }
   }, [profile]);
 

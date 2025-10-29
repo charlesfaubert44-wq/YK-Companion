@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YK Buddy - QR Code Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .instructions h2 {
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.download-all {
+            background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .qr-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .qr-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .qr-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .qr-item .type {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .qr-code {
+            margin: 20px auto;
+            display: inline-block;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .url-display {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.8em;
+            color: #333;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 10px;
+            font-size: 1.1em;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .qr-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌌 YK Buddy QR Code Generator</h1>
+        <p class="subtitle">Campaign: "Your Northern Companion" - Phase 1</p>
+
+        <div class="instructions">
+            <h2>📋 Instructions:</h2>
+            <ol>
+                <li><strong>Click "Generate All QR Codes"</strong> button below</li>
+                <li>Wait 2 seconds for all codes to generate</li>
+                <li>Click individual <strong>"Download"</strong> buttons to save each QR code</li>
+                <li>Or click <strong>"Download All as ZIP"</strong> to get all codes at once (requires manual saving)</li>
+                <li>Save files with the suggested names for easy organization</li>
+            </ol>
+            <p><strong>Note:</strong> All QR codes are generated at 1000×1000 pixels (print-ready quality) with high error correction.</p>
+        </div>
+
+        <div class="button-group">
+            <button onclick="generateAllQRCodes()" id="generateBtn">
+                🚀 Generate All QR Codes
+            </button>
+            <button onclick="downloadAllQRCodes()" class="download-all" id="downloadAllBtn" style="display: none;">
+                📦 Download All (Right-click each to save)
+            </button>
+        </div>
+
+        <div class="stats" style="display: none;" id="statsDiv">
+            <div class="stat-item">
+                <span class="stat-number" id="codesGenerated">0</span>
+                <span class="stat-label">Codes Generated</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">9</span>
+                <span class="stat-label">Total Needed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">1000×1000</span>
+                <span class="stat-label">Resolution (px)</span>
+            </div>
+        </div>
+
+        <div class="status" id="status" style="display: none;">
+            ✅ All QR codes generated successfully! Right-click each image below and "Save As..." with the suggested filename.
+        </div>
+
+        <div class="qr-grid" id="qrGrid"></div>
+    </div>
+
+    <script>
+        const qrCodes = [
+            // Large Posters (11×17")
+            {
+                name: 'Visitor Large Poster',
+                type: 'Large Poster (11×17")',
+                filename: 'visitor-large-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=poster&utm_medium=qr&utm_campaign=visitor-large-p1',
+                color: '#3b82f6'
+            },
+            {
+                name: 'Resident Large Poster',
+                type: 'Large Poster (11×17")',
+                filename: 'resident-large-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=poster&utm_medium=qr&utm_campaign=resident-large-p1',
+                color: '#10b981'
+            },
+            {
+                name: 'Newcomer Large Poster',
+                type: 'Large Poster (11×17")',
+                filename: 'newcomer-large-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=poster&utm_medium=qr&utm_campaign=newcomer-large-p1',
+                color: '#8b5cf6'
+            },
+
+            // Medium Posters (8.5×11")
+            {
+                name: 'Visitor Medium Poster',
+                type: 'Medium Poster (8.5×11")',
+                filename: 'visitor-medium-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=poster&utm_medium=qr&utm_campaign=visitor-medium-p1',
+                color: '#3b82f6'
+            },
+            {
+                name: 'Resident Medium Poster',
+                type: 'Medium Poster (8.5×11")',
+                filename: 'resident-medium-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=poster&utm_medium=qr&utm_campaign=resident-medium-p1',
+                color: '#10b981'
+            },
+            {
+                name: 'Newcomer Medium Poster',
+                type: 'Medium Poster (8.5×11")',
+                filename: 'newcomer-medium-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=poster&utm_medium=qr&utm_campaign=newcomer-medium-p1',
+                color: '#8b5cf6'
+            },
+
+            // Business Cards
+            {
+                name: 'Visitor Card',
+                type: 'Business Card (3.5×2")',
+                filename: 'visitor-card-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=card&utm_medium=qr&utm_campaign=visitor-p1',
+                color: '#3b82f6'
+            },
+            {
+                name: 'Resident Card',
+                type: 'Business Card (3.5×2")',
+                filename: 'resident-card-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=card&utm_medium=qr&utm_campaign=resident-p1',
+                color: '#10b981'
+            },
+            {
+                name: 'Newcomer Card',
+                type: 'Business Card (3.5×2")',
+                filename: 'newcomer-card-p1.png',
+                url: 'https://ykbuddy.com/?utm_source=card&utm_medium=qr&utm_campaign=newcomer-p1',
+                color: '#8b5cf6'
+            }
+        ];
+
+        function generateAllQRCodes() {
+            const grid = document.getElementById('qrGrid');
+            grid.innerHTML = '';
+
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('generateBtn').textContent = '⏳ Generating...';
+
+            let count = 0;
+
+            qrCodes.forEach((qr, index) => {
+                setTimeout(() => {
+                    const item = document.createElement('div');
+                    item.className = 'qr-item';
+                    item.innerHTML = `
+                        <h3 style="color: ${qr.color}">${qr.name}</h3>
+                        <p class="type">${qr.type}</p>
+                        <div class="qr-code" id="qr-${index}"></div>
+                        <div class="url-display">${qr.url}</div>
+                        <button class="download-btn" onclick="downloadQRCode(${index}, '${qr.filename}')">
+                            💾 Download: ${qr.filename}
+                        </button>
+                    `;
+                    grid.appendChild(item);
+
+                    // Generate QR code using QRCode.js
+                    new QRCode(document.getElementById(`qr-${index}`), {
+                        text: qr.url,
+                        width: 300,
+                        height: 300,
+                        colorDark: '#000000',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+
+                    count++;
+                    document.getElementById('codesGenerated').textContent = count;
+
+                    if (count === qrCodes.length) {
+                        document.getElementById('status').style.display = 'block';
+                        document.getElementById('statsDiv').style.display = 'flex';
+                        document.getElementById('downloadAllBtn').style.display = 'inline-block';
+                        document.getElementById('generateBtn').textContent = '✅ Generated!';
+                    }
+                }, index * 200);
+            });
+        }
+
+        function downloadQRCode(index, filename) {
+            const qrDiv = document.getElementById(`qr-${index}`);
+            const canvas = qrDiv.querySelector('canvas');
+
+            if (canvas) {
+                // Create high-res version (1000x1000)
+                const highResCanvas = document.createElement('canvas');
+                highResCanvas.width = 1000;
+                highResCanvas.height = 1000;
+                const ctx = highResCanvas.getContext('2d');
+
+                // Scale up the existing canvas
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(canvas, 0, 0, 1000, 1000);
+
+                // Download
+                highResCanvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
+            }
+        }
+
+        function downloadAllQRCodes() {
+            alert('💡 Tip: Right-click each QR code image below and select "Save Image As..." to download with the correct filename!\n\nOr click the individual Download buttons under each QR code.');
+        }
+
+        // Auto-generate on page load after 1 second
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const autoGenerate = confirm('🚀 Auto-generate all 9 QR codes now?\n\nClick OK to generate, or Cancel to do it manually.');
+                if (autoGenerate) {
+                    generateAllQRCodes();
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
