@@ -2,6 +2,7 @@
 
 import { GarageSale } from '@/types/garage-sales.types';
 import { formatDate, formatTime } from '@/lib/utils';
+import FavoriteButton from '@/components/FavoriteButton';
 
 interface Props {
   sales: GarageSale[];
@@ -147,12 +148,20 @@ function GarageSaleCard({
                 )}
               </div>
               <div className="flex gap-2">
-                <button className="px-4 py-2 bg-aurora-blue/20 text-aurora-blue hover:bg-aurora-blue/30 rounded-lg transition-colors text-sm font-medium">
-                  ⭐ Save
-                </button>
-                <button className="px-4 py-2 bg-aurora-green/20 text-aurora-green hover:bg-aurora-green/30 rounded-lg transition-colors text-sm font-medium">
+                <FavoriteButton 
+                  itemType="garage-sales"
+                  itemId={sale.id}
+                  showText={true}
+                  className="text-sm"
+                />
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${sale.latitude},${sale.longitude}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 bg-aurora-green/20 text-aurora-green hover:bg-aurora-green/30 rounded-lg transition-colors text-sm font-medium inline-flex items-center gap-2"
+                >
                   📍 Directions
-                </button>
+                </a>
               </div>
             </div>
           </div>

@@ -19,27 +19,43 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const itemType = searchParams.get('type'); // Optional filter by type
 
-    let query = supabase
-      .from('saved_favorites')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false });
+    let favorites: any[] = [];
 
-    if (itemType) {
-      query = query.eq('item_type', itemType);
+    // Fetch garage sales favorites
+    if (!itemType || itemType === 'garage-sales') {
+      const { data: garageSalesData, error: garageSalesError } = await supabase
+        .from('saved_favorites')
+        .select('*, garage_sales(*)')
+        .eq('user_id', user.id)
+        .eq('item_type', 'garage-sales')
+        .order('created_at', { ascending: false });
+
+      if (!garageSalesError && garageSalesData) {
+        favorites = [...favorites, ...garageSalesData.map(fav => ({
+          ...fav,
+          garage_sale: fav.garage_sales,
+        }))];
+      }
     }
 
-    const { data, error } = await query;
+    // Fetch articles favorites
+    if (!itemType || itemType === 'articles') {
+      const { data: articlesData, error: articlesError } = await supabase
+        .from('saved_favorites')
+        .select('*, knowledge_articles(*)')
+        .eq('user_id', user.id)
+        .eq('item_type', 'articles')
+        .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error fetching favorites:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch favorites' },
-        { status: 500 }
-      );
+      if (!articlesError && articlesData) {
+        favorites = [...favorites, ...articlesData.map(fav => ({
+          ...fav,
+          article: fav.knowledge_articles,
+        }))];
+      }
     }
 
-    return NextResponse.json({ favorites: data });
+    return NextResponse.json({ favorites });
   } catch (error: any) {
     console.error('Favorites GET error:', error);
     return NextResponse.json(
@@ -119,22 +135,21 @@ export async function DELETE(request: NextRequest) {
     }
 
     const searchParams = request.nextUrl.searchParams;
-    const itemType = searchParams.get('type');
-    const itemId = searchParams.get('id');
+    const favoriteId = searchParams.get('id');
 
-    if (!itemType || !itemId) {
+    if (!favoriteId) {
       return NextResponse.json(
-        { error: 'Missing type or id parameter' },
+        { error: 'Missing id parameter' },
         { status: 400 }
       );
     }
 
+    // Delete by the favorite record ID
     const { error } = await supabase
       .from('saved_favorites')
       .delete()
-      .eq('user_id', user.id)
-      .eq('item_type', itemType)
-      .eq('item_id', itemId);
+      .eq('id', favoriteId)
+      .eq('user_id', user.id); // Ensure user can only delete their own
 
     if (error) {
       console.error('Error removing favorite:', error);

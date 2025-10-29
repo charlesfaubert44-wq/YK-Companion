@@ -2,93 +2,105 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import InteractiveHeader from '@/components/InteractiveHeader';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import SavedGarageSales from '@/components/saved/SavedGarageSales';
+import SavedArticles from '@/components/saved/SavedArticles';
 
-export default function SavedItemsPage() {
+type TabType = 'garage-sales' | 'articles';
+
+/**
+ * Saved Items Page
+ * 
+ * Displays user's saved/favorited items organized by tabs.
+ * Includes garage sales, knowledge articles, and other saved content.
+ */
+export default function SavedPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<TabType>('garage-sales');
 
-  // Redirect if not logged in
-  if (!loading && !user) {
-    router.push('/');
-    return null;
-  }
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/');
+    }
+  }, [user, loading, router]);
 
   if (loading) {
     return (
-      <>
-        <InteractiveHeader />
-        <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
-          <div className="container mx-auto px-4 py-12 flex items-center justify-center">
-            <div className="text-white text-xl">Loading...</div>
-          </div>
+      <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-aurora-blue border-t-transparent rounded-full animate-spin"></div>
+          <div className="text-white text-xl font-semibold">Loading saved items...</div>
         </div>
-      </>
+      </div>
     );
   }
 
+  if (!user) {
+    return null;
+  }
+
+  const tabs = [
+    { id: 'garage-sales' as TabType, label: 'Garage Sales', icon: '🏷️', count: 0 },
+    { id: 'articles' as TabType, label: 'Articles', icon: '📰', count: 0 },
+  ];
+
   return (
-    <>
-      <InteractiveHeader />
-      <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 pt-20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-6xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <div className="text-6xl mb-4">🔖</div>
-              <h1 className="text-4xl font-bold text-white mb-2">Saved Items</h1>
-              <p className="text-gray-400">Your bookmarked places, activities, and resources</p>
-            </div>
+    <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Back Button */}
+        <Link 
+          href="/profile"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-aurora-green transition mb-6"
+        >
+          ← Back to Profile
+        </Link>
 
-            {/* Empty State */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-12 text-center">
-              <div className="max-w-md mx-auto">
-                <div className="text-6xl mb-6">📭</div>
-                <h3 className="text-2xl font-bold text-white mb-4">No Saved Items Yet</h3>
-                <p className="text-gray-400 mb-8">
-                  Start exploring Yellowknife and save your favorite places, activities, and resources to access them here.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link
-                    href="/visiting"
-                    className="group px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-xl hover:shadow-aurora transition-all inline-flex items-center justify-center gap-2"
-                  >
-                    <span>Explore Visiting</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </Link>
-                  <Link
-                    href="/living"
-                    className="group px-6 py-3 bg-gradient-to-r from-aurora-blue to-aurora-purple text-white font-semibold rounded-xl hover:shadow-aurora transition-all inline-flex items-center justify-center gap-2"
-                  >
-                    <span>Explore Living</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-2">
+            📑 Saved Items
+          </h1>
+          <p className="text-gray-400">
+            Your bookmarked content and favorites
+          </p>
+        </div>
 
-            {/* Coming Soon Features */}
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-gradient-to-br from-aurora-green/10 to-transparent p-6 rounded-xl border border-aurora-green/20">
-                <div className="text-4xl mb-4">📍</div>
-                <h3 className="text-lg font-bold text-white mb-2">Places</h3>
-                <p className="text-sm text-gray-400">Save restaurants, viewpoints, and attractions</p>
-              </div>
-              <div className="bg-gradient-to-br from-aurora-blue/10 to-transparent p-6 rounded-xl border border-aurora-blue/20">
-                <div className="text-4xl mb-4">🎯</div>
-                <h3 className="text-lg font-bold text-white mb-2">Activities</h3>
-                <p className="text-sm text-gray-400">Bookmark tours, events, and experiences</p>
-              </div>
-              <div className="bg-gradient-to-br from-aurora-purple/10 to-transparent p-6 rounded-xl border border-aurora-purple/20">
-                <div className="text-4xl mb-4">📚</div>
-                <h3 className="text-lg font-bold text-white mb-2">Resources</h3>
-                <p className="text-sm text-gray-400">Keep track of useful guides and tips</p>
-              </div>
-            </div>
-          </div>
+        {/* Tabs */}
+        <div className="flex flex-wrap gap-2 mb-8 justify-center">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-6 py-3 rounded-xl font-semibold transition-all ${
+                activeTab === tab.id
+                  ? 'bg-gradient-to-r from-aurora-green to-aurora-blue text-white shadow-aurora'
+                  : 'bg-dark-900/50 text-gray-400 hover:text-white hover:bg-dark-800'
+              }`}
+            >
+              <span className="mr-2">{tab.icon}</span>
+              {tab.label}
+              {tab.count > 0 && (
+                <span className="ml-2 px-2 py-0.5 bg-white/20 rounded-full text-xs">
+                  {tab.count}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        <div className="mt-8">
+          {activeTab === 'garage-sales' && (
+            <SavedGarageSales userId={user.id} />
+          )}
+          
+          {activeTab === 'articles' && (
+            <SavedArticles userId={user.id} />
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
