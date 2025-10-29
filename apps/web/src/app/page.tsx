@@ -9,7 +9,7 @@ import PremiumSpotlight from '@/components/PremiumSpotlight';
 import PremiumSponsors from '@/components/sponsors/PremiumSponsors';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from '@/components/NorthernIcons';
 import InteractiveAreYou from '@/components/InteractiveAreYou';
-import EnhancedPathwayCards from '@/components/EnhancedPathwayCards';
+import ModernCTACards from '@/components/ModernCTACards';
 import InteractiveHeader from '@/components/InteractiveHeader';
 import OnboardingModal from '@/components/OnboardingModal';
 import RecentLogbookWidget from '@/components/visitor-logbook/RecentLogbookWidget';
@@ -196,7 +196,7 @@ export default function Home() {
             <InteractiveAreYou />
 
             <div className="mt-8">
-              <EnhancedPathwayCards />
+              <ModernCTACards />
             </div>
 
             {/* CTA to retrigger onboarding */}
