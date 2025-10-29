@@ -3,6 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createClient } from '@/lib/supabase/client';
 
 // Mock createClient function since we can't actually connect to Supabase in tests
 vi.mock('@/lib/supabase/client', () => ({
@@ -30,7 +31,6 @@ describe('Supabase Client', () => {
   });
 
   it('should create a client with proper configuration', () => {
-    const { createClient } = require('@/lib/supabase/client');
     const client = createClient();
     
     expect(client).toBeDefined();
@@ -39,7 +39,6 @@ describe('Supabase Client', () => {
   });
 
   it('should handle database queries', async () => {
-    const { createClient } = require('@/lib/supabase/client');
     const client = createClient();
     
     const query = client.from('test_table').select('*');
@@ -47,7 +46,6 @@ describe('Supabase Client', () => {
   });
 
   it('should handle authentication methods', () => {
-    const { createClient } = require('@/lib/supabase/client');
     const client = createClient();
     
     expect(client.auth.getSession).toBeDefined();
