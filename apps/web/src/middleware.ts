@@ -25,13 +25,18 @@ export function middleware(request: NextRequest) {
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=(self)',
     
     // Content Security Policy
+    // Note: In production, consider using nonces for scripts/styles instead of unsafe-inline
+    // For Next.js apps, you may need 'unsafe-eval' for development hot reload
+    // Remove 'unsafe-eval' in production or use a more strict CSP
     'Content-Security-Policy': [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net",
+      process.env.NODE_ENV === 'development' 
+        ? "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://vercel.live https://va.vercel-scripts.com"
+        : "script-src 'self' https://cdn.jsdelivr.net https://va.vercel-scripts.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: https: blob:",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.mapbox.com",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.mapbox.com https://api.openweathermap.org https://vitals.vercel-insights.com",
       "frame-src 'self'",
       "object-src 'none'",
       "base-uri 'self'",

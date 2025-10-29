@@ -81,83 +81,95 @@ export default function Home() {
       }
     };
 
-    const config = userTypeConfig[profile.user_type as keyof typeof userTypeConfig];
+    // Type guard to ensure user_type is valid
+    const validUserTypes = ['visiting', 'living', 'moving'] as const;
+    const isValidUserType = (type: string): type is 'visiting' | 'living' | 'moving' => {
+      return validUserTypes.includes(type as any);
+    };
 
-    return (
-      <>
-        <ImprovedHeader />
-        <UserTypeSelector
-          isOpen={showUserTypeSelector}
-          onComplete={() => setShowUserTypeSelector(false)}
-        />
-        <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
-          <div className="max-w-5xl mx-auto px-4 py-8">
-            <PremiumSpotlight position="home_top" />
+    // Fallback to default view if user_type is invalid
+    if (!isValidUserType(profile.user_type)) {
+      console.warn(`Invalid user_type: ${profile.user_type}, showing default view`);
+      // Fall through to default view below
+    } else {
+      const config = userTypeConfig[profile.user_type];
 
-            {/* Personalized Welcome Section */}
-            <div className="text-center py-8 sm:py-12">
-              <div className="mb-6 flex justify-center animate-bounce-slow">{config.icon}</div>
-              <h1 className={`text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}>
-                {config.title}
-              </h1>
-              <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">{config.description}</p>
+      return (
+        <>
+          <ImprovedHeader />
+          <UserTypeSelector
+            isOpen={showUserTypeSelector}
+            onComplete={() => setShowUserTypeSelector(false)}
+          />
+          <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
+            <div className="max-w-5xl mx-auto px-4 py-8">
+              <PremiumSpotlight position="home_top" />
 
-              <Link href={config.primaryLink}>
-                <button className={`px-8 py-4 bg-gradient-to-r ${config.gradient} text-white font-bold rounded-xl hover:shadow-aurora transition-all transform hover:scale-105 text-lg flex items-center gap-2 mx-auto`}>
-                  <span>{config.primaryText}</span>
-                  <span>→</span>
-                </button>
-              </Link>
+              {/* Personalized Welcome Section */}
+              <div className="text-center py-8 sm:py-12">
+                <div className="mb-6 flex justify-center animate-bounce-slow">{config.icon}</div>
+                <h1 className={`text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}>
+                  {config.title}
+                </h1>
+                <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">{config.description}</p>
 
-              {/* Other Pathways */}
-              <div className="mt-10 pt-8 border-t border-gray-700/30">
-                <p className="text-sm text-gray-500 mb-4 uppercase tracking-wider font-semibold">Explore other areas</p>
-                <div className="flex justify-center gap-4 flex-wrap">
-                  {profile.user_type !== 'visiting' && (
-                    <Link href="/visiting" className="group">
-                      <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-emerald-500 hover:bg-gray-800/80 transition-all">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">🧭</span>
-                          <span className="text-gray-300 group-hover:text-emerald-400 text-sm font-semibold transition-colors">Visiting</span>
+                <Link href={config.primaryLink}>
+                  <button className={`px-8 py-4 bg-gradient-to-r ${config.gradient} text-white font-bold rounded-xl hover:shadow-aurora transition-all transform hover:scale-105 text-lg flex items-center gap-2 mx-auto`}>
+                    <span>{config.primaryText}</span>
+                    <span>→</span>
+                  </button>
+                </Link>
+
+                {/* Other Pathways */}
+                <div className="mt-10 pt-8 border-t border-gray-700/30">
+                  <p className="text-sm text-gray-500 mb-4 uppercase tracking-wider font-semibold">Explore other areas</p>
+                  <div className="flex justify-center gap-4 flex-wrap">
+                    {profile.user_type !== 'visiting' && (
+                      <Link href="/visiting" className="group">
+                        <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-emerald-500 hover:bg-gray-800/80 transition-all">
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl">🧭</span>
+                            <span className="text-gray-300 group-hover:text-emerald-400 text-sm font-semibold transition-colors">Visiting</span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  )}
-                  {profile.user_type !== 'living' && (
-                    <Link href="/living" className="group">
-                      <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-blue-500 hover:bg-gray-800/80 transition-all">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">🏔️</span>
-                          <span className="text-gray-300 group-hover:text-blue-400 text-sm font-semibold transition-colors">Living</span>
+                      </Link>
+                    )}
+                    {profile.user_type !== 'living' && (
+                      <Link href="/living" className="group">
+                        <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-blue-500 hover:bg-gray-800/80 transition-all">
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl">🏔️</span>
+                            <span className="text-gray-300 group-hover:text-blue-400 text-sm font-semibold transition-colors">Living</span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  )}
-                  {profile.user_type !== 'moving' && (
-                    <Link href="/moving" className="group">
-                      <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-purple-500 hover:bg-gray-800/80 transition-all">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">🎒</span>
-                          <span className="text-gray-300 group-hover:text-purple-400 text-sm font-semibold transition-colors">Moving</span>
+                      </Link>
+                    )}
+                    {profile.user_type !== 'moving' && (
+                      <Link href="/moving" className="group">
+                        <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-purple-500 hover:bg-gray-800/80 transition-all">
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl">🎒</span>
+                            <span className="text-gray-300 group-hover:text-purple-400 text-sm font-semibold transition-colors">Moving</span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  )}
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-8 pt-6 border-t border-gray-700/30">
-              <PremiumSponsors position="home_middle" maxSponsors={3} layout="grid" showPlaceholder={true} />
-            </div>
+              <div className="mt-8 pt-6 border-t border-gray-700/30">
+                <PremiumSponsors position="home_middle" maxSponsors={3} layout="grid" showPlaceholder={true} />
+              </div>
 
-            <footer className="mt-8 pt-4 border-t border-gray-700/30 text-center">
-              <p className="text-xs text-gray-400">{t('footer')}</p>
-            </footer>
+              <footer className="mt-8 pt-4 border-t border-gray-700/30 text-center">
+                <p className="text-xs text-gray-400">{t('footer')}</p>
+              </footer>
+            </div>
           </div>
-        </div>
-      </>
-    );
+        </>
+      );
+    }
   }
 
   // Default view for non-logged-in users or users without a selected type

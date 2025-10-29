@@ -73,6 +73,11 @@ export function useWeather(options: UseWeatherOptions = {}) {
 
         const data = await response.json();
 
+        // Validate the response structure
+        if (!data || !data.main || !data.weather || !Array.isArray(data.weather) || data.weather.length === 0) {
+          throw new Error('Invalid weather API response format');
+        }
+
         // Log the actual API response for debugging
         console.log('[useWeather] API Response:', {
           temp: data.main.temp,
@@ -170,6 +175,16 @@ export function useWeather(options: UseWeatherOptions = {}) {
 
 /**
  * Get weather emoji based on condition and time of day
+ * 
+ * @param {string} condition - Weather condition (e.g., 'Clear', 'Rain', 'Snow')
+ * @param {string} iconCode - OpenWeatherMap icon code (e.g., '01d', '01n')
+ * @returns {string} Emoji representing the weather condition
+ * 
+ * @example
+ * ```ts
+ * const emoji = getWeatherEmoji('Clear', '01d'); // Returns '☀️'
+ * const nightEmoji = getWeatherEmoji('Clear', '01n'); // Returns '🌙'
+ * ```
  */
 export function getWeatherEmoji(condition: string, iconCode: string): string {
   const isNight = iconCode.includes('n');
@@ -196,6 +211,18 @@ export function getWeatherEmoji(condition: string, iconCode: string): string {
 
 /**
  * Get temperature color class based on Celsius value
+ * 
+ * Returns Tailwind CSS color class appropriate for the temperature.
+ * Uses blue tones for freezing temps, through to red for hot temps.
+ * 
+ * @param {number} temp - Temperature in Celsius
+ * @returns {string} Tailwind CSS color class (e.g., 'text-blue-400')
+ * 
+ * @example
+ * ```ts
+ * const colorClass = getTempColor(-25); // Returns 'text-blue-400'
+ * const warmClass = getTempColor(25); // Returns 'text-orange-300'
+ * ```
  */
 export function getTempColor(temp: number): string {
   if (temp <= -30) return 'text-blue-400';

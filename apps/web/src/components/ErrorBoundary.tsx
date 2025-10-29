@@ -59,15 +59,25 @@ export class ErrorBoundary extends Component<Props, State> {
             <p className="text-gray-300 mb-6">
               We encountered an unexpected error. Don't worry, it's not your fault!
             </p>
-            <button
-              onClick={() => {
-                this.setState({ hasError: false, error: undefined });
-                window.location.href = '/';
-              }}
-              className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
-            >
-              Return to Home
-            </button>
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={() => {
+                  this.setState({ hasError: false, error: undefined });
+                }}
+                className="px-6 py-3 bg-gradient-to-r from-aurora-purple to-aurora-pink text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
+              >
+                Try Again
+              </button>
+              <button
+                onClick={() => {
+                  this.setState({ hasError: false, error: undefined });
+                  window.location.href = '/';
+                }}
+                className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
+              >
+                Return to Home
+              </button>
+            </div>
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <div className="mt-6 text-left">
                 <details className="text-sm text-red-400">

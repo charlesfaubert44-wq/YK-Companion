@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { BushPlaneIcon, NorthernCabinIcon, OldTruckIcon } from './NorthernIcons';
 
 interface OnboardingModalProps {
@@ -19,6 +20,7 @@ interface OnboardingModalProps {
  * - Moving (New Arrival)
  */
 export default function OnboardingModal({ isOpen, onClose, onSelectPath }: OnboardingModalProps) {
+  const router = useRouter();
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
@@ -48,6 +50,8 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
     setTimeout(() => {
       onClose();
       setIsAnimatingOut(false);
+      // Use Next.js router for navigation instead of window.location
+      router.push(`/${path}`);
     }, 600);
   };
 
@@ -152,7 +156,6 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                 onClick={(e) => {
                   e.preventDefault();
                   handleSelectPath(pathway.id as 'visiting' | 'living' | 'moving');
-                  window.location.href = `/${pathway.id}`;
                 }}
                 className={`group block transition-all duration-500 ${
                   isAnimatingOut && selectedCard === pathway.id

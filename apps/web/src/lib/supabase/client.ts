@@ -2,6 +2,23 @@ import { createBrowserClient } from '@supabase/ssr';
 
 let client: ReturnType<typeof createBrowserClient> | null = null;
 
+/**
+ * Creates or returns existing Supabase browser client
+ * 
+ * Implements singleton pattern to ensure only one client instance exists.
+ * Configures automatic session persistence and token refresh.
+ * 
+ * @returns {SupabaseClient} Configured Supabase client instance
+ * @throws {Error} If NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY are not set
+ * 
+ * @example
+ * ```ts
+ * const supabase = createClient();
+ * const { data, error } = await supabase
+ *   .from('profiles')
+ *   .select('*');
+ * ```
+ */
 export function createClient() {
   if (client) {
     return client;
