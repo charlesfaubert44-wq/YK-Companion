@@ -21,24 +21,25 @@ const pressStart2P = Press_Start_2P({
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  themeColor: '#10B981',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'YK Buddy',
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-    viewportFit: 'cover',
   },
   ...(googleSiteVerification && {
     verification: {
       google: googleSiteVerification,
     },
   }),
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover',
+  themeColor: '#10B981',
 };
 
 export default function RootLayout({
