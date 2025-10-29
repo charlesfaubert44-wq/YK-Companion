@@ -80,8 +80,15 @@ class Logger {
     // Skip in development and test
     if (this.isDevelopment || this.isTest) return
 
-    // TODO: Integrate with error monitoring service
-    // Example: Sentry.captureException(error, { extra: { message, ...context } })
+    // Send to Sentry if available
+    try {
+      if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SENTRY_DSN) {
+        const { captureError } = require('./sentry-integration');
+        captureError(error, { message, ...context });
+      }
+    } catch {
+      // Silently fail if Sentry not available
+    }
   }
 
   /**
