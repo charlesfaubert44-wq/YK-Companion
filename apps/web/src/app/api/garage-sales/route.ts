@@ -6,20 +6,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
+import { checkRateLimit, rateLimitConfigs } from '@/lib/rate-limiting';
 
-// Validation schema for garage sale
+// Validation schema for garage sale with sanitization
 const garageSaleSchema = z.object({
-  title: z.string().min(5, 'Title must be at least 5 characters'),
-  description: z.string().optional(),
-  address: z.string().min(5, 'Address is required'),
+  title: z.string().min(5, 'Title must be at least 5 characters').max(200).trim(),
+  description: z.string().max(1000).trim().optional(),
+  address: z.string().min(5, 'Address is required').max(500).trim(),
   latitude: z.number().min(-90).max(90),
   longitude: z.number().min(-180).max(180),
-  sale_date: z.string(), // YYYY-MM-DD
-  start_time: z.string(), // HH:MM
-  end_time: z.string(), // HH:MM
-  items_description: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-  photos: z.array(z.string()).optional(),
+  sale_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
+  start_time: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time format (HH:MM)'),
+  end_time: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time format (HH:MM)'),
+  items_description: z.string().max(2000).trim().optional(),
+  tags: z.array(z.string().max(50).trim()).max(20).optional(),
+  photos: z.array(z.string().url()).max(10).optional(),
   cash_only: z.boolean().optional(),
   early_birds_welcome: z.boolean().optional(),
 });
@@ -76,6 +77,19 @@ export async function POST(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Apply rate limiting (30 creations per minute per user)
+    const rateLimit = checkRateLimit(request, rateLimitConfigs.write, user.id);
+    
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { 
+          status: 429,
+          headers: rateLimit.headers,
+        }
+      );
     }
 
     const body = await request.json();

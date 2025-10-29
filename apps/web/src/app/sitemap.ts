@@ -1,4 +1,8 @@
 import { MetadataRoute } from 'next';
+import {
+  getGarageSalesForSitemap,
+  getKnowledgeArticlesForSitemap,
+} from '@/lib/seo/dynamic-metadata';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ykbuddy.com';
 
@@ -7,8 +11,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ykbuddy.com';
  * 
  * Generates a comprehensive sitemap with:
  * - All public pages with proper priorities
- * - Dynamic content URLs (future: garage sales, knowledge articles)
- * - Multilingual support (future: alternate language pages)
+ * - Dynamic content URLs (garage sales, knowledge articles)
+ * - Multilingual support (foundation ready)
  * - Appropriate change frequencies and priorities
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -133,83 +137,63 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.priority,
   }));
 
-  // Future: Add dynamic routes (garage sales, knowledge articles, etc.)
-  // const dynamicGarageSales = await getDynamicGarageSalesSitemapEntries();
-  // const dynamicKnowledgeArticles = await getDynamicKnowledgeSitemapEntries();
+  // Fetch dynamic content for sitemap
+  let dynamicGarageSales: MetadataRoute.Sitemap = [];
+  let dynamicKnowledgeArticles: MetadataRoute.Sitemap = [];
 
-  // Combine all entries
-  return [
-    ...staticSitemapEntries,
-    // ...dynamicGarageSales,
-    // ...dynamicKnowledgeArticles,
-  ];
-}
-
-/**
- * Future: Generate sitemap entries for dynamic garage sales
- * 
- * This function will fetch active/recent garage sales from the database
- * and generate sitemap entries for them.
- */
-/* async function getDynamicGarageSalesSitemapEntries(): Promise<MetadataRoute.Sitemap> {
   try {
-    // Fetch recent/active garage sales (last 30 days + future events)
-    const { data: garageSales } = await supabase
-      .from('garage_sales')
-      .select('id, date, updated_at')
-      .gte('date', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
-      .eq('status', 'active')
-      .limit(1000);
-
-    if (!garageSales) return [];
-
-    return garageSales.map((sale) => ({
+    // Garage sales (recent and upcoming)
+    const garageSales = await getGarageSalesForSitemap();
+    dynamicGarageSales = garageSales.map((sale) => ({
       url: `${siteUrl}/living/garage-sales/${sale.id}`,
       lastModified: new Date(sale.updated_at),
       changeFrequency: 'daily' as const,
       priority: 0.7,
     }));
-  } catch (error) {
-    console.error('Error generating garage sales sitemap entries:', error);
-    return [];
-  }
-} */
 
-/**
- * Future: Generate sitemap entries for knowledge base articles
- */
-/* async function getDynamicKnowledgeSitemapEntries(): Promise<MetadataRoute.Sitemap> {
-  try {
-    // Fetch published knowledge articles
-    const { data: articles } = await supabase
-      .from('knowledge_base')
-      .select('id, updated_at')
-      .eq('status', 'published')
-      .limit(1000);
-
-    if (!articles) return [];
-
-    return articles.map((article) => ({
+    // Knowledge base articles
+    const articles = await getKnowledgeArticlesForSitemap();
+    dynamicKnowledgeArticles = articles.map((article) => ({
       url: `${siteUrl}/knowledge/${article.id}`,
       lastModified: new Date(article.updated_at),
       changeFrequency: 'weekly' as const,
       priority: 0.6,
     }));
   } catch (error) {
-    console.error('Error generating knowledge articles sitemap entries:', error);
-    return [];
+    console.error('Error generating dynamic sitemap entries:', error);
+    // Continue with static entries if dynamic content fails
   }
-} */
+
+  // Combine all entries
+  return [
+    ...staticSitemapEntries,
+    ...dynamicGarageSales,
+    ...dynamicKnowledgeArticles,
+  ];
+}
 
 /**
  * Multilingual Sitemap Support
  * 
- * For future multilingual support, we can create language-specific sitemaps:
- * - sitemap.xml (main sitemap index)
- * - sitemap-en.xml (English pages)
- * - sitemap-fr.xml (French pages)
- * - sitemap-dene.xml (Dene pages)
+ * For future multilingual support, create language-specific sitemaps:
  * 
- * Using Next.js sitemap feature with different routes:
- * - /sitemap/[lang].xml
+ * File structure:
+ * - app/sitemap.ts (this file - main sitemap with all content)
+ * - app/[lang]/sitemap.ts (language-specific sitemaps)
+ * 
+ * Example implementation for /fr/sitemap.xml:
+ * ```typescript
+ * export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+ *   return staticRoutes.map((route) => ({
+ *     url: `${siteUrl}/fr${route.path}`,
+ *     lastModified: new Date(),
+ *     changeFrequency: route.changeFreq,
+ *     priority: route.priority,
+ *   }));
+ * }
+ * ```
+ * 
+ * With hreflang alternates in metadata:
+ * - Implemented via multilingual.ts utilities
+ * - Use generateHreflangLinks() in page metadata
  */

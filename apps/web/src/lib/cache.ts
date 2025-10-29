@@ -1,6 +1,23 @@
 /**
  * Client-side caching utility
- * Reduces unnecessary API calls and improves performance
+ * 
+ * Reduces unnecessary API calls and improves performance.
+ * Uses in-memory Map with TTL expiration.
+ * 
+ * @module cache
+ * 
+ * @example
+ * ```ts
+ * // Cache API response
+ * const data = await cache.getOrFetch('garage-sales', 
+ *   async () => fetch('/api/garage-sales').then(r => r.json()),
+ *   CACHE_TTL.MEDIUM
+ * );
+ * 
+ * // Manual cache management
+ * cache.set('user-data', userData, CACHE_TTL.SHORT);
+ * const cached = cache.get('user-data');
+ * ```
  */
 
 interface CacheEntry<T> {

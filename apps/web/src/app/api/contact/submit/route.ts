@@ -10,17 +10,31 @@ import {
   sendContactFormNotification,
   sendContactFormConfirmation,
 } from '@/lib/email/client';
+import { checkRateLimit, rateLimitConfigs } from '@/lib/rate-limiting';
 
-// Validation schema
+// Validation schema with sanitization
 const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  subject: z.string().optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  name: z.string().min(2, 'Name must be at least 2 characters').max(100).trim(),
+  email: z.string().email('Invalid email address').max(255).trim().toLowerCase(),
+  subject: z.string().max(200).trim().optional(),
+  message: z.string().min(10, 'Message must be at least 10 characters').max(5000).trim(),
 });
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting (3 submissions per minute)
+    const rateLimit = checkRateLimit(request, rateLimitConfigs.sensitive);
+    
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { 
+          status: 429,
+          headers: rateLimit.headers,
+        }
+      );
+    }
+
     const body = await request.json();
 
     // Validate input
@@ -72,11 +86,16 @@ export async function POST(request: NextRequest) {
       message,
     });
 
-    return NextResponse.json({
-      success: true,
-      message: 'Your message has been sent successfully!',
-      id: data.id,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Your message has been sent successfully!',
+        id: data.id,
+      },
+      {
+        headers: rateLimit.headers,
+      }
+    );
   } catch (error: any) {
     console.error('Contact form error:', error);
     return NextResponse.json(
