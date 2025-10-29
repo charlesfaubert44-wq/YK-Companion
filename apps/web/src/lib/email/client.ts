@@ -447,3 +447,248 @@ The YK Buddy Team
 
   return sendEmail({ to, subject, html, text });
 }
+
+/**
+ * Send neighborhood join request notification to moderators
+ */
+export async function sendNeighborhoodJoinRequest({
+  moderatorEmails,
+  applicantName,
+  applicantEmail,
+  neighborhoodName,
+  requestReason,
+  providedAddress,
+  approvalUrl,
+}: {
+  moderatorEmails: string[];
+  applicantName: string;
+  applicantEmail: string;
+  neighborhoodName: string;
+  requestReason?: string;
+  providedAddress?: string;
+  approvalUrl: string;
+}) {
+  const subject = `New Neighborhood Join Request - ${neighborhoodName}`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
+    .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+    .applicant-box { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; }
+    .detail { padding: 8px 0; }
+    .label { font-weight: bold; color: #6b7280; }
+    .button { display: inline-block; background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; margin: 20px auto; }
+    .footer { text-align: center; color: #6b7280; font-size: 12px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🏘️ New Join Request</h1>
+  </div>
+  <div class="content">
+    <p>A new member has requested to join <strong>${neighborhoodName}</strong>.</p>
+
+    <div class="applicant-box">
+      <h3>Applicant Information:</h3>
+      <div class="detail">
+        <span class="label">Name:</span> ${applicantName}
+      </div>
+      <div class="detail">
+        <span class="label">Email:</span> ${applicantEmail}
+      </div>
+      ${providedAddress ? `<div class="detail"><span class="label">Address:</span> ${providedAddress}</div>` : ''}
+      ${requestReason ? `<div class="detail"><span class="label">Reason:</span> ${requestReason}</div>` : ''}
+    </div>
+
+    <div style="text-align: center;">
+      <a href="${approvalUrl}" class="button">Review Application</a>
+    </div>
+
+    <p>Please review this application and approve or reject it in the admin panel.</p>
+
+    <p><strong>The YK Buddy Team</strong></p>
+  </div>
+  <div class="footer">
+    <p>YK Buddy - Your Guide to Yellowknife</p>
+  </div>
+</body>
+</html>
+  `;
+
+  return sendEmail({ to: moderatorEmails, subject, html });
+}
+
+/**
+ * Send neighborhood join approval notification to user
+ */
+export async function sendNeighborhoodJoinApproval({
+  to,
+  userName,
+  neighborhoodName,
+  dashboardUrl,
+}: {
+  to: string;
+  userName: string;
+  neighborhoodName: string;
+  dashboardUrl: string;
+}) {
+  const subject = `Welcome to ${neighborhoodName}! 🎉`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
+    .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+    .feature-box { background: white; padding: 15px; border-radius: 8px; margin: 10px 0; }
+    .button { display: inline-block; background: #10b981; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; margin: 20px auto; }
+    .footer { text-align: center; color: #6b7280; font-size: 12px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>✅ You're In!</h1>
+  </div>
+  <div class="content">
+    <p>Hi ${userName},</p>
+
+    <p>Great news! Your request to join <strong>${neighborhoodName}</strong> has been approved. Welcome to the community!</p>
+
+    <h3>What You Can Do Now:</h3>
+    <div class="feature-box">
+      <strong>📣 Bulletin Board</strong> - Share help offers, recommendations, and announcements
+    </div>
+    <div class="feature-box">
+      <strong>🚨 Security Alerts</strong> - Stay informed about local safety issues
+    </div>
+    <div class="feature-box">
+      <strong>🏪 Local Businesses</strong> - Discover and support neighborhood businesses
+    </div>
+    <div class="feature-box">
+      <strong>👮 RCMP Complaints</strong> - Submit formal police complaints
+    </div>
+    <div class="feature-box">
+      <strong>🏛️ Local Politics</strong> - Discuss civic issues and community decisions
+    </div>
+
+    <div style="text-align: center;">
+      <a href="${dashboardUrl}" class="button">Visit Your Neighborhood</a>
+    </div>
+
+    <p>We're excited to have you as part of our community. Let's build a stronger, more connected neighborhood together!</p>
+
+    <p><strong>The YK Buddy Team</strong></p>
+  </div>
+  <div class="footer">
+    <p>YK Buddy - Your Guide to Yellowknife</p>
+    <p>This email was sent to ${to}</p>
+  </div>
+</body>
+</html>
+  `;
+
+  return sendEmail({ to, subject, html });
+}
+
+/**
+ * Send neighborhood alert notification to members
+ */
+export async function sendNeighborhoodAlert({
+  memberEmails,
+  neighborhoodName,
+  alertType,
+  alertTitle,
+  alertDescription,
+  severity,
+  location,
+  alertUrl,
+}: {
+  memberEmails: string[];
+  neighborhoodName: string;
+  alertType: string;
+  alertTitle: string;
+  alertDescription: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  location?: string;
+  alertUrl: string;
+}) {
+  const severityColors = {
+    low: '#3b82f6',
+    medium: '#f59e0b',
+    high: '#f97316',
+    critical: '#dc2626',
+  };
+
+  const severityIcons = {
+    low: '🔵',
+    medium: '🟡',
+    high: '🟠',
+    critical: '🔴',
+  };
+
+  const subject = `${severityIcons[severity]} ${severity.toUpperCase()} Alert: ${alertTitle}`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: ${severityColors[severity]}; color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
+    .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+    .alert-box { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid ${severityColors[severity]}; }
+    .button { display: inline-block; background: ${severityColors[severity]}; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; margin: 20px auto; }
+    .footer { text-align: center; color: #6b7280; font-size: 12px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>${severityIcons[severity]} ${severity.toUpperCase()} Alert</h1>
+    <p style="margin: 0; font-size: 14px;">${neighborhoodName}</p>
+  </div>
+  <div class="content">
+    <div class="alert-box">
+      <h2>${alertTitle}</h2>
+      <p><strong>Type:</strong> ${alertType.replace('_', ' ').toUpperCase()}</p>
+      ${location ? `<p><strong>Location:</strong> ${location}</p>` : ''}
+      <p><strong>Severity:</strong> ${severity.toUpperCase()}</p>
+      <p style="margin-top: 15px;">${alertDescription}</p>
+    </div>
+
+    ${severity === 'critical' || severity === 'high' ? `
+    <div style="background: #fef2f2; padding: 15px; border-radius: 8px; margin: 20px 0;">
+      <p style="margin: 0; color: #dc2626;"><strong>⚠️ This is a ${severity} severity alert. Please take immediate action if necessary.</strong></p>
+    </div>
+    ` : ''}
+
+    <div style="text-align: center;">
+      <a href="${alertUrl}" class="button">View Full Alert</a>
+    </div>
+
+    <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">
+      <strong>Stay Safe:</strong> If you witness suspicious activity or have additional information,
+      ${severity === 'critical' || severity === 'high' ? 'call 911 immediately or ' : ''}
+      share it with your neighborhood via the YK Buddy platform.
+    </p>
+
+    <p><strong>The YK Buddy Team</strong></p>
+  </div>
+  <div class="footer">
+    <p>YK Buddy - Your Guide to Yellowknife</p>
+    <p><a href="#">Unsubscribe from alerts</a></p>
+  </div>
+</body>
+</html>
+  `;
+
+  return sendEmail({ to: memberEmails, subject, html });
+}

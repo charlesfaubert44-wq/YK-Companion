@@ -81,6 +81,19 @@ export default function LivingPage() {
                 </div>
               </Link>
 
+              <Link href="/living/neighborhoods" className="group transform transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:border-aurora-purple hover:shadow-2xl hover:shadow-aurora-purple/20 transition-all h-full">
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🏘️</div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Your Neighborhood</h3>
+                  <p className="text-gray-300 mb-4">
+                    Connect with neighbors, share alerts, discover local businesses, and build a stronger community together.
+                  </p>
+                  <div className="text-aurora-purple font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                    Join Your Community <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </Link>
+
               <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 opacity-60 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-r from-aurora-purple/10 to-aurora-pink/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative">
