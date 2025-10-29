@@ -48,7 +48,7 @@ export async function GET(
     // Check if user is an approved member
     const { data: membership } = await supabase
       .from('neighborhood_members')
-      .select('status')
+      .select('status, id')
       .eq('neighborhood_id', neighborhoodId)
       .eq('user_id', user.id)
       .single();
@@ -132,7 +132,7 @@ export async function POST(
     // Check if user is an approved member
     const { data: membership } = await supabase
       .from('neighborhood_members')
-      .select('status')
+      .select('status, id')
       .eq('neighborhood_id', neighborhoodId)
       .eq('user_id', user.id)
       .single();
