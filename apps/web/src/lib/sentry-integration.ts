@@ -207,18 +207,15 @@ export function addBreadcrumb(breadcrumb: {
  */
 export function startTransaction(name: string, op: string = 'custom') {
   if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    return Sentry.startTransaction({
-      name,
-      op,
-    });
+    return Sentry.startSpan({ name, op }, (span) => span);
   }
   
   // Return mock transaction if Sentry not configured
   return {
-    finish: () => {},
+    end: () => {},
     setStatus: () => {},
     setData: () => {},
-    setTag: () => {},
+    setAttribute: () => {},
   };
 }
 

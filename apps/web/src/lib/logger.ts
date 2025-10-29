@@ -83,8 +83,11 @@ class Logger {
     // Send to Sentry if available
     try {
       if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SENTRY_DSN) {
-        const { captureError } = require('./sentry-integration');
-        captureError(error, { message, ...context });
+        import('./sentry-integration').then(({ captureError }) => {
+          captureError(error, { message, ...context });
+        }).catch(() => {
+          // Silently fail if Sentry not available
+        });
       }
     } catch {
       // Silently fail if Sentry not available
