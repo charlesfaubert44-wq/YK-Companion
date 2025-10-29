@@ -219,6 +219,15 @@ export default function InteractiveHeader() {
                     <span className="text-xl">📧</span>
                     <span className="font-semibold">Contact</span>
                   </button>
+
+                  <Link
+                    href="/sitemap"
+                    className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10 transition-all"
+                    onClick={() => setShowMenu(false)}
+                  >
+                    <span className="text-xl">🗺️</span>
+                    <span className="font-semibold">Site Map</span>
+                  </Link>
                 </div>
 
                 <div className="border-t border-aurora-blue/20 p-3 space-y-1">
