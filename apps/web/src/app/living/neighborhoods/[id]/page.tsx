@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'next/client';
+import { useState, useEffect } from 'react';
 import { use } from 'react';
 import Link from 'next/link';
 import InteractiveHeader from '@/components/InteractiveHeader';
