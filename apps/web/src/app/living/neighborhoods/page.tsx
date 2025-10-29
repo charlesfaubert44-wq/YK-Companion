@@ -58,7 +58,10 @@ export default function NeighborhoodsPage() {
     try {
       const response = await fetch(`/api/neighborhoods/${neighborhoodId}/join`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Important: Include cookies for auth
         body: JSON.stringify({
           provided_address: userAddress,
           request_reason: 'Requesting to join my neighborhood community',
@@ -66,15 +69,19 @@ export default function NeighborhoodsPage() {
       });
 
       if (response.ok) {
-        alert('Join request submitted! You will be notified once approved.');
+        const data = await response.json();
+        alert(data.message || 'Join request submitted! You will be notified once approved.');
         fetchUserMemberships();
+        // Optionally redirect to neighborhood page
+        // router.push(`/living/neighborhoods/${neighborhoodId}`);
       } else {
         const error = await response.json();
-        alert(error.error || 'Failed to submit join request');
+        console.error('Join request failed:', error);
+        alert(error.error || 'Failed to submit join request. Please make sure you are logged in.');
       }
     } catch (error) {
       console.error('Error joining neighborhood:', error);
-      alert('Failed to submit join request');
+      alert('Failed to submit join request. Please check your connection and try again.');
     }
   };
 
