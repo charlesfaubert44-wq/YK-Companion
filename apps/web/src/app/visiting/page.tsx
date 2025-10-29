@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import InteractiveHeader from '@/components/InteractiveHeader';
+import RecentLogbookWidget from '@/components/visitor-logbook/RecentLogbookWidget';
 
 interface FAQ {
   question: string;
@@ -136,7 +137,7 @@ export default function VisitingPage() {
             </div>
 
             {/* Interactive FAQ */}
-            <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/10">
+            <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/10 mb-12">
               <h3 className="text-2xl font-bold text-white mb-6">Common Visitor Questions</h3>
               <div className="space-y-3">
                 {faqs.map((faq, index) => (
@@ -170,6 +171,9 @@ export default function VisitingPage() {
                 ))}
               </div>
             </div>
+
+            {/* Visitor Logbook Widget */}
+            <RecentLogbookWidget limit={3} featured={true} />
           </div>
         </div>
       </div>

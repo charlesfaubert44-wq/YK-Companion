@@ -12,6 +12,7 @@ import InteractiveAreYou from '@/components/InteractiveAreYou';
 import EnhancedPathwayCards from '@/components/EnhancedPathwayCards';
 import InteractiveHeader from '@/components/InteractiveHeader';
 import OnboardingModal from '@/components/OnboardingModal';
+import RecentLogbookWidget from '@/components/visitor-logbook/RecentLogbookWidget';
 
 export default function Home() {
   const { user, profile, loading } = useAuth();
@@ -210,6 +211,11 @@ export default function Home() {
                 </button>
               </div>
             )}
+
+            {/* Visitor Logbook Widget */}
+            <div className="mt-12">
+              <RecentLogbookWidget limit={4} featured={true} />
+            </div>
 
             <div className="mt-12 pt-6 border-t border-gray-700/30">
               <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
