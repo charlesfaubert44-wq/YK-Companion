@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import {
   getGarageSalesForSitemap,
   getKnowledgeArticlesForSitemap,
+  getNeighborhoodsForSitemap,
 } from '@/lib/seo/dynamic-metadata';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ykbuddy.com';
@@ -51,6 +52,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Key features - High priority
     {
       path: '/living/garage-sales',
+      priority: 0.9,
+      changeFreq: 'daily' as const,
+      lastModified: currentDate,
+    },
+    {
+      path: '/living/neighborhoods',
+      priority: 0.9,
+      changeFreq: 'daily' as const,
+      lastModified: currentDate,
+    },
+    {
+      path: '/visiting/logbook',
       priority: 0.9,
       changeFreq: 'daily' as const,
       lastModified: currentDate,
@@ -114,6 +127,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: currentDate,
     },
 
+    // User pages - Medium priority
+    {
+      path: '/profile',
+      priority: 0.6,
+      changeFreq: 'weekly' as const,
+      lastModified: currentDate,
+    },
+    {
+      path: '/saved',
+      priority: 0.6,
+      changeFreq: 'weekly' as const,
+      lastModified: currentDate,
+    },
+
     // Additional pages - Lower priority
     {
       path: '/sponsor-info',
@@ -125,6 +152,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: '/sitemap-page',
       priority: 0.5,
       changeFreq: 'monthly' as const,
+      lastModified: currentDate,
+    },
+    {
+      path: '/sitemap',
+      priority: 0.5,
+      changeFreq: 'monthly' as const,
+      lastModified: currentDate,
+    },
+    {
+      path: '/mobile-demo',
+      priority: 0.4,
+      changeFreq: 'monthly' as const,
+      lastModified: currentDate,
+    },
+    {
+      path: '/offline',
+      priority: 0.3,
+      changeFreq: 'yearly' as const,
       lastModified: currentDate,
     },
   ];
@@ -140,6 +185,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch dynamic content for sitemap
   let dynamicGarageSales: MetadataRoute.Sitemap = [];
   let dynamicKnowledgeArticles: MetadataRoute.Sitemap = [];
+  let dynamicNeighborhoods: MetadataRoute.Sitemap = [];
 
   try {
     // Garage sales (recent and upcoming)
@@ -159,13 +205,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.6,
     }));
+
+    // Neighborhoods
+    const neighborhoods = await getNeighborhoodsForSitemap();
+    dynamicNeighborhoods = neighborhoods.map(neighborhood => ({
+      url: `${siteUrl}/living/neighborhoods/${neighborhood.id}`,
+      lastModified: new Date(neighborhood.updated_at),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    }));
   } catch (error) {
     console.error('Error generating dynamic sitemap entries:', error);
     // Continue with static entries if dynamic content fails
   }
 
   // Combine all entries
-  return [...staticSitemapEntries, ...dynamicGarageSales, ...dynamicKnowledgeArticles];
+  return [
+    ...staticSitemapEntries,
+    ...dynamicGarageSales,
+    ...dynamicKnowledgeArticles,
+    ...dynamicNeighborhoods,
+  ];
 }
 
 /**

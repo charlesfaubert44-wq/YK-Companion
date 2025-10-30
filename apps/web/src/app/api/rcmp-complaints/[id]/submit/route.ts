@@ -7,7 +7,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialization - only create when needed
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not configured');
+  }
+  return new Resend(apiKey);
+}
 
 // POST - Submit complaint to RCMP via email
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
@@ -48,6 +55,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     // Send email to RCMP
     try {
+      const resend = getResendClient();
       const { data: emailData, error: emailError } = await resend.emails.send({
         from: 'YK Buddy Complaints <complaints@ykbuddy.com>',
         to: complaint.rcmp_email || 'yellowknife@rcmp-grc.gc.ca',

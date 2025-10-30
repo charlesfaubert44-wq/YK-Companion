@@ -282,3 +282,33 @@ export async function getKnowledgeArticlesForSitemap(): Promise<
     return [];
   }
 }
+
+/**
+ * Get all active neighborhoods for sitemap
+ */
+export async function getNeighborhoodsForSitemap(): Promise<
+  Array<{
+    id: string;
+    updated_at: string;
+  }>
+> {
+  try {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from('neighborhoods')
+      .select('id, updated_at')
+      .eq('status', 'active')
+      .order('updated_at', { ascending: false })
+      .limit(1000);
+
+    if (error || !data) {
+      return [];
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching neighborhoods for sitemap:', error);
+    return [];
+  }
+}
