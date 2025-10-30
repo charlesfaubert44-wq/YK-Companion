@@ -91,20 +91,13 @@ export async function createOrRetrieveCustomer({
 /**
  * Verify Stripe webhook signature
  */
-export function verifyWebhookSignature(
-  payload: string | Buffer,
-  signature: string
-): Stripe.Event {
+export function verifyWebhookSignature(payload: string | Buffer, signature: string): Stripe.Event {
   if (!stripe) {
     throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
   }
 
   try {
-    return stripe.webhooks.constructEvent(
-      payload,
-      signature,
-      stripeConfig.webhookSecret
-    );
+    return stripe.webhooks.constructEvent(payload, signature, stripeConfig.webhookSecret);
   } catch (error) {
     console.error('Webhook signature verification failed:', error);
     throw new Error('Invalid webhook signature');
@@ -138,9 +131,7 @@ export async function createRefund(
 /**
  * Retrieve payment intent
  */
-export async function getPaymentIntent(
-  paymentIntentId: string
-): Promise<Stripe.PaymentIntent> {
+export async function getPaymentIntent(paymentIntentId: string): Promise<Stripe.PaymentIntent> {
   if (!stripe) {
     throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.');
   }

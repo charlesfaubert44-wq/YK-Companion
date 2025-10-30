@@ -24,15 +24,23 @@ export default function FeaturePrompt({ featureName, onClose }: FeaturePromptPro
           <div className="text-center">
             {/* Icon */}
             <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-aurora-green/20 to-aurora-blue/20 rounded-full flex items-center justify-center border border-aurora-green/30">
-              <svg className="w-6 h-6 text-aurora-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              <svg
+                className="w-6 h-6 text-aurora-green"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
               </svg>
             </div>
 
             {/* Message */}
-            <h3 className="text-lg font-bold text-white mb-2">
-              Sign up to use {featureName}
-            </h3>
+            <h3 className="text-lg font-bold text-white mb-2">Sign up to use {featureName}</h3>
             <p className="text-gray-400 text-sm mb-5">
               Create a free account to unlock this feature and more!
             </p>

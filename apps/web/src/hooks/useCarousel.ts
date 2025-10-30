@@ -344,9 +344,7 @@ export function useCarousel(options: CarouselOptions): CarouselControls {
  *   );
  * }
  */
-export function useCarouselWithSwipe(
-  options: CarouselOptions
-): CarouselControls & {
+export function useCarouselWithSwipe(options: CarouselOptions): CarouselControls & {
   swipeHandlers: {
     onTouchStart: (e: React.TouchEvent) => void;
     onTouchMove: (e: React.TouchEvent) => void;

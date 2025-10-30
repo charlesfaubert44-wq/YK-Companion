@@ -45,7 +45,7 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
   };
 
   const updatePreferences = (updates: Partial<EmailDigestPreferences>) => {
-    setPreferences((prev) => ({ ...prev, ...updates }));
+    setPreferences(prev => ({ ...prev, ...updates }));
   };
 
   const savePreferences = async () => {
@@ -101,18 +101,26 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
   const nextSendDate = getNextSendDate();
 
   return (
-    <div className={onClose ? "fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 overflow-y-auto" : ""}>
-      <div className={`${onClose ? 'bg-dark-900 rounded-2xl max-w-2xl w-full border-2 border-aurora-blue/50 max-h-[90vh] overflow-y-auto' : 'w-full'}`}>
+    <div
+      className={
+        onClose
+          ? 'fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 overflow-y-auto'
+          : ''
+      }
+    >
+      <div
+        className={`${onClose ? 'bg-dark-900 rounded-2xl max-w-2xl w-full border-2 border-aurora-blue/50 max-h-[90vh] overflow-y-auto' : 'w-full'}`}
+      >
         {/* Header */}
-        <div className={`${onClose ? 'sticky top-0 bg-dark-900 border-b border-gray-800 p-6 z-10' : 'mb-6'}`}>
+        <div
+          className={`${onClose ? 'sticky top-0 bg-dark-900 border-b border-gray-800 p-6 z-10' : 'mb-6'}`}
+        >
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-3xl font-bold bg-gradient-to-r from-aurora-blue to-aurora-purple bg-clip-text text-transparent mb-2">
                 📧 Email Digest Settings
               </h2>
-              <p className="text-gray-400">
-                Configure your aurora activity email summaries
-              </p>
+              <p className="text-gray-400">Configure your aurora activity email summaries</p>
             </div>
             {onClose && (
               <button
@@ -125,14 +133,12 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
           </div>
         </div>
 
-        <div className={onClose ? "p-6 space-y-6" : "space-y-6"}>
+        <div className={onClose ? 'p-6 space-y-6' : 'space-y-6'}>
           {/* Frequency */}
           <div>
-            <label className="block text-lg font-bold text-white mb-3">
-              📅 Digest Frequency
-            </label>
+            <label className="block text-lg font-bold text-white mb-3">📅 Digest Frequency</label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {(['daily', 'weekly', 'monthly', 'never'] as const).map((freq) => (
+              {(['daily', 'weekly', 'monthly', 'never'] as const).map(freq => (
                 <button
                   key={freq}
                   onClick={() => updatePreferences({ digest_frequency: freq })}
@@ -149,14 +155,15 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
           </div>
 
           {/* Day Selection for Weekly/Monthly */}
-          {(preferences.digest_frequency === 'weekly' || preferences.digest_frequency === 'monthly') && (
+          {(preferences.digest_frequency === 'weekly' ||
+            preferences.digest_frequency === 'monthly') && (
             <div>
               <label className="block text-lg font-bold text-white mb-3">
                 {preferences.digest_frequency === 'weekly' ? '📆 Day of Week' : '📆 Day of Month'}
               </label>
               {preferences.digest_frequency === 'weekly' ? (
                 <div className="grid grid-cols-4 md:grid-cols-7 gap-2">
-                  {[0, 1, 2, 3, 4, 5, 6].map((day) => (
+                  {[0, 1, 2, 3, 4, 5, 6].map(day => (
                     <button
                       key={day}
                       onClick={() => updatePreferences({ digest_day: day })}
@@ -172,7 +179,7 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
                 </div>
               ) : (
                 <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
-                  {Array.from({ length: 28 }, (_, i) => i + 1).map((day) => (
+                  {Array.from({ length: 28 }, (_, i) => i + 1).map(day => (
                     <button
                       key={day}
                       onClick={() => updatePreferences({ digest_day: day })}
@@ -204,15 +211,13 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
                       <div className="font-semibold text-white group-hover:text-aurora-blue transition-colors">
                         Top Community Photos
                       </div>
-                      <div className="text-sm text-gray-400">
-                        Best photos from the community
-                      </div>
+                      <div className="text-sm text-gray-400">Best photos from the community</div>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     checked={preferences.include_top_photos}
-                    onChange={(e) => updatePreferences({ include_top_photos: e.target.checked })}
+                    onChange={e => updatePreferences({ include_top_photos: e.target.checked })}
                     className="w-5 h-5"
                   />
                 </label>
@@ -224,15 +229,13 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
                       <div className="font-semibold text-white group-hover:text-aurora-blue transition-colors">
                         New Mosaics
                       </div>
-                      <div className="text-sm text-gray-400">
-                        Recently created photo mosaics
-                      </div>
+                      <div className="text-sm text-gray-400">Recently created photo mosaics</div>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     checked={preferences.include_mosaics}
-                    onChange={(e) => updatePreferences({ include_mosaics: e.target.checked })}
+                    onChange={e => updatePreferences({ include_mosaics: e.target.checked })}
                     className="w-5 h-5"
                   />
                 </label>
@@ -244,15 +247,13 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
                       <div className="font-semibold text-white group-hover:text-aurora-blue transition-colors">
                         Aurora Forecast
                       </div>
-                      <div className="text-sm text-gray-400">
-                        Upcoming viewing predictions
-                      </div>
+                      <div className="text-sm text-gray-400">Upcoming viewing predictions</div>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     checked={preferences.include_forecast}
-                    onChange={(e) => updatePreferences({ include_forecast: e.target.checked })}
+                    onChange={e => updatePreferences({ include_forecast: e.target.checked })}
                     className="w-5 h-5"
                   />
                 </label>
@@ -264,15 +265,13 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
                       <div className="font-semibold text-white group-hover:text-aurora-blue transition-colors">
                         Photography Challenges
                       </div>
-                      <div className="text-sm text-gray-400">
-                        Active and upcoming challenges
-                      </div>
+                      <div className="text-sm text-gray-400">Active and upcoming challenges</div>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     checked={preferences.include_challenges}
-                    onChange={(e) => updatePreferences({ include_challenges: e.target.checked })}
+                    onChange={e => updatePreferences({ include_challenges: e.target.checked })}
                     className="w-5 h-5"
                   />
                 </label>
@@ -292,7 +291,7 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
                   <input
                     type="checkbox"
                     checked={preferences.include_personal_stats}
-                    onChange={(e) => updatePreferences({ include_personal_stats: e.target.checked })}
+                    onChange={e => updatePreferences({ include_personal_stats: e.target.checked })}
                     className="w-5 h-5"
                   />
                 </label>
@@ -348,8 +347,8 @@ export default function EmailDigestSettings({ userId, onClose }: Props) {
 
           {/* Preview */}
           <div className="bg-dark-800 rounded-lg p-4 text-sm text-gray-400">
-            <strong className="text-white">Note:</strong> Digests are sent at 9:00 AM in your local timezone.
-            You can update these settings at any time.
+            <strong className="text-white">Note:</strong> Digests are sent at 9:00 AM in your local
+            timezone. You can update these settings at any time.
           </div>
         </div>
       </div>

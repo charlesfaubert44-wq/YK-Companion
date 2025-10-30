@@ -1,11 +1,11 @@
 /**
  * Aurora Curtain Component
- * 
+ *
  * Provides an aurora-themed page transition overlay with:
  * - Beautiful curtain effect
  * - Seasonal color theming
  * - Smooth animations
- * 
+ *
  * @module components/transitions/AuroraCurtain
  */
 
@@ -29,20 +29,16 @@ export interface AuroraCurtainProps {
 
 /**
  * AuroraCurtain component
- * 
+ *
  * Creates an aurora-themed overlay that transitions across the screen
- * 
+ *
  * @param props - Component props
  * @returns Aurora curtain overlay
- * 
+ *
  * @example
  * <AuroraCurtain duration={600} show={isTransitioning} />
  */
-export default function AuroraCurtain({
-  duration = 500,
-  show = true,
-  season,
-}: AuroraCurtainProps) {
+export default function AuroraCurtain({ duration = 500, show = true, season }: AuroraCurtainProps) {
   const [isVisible, setIsVisible] = useState(show);
   const { colors } = useSeasonalTransition({
     season: season || undefined,
@@ -57,8 +53,7 @@ export default function AuroraCurtain({
 
   // Check for reduced motion
   const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReducedMotion) {
     return null;
@@ -131,7 +126,8 @@ export default function AuroraCurtain({
 
       <style jsx>{`
         @keyframes auroraWave {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0) scale(1);
             opacity: 0.7;
           }
@@ -150,7 +146,8 @@ export default function AuroraCurtain({
         }
 
         @keyframes curtainWave {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateX(0);
           }
           50% {
@@ -161,4 +158,3 @@ export default function AuroraCurtain({
     </div>
   );
 }
-

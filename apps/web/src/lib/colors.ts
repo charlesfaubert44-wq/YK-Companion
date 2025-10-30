@@ -238,7 +238,7 @@ export function getContrastRatio(hex1: string, hex2: string): number {
     const rgb = hexToRgb(hex);
     if (!rgb) return 0;
 
-    const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((val) => {
+    const [r, g, b] = [rgb.r, rgb.g, rgb.b].map(val => {
       const normalized = val / 255;
       return normalized <= 0.03928
         ? normalized / 12.92
@@ -266,7 +266,11 @@ export function getContrastRatio(hex1: string, hex2: string): number {
  * meetsWCAGAA('#10B981', '#0A1128', false) // true
  * meetsWCAGAA('#34D399', '#FFFFFF', false) // false (insufficient contrast)
  */
-export function meetsWCAGAA(textColor: string, bgColor: string, largeText: boolean = false): boolean {
+export function meetsWCAGAA(
+  textColor: string,
+  bgColor: string,
+  largeText: boolean = false
+): boolean {
   const ratio = getContrastRatio(textColor, bgColor);
   return largeText ? ratio >= 3 : ratio >= 4.5;
 }
@@ -330,7 +334,8 @@ export function hslToHex(h: number, s: number, l: number): string {
       return p;
     };
 
-    const q = lDecimal < 0.5 ? lDecimal * (1 + sDecimal) : lDecimal + sDecimal - lDecimal * sDecimal;
+    const q =
+      lDecimal < 0.5 ? lDecimal * (1 + sDecimal) : lDecimal + sDecimal - lDecimal * sDecimal;
     const p = 2 * lDecimal - q;
 
     r = hue2rgb(p, q, hDecimal + 1 / 3);

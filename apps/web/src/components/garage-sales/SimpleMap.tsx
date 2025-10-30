@@ -32,7 +32,7 @@ export default function SimpleMap({ sales }: SimpleMapProps) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/dark-v11',
-        center: [-114.3718, 62.4540], // Yellowknife coordinates
+        center: [-114.3718, 62.454], // Yellowknife coordinates
         zoom: 11,
       });
 
@@ -41,7 +41,6 @@ export default function SimpleMap({ sales }: SimpleMapProps) {
 
       // Add fullscreen control
       map.current.addControl(new mapboxgl.FullscreenControl(), 'top-right');
-
     } catch (error) {
       console.error('Error initializing map:', error);
       setMapError('Failed to initialize map');
@@ -61,7 +60,7 @@ export default function SimpleMap({ sales }: SimpleMapProps) {
     markers.current = [];
 
     // Add markers for each sale
-    sales.forEach((sale) => {
+    sales.forEach(sale => {
       const el = document.createElement('div');
       el.className = 'marker';
       el.style.cssText = `

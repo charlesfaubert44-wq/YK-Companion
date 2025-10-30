@@ -48,10 +48,7 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error('Error fetching garage sales:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch garage sales' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch garage sales' }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -62,10 +59,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Garage sales GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -73,7 +67,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -81,11 +78,11 @@ export async function POST(request: NextRequest) {
 
     // Apply rate limiting (30 creations per minute per user)
     const rateLimit = checkRateLimit(request, rateLimitConfigs.write, user.id);
-    
+
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many requests. Please try again later.' },
-        { 
+        {
           status: 429,
           headers: rateLimit.headers,
         }
@@ -120,10 +117,7 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('Error creating garage sale:', error);
-      return NextResponse.json(
-        { error: 'Failed to create garage sale' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to create garage sale' }, { status: 500 });
     }
 
     // TODO: Send notification to admins for approval (if needed)
@@ -135,9 +129,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Garage sale POST error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

@@ -24,10 +24,16 @@ export default function Home() {
                 <Link href="/quiz" className="text-pixel-white hover:text-aurora-green transition">
                   QUIZ
                 </Link>
-                <Link href="/calculator" className="text-pixel-white hover:text-aurora-blue transition">
+                <Link
+                  href="/calculator"
+                  className="text-pixel-white hover:text-aurora-blue transition"
+                >
                   COST
                 </Link>
-                <Link href="/aurora" className="text-pixel-white hover:text-aurora-purple transition">
+                <Link
+                  href="/aurora"
+                  className="text-pixel-white hover:text-aurora-purple transition"
+                >
                   AURORA
                 </Link>
               </div>
@@ -45,7 +51,8 @@ export default function Home() {
               &gt; WITH CONFIDENCE_
             </div>
             <p className="font-mono text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Whether you are visiting, living, or moving to Yellowknife—get the local expertise you need.
+              Whether you are visiting, living, or moving to Yellowknife—get the local expertise you
+              need.
             </p>
           </div>
 
@@ -53,61 +60,35 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
             {/* Visiting Card */}
             <Link href="/visiting" className="group">
-              <PixelCard 
-                borderColor="green"
-                hover={true}
-                icon="🎮"
-                className="h-full"
-              >
-                <h3 className="font-pixel text-xl mb-3 text-aurora-green">
-                  &gt; VISITING
-                </h3>
+              <PixelCard borderColor="green" hover={true} icon="🎮" className="h-full">
+                <h3 className="font-pixel text-xl mb-3 text-aurora-green">&gt; VISITING</h3>
                 <p className="text-gray-300 mb-4">
-                  Plan your trip with real costs, aurora forecasts, and personalized recommendations.
+                  Plan your trip with real costs, aurora forecasts, and personalized
+                  recommendations.
                 </p>
-                <div className="font-pixel text-xs text-aurora-green">
-                  [START QUEST] →
-                </div>
+                <div className="font-pixel text-xs text-aurora-green">[START QUEST] →</div>
               </PixelCard>
             </Link>
 
             {/* Living Card */}
             <Link href="/living" className="group">
-              <PixelCard 
-                borderColor="blue"
-                hover={true}
-                icon="🏠"
-                className="h-full"
-              >
-                <h3 className="font-pixel text-xl mb-3 text-aurora-blue">
-                  &gt; LIVING HERE
-                </h3>
+              <PixelCard borderColor="blue" hover={true} icon="🏠" className="h-full">
+                <h3 className="font-pixel text-xl mb-3 text-aurora-blue">&gt; LIVING HERE</h3>
                 <p className="text-gray-300 mb-4">
                   Local events, seasonal guides, and community recommendations for residents.
                 </p>
-                <div className="font-pixel text-xs text-aurora-blue">
-                  [EXPLORE MAP] →
-                </div>
+                <div className="font-pixel text-xs text-aurora-blue">[EXPLORE MAP] →</div>
               </PixelCard>
             </Link>
 
             {/* Moving Card */}
             <Link href="/moving" className="group">
-              <PixelCard 
-                borderColor="purple"
-                hover={true}
-                icon="📦"
-                className="h-full"
-              >
-                <h3 className="font-pixel text-xl mb-3 text-aurora-purple">
-                  &gt; MOVING HERE
-                </h3>
+              <PixelCard borderColor="purple" hover={true} icon="📦" className="h-full">
+                <h3 className="font-pixel text-xl mb-3 text-aurora-purple">&gt; MOVING HERE</h3>
                 <p className="text-gray-300 mb-4">
                   Housing costs, job market, climate prep, and relocation checklist.
                 </p>
-                <div className="font-pixel text-xs text-aurora-purple">
-                  [BEGIN MOVE] →
-                </div>
+                <div className="font-pixel text-xs text-aurora-purple">[BEGIN MOVE] →</div>
               </PixelCard>
             </Link>
           </div>

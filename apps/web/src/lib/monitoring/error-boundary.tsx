@@ -1,6 +1,6 @@
 /**
  * Error Boundary Component
- * 
+ *
  * Catches React errors and reports them to Sentry
  */
 
@@ -89,12 +89,10 @@ export class ErrorBoundary extends Component<Props, State> {
                 </div>
 
                 {/* Error Message */}
-                <h2 className="text-2xl font-bold text-white mb-2">
-                  Oops! Something went wrong
-                </h2>
+                <h2 className="text-2xl font-bold text-white mb-2">Oops! Something went wrong</h2>
                 <p className="text-gray-300 mb-6">
-                  We're sorry, but something unexpected happened. The error has been
-                  reported and we'll look into it.
+                  We're sorry, but something unexpected happened. The error has been reported and
+                  we'll look into it.
                 </p>
 
                 {/* Error Details (development only) */}
@@ -164,4 +162,3 @@ export function withErrorBoundary<P extends object>(
     );
   };
 }
-

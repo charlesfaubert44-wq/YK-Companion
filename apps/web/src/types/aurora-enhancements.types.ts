@@ -292,7 +292,13 @@ export interface RealtimeSubscription {
 }
 
 export interface WebSocketMessage {
-  type: 'photo_uploaded' | 'photo_liked' | 'kp_updated' | 'event_started' | 'event_ended' | 'mosaic_created';
+  type:
+    | 'photo_uploaded'
+    | 'photo_liked'
+    | 'kp_updated'
+    | 'event_started'
+    | 'event_ended'
+    | 'mosaic_created';
   event_id?: string;
   data: any;
   timestamp: string;

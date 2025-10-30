@@ -1,6 +1,6 @@
 /**
  * Health Check API Endpoint
- * 
+ *
  * Returns application health status including:
  * - Database connectivity
  * - External service status
@@ -37,16 +37,12 @@ interface HealthStatus {
  */
 async function checkDatabase(): Promise<HealthStatus> {
   const startTime = Date.now();
-  
+
   try {
     const supabase = await createClient();
 
     // Simple query to check database connection
-    const { error } = await supabase
-      .from('profiles')
-      .select('count')
-      .limit(1)
-      .single();
+    const { error } = await supabase.from('profiles').select('count').limit(1).single();
 
     const responseTime = Date.now() - startTime;
 
@@ -89,7 +85,7 @@ async function checkDatabase(): Promise<HealthStatus> {
  */
 async function checkSupabase(): Promise<HealthStatus> {
   const startTime = Date.now();
-  
+
   try {
     // Check if Supabase environment variables are configured
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
@@ -193,8 +189,8 @@ export async function GET() {
     const overallStatus: 'healthy' | 'degraded' | 'unhealthy' = hasFailure
       ? 'unhealthy'
       : hasWarning
-      ? 'degraded'
-      : 'healthy';
+        ? 'degraded'
+        : 'healthy';
 
     const result: HealthCheckResult = {
       status: overallStatus,

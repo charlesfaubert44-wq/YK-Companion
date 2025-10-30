@@ -30,7 +30,7 @@ class PerformanceMonitor {
         performance.measure(name, startMark, endMark);
         const measures = performance.getEntriesByName(name, 'measure');
         const measure = measures[measures.length - 1];
-        
+
         if (measure) {
           this.recordMetric(name, measure.duration);
           return measure.duration;
@@ -74,7 +74,7 @@ class PerformanceMonitor {
   getAverage(name: string): number | null {
     const metrics = this.getMetrics(name);
     if (metrics.length === 0) return null;
-    
+
     const sum = metrics.reduce((acc, m) => acc + m.value, 0);
     return sum / metrics.length;
   }
@@ -172,5 +172,3 @@ export function measureRender(componentName: string) {
     },
   };
 }
-
-

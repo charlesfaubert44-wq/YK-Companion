@@ -78,7 +78,7 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
       shadowColor: 'hover:shadow-[0_0_60px_rgba(16,185,129,0.6)]',
       bgGradient: 'from-emerald-500/20 via-cyan-500/10 to-transparent',
       emoji: '🧭',
-      features: ['Trip Planning', 'Attractions', 'Aurora Tours']
+      features: ['Trip Planning', 'Attractions', 'Aurora Tours'],
     },
     {
       id: 'living',
@@ -91,7 +91,7 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
       shadowColor: 'hover:shadow-[0_0_60px_rgba(59,130,246,0.6)]',
       bgGradient: 'from-blue-500/20 via-indigo-500/10 to-transparent',
       emoji: '🏔️',
-      features: ['Local Events', 'Community', 'Hidden Gems']
+      features: ['Local Events', 'Community', 'Hidden Gems'],
     },
     {
       id: 'moving',
@@ -104,8 +104,8 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
       shadowColor: 'hover:shadow-[0_0_60px_rgba(168,85,247,0.6)]',
       bgGradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
       emoji: '🎒',
-      features: ['Housing', 'Jobs', 'Services']
-    }
+      features: ['Housing', 'Jobs', 'Services'],
+    },
   ];
 
   return (
@@ -133,7 +133,6 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
         }`}
       >
         <div className="bg-gradient-to-br from-dark-900/95 via-dark-800/95 to-dark-900/95 backdrop-blur-2xl border-2 border-aurora-blue/30 rounded-3xl shadow-2xl p-6 sm:p-8 md:p-12">
-
           {/* Header */}
           <div className="text-center mb-8 sm:mb-12">
             <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple mb-6 animate-pulse-slow">
@@ -153,7 +152,7 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
               <Link
                 key={pathway.id}
                 href={`/${pathway.id}`}
-                onClick={(e) => {
+                onClick={e => {
                   e.preventDefault();
                   handleSelectPath(pathway.id as 'visiting' | 'living' | 'moving');
                 }}
@@ -161,17 +160,20 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                   isAnimatingOut && selectedCard === pathway.id
                     ? 'scale-110 opacity-100'
                     : isAnimatingOut
-                    ? 'scale-95 opacity-0'
-                    : 'scale-100 opacity-100'
+                      ? 'scale-95 opacity-0'
+                      : 'scale-100 opacity-100'
                 }`}
                 style={{
-                  transitionDelay: `${index * 100}ms`
+                  transitionDelay: `${index * 100}ms`,
                 }}
               >
-                <div className={`relative h-full min-h-[360px] sm:min-h-[400px] rounded-2xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 ${pathway.borderColor} transition-all duration-500 ${pathway.shadowColor} transform-gpu hover:scale-105 cursor-pointer`}>
-
+                <div
+                  className={`relative h-full min-h-[360px] sm:min-h-[400px] rounded-2xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border-2 ${pathway.borderColor} transition-all duration-500 ${pathway.shadowColor} transform-gpu hover:scale-105 cursor-pointer`}
+                >
                   {/* Animated gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${pathway.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${pathway.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
+                  />
 
                   {/* Falling snow particles */}
                   <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -194,7 +196,6 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
 
                   {/* Content */}
                   <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col items-center text-center">
-
                     {/* Icon */}
                     <div className="mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
                       {pathway.icon}
@@ -204,7 +205,9 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                     <div className="mb-4">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <span className="text-3xl sm:text-4xl">{pathway.emoji}</span>
-                        <h3 className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r ${pathway.gradient} bg-clip-text text-transparent`}>
+                        <h3
+                          className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r ${pathway.gradient} bg-clip-text text-transparent`}
+                        >
                           {pathway.title}
                         </h3>
                       </div>
@@ -214,16 +217,17 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                     </div>
 
                     {/* Description */}
-                    <p className="text-base sm:text-lg text-gray-300 mb-6">
-                      {pathway.description}
-                    </p>
+                    <p className="text-base sm:text-lg text-gray-300 mb-6">{pathway.description}</p>
 
                     {/* Features */}
                     <div className="mt-auto w-full">
                       <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                         <div className="space-y-2">
                           {pathway.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-sm text-gray-300">
+                            <div
+                              key={idx}
+                              className="flex items-center gap-2 text-sm text-gray-300"
+                            >
                               <span className="text-aurora-green">✓</span>
                               <span>{feature}</span>
                             </div>
@@ -233,7 +237,9 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
                     </div>
 
                     {/* CTA Button */}
-                    <button className={`mt-6 w-full px-6 py-3 bg-gradient-to-r ${pathway.gradient} text-white font-bold rounded-xl hover:shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2`}>
+                    <button
+                      className={`mt-6 w-full px-6 py-3 bg-gradient-to-r ${pathway.gradient} text-white font-bold rounded-xl hover:shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2`}
+                    >
                       <span>Explore</span>
                       <span>→</span>
                     </button>
@@ -270,7 +276,8 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
         }
 
         @keyframes pulse-slow {
-          0%, 100% {
+          0%,
+          100% {
             transform: scale(1);
             opacity: 1;
           }
@@ -285,7 +292,8 @@ export default function OnboardingModal({ isOpen, onClose, onSelectPath }: Onboa
         }
 
         @keyframes aurora {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
             transform: translateY(0) scale(1);
           }

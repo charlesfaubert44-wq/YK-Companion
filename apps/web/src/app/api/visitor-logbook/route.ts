@@ -71,20 +71,22 @@ export async function GET(request: NextRequest) {
     }
 
     // Check if user has liked each entry (if authenticated)
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     let entriesWithLikes = entries;
 
     if (user && entries && entries.length > 0) {
-      const entryIds = entries.map((e) => e.id);
+      const entryIds = entries.map(e => e.id);
       const { data: likes } = await supabase
         .from('visitor_logbook_likes')
         .select('entry_id')
         .eq('user_id', user.id)
         .in('entry_id', entryIds);
 
-      const likedEntryIds = new Set(likes?.map((l) => l.entry_id) || []);
+      const likedEntryIds = new Set(likes?.map(l => l.entry_id) || []);
 
-      entriesWithLikes = entries.map((entry) => ({
+      entriesWithLikes = entries.map(entry => ({
         ...entry,
         user_liked: likedEntryIds.has(entry.id),
       }));
@@ -95,7 +97,6 @@ export async function GET(request: NextRequest) {
       data: entriesWithLikes || [],
       total: count || 0,
     });
-
   } catch (error) {
     console.error('Error in GET /api/visitor-logbook:', error);
     return NextResponse.json(
@@ -114,7 +115,10 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient();
 
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized. Please sign in to create an entry.' },
@@ -134,7 +138,7 @@ export async function POST(request: NextRequest) {
         { success: false, error: 'Too many entries created. Please try again later.' },
         {
           status: 429,
-          headers: rateLimit.headers
+          headers: rateLimit.headers,
         }
       );
     }
@@ -192,14 +196,13 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         data: entry,
-        message: 'Your entry has been submitted and is pending approval!'
+        message: 'Your entry has been submitted and is pending approval!',
       },
       {
         status: 201,
-        headers: rateLimit.headers
+        headers: rateLimit.headers,
       }
     );
-
   } catch (error) {
     console.error('Error in POST /api/visitor-logbook:', error);
     return NextResponse.json(

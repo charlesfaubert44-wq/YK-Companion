@@ -5,16 +5,16 @@ import { createClient } from '@/lib/supabase/server';
  * POST /api/visitor-logbook/[id]/like
  * Toggle like status for a visitor logbook entry
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
     const { id: entryId } = params;
 
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       return NextResponse.json(
         { success: false, error: 'Please sign in to like entries' },
@@ -30,10 +30,7 @@ export async function POST(
       .single();
 
     if (entryError || !entry) {
-      return NextResponse.json(
-        { success: false, error: 'Entry not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Entry not found' }, { status: 404 });
     }
 
     if (!entry.is_active || !entry.is_approved) {
@@ -71,15 +68,12 @@ export async function POST(
 
       liked = false;
       newLikesCount = Math.max(0, newLikesCount - 1);
-
     } else {
       // Like - insert new like
-      const { error: insertError } = await supabase
-        .from('visitor_logbook_likes')
-        .insert({
-          entry_id: entryId,
-          user_id: user.id,
-        });
+      const { error: insertError } = await supabase.from('visitor_logbook_likes').insert({
+        entry_id: entryId,
+        user_id: user.id,
+      });
 
       if (insertError) {
         console.error('Error liking entry:', insertError);
@@ -105,7 +99,6 @@ export async function POST(
       liked,
       likes_count: updatedEntry?.likes_count || newLikesCount,
     });
-
   } catch (error) {
     console.error('Error in POST /api/visitor-logbook/[id]/like:', error);
     return NextResponse.json(

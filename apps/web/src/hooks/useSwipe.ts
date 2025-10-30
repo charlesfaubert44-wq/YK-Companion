@@ -315,10 +315,10 @@ export function useSwipeToDismiss(
 
   const swipe = useSwipe({
     ...options,
-    onSwipeMove: (deltaX) => {
+    onSwipeMove: deltaX => {
       swipeProgress.current = deltaX;
     },
-    onSwipe: (direction) => {
+    onSwipe: direction => {
       if (direction === 'left' || direction === 'right') {
         isDismissed.current = true;
         onDismiss(direction);

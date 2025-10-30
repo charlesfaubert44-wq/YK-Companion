@@ -6,11 +6,7 @@
  */
 
 import { useState } from 'react';
-import {
-  PaymentElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 interface CheckoutFormProps {
   amount: number;
@@ -65,12 +61,8 @@ export default function CheckoutForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <h3 className="text-lg font-semibold text-white mb-2">
-          {sponsorTier} Sponsor
-        </h3>
-        <p className="text-2xl font-bold text-aurora-green">
-          ${amount.toFixed(2)} CAD
-        </p>
+        <h3 className="text-lg font-semibold text-white mb-2">{sponsorTier} Sponsor</h3>
+        <p className="text-2xl font-bold text-aurora-green">${amount.toFixed(2)} CAD</p>
       </div>
 
       <PaymentElement />
@@ -111,9 +103,7 @@ export default function CheckoutForm({
         )}
       </button>
 
-      <p className="text-xs text-gray-400 text-center">
-        Secure payment powered by Stripe
-      </p>
+      <p className="text-xs text-gray-400 text-center">Secure payment powered by Stripe</p>
     </form>
   );
 }

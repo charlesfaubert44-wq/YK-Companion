@@ -41,7 +41,7 @@ export default function AdminGarageSalesPage() {
   const [filters, setFilters] = useState({
     search: '',
     status: 'all',
-    featured: 'all'
+    featured: 'all',
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,10 +72,11 @@ export default function AdminGarageSalesPage() {
     // Search filter
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
-      filtered = filtered.filter(s =>
-        s.title.toLowerCase().includes(searchLower) ||
-        s.address.toLowerCase().includes(searchLower) ||
-        s.contact_email?.toLowerCase().includes(searchLower)
+      filtered = filtered.filter(
+        s =>
+          s.title.toLowerCase().includes(searchLower) ||
+          s.address.toLowerCase().includes(searchLower) ||
+          s.contact_email?.toLowerCase().includes(searchLower)
       );
     }
 
@@ -109,17 +110,14 @@ export default function AdminGarageSalesPage() {
     const updates: any = {
       approval_status: approvalAction === 'approve' ? 'approved' : 'rejected',
       approved_at: new Date().toISOString(),
-      admin_notes: adminNotes || null
+      admin_notes: adminNotes || null,
     };
 
     if (approvalAction === 'reject') {
       updates.rejection_reason = rejectionReason;
     }
 
-    const { error } = await supabase
-      .from('garage_sales')
-      .update(updates)
-      .eq('id', selectedSale.id);
+    const { error } = await supabase.from('garage_sales').update(updates).eq('id', selectedSale.id);
 
     if (!error) {
       setShowApprovalModal(false);
@@ -156,11 +154,12 @@ export default function AdminGarageSalesPage() {
   };
 
   const deleteSale = async (id: string) => {
-    if (confirm('Are you sure you want to permanently delete this garage sale? This action cannot be undone.')) {
-      const { error } = await supabase
-        .from('garage_sales')
-        .delete()
-        .eq('id', id);
+    if (
+      confirm(
+        'Are you sure you want to permanently delete this garage sale? This action cannot be undone.'
+      )
+    ) {
+      const { error } = await supabase.from('garage_sales').delete().eq('id', id);
 
       if (!error) {
         fetchGarageSales();
@@ -179,9 +178,11 @@ export default function AdminGarageSalesPage() {
         new Date(s.end_date).toLocaleDateString(),
         s.approval_status,
         s.contact_email || s.contact_phone || '',
-        new Date(s.created_at).toLocaleDateString()
-      ])
-    ].map(row => row.join(',')).join('\n');
+        new Date(s.created_at).toLocaleDateString(),
+      ]),
+    ]
+      .map(row => row.join(','))
+      .join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -211,10 +212,15 @@ export default function AdminGarageSalesPage() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">Garage Sales Management</h1>
-            <p className="text-gray-400">Moderate and manage garage sale listings ({filteredSales.length} listings)</p>
+            <p className="text-gray-400">
+              Moderate and manage garage sale listings ({filteredSales.length} listings)
+            </p>
           </div>
           <div className="flex gap-4">
-            <Link href="/admin" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">
+            <Link
+              href="/admin"
+              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
               ← Back to Admin
             </Link>
             <button
@@ -255,7 +261,7 @@ export default function AdminGarageSalesPage() {
                 type="text"
                 placeholder="Search by title, address, or contact..."
                 value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                onChange={e => setFilters({ ...filters, search: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               />
             </div>
@@ -264,7 +270,7 @@ export default function AdminGarageSalesPage() {
             <div>
               <select
                 value={filters.status}
-                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                onChange={e => setFilters({ ...filters, status: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All Status</option>
@@ -279,7 +285,7 @@ export default function AdminGarageSalesPage() {
             <div>
               <select
                 value={filters.featured}
-                onChange={(e) => setFilters({ ...filters, featured: e.target.value })}
+                onChange={e => setFilters({ ...filters, featured: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All Listings</option>
@@ -302,26 +308,34 @@ export default function AdminGarageSalesPage() {
                   : 'No garage sales match your filters.'}
               </p>
             ) : (
-              paginatedSales.map((sale) => (
+              paginatedSales.map(sale => (
                 <div
                   key={sale.id}
                   className={`bg-gray-900/50 border rounded-xl p-6 transition-all ${
-                    sale.approval_status === 'pending' ? 'border-yellow-500/30' :
-                    sale.approval_status === 'approved' ? 'border-green-500/30' :
-                    sale.approval_status === 'flagged' ? 'border-orange-500/30' :
-                    'border-gray-700'
+                    sale.approval_status === 'pending'
+                      ? 'border-yellow-500/30'
+                      : sale.approval_status === 'approved'
+                        ? 'border-green-500/30'
+                        : sale.approval_status === 'flagged'
+                          ? 'border-orange-500/30'
+                          : 'border-gray-700'
                   }`}
                 >
                   <div className="flex gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="text-xl font-bold text-white">{sale.title}</h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          sale.approval_status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
-                          sale.approval_status === 'approved' ? 'bg-green-500/20 text-green-400' :
-                          sale.approval_status === 'rejected' ? 'bg-red-500/20 text-red-400' :
-                          'bg-orange-500/20 text-orange-400'
-                        }`}>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            sale.approval_status === 'pending'
+                              ? 'bg-yellow-500/20 text-yellow-400'
+                              : sale.approval_status === 'approved'
+                                ? 'bg-green-500/20 text-green-400'
+                                : sale.approval_status === 'rejected'
+                                  ? 'bg-red-500/20 text-red-400'
+                                  : 'bg-orange-500/20 text-orange-400'
+                          }`}
+                        >
                           {sale.approval_status}
                         </span>
                         {sale.is_featured && (
@@ -331,9 +345,7 @@ export default function AdminGarageSalesPage() {
                         )}
                       </div>
 
-                      {sale.description && (
-                        <p className="text-gray-400 mb-3">{sale.description}</p>
-                      )}
+                      {sale.description && <p className="text-gray-400 mb-3">{sale.description}</p>}
 
                       <div className="grid md:grid-cols-2 gap-3 text-sm mb-3">
                         <div>
@@ -343,7 +355,8 @@ export default function AdminGarageSalesPage() {
                         <div>
                           <span className="text-gray-500">Dates:</span>{' '}
                           <span className="text-white">
-                            {new Date(sale.start_date).toLocaleDateString()} - {new Date(sale.end_date).toLocaleDateString()}
+                            {new Date(sale.start_date).toLocaleDateString()} -{' '}
+                            {new Date(sale.end_date).toLocaleDateString()}
                           </span>
                         </div>
                         {sale.contact_name && (
@@ -475,7 +488,7 @@ export default function AdminGarageSalesPage() {
                   </label>
                   <textarea
                     value={rejectionReason}
-                    onChange={(e) => setRejectionReason(e.target.value)}
+                    onChange={e => setRejectionReason(e.target.value)}
                     rows={3}
                     required
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
@@ -490,7 +503,7 @@ export default function AdminGarageSalesPage() {
                 </label>
                 <textarea
                   value={adminNotes}
-                  onChange={(e) => setAdminNotes(e.target.value)}
+                  onChange={e => setAdminNotes(e.target.value)}
                   rows={3}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   placeholder="Any internal notes about this listing..."

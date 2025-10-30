@@ -38,7 +38,7 @@ export const urlSchema = z
   .url('Invalid URL')
   .max(2000, 'URL must be less than 2000 characters')
   .refine(
-    (url) => url.startsWith('https://') || url.startsWith('http://'),
+    url => url.startsWith('https://') || url.startsWith('http://'),
     'URL must start with http:// or https://'
   );
 
@@ -69,11 +69,8 @@ export function sanitizeHtml(input: string): string {
 // Validate and sanitize user input
 export function sanitizeInput(input: string, maxLength = 1000): string {
   if (!input) return '';
-  
-  return input
-    .trim()
-    .slice(0, maxLength)
-    .replace(/[<>]/g, ''); // Remove angle brackets
+
+  return input.trim().slice(0, maxLength).replace(/[<>]/g, ''); // Remove angle brackets
 }
 
 // Form validation schemas

@@ -11,7 +11,12 @@ interface Props {
   enableSelection: boolean;
 }
 
-export default function GarageSaleList({ sales, selectedSales, onToggleSelection, enableSelection }: Props) {
+export default function GarageSaleList({
+  sales,
+  selectedSales,
+  onToggleSelection,
+  enableSelection,
+}: Props) {
   return (
     <div className="space-y-4">
       {sales.map(sale => (
@@ -88,24 +93,24 @@ function GarageSaleCard({
                   </span>
                 )}
                 {sale.save_count && sale.save_count > 0 && (
-                  <div className="text-gray-400 text-sm">
-                    ⭐ {sale.save_count} saved
-                  </div>
+                  <div className="text-gray-400 text-sm">⭐ {sale.save_count} saved</div>
                 )}
               </div>
             </div>
 
             {/* Description */}
-            {sale.description && (
-              <p className="text-gray-300 mb-3">{sale.description}</p>
-            )}
+            {sale.description && <p className="text-gray-300 mb-3">{sale.description}</p>}
 
             {/* Date/Time */}
             <div className="flex flex-wrap gap-4 mb-3 text-sm">
               <div className="flex items-center gap-2">
                 <span className="text-gray-400">📅</span>
                 <span className="text-white font-medium">
-                  {saleDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                  {saleDate.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -140,15 +145,13 @@ function GarageSaleCard({
             {/* Footer */}
             <div className="flex items-center justify-between pt-3 border-t border-gray-700">
               <div className="flex gap-3 text-sm">
-                {sale.cash_only && (
-                  <span className="text-yellow-400">💵 Cash Only</span>
-                )}
+                {sale.cash_only && <span className="text-yellow-400">💵 Cash Only</span>}
                 {sale.early_birds_welcome && (
                   <span className="text-green-400">🐦 Early Birds OK</span>
                 )}
               </div>
               <div className="flex gap-2">
-                <FavoriteButton 
+                <FavoriteButton
                   itemType="garage-sales"
                   itemId={sale.id}
                   showText={true}

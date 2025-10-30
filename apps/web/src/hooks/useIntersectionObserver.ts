@@ -275,27 +275,19 @@ export function useBatchIntersectionObserver<T extends Element = Element>(
   disconnect: () => void;
   entries: Map<T, IntersectionObserverEntry>;
 } {
-  const {
-    root = null,
-    rootMargin = '0px',
-    threshold = 0,
-    onEnter,
-    onLeave,
-  } = options;
+  const { root = null, rootMargin = '0px', threshold = 0, onEnter, onLeave } = options;
 
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const [entries, setEntries] = useState<Map<T, IntersectionObserverEntry>>(
-    new Map()
-  );
+  const [entries, setEntries] = useState<Map<T, IntersectionObserverEntry>>(new Map());
   const intersectingMap = useRef<Map<T, boolean>>(new Map());
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
-      (observerEntries) => {
-        setEntries((prev) => {
+      observerEntries => {
+        setEntries(prev => {
           const next = new Map(prev);
 
-          observerEntries.forEach((entry) => {
+          observerEntries.forEach(entry => {
             const element = entry.target as T;
             next.set(element, entry);
 
@@ -335,7 +327,7 @@ export function useBatchIntersectionObserver<T extends Element = Element>(
   const unobserve = useCallback((element: T) => {
     if (observerRef.current) {
       observerRef.current.unobserve(element);
-      setEntries((prev) => {
+      setEntries(prev => {
         const next = new Map(prev);
         next.delete(element);
         return next;
@@ -393,7 +385,7 @@ export function useScrollAnimation<T extends Element = Element>(
   const observer = useIntersectionObserver<T>({
     ...options,
     threshold: options.threshold || [0, 0.25, 0.5, 0.75, 1],
-    onChange: (entry) => {
+    onChange: entry => {
       setScrollProgress(entry.intersectionRatio);
       options.onChange?.(entry);
     },
@@ -439,7 +431,7 @@ export function useViewportAnimation<T extends Element = Element>(
 
   const { ref, isIntersecting } = useIntersectionObserver<T>({
     ...options,
-    onEnter: (entry) => {
+    onEnter: entry => {
       setIsVisible(true);
       options.onEnter?.(entry);
     },

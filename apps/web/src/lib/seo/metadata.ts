@@ -4,7 +4,8 @@ import type { Metadata } from 'next';
 export const SITE_CONFIG = {
   name: 'YK Buddy',
   fullName: 'YK Buddy - Your Yellowknife Companion',
-  description: 'Your friendly companion for exploring Yellowknife - whether you are visiting, living here, or planning to move. Features aurora tracking, garage sale planner, and local insights.',
+  description:
+    'Your friendly companion for exploring Yellowknife - whether you are visiting, living here, or planning to move. Features aurora tracking, garage sale planner, and local insights.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://ykbuddy.com',
   locale: 'en_US',
   twitterHandle: '@YKBuddy',
@@ -97,9 +98,7 @@ export const defaultMetadata: Metadata = {
       { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [
-      { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
-    ],
+    apple: [{ url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' }],
     shortcut: ['/favicon.ico'],
   },
   alternates: {
@@ -221,21 +220,41 @@ export function generatePageMetadata(config: PageMetadataConfig): Metadata {
 export const PATHWAY_METADATA = {
   visiting: generatePageMetadata({
     title: 'Visiting Yellowknife',
-    description: 'Plan your trip to Yellowknife. Aurora viewing, activities, accommodations and attractions. Complete guide to visiting Canada\'s northern capital.',
+    description:
+      "Plan your trip to Yellowknife. Aurora viewing, activities, accommodations and attractions. Complete guide to visiting Canada's northern capital.",
     path: '/visiting',
-    keywords: ['visit yellowknife', 'yellowknife tourism', 'yellowknife vacation', 'aurora tours', 'northern lights viewing'],
+    keywords: [
+      'visit yellowknife',
+      'yellowknife tourism',
+      'yellowknife vacation',
+      'aurora tours',
+      'northern lights viewing',
+    ],
   }),
   living: generatePageMetadata({
     title: 'Living in Yellowknife',
-    description: 'Essential guide to living in Yellowknife. Local events, garage sales, community resources, and daily life in Canada\'s northern capital.',
+    description:
+      "Essential guide to living in Yellowknife. Local events, garage sales, community resources, and daily life in Canada's northern capital.",
     path: '/living',
-    keywords: ['living in yellowknife', 'yellowknife community', 'yellowknife events', 'yellowknife lifestyle'],
+    keywords: [
+      'living in yellowknife',
+      'yellowknife community',
+      'yellowknife events',
+      'yellowknife lifestyle',
+    ],
   }),
   moving: generatePageMetadata({
     title: 'Moving to Yellowknife',
-    description: 'Complete guide to moving to Yellowknife. Housing, jobs, cost of living, and tips for a smooth transition to Canada\'s northern capital.',
+    description:
+      "Complete guide to moving to Yellowknife. Housing, jobs, cost of living, and tips for a smooth transition to Canada's northern capital.",
     path: '/moving',
-    keywords: ['moving to yellowknife', 'relocating to yellowknife', 'yellowknife jobs', 'yellowknife housing', 'moving to nwt'],
+    keywords: [
+      'moving to yellowknife',
+      'relocating to yellowknife',
+      'yellowknife jobs',
+      'yellowknife housing',
+      'moving to nwt',
+    ],
   }),
 } as const;
 
@@ -245,51 +264,101 @@ export const PATHWAY_METADATA = {
 export const FEATURE_METADATA = {
   aurora: generatePageMetadata({
     title: 'Aurora Forecast & Tracking',
-    description: 'Real-time aurora borealis forecasts and tracking for Yellowknife. Get alerts for optimal northern lights viewing conditions.',
+    description:
+      'Real-time aurora borealis forecasts and tracking for Yellowknife. Get alerts for optimal northern lights viewing conditions.',
     path: '/aurora',
-    keywords: ['aurora forecast', 'northern lights forecast', 'yellowknife aurora', 'aurora alerts', 'kp index'],
+    keywords: [
+      'aurora forecast',
+      'northern lights forecast',
+      'yellowknife aurora',
+      'aurora alerts',
+      'kp index',
+    ],
   }),
   'aurora-live': generatePageMetadata({
     title: 'Live Aurora Dashboard',
-    description: 'Real-time aurora conditions, live webcams, and instant notifications for northern lights viewing in Yellowknife.',
+    description:
+      'Real-time aurora conditions, live webcams, and instant notifications for northern lights viewing in Yellowknife.',
     path: '/aurora-live',
-    keywords: ['live aurora', 'aurora webcam', 'real-time aurora', 'aurora now', 'current aurora conditions'],
+    keywords: [
+      'live aurora',
+      'aurora webcam',
+      'real-time aurora',
+      'aurora now',
+      'current aurora conditions',
+    ],
   }),
   'garage-sales': generatePageMetadata({
     title: 'Yellowknife Garage Sales',
-    description: 'Find and post garage sales in Yellowknife. Interactive map, filters, and notifications for deals in your neighborhood.',
+    description:
+      'Find and post garage sales in Yellowknife. Interactive map, filters, and notifications for deals in your neighborhood.',
     path: '/living/garage-sales',
-    keywords: ['yellowknife garage sales', 'yard sales yellowknife', 'garage sale map', 'buy and sell yellowknife'],
+    keywords: [
+      'yellowknife garage sales',
+      'yard sales yellowknife',
+      'garage sale map',
+      'buy and sell yellowknife',
+    ],
   }),
   knowledge: generatePageMetadata({
     title: 'Knowledge Base',
-    description: 'Comprehensive knowledge base about Yellowknife. Local tips, guides, FAQs, and community-contributed insights.',
+    description:
+      'Comprehensive knowledge base about Yellowknife. Local tips, guides, FAQs, and community-contributed insights.',
     path: '/knowledge',
-    keywords: ['yellowknife guide', 'yellowknife tips', 'yellowknife faq', 'yellowknife information'],
+    keywords: [
+      'yellowknife guide',
+      'yellowknife tips',
+      'yellowknife faq',
+      'yellowknife information',
+    ],
   }),
   discover: generatePageMetadata({
     title: 'Discover Yellowknife',
-    description: 'Explore Yellowknife\'s hidden gems, attractions, restaurants, and cultural experiences. Your guide to what makes YK special.',
+    description:
+      "Explore Yellowknife's hidden gems, attractions, restaurants, and cultural experiences. Your guide to what makes YK special.",
     path: '/discover',
-    keywords: ['yellowknife attractions', 'things to do yellowknife', 'yellowknife restaurants', 'yellowknife culture'],
+    keywords: [
+      'yellowknife attractions',
+      'things to do yellowknife',
+      'yellowknife restaurants',
+      'yellowknife culture',
+    ],
   }),
   calculator: generatePageMetadata({
     title: 'Moving Cost Calculator',
-    description: 'Calculate the cost of moving to Yellowknife. Estimate moving expenses, cost of living differences, and budget planning.',
+    description:
+      'Calculate the cost of moving to Yellowknife. Estimate moving expenses, cost of living differences, and budget planning.',
     path: '/calculator',
-    keywords: ['moving calculator', 'yellowknife cost of living', 'moving cost estimate', 'relocation budget'],
+    keywords: [
+      'moving calculator',
+      'yellowknife cost of living',
+      'moving cost estimate',
+      'relocation budget',
+    ],
   }),
   quiz: generatePageMetadata({
     title: 'Yellowknife Readiness Quiz',
-    description: 'Take our interactive quiz to see if you\'re ready for life in Yellowknife. Get personalized recommendations.',
+    description:
+      "Take our interactive quiz to see if you're ready for life in Yellowknife. Get personalized recommendations.",
     path: '/quiz',
-    keywords: ['yellowknife quiz', 'moving to north quiz', 'yellowknife readiness', 'should i move to yellowknife'],
+    keywords: [
+      'yellowknife quiz',
+      'moving to north quiz',
+      'yellowknife readiness',
+      'should i move to yellowknife',
+    ],
   }),
   seasonal: generatePageMetadata({
     title: 'Seasonal Guide',
-    description: 'Seasonal activities, events, and tips for experiencing Yellowknife year-round. From summer adventures to winter wonders.',
+    description:
+      'Seasonal activities, events, and tips for experiencing Yellowknife year-round. From summer adventures to winter wonders.',
     path: '/seasonal',
-    keywords: ['yellowknife seasons', 'yellowknife weather', 'seasonal activities yellowknife', 'yellowknife year round'],
+    keywords: [
+      'yellowknife seasons',
+      'yellowknife weather',
+      'seasonal activities yellowknife',
+      'yellowknife year round',
+    ],
   }),
 } as const;
 
@@ -299,21 +368,29 @@ export const FEATURE_METADATA = {
 export const STATIC_METADATA = {
   about: generatePageMetadata({
     title: 'About YK Buddy',
-    description: 'Learn about YK Buddy, our mission to make Yellowknife accessible and welcoming for visitors, residents, and newcomers.',
+    description:
+      'Learn about YK Buddy, our mission to make Yellowknife accessible and welcoming for visitors, residents, and newcomers.',
     path: '/about',
     keywords: ['about yk buddy', 'yellowknife platform', 'yellowknife community platform'],
   }),
   contact: generatePageMetadata({
     title: 'Contact Us',
-    description: 'Get in touch with YK Buddy. Questions, feedback, or partnership inquiries welcome.',
+    description:
+      'Get in touch with YK Buddy. Questions, feedback, or partnership inquiries welcome.',
     path: '/contact',
     keywords: ['contact yk buddy', 'yellowknife help', 'contact yellowknife guide'],
   }),
   'sponsor-info': generatePageMetadata({
     title: 'Become a Sponsor',
-    description: 'Partner with YK Buddy to reach visitors, residents, and newcomers to Yellowknife. Flexible sponsorship opportunities.',
+    description:
+      'Partner with YK Buddy to reach visitors, residents, and newcomers to Yellowknife. Flexible sponsorship opportunities.',
     path: '/sponsor-info',
-    keywords: ['yellowknife advertising', 'sponsor yellowknife', 'yellowknife marketing', 'advertise in yellowknife'],
+    keywords: [
+      'yellowknife advertising',
+      'sponsor yellowknife',
+      'yellowknife marketing',
+      'advertise in yellowknife',
+    ],
   }),
 } as const;
 
@@ -347,4 +424,3 @@ export const USER_METADATA = {
     noindex: true,
   }),
 };
-

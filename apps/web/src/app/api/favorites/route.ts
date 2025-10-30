@@ -10,7 +10,10 @@ import { createClient } from '@/lib/supabase/server';
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -31,10 +34,13 @@ export async function GET(request: NextRequest) {
         .order('created_at', { ascending: false });
 
       if (!garageSalesError && garageSalesData) {
-        favorites = [...favorites, ...garageSalesData.map(fav => ({
-          ...fav,
-          garage_sale: fav.garage_sales,
-        }))];
+        favorites = [
+          ...favorites,
+          ...garageSalesData.map(fav => ({
+            ...fav,
+            garage_sale: fav.garage_sales,
+          })),
+        ];
       }
     }
 
@@ -48,20 +54,20 @@ export async function GET(request: NextRequest) {
         .order('created_at', { ascending: false });
 
       if (!articlesError && articlesData) {
-        favorites = [...favorites, ...articlesData.map(fav => ({
-          ...fav,
-          article: fav.knowledge_articles,
-        }))];
+        favorites = [
+          ...favorites,
+          ...articlesData.map(fav => ({
+            ...fav,
+            article: fav.knowledge_articles,
+          })),
+        ];
       }
     }
 
     return NextResponse.json({ favorites });
   } catch (error: any) {
     console.error('Favorites GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -69,7 +75,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -79,10 +88,7 @@ export async function POST(request: NextRequest) {
     const { itemType, itemId } = body;
 
     if (!itemType || !itemId) {
-      return NextResponse.json(
-        { error: 'Missing itemType or itemId' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Missing itemType or itemId' }, { status: 400 });
     }
 
     const { data, error } = await supabase
@@ -98,17 +104,11 @@ export async function POST(request: NextRequest) {
     if (error) {
       // Check if already exists
       if (error.code === '23505') {
-        return NextResponse.json(
-          { error: 'Already in favorites' },
-          { status: 409 }
-        );
+        return NextResponse.json({ error: 'Already in favorites' }, { status: 409 });
       }
 
       console.error('Error adding favorite:', error);
-      return NextResponse.json(
-        { error: 'Failed to add favorite' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to add favorite' }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -117,10 +117,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Favorites POST error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -128,7 +125,10 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -138,10 +138,7 @@ export async function DELETE(request: NextRequest) {
     const favoriteId = searchParams.get('id');
 
     if (!favoriteId) {
-      return NextResponse.json(
-        { error: 'Missing id parameter' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Missing id parameter' }, { status: 400 });
     }
 
     // Delete by the favorite record ID
@@ -153,18 +150,12 @@ export async function DELETE(request: NextRequest) {
 
     if (error) {
       console.error('Error removing favorite:', error);
-      return NextResponse.json(
-        { error: 'Failed to remove favorite' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to remove favorite' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error('Favorites DELETE error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

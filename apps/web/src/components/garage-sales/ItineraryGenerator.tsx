@@ -10,11 +10,15 @@ interface Props {
   onSelectionChange: (saleIds: string[]) => void;
 }
 
-export default function ItineraryGenerator({ allSales, selectedSaleIds, onSelectionChange }: Props) {
+export default function ItineraryGenerator({
+  allSales,
+  selectedSaleIds,
+  onSelectionChange,
+}: Props) {
   const [itinerary, setItinerary] = useState<GarageSaleItinerary | null>(null);
   const [optimizing, setOptimizing] = useState(false);
-  const [startLocation] = useState<{latitude: number, longitude: number}>({
-    latitude: 62.4540, // Yellowknife center
+  const [startLocation] = useState<{ latitude: number; longitude: number }>({
+    latitude: 62.454, // Yellowknife center
     longitude: -114.3718,
   });
 
@@ -101,7 +105,10 @@ export default function ItineraryGenerator({ allSales, selectedSaleIds, onSelect
   };
 
   // Nearest Neighbor TSP Algorithm
-  function nearestNeighborTSP(sales: GarageSale[], start: {latitude: number, longitude: number}): GarageSale[] {
+  function nearestNeighborTSP(
+    sales: GarageSale[],
+    start: { latitude: number; longitude: number }
+  ): GarageSale[] {
     const unvisited = [...sales];
     const route: GarageSale[] = [];
     let currentLat = start.latitude;
@@ -175,9 +182,7 @@ export default function ItineraryGenerator({ allSales, selectedSaleIds, onSelect
       {/* Selection Panel */}
       <div className="bg-dark-800 rounded-xl p-6 border border-aurora-green/20">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-white">
-            Selected Sales ({selectedSales.length})
-          </h3>
+          <h3 className="text-xl font-bold text-white">Selected Sales ({selectedSales.length})</h3>
           <button
             onClick={optimizeRoute}
             disabled={selectedSales.length < 2 || optimizing}
@@ -244,9 +249,7 @@ export default function ItineraryGenerator({ allSales, selectedSaleIds, onSelect
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-400">📍 Stops:</span>
-                  <span className="font-bold text-aurora-purple">
-                    {itinerary.sale_ids.length}
-                  </span>
+                  <span className="font-bold text-aurora-purple">{itinerary.sale_ids.length}</span>
                 </div>
               </div>
             </div>

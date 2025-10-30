@@ -7,10 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { verifyWebhookSignature } from '@/lib/stripe/server';
 import { createClient } from '@/lib/supabase/server';
-import {
-  sendPaymentConfirmation,
-  sendPaymentFailedNotification,
-} from '@/lib/email/client';
+import { sendPaymentConfirmation, sendPaymentFailedNotification } from '@/lib/email/client';
 import Stripe from 'stripe';
 
 export async function POST(request: NextRequest) {
@@ -20,10 +17,7 @@ export async function POST(request: NextRequest) {
     const signature = headersList.get('stripe-signature');
 
     if (!signature) {
-      return NextResponse.json(
-        { error: 'Missing stripe-signature header' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 });
     }
 
     // Verify webhook signature
@@ -32,10 +26,7 @@ export async function POST(request: NextRequest) {
       event = verifyWebhookSignature(body, signature);
     } catch (error) {
       console.error('Webhook signature verification failed:', error);
-      return NextResponse.json(
-        { error: 'Invalid signature' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
     }
 
     const supabase = await createClient();
@@ -67,29 +58,20 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ received: true });
   } catch (error: any) {
     console.error('Webhook error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Webhook handler failed' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Webhook handler failed' }, { status: 500 });
   }
 }
 
 /**
  * Handle successful payment
  */
-async function handlePaymentSuccess(
-  paymentIntent: Stripe.PaymentIntent,
-  supabase: any
-) {
+async function handlePaymentSuccess(paymentIntent: Stripe.PaymentIntent, supabase: any) {
   const metadata = paymentIntent.metadata;
   const userId = metadata.userId;
   const sponsorTier = metadata.sponsorTier;
 
   // Update payment intent status
-  await supabase
-    .from('payment_intents')
-    .update({ status: 'succeeded' })
-    .eq('id', paymentIntent.id);
+  await supabase.from('payment_intents').update({ status: 'succeeded' }).eq('id', paymentIntent.id);
 
   // Create or update sponsor record
   const { error: sponsorError } = await supabase
@@ -131,14 +113,8 @@ async function handlePaymentSuccess(
 /**
  * Handle failed payment
  */
-async function handlePaymentFailure(
-  paymentIntent: Stripe.PaymentIntent,
-  supabase: any
-) {
-  await supabase
-    .from('payment_intents')
-    .update({ status: 'failed' })
-    .eq('id', paymentIntent.id);
+async function handlePaymentFailure(paymentIntent: Stripe.PaymentIntent, supabase: any) {
+  await supabase.from('payment_intents').update({ status: 'failed' }).eq('id', paymentIntent.id);
 
   // Send failure notification email
   const metadata = paymentIntent.metadata;
@@ -166,10 +142,7 @@ async function handlePaymentFailure(
 async function handleRefund(charge: Stripe.Charge, supabase: any) {
   const paymentIntentId = charge.payment_intent as string;
 
-  await supabase
-    .from('payment_intents')
-    .update({ status: 'refunded' })
-    .eq('id', paymentIntentId);
+  await supabase.from('payment_intents').update({ status: 'refunded' }).eq('id', paymentIntentId);
 
   // Deactivate sponsor
   await supabase

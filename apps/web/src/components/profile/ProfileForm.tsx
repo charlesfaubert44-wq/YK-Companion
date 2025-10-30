@@ -14,7 +14,7 @@ interface ProfileFormProps {
 
 /**
  * ProfileForm Component
- * 
+ *
  * Form for editing user profile information including name, user type, and address.
  */
 export default function ProfileForm({ userId, initialData }: ProfileFormProps) {
@@ -141,4 +141,3 @@ export default function ProfileForm({ userId, initialData }: ProfileFormProps) {
     </form>
   );
 }
-

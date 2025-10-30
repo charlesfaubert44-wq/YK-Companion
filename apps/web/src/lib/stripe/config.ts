@@ -11,7 +11,9 @@ if (isProduction && !process.env.STRIPE_SECRET_KEY) {
 }
 
 if (isProduction && !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
-  console.warn('WARNING: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set. Payment features will be disabled.');
+  console.warn(
+    'WARNING: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set. Payment features will be disabled.'
+  );
 }
 
 export const stripeConfig = {
@@ -19,7 +21,9 @@ export const stripeConfig = {
   publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
   webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
   apiVersion: '2025-09-30.clover' as const,
-  isConfigured: Boolean(process.env.STRIPE_SECRET_KEY && process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY),
+  isConfigured: Boolean(
+    process.env.STRIPE_SECRET_KEY && process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  ),
 };
 
 export const STRIPE_PRICES = {

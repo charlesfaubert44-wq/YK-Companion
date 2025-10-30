@@ -3,11 +3,6 @@ import { PATHWAY_METADATA } from '@/lib/seo';
 
 export const metadata: Metadata = PATHWAY_METADATA.moving;
 
-export default function MovingLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function MovingLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-

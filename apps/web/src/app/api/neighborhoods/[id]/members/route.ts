@@ -7,13 +7,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
 // GET - Fetch neighborhood members
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -42,19 +42,18 @@ export async function GET(
     // Only moderators/admins can see pending requests
     const canSeePending = ['moderator', 'admin'].includes(userMembership.role);
     if (status === 'pending' && !canSeePending) {
-      return NextResponse.json(
-        { error: 'Insufficient permissions' },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
     // Fetch members
     let query = supabase
       .from('neighborhood_members')
-      .select(`
+      .select(
+        `
         *,
         ${includeProfile ? 'profiles:user_id(id, full_name, email)' : ''}
-      `)
+      `
+      )
       .eq('neighborhood_id', neighborhoodId)
       .eq('status', status)
       .order('requested_at', { ascending: false });
@@ -63,18 +62,12 @@ export async function GET(
 
     if (error) {
       console.error('Error fetching members:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch members' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch members' }, { status: 500 });
     }
 
     return NextResponse.json({ members: members || [] });
   } catch (error: any) {
     console.error('Members GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

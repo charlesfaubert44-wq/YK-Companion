@@ -93,9 +93,7 @@ export default function AdminDashboard() {
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
                 Super Admin Dashboard
               </h1>
-              <p className="text-gray-300 mt-2">
-                Manage your YK Buddy platform
-              </p>
+              <p className="text-gray-300 mt-2">Manage your YK Buddy platform</p>
             </div>
             <div className="text-right">
               <div className="text-sm text-gray-400">Last login</div>
@@ -134,7 +132,9 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm">Page Views</p>
-                <p className="text-3xl font-bold text-white mt-1">{stats.pageViews.toLocaleString()}</p>
+                <p className="text-3xl font-bold text-white mt-1">
+                  {stats.pageViews.toLocaleString()}
+                </p>
               </div>
               <div className="text-4xl">📊</div>
             </div>
@@ -160,15 +160,15 @@ export default function AdminDashboard() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {quickActions.map((action, index) => (
                 <Link key={index} href={action.href} className="group">
-                  <div className={`bg-gradient-to-br ${action.color} p-[2px] rounded-xl hover:shadow-aurora transition-all transform hover:scale-105`}>
+                  <div
+                    className={`bg-gradient-to-br ${action.color} p-[2px] rounded-xl hover:shadow-aurora transition-all transform hover:scale-105`}
+                  >
                     <div className="bg-dark-800 rounded-xl p-6 h-full">
                       <div className="text-5xl mb-4">{action.icon}</div>
                       <h3 className="text-xl font-bold text-white mb-2 group-hover:text-aurora-green transition-colors">
                         {action.title}
                       </h3>
-                      <p className="text-gray-400 text-sm">
-                        {action.description}
-                      </p>
+                      <p className="text-gray-400 text-sm">{action.description}</p>
                       <div className="mt-4 text-aurora-green font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
                         Open <span>→</span>
                       </div>
@@ -208,7 +208,10 @@ export default function AdminDashboard() {
             <div className="bg-dark-800 rounded-xl p-6 border border-aurora-green/20">
               <div className="space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="pb-4 border-b border-gray-700 last:border-0 last:pb-0">
+                  <div
+                    key={index}
+                    className="pb-4 border-b border-gray-700 last:border-0 last:pb-0"
+                  >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <p className="text-white font-semibold">{activity.action}</p>

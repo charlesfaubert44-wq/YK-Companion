@@ -72,7 +72,7 @@ export default function MobileBottomNav({ theme }: MobileBottomNavProps) {
         }}
       >
         <div className="flex items-center justify-around h-16 px-2">
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.map(item => {
             const Icon = item.icon;
             const active = isActive(item.path);
 
@@ -161,7 +161,8 @@ export default function MobileBottomNav({ theme }: MobileBottomNavProps) {
       {/* Animation styles */}
       <style jsx>{`
         @keyframes aurora-wave {
-          0%, 100% {
+          0%,
+          100% {
             background-position: 0% 0%;
             opacity: 0.5;
           }

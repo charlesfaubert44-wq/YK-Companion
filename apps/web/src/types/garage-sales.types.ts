@@ -166,4 +166,4 @@ export const GARAGE_SALE_TAGS = [
   'misc',
 ] as const;
 
-export type GarageSaleTag = typeof GARAGE_SALE_TAGS[number];
+export type GarageSaleTag = (typeof GARAGE_SALE_TAGS)[number];

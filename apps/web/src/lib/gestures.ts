@@ -190,7 +190,10 @@ export function getTouchDistance(touch1: Touch | React.Touch, touch2: Touch | Re
  * const center = getTouchCenter(touch1, touch2);
  * console.log(`Pinch center: (${center.x}, ${center.y})`);
  */
-export function getTouchCenter(touch1: Touch | React.Touch, touch2: Touch | React.Touch): { x: number; y: number } {
+export function getTouchCenter(
+  touch1: Touch | React.Touch,
+  touch2: Touch | React.Touch
+): { x: number; y: number } {
   return {
     x: (touch1.clientX + touch2.clientX) / 2,
     y: (touch1.clientY + touch2.clientY) / 2,
@@ -275,9 +278,7 @@ export function isMultiTouch(event: TouchEvent): boolean {
  *   }
  * };
  */
-export function normalizePointerEvent(
-  event: TouchEvent | MouseEvent
-): TouchPoint | null {
+export function normalizePointerEvent(event: TouchEvent | MouseEvent): TouchPoint | null {
   if ('touches' in event) {
     // Touch event
     if (event.touches.length === 0) return null;
@@ -360,7 +361,7 @@ export function isHorizontalSwipe(
   return (
     (angle >= 0 && angle <= tolerance) ||
     (angle >= 180 - tolerance && angle <= 180 + tolerance) ||
-    (angle >= 360 - tolerance)
+    angle >= 360 - tolerance
   );
 }
 

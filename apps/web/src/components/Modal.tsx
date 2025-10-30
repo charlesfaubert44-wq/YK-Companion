@@ -42,7 +42,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
       {/* Modal Content - Better mobile sizing */}
       <div
         className="relative w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] bg-gradient-to-b from-northern-midnight to-dark-900 rounded-xl sm:rounded-2xl shadow-2xl border border-aurora-blue/30 overflow-hidden animate-slideUp"
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         {/* Header - Compact on mobile */}
         <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-northern-midnight/95 backdrop-blur-sm border-b border-gray-700/50">
@@ -59,7 +59,9 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
               className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800/50 hover:bg-aurora-blue/20 border border-gray-700/50 hover:border-aurora-blue/50 transition-all group"
               aria-label="Close"
             >
-              <span className="text-gray-400 group-hover:text-aurora-blue text-xl sm:text-2xl leading-none">×</span>
+              <span className="text-gray-400 group-hover:text-aurora-blue text-xl sm:text-2xl leading-none">
+                ×
+              </span>
             </button>
           </div>
         </div>

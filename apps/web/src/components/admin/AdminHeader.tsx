@@ -28,7 +28,7 @@ export default function AdminHeader({ title, subtitle, onMenuClick }: AdminHeade
     }
 
     const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
-    
+
     await supabase.auth.signOut();
     router.push('/');
   };
@@ -36,7 +36,11 @@ export default function AdminHeader({ title, subtitle, onMenuClick }: AdminHeade
   const getInitials = () => {
     if (profile?.full_name) {
       const names = profile.full_name.split(' ');
-      return names.map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      return names
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
     }
     return user?.email?.[0].toUpperCase() || 'A';
   };
@@ -56,7 +60,12 @@ export default function AdminHeader({ title, subtitle, onMenuClick }: AdminHeade
               aria-label="Toggle menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           )}
@@ -68,9 +77,7 @@ export default function AdminHeader({ title, subtitle, onMenuClick }: AdminHeade
                 {title}
               </h1>
             )}
-            {subtitle && (
-              <p className="text-sm text-gray-400 mt-1">{subtitle}</p>
-            )}
+            {subtitle && <p className="text-sm text-gray-400 mt-1">{subtitle}</p>}
           </div>
         </div>
 
@@ -107,7 +114,12 @@ export default function AdminHeader({ title, subtitle, onMenuClick }: AdminHeade
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
 
@@ -115,10 +127,7 @@ export default function AdminHeader({ title, subtitle, onMenuClick }: AdminHeade
             {showUserMenu && (
               <>
                 {/* Backdrop */}
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setShowUserMenu(false)}
-                />
+                <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
 
                 {/* Menu */}
                 <div className="absolute right-0 mt-2 w-64 bg-dark-800 border border-aurora-green/20 rounded-xl shadow-2xl z-50 overflow-hidden">
@@ -201,4 +210,3 @@ export default function AdminHeader({ title, subtitle, onMenuClick }: AdminHeade
     </header>
   );
 }
-

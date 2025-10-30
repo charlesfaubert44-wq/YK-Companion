@@ -6,7 +6,9 @@ import { useLanguage } from '@/contexts/LanguageContext';
 export default function InteractiveAreYou() {
   const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
-  const [floatingStars, setFloatingStars] = useState<Array<{ id: number; x: number; y: number; delay: number }>>([]);
+  const [floatingStars, setFloatingStars] = useState<
+    Array<{ id: number; x: number; y: number; delay: number }>
+  >([]);
 
   useEffect(() => {
     // Animate in on mount
@@ -27,7 +29,7 @@ export default function InteractiveAreYou() {
       {/* Glassmorphic Container */}
       <div className="relative backdrop-blur-xl bg-gradient-to-br from-slate-900/60 via-slate-800/60 to-slate-900/60 border border-slate-700/50 rounded-t-3xl px-8 py-6 shadow-2xl">
         {/* Floating Stars Background */}
-        {floatingStars.slice(0, 8).map((star) => (
+        {floatingStars.slice(0, 8).map(star => (
           <div
             key={star.id}
             className="absolute rounded-full animate-pulse"
@@ -40,14 +42,14 @@ export default function InteractiveAreYou() {
                 star.id % 3 === 0
                   ? 'rgba(16, 185, 129, 0.4)'
                   : star.id % 3 === 1
-                  ? 'rgba(34, 211, 238, 0.4)'
-                  : 'rgba(139, 92, 246, 0.4)',
+                    ? 'rgba(34, 211, 238, 0.4)'
+                    : 'rgba(139, 92, 246, 0.4)',
               boxShadow: `0 0 12px ${
                 star.id % 3 === 0
                   ? 'rgba(16, 185, 129, 0.5)'
                   : star.id % 3 === 1
-                  ? 'rgba(34, 211, 238, 0.5)'
-                  : 'rgba(139, 92, 246, 0.5)'
+                    ? 'rgba(34, 211, 238, 0.5)'
+                    : 'rgba(139, 92, 246, 0.5)'
               }`,
               animation: `twinkle ${2 + Math.random() * 2}s ease-in-out infinite`,
               animationDelay: `${star.delay}s`,

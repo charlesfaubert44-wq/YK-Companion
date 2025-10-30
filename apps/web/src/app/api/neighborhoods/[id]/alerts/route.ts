@@ -31,13 +31,13 @@ const alertSchema = z.object({
 });
 
 // GET - Fetch neighborhood alerts
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -69,10 +69,12 @@ export async function GET(
     // Build query
     let query = supabase
       .from('neighborhood_alerts')
-      .select(`
+      .select(
+        `
         *,
         profiles:user_id(full_name, email)
-      `)
+      `
+      )
       .eq('neighborhood_id', neighborhoodId)
       .eq('status', status);
 
@@ -93,30 +95,24 @@ export async function GET(
 
     if (error) {
       console.error('Error fetching alerts:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch alerts' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch alerts' }, { status: 500 });
     }
 
     return NextResponse.json({ alerts: alerts || [] });
   } catch (error: any) {
     console.error('Alerts GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST - Create a new alert
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -160,18 +156,17 @@ export async function POST(
         ...alertData,
         status: 'active',
       })
-      .select(`
+      .select(
+        `
         *,
         profiles:user_id(full_name, email)
-      `)
+      `
+      )
       .single();
 
     if (error) {
       console.error('Error creating alert:', error);
-      return NextResponse.json(
-        { error: 'Failed to create alert' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to create alert' }, { status: 500 });
     }
 
     // Update member's alert count
@@ -179,7 +174,7 @@ export async function POST(
       .from('neighborhood_members')
       .update({
         alerts_count: (membership as any).alerts_count + 1,
-        last_active_at: new Date().toISOString()
+        last_active_at: new Date().toISOString(),
       })
       .eq('id', membership.id);
 
@@ -188,13 +183,10 @@ export async function POST(
 
     return NextResponse.json({
       alert,
-      message: 'Alert created successfully. Email notifications will be sent to members.'
+      message: 'Alert created successfully. Email notifications will be sent to members.',
     });
   } catch (error: any) {
     console.error('Alert creation error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

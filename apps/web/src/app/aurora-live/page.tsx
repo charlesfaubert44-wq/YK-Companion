@@ -123,8 +123,13 @@ function AuroraLivePage() {
         user_id: `user-${i}`,
         photo_url: `/placeholder-aurora-${i % 3}.jpg`,
         thumbnail_url: null,
-        caption: i % 3 === 0 ? 'Amazing display over Frame Lake!' : i % 3 === 1 ? 'The colors are incredible tonight 💚' : null,
-        location_lat: 62.4540 + (Math.random() - 0.5) * 0.1,
+        caption:
+          i % 3 === 0
+            ? 'Amazing display over Frame Lake!'
+            : i % 3 === 1
+              ? 'The colors are incredible tonight 💚'
+              : null,
+        location_lat: 62.454 + (Math.random() - 0.5) * 0.1,
         location_lng: -114.3718 + (Math.random() - 0.5) * 0.1,
         location_name: ['Frame Lake', 'Ingraham Trail Km 5', 'Yellowknife Bay', 'Old Town'][i % 4],
         camera_model: 'iPhone 14 Pro',
@@ -198,13 +203,17 @@ function AuroraLivePage() {
             </span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mb-6">
-            Real-time community aurora tracking. Upload your photos, join the live event, and watch as we create a stunning mosaic of tonight's display!
+            Real-time community aurora tracking. Upload your photos, join the live event, and watch
+            as we create a stunning mosaic of tonight's display!
           </p>
 
           {/* KP Index Display */}
           {currentKP && kpInfo && (
             <div className="inline-block">
-              <div className="bg-dark-800/80 backdrop-blur-lg border-2 rounded-xl p-6" style={{ borderColor: kpInfo.color }}>
+              <div
+                className="bg-dark-800/80 backdrop-blur-lg border-2 rounded-xl p-6"
+                style={{ borderColor: kpInfo.color }}
+              >
                 <div className="flex items-center gap-4">
                   <div>
                     <div className="text-sm text-gray-400 mb-1">Current KP Index</div>
@@ -234,11 +243,15 @@ function AuroraLivePage() {
             <div className="bg-dark-800/50 backdrop-blur-lg rounded-xl p-6 mb-8 border border-aurora-green/20">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-aurora-green">{activeEvent.photo_count}</div>
+                  <div className="text-3xl font-bold text-aurora-green">
+                    {activeEvent.photo_count}
+                  </div>
                   <div className="text-sm text-gray-400">Photos Uploaded</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-aurora-blue">{activeEvent.participant_count}</div>
+                  <div className="text-3xl font-bold text-aurora-blue">
+                    {activeEvent.participant_count}
+                  </div>
                   <div className="text-sm text-gray-400">Participants</div>
                 </div>
                 <div className="text-center">
@@ -248,7 +261,9 @@ function AuroraLivePage() {
                   <div className="text-sm text-gray-400">Event Duration</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-yellow-400">{activeEvent.visibility_score}/10</div>
+                  <div className="text-3xl font-bold text-yellow-400">
+                    {activeEvent.visibility_score}/10
+                  </div>
                   <div className="text-sm text-gray-400">Visibility Score</div>
                 </div>
               </div>
@@ -333,13 +348,16 @@ function AuroraLivePage() {
             <div className="text-8xl mb-6">🌙</div>
             <h2 className="text-3xl font-bold text-white mb-4">No Active Aurora Event</h2>
             <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-              When the KP index reaches 4.0 or higher, a live event will automatically start and you'll be able to upload photos and join the community!
+              When the KP index reaches 4.0 or higher, a live event will automatically start and
+              you'll be able to upload photos and join the community!
             </p>
 
             {currentKP && (
               <div className="inline-block bg-dark-800 rounded-xl p-6 border border-gray-700">
                 <div className="text-sm text-gray-400 mb-2">Current KP Index</div>
-                <div className="text-4xl font-bold text-gray-300">{currentKP.kp_index.toFixed(1)}</div>
+                <div className="text-4xl font-bold text-gray-300">
+                  {currentKP.kp_index.toFixed(1)}
+                </div>
                 <div className="text-sm text-gray-500 mt-2">Event starts at KP ≥ 4.0</div>
               </div>
             )}
@@ -363,21 +381,24 @@ function AuroraLivePage() {
             <div className="text-4xl mb-3">🤳</div>
             <h3 className="text-xl font-bold text-white mb-2">Upload Live</h3>
             <p className="text-gray-400 text-sm">
-              Share your aurora photos in real-time during active events. Get instant feedback from the community!
+              Share your aurora photos in real-time during active events. Get instant feedback from
+              the community!
             </p>
           </div>
           <div className="text-center">
             <div className="text-4xl mb-3">🎨</div>
             <h3 className="text-xl font-bold text-white mb-2">Create Mosaics</h3>
             <p className="text-gray-400 text-sm">
-              Generate beautiful mosaics from photos taken at the same moment. See the aurora from every angle!
+              Generate beautiful mosaics from photos taken at the same moment. See the aurora from
+              every angle!
             </p>
           </div>
           <div className="text-center">
             <div className="text-4xl mb-3">🏆</div>
             <h3 className="text-xl font-bold text-white mb-2">Join Community</h3>
             <p className="text-gray-400 text-sm">
-              Connect with fellow aurora chasers, share tips, and celebrate amazing captures together!
+              Connect with fellow aurora chasers, share tips, and celebrate amazing captures
+              together!
             </p>
           </div>
         </div>
@@ -392,10 +413,7 @@ function AuroraLivePage() {
       )}
 
       {showChallenges && (
-        <ChallengeLeaderboard
-          userId={userId}
-          onClose={() => setShowChallenges(false)}
-        />
+        <ChallengeLeaderboard userId={userId} onClose={() => setShowChallenges(false)} />
       )}
 
       {showForecast && (
@@ -416,10 +434,7 @@ function AuroraLivePage() {
       )}
 
       {showEmailSettings && (
-        <EmailDigestSettings
-          userId={userId}
-          onClose={() => setShowEmailSettings(false)}
-        />
+        <EmailDigestSettings userId={userId} onClose={() => setShowEmailSettings(false)} />
       )}
 
       {showBadges && (
@@ -440,17 +455,11 @@ function AuroraLivePage() {
       )}
 
       {showARCamera && currentKP && (
-        <ARCameraOverlay
-          currentKP={currentKP.kp_index}
-          onClose={() => setShowARCamera(false)}
-        />
+        <ARCameraOverlay currentKP={currentKP.kp_index} onClose={() => setShowARCamera(false)} />
       )}
 
       {selectedPhotoForAI && (
-        <AIPhotoScoring
-          photo={selectedPhotoForAI}
-          onClose={() => setSelectedPhotoForAI(null)}
-        />
+        <AIPhotoScoring photo={selectedPhotoForAI} onClose={() => setSelectedPhotoForAI(null)} />
       )}
 
       {selectedMosaicForPrint && (

@@ -5,20 +5,19 @@ import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 // GET /api/knowledge/[id] - Get a specific submission
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
     const { id } = params;
 
     const { data, error } = await supabase
       .from('knowledge_submissions')
-      .select(`
+      .select(
+        `
         *,
         category:knowledge_categories(*)
-      `)
+      `
+      )
       .eq('id', id)
       .single();
 
@@ -27,7 +26,9 @@ export async function GET(
     }
 
     // Only return if approved OR user owns the submission
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (data.status !== 'approved' && data.submitted_by !== user?.id) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
@@ -43,16 +44,15 @@ export async function GET(
 }
 
 // PATCH /api/knowledge/[id] - Update submission (user's own pending OR admin)
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
     const { id } = params;
     const body = await request.json();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -74,7 +74,8 @@ export async function PATCH(
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
-    const canEdit = profile?.is_admin || (submission.submitted_by === user.id && submission.status === 'pending');
+    const canEdit =
+      profile?.is_admin || (submission.submitted_by === user.id && submission.status === 'pending');
 
     if (!canEdit) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
@@ -100,15 +101,14 @@ export async function PATCH(
 }
 
 // DELETE /api/knowledge/[id] - Delete submission (admin only)
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
     const { id } = params;
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -124,10 +124,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Forbidden - Admin only' }, { status: 403 });
     }
 
-    const { error } = await supabase
-      .from('knowledge_submissions')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('knowledge_submissions').delete().eq('id', id);
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

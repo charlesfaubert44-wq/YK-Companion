@@ -292,7 +292,12 @@ export default function SitemapPage() {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </button>
           )}
@@ -346,7 +351,7 @@ export default function SitemapPage() {
 
         {hasChildren && isExpanded && (
           <div className="mt-2">
-            {page.children?.map((child) => (
+            {page.children?.map(child => (
               <PageLink key={child.path} page={child} level={level + 1} />
             ))}
           </div>
@@ -363,13 +368,13 @@ export default function SitemapPage() {
       return acc + pageCount;
     }, 0),
     publicPages: siteStructure.reduce((acc, section) => {
-      return acc + section.pages.filter((p) => !p.requiresAuth && !p.requiresAdmin).length;
+      return acc + section.pages.filter(p => !p.requiresAuth && !p.requiresAdmin).length;
     }, 0),
     authPages: siteStructure.reduce((acc, section) => {
-      return acc + section.pages.filter((p) => p.requiresAuth).length;
+      return acc + section.pages.filter(p => p.requiresAuth).length;
     }, 0),
     adminPages: siteStructure.reduce((acc, section) => {
-      return acc + section.pages.filter((p) => p.requiresAdmin).length;
+      return acc + section.pages.filter(p => p.requiresAdmin).length;
     }, 0),
   };
 
@@ -379,9 +384,7 @@ export default function SitemapPage() {
       <div className="relative overflow-hidden bg-gradient-to-r from-aurora-green/10 to-aurora-blue/10 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-white mb-4">
-              🗺️ Site Map & Feature Tree
-            </h1>
+            <h1 className="text-5xl font-bold text-white mb-4">🗺️ Site Map & Feature Tree</h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-6">
               Complete navigation guide to all pages and features on YK Buddy
             </p>
@@ -414,7 +417,7 @@ export default function SitemapPage() {
         {/* Quick Actions */}
         <div className="mb-8 flex flex-wrap gap-3">
           <button
-            onClick={() => setExpandedSections(new Set(siteStructure.map((s) => s.id)))}
+            onClick={() => setExpandedSections(new Set(siteStructure.map(s => s.id)))}
             className="px-4 py-2 bg-aurora-green text-white rounded-lg hover:bg-aurora-green/80 transition-colors text-sm font-medium"
           >
             Expand All
@@ -435,11 +438,14 @@ export default function SitemapPage() {
 
         {/* Site Structure */}
         <div className="space-y-8">
-          {siteStructure.map((section) => {
+          {siteStructure.map(section => {
             const isExpanded = expandedSections.has(section.id);
 
             return (
-              <div key={section.id} className="bg-dark-800 border border-gray-700 rounded-xl overflow-hidden">
+              <div
+                key={section.id}
+                className="bg-dark-800 border border-gray-700 rounded-xl overflow-hidden"
+              >
                 {/* Section Header */}
                 <button
                   onClick={() => toggleSection(section.id)}
@@ -456,14 +462,19 @@ export default function SitemapPage() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
 
                 {/* Section Content */}
                 {isExpanded && (
                   <div className="p-6">
-                    {section.pages.map((page) => (
+                    {section.pages.map(page => (
                       <PageLink key={page.path} page={page} />
                     ))}
                   </div>

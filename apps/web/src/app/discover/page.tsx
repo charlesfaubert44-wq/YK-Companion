@@ -10,29 +10,32 @@ const activityCards: CardData[] = [
   {
     id: '1',
     title: 'Aurora Viewing',
-    description: 'Experience the magical Northern Lights dancing across the night sky. Best viewing from September to April.',
+    description:
+      'Experience the magical Northern Lights dancing across the night sky. Best viewing from September to April.',
     emoji: '🌌',
     category: 'Winter Activity',
     tags: ['Night', 'Photography', 'Nature'],
-    metadata: { season: 'winter', difficulty: 'easy' }
+    metadata: { season: 'winter', difficulty: 'easy' },
   },
   {
     id: '2',
     title: 'Dog Sledding',
-    description: 'Mush through pristine snow-covered trails with a team of energetic sled dogs. An authentic northern experience!',
+    description:
+      'Mush through pristine snow-covered trails with a team of energetic sled dogs. An authentic northern experience!',
     emoji: '🐕',
     category: 'Winter Activity',
     tags: ['Adventure', 'Outdoors', 'Animals'],
-    metadata: { season: 'winter', difficulty: 'moderate' }
+    metadata: { season: 'winter', difficulty: 'moderate' },
   },
   {
     id: '3',
     title: 'Ice Fishing',
-    description: 'Try your luck catching fish through holes in the frozen lake. A peaceful winter tradition.',
+    description:
+      'Try your luck catching fish through holes in the frozen lake. A peaceful winter tradition.',
     emoji: '🎣',
     category: 'Winter Activity',
     tags: ['Fishing', 'Relaxing', 'Traditional'],
-    metadata: { season: 'winter', difficulty: 'easy' }
+    metadata: { season: 'winter', difficulty: 'easy' },
   },
   {
     id: '4',
@@ -41,7 +44,7 @@ const activityCards: CardData[] = [
     emoji: '🛷',
     category: 'Winter Activity',
     tags: ['Adventure', 'Speed', 'Outdoors'],
-    metadata: { season: 'winter', difficulty: 'moderate' }
+    metadata: { season: 'winter', difficulty: 'moderate' },
   },
   {
     id: '5',
@@ -50,7 +53,7 @@ const activityCards: CardData[] = [
     emoji: '🚣',
     category: 'Summer Activity',
     tags: ['Water', 'Exercise', 'Scenic'],
-    metadata: { season: 'summer', difficulty: 'moderate' }
+    metadata: { season: 'summer', difficulty: 'moderate' },
   },
   {
     id: '6',
@@ -59,7 +62,7 @@ const activityCards: CardData[] = [
     emoji: '🥾',
     category: 'Summer Activity',
     tags: ['Exercise', 'Nature', 'Photography'],
-    metadata: { season: 'summer', difficulty: 'varies' }
+    metadata: { season: 'summer', difficulty: 'varies' },
   },
   {
     id: '7',
@@ -68,16 +71,17 @@ const activityCards: CardData[] = [
     emoji: '🦌',
     category: 'All Season',
     tags: ['Nature', 'Photography', 'Educational'],
-    metadata: { season: 'all', difficulty: 'easy' }
+    metadata: { season: 'all', difficulty: 'easy' },
   },
   {
     id: '8',
     title: 'Indigenous Culture',
-    description: 'Learn about the rich history and traditions of the Yellowknives Dene First Nation.',
+    description:
+      'Learn about the rich history and traditions of the Yellowknives Dene First Nation.',
     emoji: '🎨',
     category: 'All Season',
     tags: ['Cultural', 'Educational', 'Indoor'],
-    metadata: { season: 'all', difficulty: 'easy' }
+    metadata: { season: 'all', difficulty: 'easy' },
   },
 ];
 
@@ -125,9 +129,7 @@ export default function DiscoverPage() {
 
       {/* Instructions */}
       <div className="pt-24 pb-6 px-4 text-center">
-        <p className="text-gray-300 text-sm mb-2">
-          Swipe right to save • Swipe left to skip
-        </p>
+        <p className="text-gray-300 text-sm mb-2">Swipe right to save • Swipe left to skip</p>
         <div className="flex justify-center gap-6 text-xs text-gray-500">
           <span>💚 Saved: {savedCards.length}</span>
           <span>⏭️ Skipped: {skippedCards.length}</span>

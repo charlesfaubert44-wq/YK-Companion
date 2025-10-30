@@ -1,7 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { PushSubscription as PushSubscriptionType, NotificationPreferences } from '@/types/aurora-enhancements.types';
+import {
+  PushSubscription as PushSubscriptionType,
+  NotificationPreferences,
+} from '@/types/aurora-enhancements.types';
 
 interface Props {
   userId: string;
@@ -222,7 +225,9 @@ export default function PushNotificationManager({ userId, onClose }: Props) {
                           max="9"
                           step="0.5"
                           value={preferences.push_kp_threshold}
-                          onChange={(e) => updatePreferences({ push_kp_threshold: parseFloat(e.target.value) })}
+                          onChange={e =>
+                            updatePreferences({ push_kp_threshold: parseFloat(e.target.value) })
+                          }
                           className="flex-1"
                         />
                         <span className="text-2xl font-bold text-aurora-green w-16 text-center">
@@ -239,12 +244,14 @@ export default function PushNotificationManager({ userId, onClose }: Props) {
                       <label className="flex items-center justify-between">
                         <div>
                           <div className="font-semibold text-white">New Event Starts</div>
-                          <div className="text-sm text-gray-400">When a new aurora event begins</div>
+                          <div className="text-sm text-gray-400">
+                            When a new aurora event begins
+                          </div>
                         </div>
                         <input
                           type="checkbox"
                           checked={preferences.push_new_event}
-                          onChange={(e) => updatePreferences({ push_new_event: e.target.checked })}
+                          onChange={e => updatePreferences({ push_new_event: e.target.checked })}
                           className="w-5 h-5"
                         />
                       </label>
@@ -257,7 +264,9 @@ export default function PushNotificationManager({ userId, onClose }: Props) {
                         <input
                           type="checkbox"
                           checked={preferences.push_photo_featured}
-                          onChange={(e) => updatePreferences({ push_photo_featured: e.target.checked })}
+                          onChange={e =>
+                            updatePreferences({ push_photo_featured: e.target.checked })
+                          }
                           className="w-5 h-5"
                         />
                       </label>
@@ -265,12 +274,16 @@ export default function PushNotificationManager({ userId, onClose }: Props) {
                       <label className="flex items-center justify-between">
                         <div>
                           <div className="font-semibold text-white">Challenge Starts</div>
-                          <div className="text-sm text-gray-400">When a photography challenge begins</div>
+                          <div className="text-sm text-gray-400">
+                            When a photography challenge begins
+                          </div>
                         </div>
                         <input
                           type="checkbox"
                           checked={preferences.push_challenge_start}
-                          onChange={(e) => updatePreferences({ push_challenge_start: e.target.checked })}
+                          onChange={e =>
+                            updatePreferences({ push_challenge_start: e.target.checked })
+                          }
                           className="w-5 h-5"
                         />
                       </label>
@@ -283,7 +296,7 @@ export default function PushNotificationManager({ userId, onClose }: Props) {
                         <input
                           type="checkbox"
                           checked={preferences.push_mosaic_ready}
-                          onChange={(e) => updatePreferences({ push_mosaic_ready: e.target.checked })}
+                          onChange={e => updatePreferences({ push_mosaic_ready: e.target.checked })}
                           className="w-5 h-5"
                         />
                       </label>
@@ -314,9 +327,9 @@ export default function PushNotificationManager({ userId, onClose }: Props) {
 
           {/* Info */}
           <div className="bg-dark-800 rounded-lg p-4 text-sm text-gray-400">
-            <strong className="text-white">Note:</strong> Push notifications require browser permission.
-            You can manage these settings in your browser at any time. Notifications will only be sent
-            when conditions match your preferences.
+            <strong className="text-white">Note:</strong> Push notifications require browser
+            permission. You can manage these settings in your browser at any time. Notifications
+            will only be sent when conditions match your preferences.
           </div>
         </div>
       </div>

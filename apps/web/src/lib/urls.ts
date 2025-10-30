@@ -134,7 +134,8 @@ export function getWeatherUrl(
 ): string {
   const urls = {
     'weather-canada': 'https://weather.gc.ca/city/pages/nt-24_metric_e.html',
-    'weather-network': 'https://www.theweathernetwork.com/ca/weather/northwest-territories/yellowknife',
+    'weather-network':
+      'https://www.theweathernetwork.com/ca/weather/northwest-territories/yellowknife',
     accuweather: 'https://www.accuweather.com/en/ca/yellowknife/x0e/weather-forecast/2873',
   };
   return urls[source];
@@ -168,7 +169,10 @@ export function getAuroraForecastUrl(
  * buildRoute('/living/garage-sales', { search: 'furniture', date: '2025-01-15' })
  * // '/living/garage-sales?search=furniture&date=2025-01-15'
  */
-export function buildRoute(path: string, params?: Record<string, string | number | boolean>): string {
+export function buildRoute(
+  path: string,
+  params?: Record<string, string | number | boolean>
+): string {
   if (!params || Object.keys(params).length === 0) return path;
 
   const searchParams = new URLSearchParams();

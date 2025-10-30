@@ -116,24 +116,27 @@ export default function Carousel({
     }
   }, [currentIndex, onSlideChange]);
 
-  const goToSlide = useCallback((index: number) => {
-    let newIndex = index;
+  const goToSlide = useCallback(
+    (index: number) => {
+      let newIndex = index;
 
-    if (loop) {
-      // Handle infinite loop
-      if (newIndex < 0) {
-        newIndex = maxIndex;
-      } else if (newIndex > maxIndex) {
-        newIndex = 0;
+      if (loop) {
+        // Handle infinite loop
+        if (newIndex < 0) {
+          newIndex = maxIndex;
+        } else if (newIndex > maxIndex) {
+          newIndex = 0;
+        }
+      } else {
+        // Clamp to bounds
+        newIndex = Math.max(0, Math.min(maxIndex, newIndex));
       }
-    } else {
-      // Clamp to bounds
-      newIndex = Math.max(0, Math.min(maxIndex, newIndex));
-    }
 
-    setCurrentIndex(newIndex);
-    setDragOffset(0);
-  }, [loop, maxIndex]);
+      setCurrentIndex(newIndex);
+      setDragOffset(0);
+    },
+    [loop, maxIndex]
+  );
 
   const goToPrevious = useCallback(() => {
     goToSlide(currentIndex - 1);
@@ -241,7 +244,9 @@ export default function Carousel({
   }
 
   const itemWidth = `calc((100% - ${gap * (itemsToShow - 1)}px) / ${itemsToShow})`;
-  const translateX = -(currentIndex * (100 / itemsToShow)) + (dragOffset / (carouselRef.current?.offsetWidth || 1)) * 100;
+  const translateX =
+    -(currentIndex * (100 / itemsToShow)) +
+    (dragOffset / (carouselRef.current?.offsetWidth || 1)) * 100;
 
   return (
     <div
@@ -301,8 +306,18 @@ export default function Carousel({
             }`}
             aria-label="Previous slide"
           >
-            <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg
+              className="w-5 h-5 md:w-6 md:h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
 
@@ -310,11 +325,18 @@ export default function Carousel({
             onClick={goToNext}
             disabled={!loop && currentIndex >= maxIndex}
             className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-dark-900/80 backdrop-blur-sm border-2 border-aurora-blue/40 text-white flex items-center justify-center transition-all hover:bg-dark-800 hover:border-aurora-blue hover:scale-110 focus:outline-none focus:ring-2 focus:ring-aurora-blue focus:ring-offset-2 focus:ring-offset-dark-900 ${
-              !loop && currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-glow'
+              !loop && currentIndex >= maxIndex
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:shadow-glow'
             }`}
             aria-label="Next slide"
           >
-            <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-5 h-5 md:w-6 md:h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -323,15 +345,17 @@ export default function Carousel({
 
       {/* Pagination Dots */}
       {showDots && totalItems > itemsToShow && (
-        <div className="flex justify-center gap-2 mt-4" role="tablist" aria-label="Slide navigation">
+        <div
+          className="flex justify-center gap-2 mt-4"
+          role="tablist"
+          aria-label="Slide navigation"
+        >
           {Array.from({ length: maxIndex + 1 }).map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-2 h-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-aurora-blue focus:ring-offset-1 focus:ring-offset-dark-900 ${
-                index === currentIndex
-                  ? 'bg-aurora-blue w-8'
-                  : 'bg-gray-600 hover:bg-gray-500'
+                index === currentIndex ? 'bg-aurora-blue w-8' : 'bg-gray-600 hover:bg-gray-500'
               }`}
               aria-label={`Go to slide ${index + 1}`}
               aria-selected={index === currentIndex}
@@ -353,10 +377,12 @@ export default function Carousel({
  * Carousel wrapper for card components
  * Provides consistent spacing and styling
  */
-export function CarouselCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`h-full ${className}`}>
-      {children}
-    </div>
-  );
+export function CarouselCard({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={`h-full ${className}`}>{children}</div>;
 }

@@ -42,7 +42,7 @@ export default function AdminUsersPage() {
     search: '',
     userType: 'all',
     adminStatus: 'all',
-    activeStatus: 'all'
+    activeStatus: 'all',
   });
 
   const [editPermissions, setEditPermissions] = useState({
@@ -53,7 +53,7 @@ export default function AdminUsersPage() {
     can_manage_garage_sales: false,
     can_view_analytics: false,
     can_manage_settings: false,
-    notes: ''
+    notes: '',
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,19 +71,22 @@ export default function AdminUsersPage() {
     // Fetch all users with their permissions
     const { data: profilesData, error: profilesError } = await supabase
       .from('profiles')
-      .select(`
+      .select(
+        `
         *,
         permissions:user_permissions(*)
-      `)
+      `
+      )
       .order('created_at', { ascending: false });
 
     if (profilesData && !profilesError) {
       // Flatten the permissions array (since it returns as array with one item)
       const formattedUsers = profilesData.map((user: any) => ({
         ...user,
-        permissions: Array.isArray(user.permissions) && user.permissions.length > 0
-          ? user.permissions[0]
-          : null
+        permissions:
+          Array.isArray(user.permissions) && user.permissions.length > 0
+            ? user.permissions[0]
+            : null,
       }));
       setUsers(formattedUsers);
     } else {
@@ -97,9 +100,10 @@ export default function AdminUsersPage() {
     // Search filter
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
-      filtered = filtered.filter(u =>
-        u.email?.toLowerCase().includes(searchLower) ||
-        u.full_name?.toLowerCase().includes(searchLower)
+      filtered = filtered.filter(
+        u =>
+          u.email?.toLowerCase().includes(searchLower) ||
+          u.full_name?.toLowerCase().includes(searchLower)
       );
     }
 
@@ -172,7 +176,7 @@ export default function AdminUsersPage() {
         can_manage_garage_sales: user.permissions.can_manage_garage_sales,
         can_view_analytics: user.permissions.can_view_analytics,
         can_manage_settings: user.permissions.can_manage_settings,
-        notes: user.permissions.notes || ''
+        notes: user.permissions.notes || '',
       });
     } else {
       // Default permissions if none exist
@@ -184,7 +188,7 @@ export default function AdminUsersPage() {
         can_manage_garage_sales: false,
         can_view_analytics: false,
         can_manage_settings: false,
-        notes: ''
+        notes: '',
       });
     }
     setShowPermissionsModal(true);
@@ -227,9 +231,11 @@ export default function AdminUsersPage() {
         u.is_admin ? 'Yes' : 'No',
         u.is_active ? 'Yes' : 'No',
         new Date(u.created_at).toLocaleDateString(),
-        u.last_login_at ? new Date(u.last_login_at).toLocaleDateString() : 'Never'
-      ])
-    ].map(row => row.join(',')).join('\n');
+        u.last_login_at ? new Date(u.last_login_at).toLocaleDateString() : 'Never',
+      ]),
+    ]
+      .map(row => row.join(','))
+      .join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -262,7 +268,10 @@ export default function AdminUsersPage() {
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-4">Access Denied</h1>
           <p className="text-gray-400 mb-6">You don't have permission to manage users.</p>
-          <Link href="/admin" className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all">
+          <Link
+            href="/admin"
+            className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
+          >
             Back to Admin Dashboard
           </Link>
         </div>
@@ -277,10 +286,15 @@ export default function AdminUsersPage() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">User Management</h1>
-            <p className="text-gray-400">Manage user accounts and permissions ({filteredUsers.length} users)</p>
+            <p className="text-gray-400">
+              Manage user accounts and permissions ({filteredUsers.length} users)
+            </p>
           </div>
           <div className="flex gap-4">
-            <Link href="/admin" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">
+            <Link
+              href="/admin"
+              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
               ← Back to Admin
             </Link>
             <button
@@ -327,7 +341,7 @@ export default function AdminUsersPage() {
                 type="text"
                 placeholder="Search by email or name..."
                 value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                onChange={e => setFilters({ ...filters, search: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               />
             </div>
@@ -336,7 +350,7 @@ export default function AdminUsersPage() {
             <div>
               <select
                 value={filters.userType}
-                onChange={(e) => setFilters({ ...filters, userType: e.target.value })}
+                onChange={e => setFilters({ ...filters, userType: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All User Types</option>
@@ -350,7 +364,7 @@ export default function AdminUsersPage() {
             <div>
               <select
                 value={filters.adminStatus}
-                onChange={(e) => setFilters({ ...filters, adminStatus: e.target.value })}
+                onChange={e => setFilters({ ...filters, adminStatus: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All Users</option>
@@ -363,7 +377,7 @@ export default function AdminUsersPage() {
             <div>
               <select
                 value={filters.activeStatus}
-                onChange={(e) => setFilters({ ...filters, activeStatus: e.target.value })}
+                onChange={e => setFilters({ ...filters, activeStatus: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All Status</option>
@@ -414,7 +428,7 @@ export default function AdminUsersPage() {
                     </td>
                   </tr>
                 ) : (
-                  paginatedUsers.map((user) => (
+                  paginatedUsers.map(user => (
                     <tr key={user.id} className="hover:bg-gray-900/30 transition-colors">
                       <td className="px-6 py-4">
                         <div>
@@ -425,20 +439,29 @@ export default function AdminUsersPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          user.user_type === 'visiting' ? 'bg-blue-500/20 text-blue-400' :
-                          user.user_type === 'living' ? 'bg-green-500/20 text-green-400' :
-                          user.user_type === 'moving' ? 'bg-purple-500/20 text-purple-400' :
-                          'bg-gray-500/20 text-gray-400'
-                        }`}>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            user.user_type === 'visiting'
+                              ? 'bg-blue-500/20 text-blue-400'
+                              : user.user_type === 'living'
+                                ? 'bg-green-500/20 text-green-400'
+                                : user.user_type === 'moving'
+                                  ? 'bg-purple-500/20 text-purple-400'
+                                  : 'bg-gray-500/20 text-gray-400'
+                          }`}
+                        >
                           {user.user_type || 'None'}
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-1">
-                          <span className={`px-3 py-1 rounded-full text-xs font-semibold inline-block w-fit ${
-                            user.is_active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                          }`}>
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-semibold inline-block w-fit ${
+                              user.is_active
+                                ? 'bg-green-500/20 text-green-400'
+                                : 'bg-red-500/20 text-red-400'
+                            }`}
+                          >
                             {user.is_active ? 'Active' : 'Suspended'}
                           </span>
                           {user.is_admin && (
@@ -527,12 +550,8 @@ export default function AdminUsersPage() {
       {showPermissionsModal && selectedUser && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-gray-800 rounded-2xl border border-gray-700 p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold text-white mb-2">
-              Manage Permissions
-            </h2>
-            <p className="text-gray-400 mb-6">
-              {selectedUser.email}
-            </p>
+            <h2 className="text-2xl font-bold text-white mb-2">Manage Permissions</h2>
+            <p className="text-gray-400 mb-6">{selectedUser.email}</p>
 
             <div className="space-y-4 mb-6">
               {/* Super Admin */}
@@ -540,37 +559,45 @@ export default function AdminUsersPage() {
                 <input
                   type="checkbox"
                   checked={editPermissions.is_super_admin}
-                  onChange={(e) => {
+                  onChange={e => {
                     const isSuperAdmin = e.target.checked;
                     setEditPermissions({
                       ...editPermissions,
                       is_super_admin: isSuperAdmin,
                       // If super admin, grant all permissions
-                      ...(isSuperAdmin ? {
-                        can_manage_users: true,
-                        can_manage_sponsors: true,
-                        can_manage_content: true,
-                        can_manage_garage_sales: true,
-                        can_view_analytics: true,
-                        can_manage_settings: true
-                      } : {})
+                      ...(isSuperAdmin
+                        ? {
+                            can_manage_users: true,
+                            can_manage_sponsors: true,
+                            can_manage_content: true,
+                            can_manage_garage_sales: true,
+                            can_view_analytics: true,
+                            can_manage_settings: true,
+                          }
+                        : {}),
                     });
                   }}
                   className="w-5 h-5"
                 />
                 <div className="flex-1">
                   <div className="font-semibold text-yellow-400">Super Admin</div>
-                  <div className="text-sm text-gray-400">Full access to all features and settings</div>
+                  <div className="text-sm text-gray-400">
+                    Full access to all features and settings
+                  </div>
                 </div>
               </label>
 
               {/* Individual Permissions */}
-              <div className={`space-y-3 ${editPermissions.is_super_admin ? 'opacity-50 pointer-events-none' : ''}`}>
+              <div
+                className={`space-y-3 ${editPermissions.is_super_admin ? 'opacity-50 pointer-events-none' : ''}`}
+              >
                 <label className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-900/70 transition-colors">
                   <input
                     type="checkbox"
                     checked={editPermissions.can_manage_users}
-                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_users: e.target.checked })}
+                    onChange={e =>
+                      setEditPermissions({ ...editPermissions, can_manage_users: e.target.checked })
+                    }
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Users</span>
@@ -580,7 +607,12 @@ export default function AdminUsersPage() {
                   <input
                     type="checkbox"
                     checked={editPermissions.can_manage_sponsors}
-                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_sponsors: e.target.checked })}
+                    onChange={e =>
+                      setEditPermissions({
+                        ...editPermissions,
+                        can_manage_sponsors: e.target.checked,
+                      })
+                    }
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Sponsors</span>
@@ -590,7 +622,12 @@ export default function AdminUsersPage() {
                   <input
                     type="checkbox"
                     checked={editPermissions.can_manage_content}
-                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_content: e.target.checked })}
+                    onChange={e =>
+                      setEditPermissions({
+                        ...editPermissions,
+                        can_manage_content: e.target.checked,
+                      })
+                    }
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Content</span>
@@ -600,7 +637,12 @@ export default function AdminUsersPage() {
                   <input
                     type="checkbox"
                     checked={editPermissions.can_manage_garage_sales}
-                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_garage_sales: e.target.checked })}
+                    onChange={e =>
+                      setEditPermissions({
+                        ...editPermissions,
+                        can_manage_garage_sales: e.target.checked,
+                      })
+                    }
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Garage Sales</span>
@@ -610,7 +652,12 @@ export default function AdminUsersPage() {
                   <input
                     type="checkbox"
                     checked={editPermissions.can_view_analytics}
-                    onChange={(e) => setEditPermissions({ ...editPermissions, can_view_analytics: e.target.checked })}
+                    onChange={e =>
+                      setEditPermissions({
+                        ...editPermissions,
+                        can_view_analytics: e.target.checked,
+                      })
+                    }
                     className="w-4 h-4"
                   />
                   <span className="text-white">View Analytics</span>
@@ -620,7 +667,12 @@ export default function AdminUsersPage() {
                   <input
                     type="checkbox"
                     checked={editPermissions.can_manage_settings}
-                    onChange={(e) => setEditPermissions({ ...editPermissions, can_manage_settings: e.target.checked })}
+                    onChange={e =>
+                      setEditPermissions({
+                        ...editPermissions,
+                        can_manage_settings: e.target.checked,
+                      })
+                    }
                     className="w-4 h-4"
                   />
                   <span className="text-white">Manage Settings</span>
@@ -629,12 +681,10 @@ export default function AdminUsersPage() {
 
               {/* Notes */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Notes
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Notes</label>
                 <textarea
                   value={editPermissions.notes}
-                  onChange={(e) => setEditPermissions({ ...editPermissions, notes: e.target.value })}
+                  onChange={e => setEditPermissions({ ...editPermissions, notes: e.target.value })}
                   rows={3}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   placeholder="Any notes about this user's permissions..."

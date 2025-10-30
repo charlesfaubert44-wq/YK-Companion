@@ -80,7 +80,10 @@ export default function AuroraPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
       <div className="container mx-auto px-4 py-12">
-        <Link href="/" className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8"
+        >
           ← YK Buddy
         </Link>
 
@@ -90,16 +93,16 @@ export default function AuroraPage() {
             <div className="inline-block px-4 py-2 bg-aurora-green/20 border border-aurora-green/30 rounded-full text-aurora-green text-sm font-semibold mb-6">
               🌌 Updated 5 minutes ago
             </div>
-            <h1 className="text-5xl font-bold text-white mb-4">
-              Aurora Forecast
-            </h1>
+            <h1 className="text-5xl font-bold text-white mb-4">Aurora Forecast</h1>
             <p className="text-xl text-gray-300">
               Real-time northern lights predictions for Yellowknife
             </p>
           </div>
 
           {/* Current Conditions - Hero Card */}
-          <div className={`bg-gradient-to-br from-aurora-green/20 to-aurora-purple/20 backdrop-blur-lg p-8 rounded-2xl border-2 ${getQualityBg(current.quality)} mb-8`}>
+          <div
+            className={`bg-gradient-to-br from-aurora-green/20 to-aurora-purple/20 backdrop-blur-lg p-8 rounded-2xl border-2 ${getQualityBg(current.quality)} mb-8`}
+          >
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h2 className="text-3xl font-bold text-white mb-2">Tonight's Forecast</h2>
@@ -162,10 +165,12 @@ export default function AuroraPage() {
               <div className="flex items-start gap-3">
                 <span className="text-3xl">✨</span>
                 <div>
-                  <p className="text-white font-semibold mb-1">Excellent viewing conditions tonight!</p>
+                  <p className="text-white font-semibold mb-1">
+                    Excellent viewing conditions tonight!
+                  </p>
                   <p className="text-gray-200 text-sm">
-                    High solar activity and clear skies. Best viewing window is between 11:00 PM and 2:00 AM.
-                    Head to a dark location away from city lights for optimal experience.
+                    High solar activity and clear skies. Best viewing window is between 11:00 PM and
+                    2:00 AM. Head to a dark location away from city lights for optimal experience.
                   </p>
                 </div>
               </div>
@@ -198,16 +203,18 @@ export default function AuroraPage() {
                                   day.quality === 'excellent'
                                     ? 'bg-aurora-green'
                                     : day.quality === 'good'
-                                    ? 'bg-aurora-blue'
-                                    : day.quality === 'fair'
-                                    ? 'bg-yellow-400'
-                                    : 'bg-gray-400'
+                                      ? 'bg-aurora-blue'
+                                      : day.quality === 'fair'
+                                        ? 'bg-yellow-400'
+                                        : 'bg-gray-400'
                                 }`}
                                 style={{ height: `${(day.kp / 9) * 100}%` }}
                               />
                             </div>
                           </div>
-                          <div className={`font-bold capitalize ${getQualityColor(day.quality)} w-24 text-right`}>
+                          <div
+                            className={`font-bold capitalize ${getQualityColor(day.quality)} w-24 text-right`}
+                          >
                             {day.quality}
                           </div>
                         </div>

@@ -19,14 +19,7 @@ export default function LogbookGrid({
   limit = 20,
   compact = false,
 }: LogbookGridProps) {
-  const {
-    entries,
-    loading,
-    error,
-    hasMore,
-    loadMore,
-    toggleLike,
-  } = useVisitorLogbook({
+  const { entries, loading, error, hasMore, loadMore, toggleLike } = useVisitorLogbook({
     autoFetch: true,
     featured,
     experienceType,
@@ -37,8 +30,18 @@ export default function LogbookGrid({
   if (error) {
     return (
       <div className="bg-red-500/10 border border-red-500 rounded-lg p-6 text-center">
-        <svg className="w-12 h-12 mx-auto mb-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <svg
+          className="w-12 h-12 mx-auto mb-3 text-red-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
         </svg>
         <p className="text-red-400 font-medium mb-2">Failed to load visitor entries</p>
         <p className="text-gray-400 text-sm">{error}</p>
@@ -50,7 +53,10 @@ export default function LogbookGrid({
     return (
       <div className="space-y-6">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-dark-800 border border-gray-700 rounded-xl overflow-hidden animate-pulse">
+          <div
+            key={i}
+            className="bg-dark-800 border border-gray-700 rounded-xl overflow-hidden animate-pulse"
+          >
             <div className="aspect-[16/9] bg-dark-700" />
             <div className="p-5 space-y-3">
               <div className="h-6 bg-dark-700 rounded w-3/4" />
@@ -70,13 +76,21 @@ export default function LogbookGrid({
   if (entries.length === 0) {
     return (
       <div className="bg-dark-800 border border-gray-700 rounded-xl p-12 text-center">
-        <svg className="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        <svg
+          className="w-16 h-16 mx-auto mb-4 text-gray-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+          />
         </svg>
         <h3 className="text-xl font-bold text-white mb-2">No Entries Yet</h3>
-        <p className="text-gray-400">
-          Be the first to share your Yellowknife experience!
-        </p>
+        <p className="text-gray-400">Be the first to share your Yellowknife experience!</p>
       </div>
     );
   }
@@ -85,13 +99,8 @@ export default function LogbookGrid({
     <div className="space-y-6">
       {/* Entries Grid */}
       <div className={compact ? 'space-y-3' : 'grid grid-cols-1 lg:grid-cols-2 gap-6'}>
-        {entries.map((entry) => (
-          <LogbookEntryCard
-            key={entry.id}
-            entry={entry}
-            onLike={toggleLike}
-            compact={compact}
-          />
+        {entries.map(entry => (
+          <LogbookEntryCard key={entry.id} entry={entry} onLike={toggleLike} compact={compact} />
         ))}
       </div>
 
@@ -106,8 +115,19 @@ export default function LogbookGrid({
             {loading ? (
               <span className="flex items-center gap-2">
                 <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
                 </svg>
                 Loading...
               </span>

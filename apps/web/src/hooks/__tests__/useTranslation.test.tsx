@@ -50,7 +50,7 @@ describe('useTranslation', () => {
     });
 
     expect(result.current.language).toBe('en');
-    
+
     // Change to French
     result.current.setLanguage('fr');
     expect(result.current.language).toBe('fr');
@@ -63,14 +63,21 @@ describe('useTranslation', () => {
     });
 
     const languages: Array<'en' | 'fr' | 'zh' | 'ja' | 'ko' | 'es' | 'de' | 'vi' | 'tl'> = [
-      'en', 'fr', 'zh', 'ja', 'ko', 'es', 'de', 'vi', 'tl'
+      'en',
+      'fr',
+      'zh',
+      'ja',
+      'ko',
+      'es',
+      'de',
+      'vi',
+      'tl',
     ];
 
-    languages.forEach((lang) => {
+    languages.forEach(lang => {
       result.current.setLanguage(lang);
       expect(result.current.language).toBe(lang);
       expect(result.current.t('home')).toBeTruthy(); // Should have a translation
     });
   });
 });
-

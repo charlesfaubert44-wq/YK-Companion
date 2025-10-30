@@ -17,7 +17,7 @@ export function ExampleFullPage() {
       breadcrumbs={[
         { label: 'YK Buddy', href: '/' },
         { label: 'Living', href: '/living' },
-        { label: 'Garage Sales' }
+        { label: 'Garage Sales' },
       ]}
     >
       <PageHeader
@@ -51,9 +51,7 @@ export function ExampleSimplePage() {
       />
 
       {/* Page content */}
-      <div className="space-y-6">
-        {/* Content here */}
-      </div>
+      <div className="space-y-6">{/* Content here */}</div>
     </AppLayout>
   );
 }
@@ -65,11 +63,7 @@ export function ExampleSimplePage() {
 export function ExampleMinimalPage() {
   return (
     <AppLayout showBanner={false} showMenu={false}>
-      <PageHeader
-        icon="🔐"
-        title="Admin Dashboard"
-        description="Manage your YK Buddy settings."
-      />
+      <PageHeader icon="🔐" title="Admin Dashboard" description="Manage your YK Buddy settings." />
 
       {/* Admin content */}
     </AppLayout>
@@ -84,12 +78,7 @@ import { BushPlaneIcon } from '@/components/NorthernIcons';
 
 export function ExampleCustomIcon() {
   return (
-    <AppLayout
-      breadcrumbs={[
-        { label: 'YK Buddy', href: '/' },
-        { label: 'Visiting' }
-      ]}
-    >
+    <AppLayout breadcrumbs={[{ label: 'YK Buddy', href: '/' }, { label: 'Visiting' }]}>
       <PageHeader
         icon={<BushPlaneIcon className="w-16 h-16 text-aurora-green" />}
         title="Planning Your Visit"
@@ -115,7 +104,7 @@ export function ExampleStandaloneBreadcrumbs() {
           { label: 'YK Buddy', href: '/' },
           { label: 'Living', href: '/living' },
           { label: 'Events', href: '/living/events' },
-          { label: 'Folk on the Rocks' }
+          { label: 'Folk on the Rocks' },
         ]}
       />
 
@@ -155,12 +144,7 @@ export default function MyPage() {
 // AFTER (simplified and consistent):
 export function MyPageRefactored() {
   return (
-    <AppLayout
-      breadcrumbs={[
-        { label: 'YK Buddy', href: '/' },
-        { label: 'Living' }
-      ]}
-    >
+    <AppLayout breadcrumbs={[{ label: 'YK Buddy', href: '/' }, { label: 'Living' }]}>
       <PageHeader
         icon="🏠"
         title="Living in Yellowknife"
@@ -168,9 +152,7 @@ export function MyPageRefactored() {
       />
 
       {/* Your existing content - no wrapper divs needed! */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Content here */}
-      </div>
+      <div className="grid md:grid-cols-2 gap-6">{/* Content here */}</div>
     </AppLayout>
   );
 }
@@ -187,7 +169,7 @@ export function ExampleDeepPage() {
         { label: 'Living', href: '/living' },
         { label: 'Community', href: '/living/community' },
         { label: 'Recreation', href: '/living/community/recreation' },
-        { label: 'Fieldhouse' }
+        { label: 'Fieldhouse' },
       ]}
     >
       <PageHeader

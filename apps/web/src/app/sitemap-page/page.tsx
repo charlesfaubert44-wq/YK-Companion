@@ -172,7 +172,10 @@ export default function SitemapPage() {
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
       {/* Top Navigation */}
       <div className="fixed top-6 left-6 right-6 z-50 flex justify-between items-center">
-        <Link href="/" className="text-gray-400 hover:text-aurora-green transition-colors text-sm flex items-center gap-2">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-aurora-green transition-colors text-sm flex items-center gap-2"
+        >
           <span>←</span> Back to Home
         </Link>
         <LanguageSelector />
@@ -199,7 +202,10 @@ export default function SitemapPage() {
             const categoryPages = pages.filter(p => p.category === category);
 
             return (
-              <div key={category} className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
+              <div
+                key={category}
+                className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8"
+              >
                 <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
                   <span className="text-aurora-blue">{category}</span>
                   <span className="text-sm text-gray-500 font-normal">
@@ -209,16 +215,10 @@ export default function SitemapPage() {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   {categoryPages.map(page => (
-                    <Link
-                      key={page.path}
-                      href={page.path}
-                      className="group"
-                    >
+                    <Link key={page.path} href={page.path} className="group">
                       <div className="bg-gray-900/50 border border-gray-700/50 rounded-xl p-6 hover:border-aurora-green/50 transition-all hover:shadow-aurora">
                         <div className="flex items-start gap-4">
-                          <div className="text-4xl flex-shrink-0">
-                            {page.icon}
-                          </div>
+                          <div className="text-4xl flex-shrink-0">{page.icon}</div>
                           <div className="flex-1 min-w-0">
                             <h3 className="text-lg font-bold text-white mb-2 group-hover:text-aurora-green transition-colors">
                               {page.title}
@@ -256,15 +256,21 @@ export default function SitemapPage() {
               <p className="text-xs text-gray-400 mt-1">Get specific knowledge submission</p>
             </div>
             <div className="bg-gray-900/50 border border-gray-700/50 rounded-lg p-4">
-              <code className="text-sm text-aurora-blue font-mono">GET /api/knowledge/categories</code>
+              <code className="text-sm text-aurora-blue font-mono">
+                GET /api/knowledge/categories
+              </code>
               <p className="text-xs text-gray-400 mt-1">List all knowledge categories</p>
             </div>
             <div className="bg-gray-900/50 border border-gray-700/50 rounded-lg p-4">
-              <code className="text-sm text-aurora-blue font-mono">GET /api/knowledge/admin/stats</code>
+              <code className="text-sm text-aurora-blue font-mono">
+                GET /api/knowledge/admin/stats
+              </code>
               <p className="text-xs text-gray-400 mt-1">Admin statistics for submissions</p>
             </div>
             <div className="bg-gray-900/50 border border-gray-700/50 rounded-lg p-4">
-              <code className="text-sm text-aurora-blue font-mono">POST /api/knowledge/admin/review</code>
+              <code className="text-sm text-aurora-blue font-mono">
+                POST /api/knowledge/admin/review
+              </code>
               <p className="text-xs text-gray-400 mt-1">Approve or reject knowledge submissions</p>
             </div>
           </div>
@@ -307,12 +313,8 @@ export default function SitemapPage() {
         {/* Footer */}
         <footer className="mt-16 pt-8 border-t border-gray-700/30">
           <div className="text-center space-y-2">
-            <p className="text-sm text-gray-400">
-              {t('footer')}
-            </p>
-            <p className="text-xs text-gray-500">
-              {t('frozen_shield')}
-            </p>
+            <p className="text-sm text-gray-400">{t('footer')}</p>
+            <p className="text-xs text-gray-500">{t('frozen_shield')}</p>
           </div>
         </footer>
       </div>

@@ -62,7 +62,9 @@ export default function RecentLogbookWidget({
               ✨ Visitor Stories
             </h2>
             <p className="text-gray-400 text-sm mt-1">
-              {featured ? 'Featured experiences from our visitors' : 'Recent experiences from our visitors'}
+              {featured
+                ? 'Featured experiences from our visitors'
+                : 'Recent experiences from our visitors'}
             </p>
           </div>
           {showViewAll && (
@@ -72,7 +74,12 @@ export default function RecentLogbookWidget({
             >
               View All
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </Link>
           )}
@@ -81,13 +88,8 @@ export default function RecentLogbookWidget({
 
       {/* Entries */}
       <div className="p-6 space-y-4">
-        {entries.map((entry) => (
-          <LogbookEntryCard
-            key={entry.id}
-            entry={entry}
-            onLike={toggleLike}
-            compact={compact}
-          />
+        {entries.map(entry => (
+          <LogbookEntryCard key={entry.id} entry={entry} onLike={toggleLike} compact={compact} />
         ))}
       </div>
 

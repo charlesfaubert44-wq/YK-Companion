@@ -34,9 +34,9 @@ describe('Header Component', () => {
     renderWithProviders(<Header />);
 
     // Language selector should be present
-    const languageSelector = screen.queryByRole('button', { name: /language/i }) || 
-                            screen.queryByRole('combobox');
-    
+    const languageSelector =
+      screen.queryByRole('button', { name: /language/i }) || screen.queryByRole('combobox');
+
     // At minimum, there should be some way to change language
     expect(languageSelector || screen.queryByText(/EN|English/i)).toBeTruthy();
   });
@@ -46,10 +46,11 @@ describe('Header Component', () => {
     renderWithProviders(<Header />);
 
     // Should show either "Sign In" or user info
-    const authElement = screen.queryByText(/Sign In/i) || 
-                       screen.queryByText(/Sign Out/i) ||
-                       screen.queryByRole('button', { name: /account/i });
-    
+    const authElement =
+      screen.queryByText(/Sign In/i) ||
+      screen.queryByText(/Sign Out/i) ||
+      screen.queryByRole('button', { name: /account/i });
+
     expect(authElement).toBeTruthy();
   });
 
@@ -58,9 +59,10 @@ describe('Header Component', () => {
     const { container } = renderWithProviders(<Header />);
 
     // Look for mobile menu button (hamburger)
-    const mobileMenuButton = container.querySelector('[aria-label*="menu"]') ||
-                            container.querySelector('[class*="hamburger"]') ||
-                            screen.queryByRole('button', { name: /menu/i });
+    const mobileMenuButton =
+      container.querySelector('[aria-label*="menu"]') ||
+      container.querySelector('[class*="hamburger"]') ||
+      screen.queryByRole('button', { name: /menu/i });
 
     // Should have some mechanism for mobile navigation
     expect(mobileMenuButton || container.querySelector('nav')).toBeTruthy();
@@ -71,9 +73,8 @@ describe('Header Component', () => {
     renderWithProviders(<Header />);
 
     // Should have a nav element
-    const nav = screen.queryByRole('navigation') || 
-               document.querySelector('nav');
-    
+    const nav = screen.queryByRole('navigation') || document.querySelector('nav');
+
     expect(nav).toBeTruthy();
   });
 
@@ -85,16 +86,16 @@ describe('Header Component', () => {
     // This is implementation-specific, but there should be some indication
     const homeLink = screen.getByText(/Home/i);
     expect(homeLink).toBeInTheDocument();
-    
+
     // Check if link has some active class or aria-current
     const link = homeLink.closest('a');
     if (link) {
-      const hasActiveIndicator = link.getAttribute('aria-current') === 'page' ||
-                                 link.className.includes('active') ||
-                                 link.className.includes('current');
+      const hasActiveIndicator =
+        link.getAttribute('aria-current') === 'page' ||
+        link.className.includes('active') ||
+        link.className.includes('current');
       // This test is lenient - implementation may vary
       expect(link).toBeTruthy();
     }
   });
 });
-

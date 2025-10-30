@@ -56,7 +56,7 @@ export default function SponsorAdmin() {
     payment_status: 'pending',
     contact_email: '',
     contact_name: '',
-    notes: ''
+    notes: '',
   });
 
   useEffect(() => {
@@ -127,9 +127,7 @@ export default function SponsorAdmin() {
         if (error) throw error;
         alert('Sponsor updated successfully!');
       } else {
-        const { error } = await supabase
-          .from('premium_sponsors')
-          .insert([formData]);
+        const { error } = await supabase.from('premium_sponsors').insert([formData]);
 
         if (error) throw error;
         alert('Sponsor created successfully!');
@@ -148,10 +146,7 @@ export default function SponsorAdmin() {
     if (!confirm('Are you sure you want to delete this sponsor?')) return;
 
     try {
-      const { error } = await supabase
-        .from('premium_sponsors')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('premium_sponsors').delete().eq('id', id);
 
       if (error) throw error;
       alert('Sponsor deleted successfully!');
@@ -182,7 +177,7 @@ export default function SponsorAdmin() {
       payment_status: 'pending',
       contact_email: '',
       contact_name: '',
-      notes: ''
+      notes: '',
     });
   };
 
@@ -234,44 +229,38 @@ export default function SponsorAdmin() {
                   type="text"
                   required
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={e => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Tagline
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Tagline</label>
                 <input
                   type="text"
                   value={formData.tagline}
-                  onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+                  onChange={e => setFormData({ ...formData, tagline: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Website URL
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Website URL</label>
                 <input
                   type="url"
                   value={formData.link}
-                  onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                  onChange={e => setFormData({ ...formData, link: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                   placeholder="https://example.com"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Position *
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Position *</label>
                 <select
                   required
                   value={formData.position}
-                  onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                  onChange={e => setFormData({ ...formData, position: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 >
                   <option value="home_top">Home - Top</option>
@@ -284,13 +273,11 @@ export default function SponsorAdmin() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Plan Type *
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Plan Type *</label>
                 <select
                   required
                   value={formData.plan_type}
-                  onChange={(e) => setFormData({ ...formData, plan_type: e.target.value })}
+                  onChange={e => setFormData({ ...formData, plan_type: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 >
                   <option value="basic">Basic</option>
@@ -308,45 +295,41 @@ export default function SponsorAdmin() {
                   required
                   min="1"
                   value={formData.duration_days}
-                  onChange={(e) => setFormData({ ...formData, duration_days: parseInt(e.target.value) })}
+                  onChange={e =>
+                    setFormData({ ...formData, duration_days: parseInt(e.target.value) })
+                  }
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Start Date *
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Start Date *</label>
                 <input
                   type="date"
                   required
                   value={formData.start_date}
-                  onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                  onChange={e => setFormData({ ...formData, start_date: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  End Date *
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">End Date *</label>
                 <input
                   type="date"
                   required
                   value={formData.end_date}
-                  onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                  onChange={e => setFormData({ ...formData, end_date: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Contact Name
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Contact Name</label>
                 <input
                   type="text"
                   value={formData.contact_name}
-                  onChange={(e) => setFormData({ ...formData, contact_name: e.target.value })}
+                  onChange={e => setFormData({ ...formData, contact_name: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
@@ -358,7 +341,7 @@ export default function SponsorAdmin() {
                 <input
                   type="email"
                   value={formData.contact_email}
-                  onChange={(e) => setFormData({ ...formData, contact_email: e.target.value })}
+                  onChange={e => setFormData({ ...formData, contact_email: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
@@ -369,7 +352,7 @@ export default function SponsorAdmin() {
                 </label>
                 <select
                   value={formData.payment_status}
-                  onChange={(e) => setFormData({ ...formData, payment_status: e.target.value })}
+                  onChange={e => setFormData({ ...formData, payment_status: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 >
                   <option value="pending">Pending</option>
@@ -387,20 +370,20 @@ export default function SponsorAdmin() {
                   type="number"
                   step="0.01"
                   value={formData.total_price}
-                  onChange={(e) => setFormData({ ...formData, total_price: parseFloat(e.target.value) })}
+                  onChange={e =>
+                    setFormData({ ...formData, total_price: parseFloat(e.target.value) })
+                  }
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Notes
-              </label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Notes</label>
               <textarea
                 rows={3}
                 value={formData.notes}
-                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                onChange={e => setFormData({ ...formData, notes: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-blue"
               />
             </div>
@@ -410,7 +393,7 @@ export default function SponsorAdmin() {
                 type="checkbox"
                 id="is_active"
                 checked={formData.is_active}
-                onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
+                onChange={e => setFormData({ ...formData, is_active: e.target.checked })}
                 className="w-4 h-4 text-aurora-blue bg-gray-900 border-gray-700 rounded focus:ring-aurora-blue"
               />
               <label htmlFor="is_active" className="ml-2 text-sm text-gray-300">
@@ -457,7 +440,7 @@ export default function SponsorAdmin() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
-              {sponsors.map((sponsor) => (
+              {sponsors.map(sponsor => (
                 <tr key={sponsor.id} className="hover:bg-gray-900/30">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-white">{sponsor.name}</div>
@@ -469,22 +452,32 @@ export default function SponsorAdmin() {
                     {sponsor.position}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                      sponsor.plan_type === 'enterprise' ? 'bg-yellow-500/20 text-yellow-400' :
-                      sponsor.plan_type === 'premium' ? 'bg-aurora-purple/20 text-aurora-purple' :
-                      'bg-aurora-blue/20 text-aurora-blue'
-                    }`}>
+                    <span
+                      className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        sponsor.plan_type === 'enterprise'
+                          ? 'bg-yellow-500/20 text-yellow-400'
+                          : sponsor.plan_type === 'premium'
+                            ? 'bg-aurora-purple/20 text-aurora-purple'
+                            : 'bg-aurora-blue/20 text-aurora-blue'
+                      }`}
+                    >
                       {sponsor.plan_type}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     <div>{new Date(sponsor.start_date).toLocaleDateString()}</div>
-                    <div className="text-xs text-gray-500">to {new Date(sponsor.end_date).toLocaleDateString()}</div>
+                    <div className="text-xs text-gray-500">
+                      to {new Date(sponsor.end_date).toLocaleDateString()}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                      sponsor.is_active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                    }`}>
+                    <span
+                      className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        sponsor.is_active
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-red-500/20 text-red-400'
+                      }`}
+                    >
                       {sponsor.is_active ? 'Active' : 'Inactive'}
                     </span>
                   </td>

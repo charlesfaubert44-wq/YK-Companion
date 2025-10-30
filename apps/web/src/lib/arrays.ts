@@ -13,11 +13,7 @@
  * sortByProperty(sales, 'sale_date', 'asc') // Earliest dates first
  * sortByProperty(users, 'created_at', 'desc') // Newest first
  */
-export function sortByProperty<T>(
-  array: T[],
-  key: keyof T,
-  order: 'asc' | 'desc' = 'asc'
-): T[] {
+export function sortByProperty<T>(array: T[], key: keyof T, order: 'asc' | 'desc' = 'asc'): T[] {
   return [...array].sort((a, b) => {
     const aVal = a[key];
     const bVal = b[key];
@@ -69,7 +65,7 @@ export function sortByMultiple<T>(
  */
 export function uniqueBy<T>(array: T[], key: keyof T): T[] {
   const seen = new Set();
-  return array.filter((item) => {
+  return array.filter(item => {
     const value = item[key];
     if (seen.has(value)) return false;
     seen.add(value);
@@ -137,11 +133,11 @@ export function getRandomItems<T>(array: T[], count: number): T[] {
  */
 export function difference<T>(array1: T[], array2: T[], key?: keyof T): T[] {
   if (!key) {
-    return array1.filter((item) => !array2.includes(item));
+    return array1.filter(item => !array2.includes(item));
   }
 
-  const set2 = new Set(array2.map((item) => item[key]));
-  return array1.filter((item) => !set2.has(item[key]));
+  const set2 = new Set(array2.map(item => item[key]));
+  return array1.filter(item => !set2.has(item[key]));
 }
 
 /**
@@ -156,11 +152,11 @@ export function difference<T>(array1: T[], array2: T[], key?: keyof T): T[] {
  */
 export function intersection<T>(array1: T[], array2: T[], key?: keyof T): T[] {
   if (!key) {
-    return array1.filter((item) => array2.includes(item));
+    return array1.filter(item => array2.includes(item));
   }
 
-  const set2 = new Set(array2.map((item) => item[key]));
-  return array1.filter((item) => set2.has(item[key]));
+  const set2 = new Set(array2.map(item => item[key]));
+  return array1.filter(item => set2.has(item[key]));
 }
 
 /**
@@ -172,14 +168,11 @@ export function intersection<T>(array1: T[], array2: T[], key?: keyof T): T[] {
  * const [active, inactive] = partition(sales, s => s.status === 'active');
  * const [today, future] = partition(events, e => isToday(e.date));
  */
-export function partition<T>(
-  array: T[],
-  predicate: (item: T) => boolean
-): [T[], T[]] {
+export function partition<T>(array: T[], predicate: (item: T) => boolean): [T[], T[]] {
   const matching: T[] = [];
   const nonMatching: T[] = [];
 
-  array.forEach((item) => {
+  array.forEach(item => {
     if (predicate(item)) {
       matching.push(item);
     } else {
@@ -202,7 +195,7 @@ export function partition<T>(
 export function countOccurrences<T>(array: T[], key?: keyof T): Record<string, number> {
   const counts: Record<string, number> = {};
 
-  array.forEach((item) => {
+  array.forEach(item => {
     const value = key ? String(item[key]) : String(item);
     counts[value] = (counts[value] || 0) + 1;
   });
@@ -224,7 +217,7 @@ export function mostCommon<T>(array: T[], key?: keyof T): T | string | null {
 
   const counts = countOccurrences(array, key);
   const maxCount = Math.max(...Object.values(counts));
-  const mostCommonValue = Object.keys(counts).find((k) => counts[k] === maxCount);
+  const mostCommonValue = Object.keys(counts).find(k => counts[k] === maxCount);
 
   return mostCommonValue || null;
 }
@@ -332,24 +325,20 @@ export function moveItem<T>(array: T[], fromIndex: number, toIndex: number): T[]
  * filterBySearch(sales, ['furniture', 'tools'], ['title', 'description', 'items_description'])
  * // Returns sales that mention furniture OR tools in any of those fields
  */
-export function filterBySearch<T>(
-  array: T[],
-  searchTerms: string[],
-  keys: (keyof T)[]
-): T[] {
+export function filterBySearch<T>(array: T[], searchTerms: string[], keys: (keyof T)[]): T[] {
   if (searchTerms.length === 0) return array;
 
-  const lowerTerms = searchTerms.map((term) => term.toLowerCase());
+  const lowerTerms = searchTerms.map(term => term.toLowerCase());
 
-  return array.filter((item) => {
-    return lowerTerms.some((term) => {
-      return keys.some((key) => {
+  return array.filter(item => {
+    return lowerTerms.some(term => {
+      return keys.some(key => {
         const value = item[key];
         if (typeof value === 'string') {
           return value.toLowerCase().includes(term);
         }
         if (Array.isArray(value)) {
-          return value.some((v) => String(v).toLowerCase().includes(term));
+          return value.some(v => String(v).toLowerCase().includes(term));
         }
         return false;
       });

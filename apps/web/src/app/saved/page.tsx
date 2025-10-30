@@ -11,7 +11,7 @@ type TabType = 'garage-sales' | 'articles';
 
 /**
  * Saved Items Page
- * 
+ *
  * Displays user's saved/favorited items organized by tabs.
  * Includes garage sales, knowledge articles, and other saved content.
  */
@@ -50,7 +50,7 @@ export default function SavedPage() {
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Back Button */}
-        <Link 
+        <Link
           href="/profile"
           className="inline-flex items-center gap-2 text-gray-400 hover:text-aurora-green transition mb-6"
         >
@@ -59,17 +59,13 @@ export default function SavedPage() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            📑 Saved Items
-          </h1>
-          <p className="text-gray-400">
-            Your bookmarked content and favorites
-          </p>
+          <h1 className="text-4xl font-bold text-white mb-2">📑 Saved Items</h1>
+          <p className="text-gray-400">Your bookmarked content and favorites</p>
         </div>
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 justify-center">
-          {tabs.map((tab) => (
+          {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
@@ -92,13 +88,9 @@ export default function SavedPage() {
 
         {/* Tab Content */}
         <div className="mt-8">
-          {activeTab === 'garage-sales' && (
-            <SavedGarageSales userId={user.id} />
-          )}
-          
-          {activeTab === 'articles' && (
-            <SavedArticles userId={user.id} />
-          )}
+          {activeTab === 'garage-sales' && <SavedGarageSales userId={user.id} />}
+
+          {activeTab === 'articles' && <SavedArticles userId={user.id} />}
         </div>
       </div>
     </div>

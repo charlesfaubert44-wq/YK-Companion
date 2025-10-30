@@ -15,13 +15,13 @@ const approvalSchema = z.object({
 });
 
 // POST - Approve or reject a join request
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -68,10 +68,7 @@ export async function POST(
       .single();
 
     if (fetchError || !membership) {
-      return NextResponse.json(
-        { error: 'Membership request not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Membership request not found' }, { status: 404 });
     }
 
     if (membership.status !== 'pending') {
@@ -98,10 +95,7 @@ export async function POST(
 
     if (updateError) {
       console.error('Error updating membership:', updateError);
-      return NextResponse.json(
-        { error: 'Failed to process request' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to process request' }, { status: 500 });
     }
 
     // TODO: Send email notification to the user
@@ -109,15 +103,10 @@ export async function POST(
 
     return NextResponse.json({
       membership: updatedMembership,
-      message: action === 'approve'
-        ? 'Member approved successfully'
-        : 'Request rejected',
+      message: action === 'approve' ? 'Member approved successfully' : 'Request rejected',
     });
   } catch (error: any) {
     console.error('Approval error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

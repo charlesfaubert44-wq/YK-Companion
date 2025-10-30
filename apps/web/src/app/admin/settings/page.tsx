@@ -31,9 +31,7 @@ export default function AdminSettingsPage() {
       setDebugInfo('Creating query...');
       console.log('[1] Creating Supabase query');
 
-      const query = supabase
-        .from('site_settings')
-        .select('key, value, category, description');
+      const query = supabase.from('site_settings').select('key, value, category, description');
 
       console.log('[2] Query object created, executing...');
       setDebugInfo('Executing query...');
@@ -72,15 +70,16 @@ export default function AdminSettingsPage() {
   const updateSetting = async (key: string, value: any) => {
     setSaving(true);
 
-    const { error } = await supabase
-      .from('site_settings')
-      .upsert({
+    const { error } = await supabase.from('site_settings').upsert(
+      {
         key,
         value: value, // Store as plain text
-        updated_at: new Date().toISOString()
-      }, {
-        onConflict: 'key'
-      });
+        updated_at: new Date().toISOString(),
+      },
+      {
+        onConflict: 'key',
+      }
+    );
 
     if (!error) {
       setSettings({ ...settings, [key]: value });
@@ -100,12 +99,10 @@ export default function AdminSettingsPage() {
     const updates = Object.keys(settings).map(key => ({
       key,
       value: settings[key], // Store as plain text
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     }));
 
-    const { error } = await supabase
-      .from('site_settings')
-      .upsert(updates, { onConflict: 'key' });
+    const { error } = await supabase.from('site_settings').upsert(updates, { onConflict: 'key' });
 
     if (!error) {
       alert('All settings saved successfully');
@@ -121,9 +118,7 @@ export default function AdminSettingsPage() {
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center">
         <div className="text-white text-center">
           <div className="text-xl mb-4">Loading settings...</div>
-          {debugInfo && (
-            <div className="text-sm text-aurora-purple">Debug: {debugInfo}</div>
-          )}
+          {debugInfo && <div className="text-sm text-aurora-purple">Debug: {debugInfo}</div>}
         </div>
       </div>
     );
@@ -138,7 +133,10 @@ export default function AdminSettingsPage() {
             <h1 className="text-4xl font-bold text-white mb-2">Site Settings</h1>
             <p className="text-gray-400">Configure platform-wide settings</p>
           </div>
-          <Link href="/admin" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">
+          <Link
+            href="/admin"
+            className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+          >
             ← Back to Admin
           </Link>
         </div>
@@ -150,25 +148,21 @@ export default function AdminSettingsPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Site Name
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Site Name</label>
                 <input
                   type="text"
                   value={settings.site_name || 'YK Buddy'}
-                  onChange={(e) => setSettings({ ...settings, site_name: e.target.value })}
+                  onChange={e => setSettings({ ...settings, site_name: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Site Tagline
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Site Tagline</label>
                 <input
                   type="text"
                   value={settings.site_tagline || 'Your Yellowknife Companion'}
-                  onChange={(e) => setSettings({ ...settings, site_tagline: e.target.value })}
+                  onChange={e => setSettings({ ...settings, site_tagline: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
               </div>
@@ -180,7 +174,7 @@ export default function AdminSettingsPage() {
                 <input
                   type="email"
                   value={settings.contact_email || 'hello@ykbuddy.ca'}
-                  onChange={(e) => setSettings({ ...settings, contact_email: e.target.value })}
+                  onChange={e => setSettings({ ...settings, contact_email: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
               </div>
@@ -191,7 +185,7 @@ export default function AdminSettingsPage() {
                 </label>
                 <select
                   value={settings.default_language || 'en'}
-                  onChange={(e) => setSettings({ ...settings, default_language: e.target.value })}
+                  onChange={e => setSettings({ ...settings, default_language: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 >
                   <option value="en">English</option>
@@ -207,12 +201,10 @@ export default function AdminSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Timezone
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Timezone</label>
                 <select
                   value={settings.timezone || 'America/Yellowknife'}
-                  onChange={(e) => setSettings({ ...settings, timezone: e.target.value })}
+                  onChange={e => setSettings({ ...settings, timezone: e.target.value })}
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 >
                   <option value="America/Yellowknife">America/Yellowknife</option>
@@ -227,12 +219,14 @@ export default function AdminSettingsPage() {
                   <input
                     type="checkbox"
                     checked={settings.maintenance_mode === true}
-                    onChange={(e) => setSettings({ ...settings, maintenance_mode: e.target.checked })}
+                    onChange={e => setSettings({ ...settings, maintenance_mode: e.target.checked })}
                     className="w-5 h-5"
                   />
                   <div>
                     <div className="text-white font-medium">Maintenance Mode</div>
-                    <div className="text-sm text-gray-400">Temporarily disable public access to the site</div>
+                    <div className="text-sm text-gray-400">
+                      Temporarily disable public access to the site
+                    </div>
                   </div>
                 </label>
               </div>
@@ -249,7 +243,9 @@ export default function AdminSettingsPage() {
                   <input
                     type="checkbox"
                     checked={settings.user_registration_enabled !== false}
-                    onChange={(e) => setSettings({ ...settings, user_registration_enabled: e.target.checked })}
+                    onChange={e =>
+                      setSettings({ ...settings, user_registration_enabled: e.target.checked })
+                    }
                     className="w-5 h-5"
                   />
                   <div>
@@ -264,12 +260,16 @@ export default function AdminSettingsPage() {
                   <input
                     type="checkbox"
                     checked={settings.email_verification_required !== false}
-                    onChange={(e) => setSettings({ ...settings, email_verification_required: e.target.checked })}
+                    onChange={e =>
+                      setSettings({ ...settings, email_verification_required: e.target.checked })
+                    }
                     className="w-5 h-5"
                   />
                   <div>
                     <div className="text-white font-medium">Require Email Verification</div>
-                    <div className="text-sm text-gray-400">Users must verify their email before accessing the platform</div>
+                    <div className="text-sm text-gray-400">
+                      Users must verify their email before accessing the platform
+                    </div>
                   </div>
                 </label>
               </div>
@@ -288,7 +288,7 @@ export default function AdminSettingsPage() {
                 <input
                   type="text"
                   value={settings.google_analytics_id || ''}
-                  onChange={(e) => setSettings({ ...settings, google_analytics_id: e.target.value })}
+                  onChange={e => setSettings({ ...settings, google_analytics_id: e.target.value })}
                   placeholder="G-XXXXXXXXXX"
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
@@ -302,7 +302,7 @@ export default function AdminSettingsPage() {
                 <input
                   type="text"
                   value={settings.mapbox_api_key || ''}
-                  onChange={(e) => setSettings({ ...settings, mapbox_api_key: e.target.value })}
+                  onChange={e => setSettings({ ...settings, mapbox_api_key: e.target.value })}
                   placeholder="pk.ey..."
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
@@ -316,7 +316,9 @@ export default function AdminSettingsPage() {
                 <input
                   type="text"
                   value={settings.stripe_publishable_key || ''}
-                  onChange={(e) => setSettings({ ...settings, stripe_publishable_key: e.target.value })}
+                  onChange={e =>
+                    setSettings({ ...settings, stripe_publishable_key: e.target.value })
+                  }
                   placeholder="pk_live_..."
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
@@ -331,13 +333,11 @@ export default function AdminSettingsPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Facebook URL
-                </label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Facebook URL</label>
                 <input
                   type="url"
                   value={settings.facebook_url || ''}
-                  onChange={(e) => setSettings({ ...settings, facebook_url: e.target.value })}
+                  onChange={e => setSettings({ ...settings, facebook_url: e.target.value })}
                   placeholder="https://facebook.com/ykbuddy"
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
@@ -350,7 +350,7 @@ export default function AdminSettingsPage() {
                 <input
                   type="url"
                   value={settings.twitter_url || ''}
-                  onChange={(e) => setSettings({ ...settings, twitter_url: e.target.value })}
+                  onChange={e => setSettings({ ...settings, twitter_url: e.target.value })}
                   placeholder="https://twitter.com/ykbuddy"
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />
@@ -363,7 +363,7 @@ export default function AdminSettingsPage() {
                 <input
                   type="url"
                   value={settings.instagram_url || ''}
-                  onChange={(e) => setSettings({ ...settings, instagram_url: e.target.value })}
+                  onChange={e => setSettings({ ...settings, instagram_url: e.target.value })}
                   placeholder="https://instagram.com/ykbuddy"
                   className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                 />

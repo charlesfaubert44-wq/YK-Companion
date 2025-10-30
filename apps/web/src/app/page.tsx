@@ -62,24 +62,24 @@ export default function Home() {
         description: 'Ready to explore Yellowknife?',
         primaryLink: '/visiting',
         primaryText: 'Plan Your Trip',
-        gradient: 'from-emerald-500 to-cyan-500'
+        gradient: 'from-emerald-500 to-cyan-500',
       },
       living: {
         title: 'Welcome Home!',
         icon: <NorthernCabinIcon className="w-16 h-16" />,
-        description: 'Discover what\'s happening in your city',
+        description: "Discover what's happening in your city",
         primaryLink: '/living',
         primaryText: 'Explore Yellowknife',
-        gradient: 'from-blue-500 to-indigo-500'
+        gradient: 'from-blue-500 to-indigo-500',
       },
       moving: {
         title: 'Welcome to Your New Journey!',
         icon: <OldTruckIcon className="w-16 h-16" />,
-        description: 'Let\'s get you settled in Yellowknife',
+        description: "Let's get you settled in Yellowknife",
         primaryLink: '/moving',
         primaryText: 'Continue Planning',
-        gradient: 'from-purple-500 to-pink-500'
-      }
+        gradient: 'from-purple-500 to-pink-500',
+      },
     };
 
     // Type guard to ensure user_type is valid
@@ -109,13 +109,19 @@ export default function Home() {
               {/* Personalized Welcome Section */}
               <div className="text-center py-8 sm:py-12">
                 <div className="mb-6 flex justify-center animate-bounce-slow">{config.icon}</div>
-                <h1 className={`text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}>
+                <h1
+                  className={`text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}
+                >
                   {config.title}
                 </h1>
-                <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">{config.description}</p>
+                <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                  {config.description}
+                </p>
 
                 <Link href={config.primaryLink}>
-                  <button className={`px-8 py-4 bg-gradient-to-r ${config.gradient} text-white font-bold rounded-xl hover:shadow-aurora transition-all transform hover:scale-105 text-lg flex items-center gap-2 mx-auto`}>
+                  <button
+                    className={`px-8 py-4 bg-gradient-to-r ${config.gradient} text-white font-bold rounded-xl hover:shadow-aurora transition-all transform hover:scale-105 text-lg flex items-center gap-2 mx-auto`}
+                  >
                     <span>{config.primaryText}</span>
                     <span>→</span>
                   </button>
@@ -123,14 +129,18 @@ export default function Home() {
 
                 {/* Other Pathways */}
                 <div className="mt-10 pt-8 border-t border-gray-700/30">
-                  <p className="text-sm text-gray-500 mb-4 uppercase tracking-wider font-semibold">Explore other areas</p>
+                  <p className="text-sm text-gray-500 mb-4 uppercase tracking-wider font-semibold">
+                    Explore other areas
+                  </p>
                   <div className="flex justify-center gap-4 flex-wrap">
                     {profile.user_type !== 'visiting' && (
                       <Link href="/visiting" className="group">
                         <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-emerald-500 hover:bg-gray-800/80 transition-all">
                           <div className="flex items-center gap-2">
                             <span className="text-2xl">🧭</span>
-                            <span className="text-gray-300 group-hover:text-emerald-400 text-sm font-semibold transition-colors">Visiting</span>
+                            <span className="text-gray-300 group-hover:text-emerald-400 text-sm font-semibold transition-colors">
+                              Visiting
+                            </span>
                           </div>
                         </div>
                       </Link>
@@ -140,7 +150,9 @@ export default function Home() {
                         <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-blue-500 hover:bg-gray-800/80 transition-all">
                           <div className="flex items-center gap-2">
                             <span className="text-2xl">🏔️</span>
-                            <span className="text-gray-300 group-hover:text-blue-400 text-sm font-semibold transition-colors">Living</span>
+                            <span className="text-gray-300 group-hover:text-blue-400 text-sm font-semibold transition-colors">
+                              Living
+                            </span>
                           </div>
                         </div>
                       </Link>
@@ -150,7 +162,9 @@ export default function Home() {
                         <div className="px-5 py-3 bg-gray-800/50 border-2 border-gray-700/50 rounded-xl hover:border-purple-500 hover:bg-gray-800/80 transition-all">
                           <div className="flex items-center gap-2">
                             <span className="text-2xl">🎒</span>
-                            <span className="text-gray-300 group-hover:text-purple-400 text-sm font-semibold transition-colors">Moving</span>
+                            <span className="text-gray-300 group-hover:text-purple-400 text-sm font-semibold transition-colors">
+                              Moving
+                            </span>
                           </div>
                         </div>
                       </Link>
@@ -160,7 +174,12 @@ export default function Home() {
               </div>
 
               <div className="mt-8 pt-6 border-t border-gray-700/30">
-                <PremiumSponsors position="home_middle" maxSponsors={3} layout="grid" showPlaceholder={true} />
+                <PremiumSponsors
+                  position="home_middle"
+                  maxSponsors={3}
+                  layout="grid"
+                  showPlaceholder={true}
+                />
               </div>
 
               <footer className="mt-8 pt-4 border-t border-gray-700/30 text-center">
@@ -183,10 +202,7 @@ export default function Home() {
       />
 
       {/* Beautiful Auto-Opening Onboarding Modal for First-Time Visitors */}
-      <OnboardingModal
-        isOpen={showOnboarding}
-        onClose={() => setShowOnboarding(false)}
-      />
+      <OnboardingModal isOpen={showOnboarding} onClose={() => setShowOnboarding(false)} />
 
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
         <div className="max-w-5xl mx-auto px-4 py-8">
@@ -218,7 +234,12 @@ export default function Home() {
             </div>
 
             <div className="mt-12 pt-6 border-t border-gray-700/30">
-              <PremiumSponsors position="home_bottom" maxSponsors={6} layout="grid" showPlaceholder={true} />
+              <PremiumSponsors
+                position="home_bottom"
+                maxSponsors={6}
+                layout="grid"
+                showPlaceholder={true}
+              />
             </div>
 
             <footer className="mt-8 pt-4 border-t border-gray-700/30 text-center">
@@ -230,7 +251,8 @@ export default function Home() {
 
       <style jsx>{`
         @keyframes bounce-slow {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {

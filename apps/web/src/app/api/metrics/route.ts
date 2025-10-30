@@ -1,6 +1,6 @@
 /**
  * Metrics API Endpoint
- * 
+ *
  * Returns application metrics for monitoring
  * Requires admin authentication
  */

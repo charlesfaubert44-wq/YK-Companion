@@ -27,15 +27,12 @@ export async function POST(request: NextRequest) {
     }
 
     const { user: adminUser } = adminCheck;
-    
+
     // Ensure adminUser exists
     if (!adminUser) {
-      return NextResponse.json(
-        { error: 'Admin user not found' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Admin user not found' }, { status: 401 });
     }
-    
+
     const supabase = await createClient();
     const body = await request.json();
 
@@ -52,10 +49,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     if (!userId) {
-      return NextResponse.json(
-        { error: 'userId is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'userId is required' }, { status: 400 });
     }
 
     // Check if user is admin first
@@ -101,12 +95,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Log activity
-    await logAdminActivity(
-      'update_user_permissions',
-      'user_permissions',
-      userId,
-      { granted_by: adminUser.id, permissions: data }
-    );
+    await logAdminActivity('update_user_permissions', 'user_permissions', userId, {
+      granted_by: adminUser.id,
+      permissions: data,
+    });
 
     return NextResponse.json({
       message: 'Permissions updated successfully',
@@ -133,31 +125,22 @@ export async function DELETE(request: NextRequest) {
     }
 
     const { user: adminUser } = adminCheck;
-    
+
     // Ensure adminUser exists
     if (!adminUser) {
-      return NextResponse.json(
-        { error: 'Admin user not found' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Admin user not found' }, { status: 401 });
     }
-    
+
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
 
     if (!userId) {
-      return NextResponse.json(
-        { error: 'userId is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'userId is required' }, { status: 400 });
     }
 
     // Delete permissions
-    const { error } = await supabase
-      .from('user_permissions')
-      .delete()
-      .eq('user_id', userId);
+    const { error } = await supabase.from('user_permissions').delete().eq('user_id', userId);
 
     if (error) {
       console.error('Error revoking permissions:', error);
@@ -165,12 +148,9 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Log activity
-    await logAdminActivity(
-      'revoke_user_permissions',
-      'user_permissions',
-      userId,
-      { revoked_by: adminUser.id }
-    );
+    await logAdminActivity('revoke_user_permissions', 'user_permissions', userId, {
+      revoked_by: adminUser.id,
+    });
 
     return NextResponse.json({
       message: 'Permissions revoked successfully',

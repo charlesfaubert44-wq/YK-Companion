@@ -109,7 +109,8 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
         <div className="text-6xl mb-4">✅</div>
         <h3 className="text-2xl font-bold text-white mb-3">Submission Received!</h3>
         <p className="text-gray-300 mb-6">
-          Thank you for sharing your knowledge about Yellowknife. Our team will review your submission and publish it soon.
+          Thank you for sharing your knowledge about Yellowknife. Our team will review your
+          submission and publish it soon.
         </p>
         <button
           onClick={onSuccess}
@@ -139,9 +140,11 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
 
       {/* Content Type Selection */}
       <div>
-        <label className="block text-sm font-semibold text-gray-300 mb-3">What are you sharing? *</label>
+        <label className="block text-sm font-semibold text-gray-300 mb-3">
+          What are you sharing? *
+        </label>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {contentTypes.map((type) => (
+          {contentTypes.map(type => (
             <button
               key={type.value}
               type="button"
@@ -167,7 +170,7 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
           type="text"
           required
           value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          onChange={e => setFormData({ ...formData, title: e.target.value })}
           placeholder="e.g., The Best Time to See the Northern Lights"
           className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all"
         />
@@ -179,7 +182,7 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
         <textarea
           required
           value={formData.content}
-          onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+          onChange={e => setFormData({ ...formData, content: e.target.value })}
           placeholder="Share your knowledge, story, or tip about Yellowknife..."
           rows={8}
           className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all resize-vertical"
@@ -191,7 +194,7 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
       <div>
         <label className="block text-sm font-semibold text-gray-300 mb-3">Season (optional)</label>
         <div className="flex flex-wrap gap-2">
-          {seasons.map((season) => (
+          {seasons.map(season => (
             <button
               key={season.value}
               type="button"
@@ -216,11 +219,13 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
 
       {/* Location (optional) */}
       <div>
-        <label className="block text-sm font-semibold text-gray-300 mb-2">Location (optional)</label>
+        <label className="block text-sm font-semibold text-gray-300 mb-2">
+          Location (optional)
+        </label>
         <input
           type="text"
           value={formData.location_name}
-          onChange={(e) => setFormData({ ...formData, location_name: e.target.value })}
+          onChange={e => setFormData({ ...formData, location_name: e.target.value })}
           placeholder="e.g., Old Town, Frame Lake Trail, Ragged Ass Road"
           className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all"
         />
@@ -233,8 +238,8 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
           <input
             type="text"
             value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+            onChange={e => setTagInput(e.target.value)}
+            onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), addTag())}
             placeholder="Add tags (press Enter)"
             className="flex-1 px-4 py-2 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all"
           />
@@ -248,7 +253,7 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
         </div>
         {formData.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {formData.tags.map((tag) => (
+            {formData.tags.map(tag => (
               <span
                 key={tag}
                 className="px-3 py-1 bg-aurora-green/20 border border-aurora-green/40 rounded-full text-sm text-aurora-green flex items-center gap-2"
@@ -269,13 +274,15 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
 
       {/* Sources (optional) */}
       <div>
-        <label className="block text-sm font-semibold text-gray-300 mb-2">Sources / References (optional)</label>
+        <label className="block text-sm font-semibold text-gray-300 mb-2">
+          Sources / References (optional)
+        </label>
         <div className="flex gap-2 mb-2">
           <input
             type="url"
             value={sourceInput}
-            onChange={(e) => setSourceInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSource())}
+            onChange={e => setSourceInput(e.target.value)}
+            onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), addSource())}
             placeholder="Add source URL (press Enter)"
             className="flex-1 px-4 py-2 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all"
           />
@@ -311,21 +318,25 @@ export default function SubmissionForm({ onSuccess, onCancel }: SubmissionFormPr
       {/* Submitter Info */}
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-semibold text-gray-300 mb-2">Your Name (optional)</label>
+          <label className="block text-sm font-semibold text-gray-300 mb-2">
+            Your Name (optional)
+          </label>
           <input
             type="text"
             value={formData.submitter_name}
-            onChange={(e) => setFormData({ ...formData, submitter_name: e.target.value })}
+            onChange={e => setFormData({ ...formData, submitter_name: e.target.value })}
             placeholder="How should we credit you?"
             className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all"
           />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-gray-300 mb-2">Your Email (optional)</label>
+          <label className="block text-sm font-semibold text-gray-300 mb-2">
+            Your Email (optional)
+          </label>
           <input
             type="email"
             value={formData.submitter_email}
-            onChange={(e) => setFormData({ ...formData, submitter_email: e.target.value })}
+            onChange={e => setFormData({ ...formData, submitter_email: e.target.value })}
             placeholder="For updates on your submission"
             className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all"
           />

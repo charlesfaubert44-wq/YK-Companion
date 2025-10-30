@@ -42,11 +42,7 @@ export const viewport = {
   themeColor: '#10B981',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${pressStart2P.variable} overflow-x-hidden`}>
       <head>

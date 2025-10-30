@@ -110,9 +110,9 @@ export default function AdminSidebar({ isCollapsed = false, onToggleCollapse }: 
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto p-4 space-y-1">
-        {navigationItems.map((item) => {
+        {navigationItems.map(item => {
           const active = isActive(item.href);
-          
+
           return (
             <Link
               key={item.href}
@@ -120,9 +120,10 @@ export default function AdminSidebar({ isCollapsed = false, onToggleCollapse }: 
               className={`
                 flex items-center gap-3 px-4 py-3 rounded-xl
                 transition-all duration-200 group
-                ${active
-                  ? 'bg-aurora-green/20 text-aurora-green border-2 border-aurora-green/50'
-                  : 'text-gray-400 hover:bg-dark-700 hover:text-white border-2 border-transparent'
+                ${
+                  active
+                    ? 'bg-aurora-green/20 text-aurora-green border-2 border-aurora-green/50'
+                    : 'text-gray-400 hover:bg-dark-700 hover:text-white border-2 border-transparent'
                 }
               `}
               title={isCollapsed ? item.title : undefined}
@@ -130,7 +131,9 @@ export default function AdminSidebar({ isCollapsed = false, onToggleCollapse }: 
               <span className="text-2xl flex-shrink-0">{item.icon}</span>
               {!isCollapsed && (
                 <div className="flex-1 min-w-0">
-                  <div className={`font-semibold ${active ? 'text-aurora-green' : 'text-white group-hover:text-white'}`}>
+                  <div
+                    className={`font-semibold ${active ? 'text-aurora-green' : 'text-white group-hover:text-white'}`}
+                  >
                     {item.title}
                   </div>
                   {item.description && (
@@ -182,4 +185,3 @@ export default function AdminSidebar({ isCollapsed = false, onToggleCollapse }: 
     </aside>
   );
 }
-

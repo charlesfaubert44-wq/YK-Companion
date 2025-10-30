@@ -664,11 +664,15 @@ export async function sendNeighborhoodAlert({
       <p style="margin-top: 15px;">${alertDescription}</p>
     </div>
 
-    ${severity === 'critical' || severity === 'high' ? `
+    ${
+      severity === 'critical' || severity === 'high'
+        ? `
     <div style="background: #fef2f2; padding: 15px; border-radius: 8px; margin: 20px 0;">
       <p style="margin: 0; color: #dc2626;"><strong>⚠️ This is a ${severity} severity alert. Please take immediate action if necessary.</strong></p>
     </div>
-    ` : ''}
+    `
+        : ''
+    }
 
     <div style="text-align: center;">
       <a href="${alertUrl}" class="button">View Full Alert</a>

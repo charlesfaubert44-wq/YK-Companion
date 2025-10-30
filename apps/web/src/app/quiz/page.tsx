@@ -16,7 +16,7 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is your ideal vacation vibe?",
+    question: 'What is your ideal vacation vibe?',
     options: [
       { text: 'Comfortable and curated experiences', emoji: '☕', type: 'relaxed' },
       { text: 'Learning about local culture and traditions', emoji: '📚', type: 'curious' },
@@ -37,7 +37,11 @@ const quizQuestions: QuizQuestion[] = [
     question: 'Your dream aurora viewing experience:',
     options: [
       { text: 'Heated cabin with gourmet meal included', emoji: '🏠', type: 'relaxed' },
-      { text: 'Indigenous guide explaining the cultural significance', emoji: '🌟', type: 'curious' },
+      {
+        text: 'Indigenous guide explaining the cultural significance',
+        emoji: '🌟',
+        type: 'curious',
+      },
       { text: 'Snowshoeing to a remote location', emoji: '🥾', type: 'adventurer' },
     ],
   },
@@ -92,7 +96,8 @@ const travelerProfiles = {
   relaxed: {
     title: 'The Relaxed Traveler',
     emoji: '☕',
-    description: 'You value comfort and quality experiences without the stress of planning every detail.',
+    description:
+      'You value comfort and quality experiences without the stress of planning every detail.',
     color: 'aurora-blue',
     recommendations: [
       'All-inclusive aurora viewing packages',
@@ -104,7 +109,8 @@ const travelerProfiles = {
   curious: {
     title: 'The Curious Explorer',
     emoji: '🌍',
-    description: 'You seek authentic cultural experiences and want to understand the deeper meaning of what you encounter.',
+    description:
+      'You seek authentic cultural experiences and want to understand the deeper meaning of what you encounter.',
     color: 'aurora-purple',
     recommendations: [
       'Indigenous cultural experiences',
@@ -116,7 +122,8 @@ const travelerProfiles = {
   adventurer: {
     title: 'The Extreme Adventurer',
     emoji: '⛰️',
-    description: 'You crave unique outdoor challenges and are not afraid of extreme conditions or physical demands.',
+    description:
+      'You crave unique outdoor challenges and are not afraid of extreme conditions or physical demands.',
     color: 'aurora-green',
     recommendations: [
       'Multi-day wilderness expeditions',
@@ -149,10 +156,13 @@ export default function QuizPage() {
 
   const calculateResult = (): 'relaxed' | 'curious' | 'adventurer' => {
     const counts = { relaxed: 0, curious: 0, adventurer: 0 };
-    Object.values(answers).forEach((answer) => {
+    Object.values(answers).forEach(answer => {
       counts[answer as keyof typeof counts]++;
     });
-    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0] as 'relaxed' | 'curious' | 'adventurer';
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0] as
+      | 'relaxed'
+      | 'curious'
+      | 'adventurer';
   };
 
   const result = showResults ? calculateResult() : null;
@@ -164,7 +174,10 @@ export default function QuizPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
         <div className="container mx-auto px-4 py-12">
-          <Link href="/" className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8">
+          <Link
+            href="/"
+            className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8"
+          >
             ← YK Buddy
           </Link>
 
@@ -172,19 +185,15 @@ export default function QuizPage() {
             {/* Results Header */}
             <div className="text-center mb-12">
               <div className="text-8xl mb-6 animate-bounce">{profile.emoji}</div>
-              <h1 className="text-5xl font-bold text-white mb-4">
-                You are {profile.title}!
-              </h1>
-              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                {profile.description}
-              </p>
+              <h1 className="text-5xl font-bold text-white mb-4">You are {profile.title}!</h1>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto">{profile.description}</p>
             </div>
 
             {/* Recommendations Card */}
-            <div className={`bg-gradient-to-br from-${profile.color}/20 to-${profile.color}/5 backdrop-blur-sm p-8 rounded-2xl border border-${profile.color}/30 mb-8`}>
-              <h2 className="text-2xl font-bold text-white mb-6">
-                Perfect Activities for You
-              </h2>
+            <div
+              className={`bg-gradient-to-br from-${profile.color}/20 to-${profile.color}/5 backdrop-blur-sm p-8 rounded-2xl border border-${profile.color}/30 mb-8`}
+            >
+              <h2 className="text-2xl font-bold text-white mb-6">Perfect Activities for You</h2>
               <ul className="space-y-4">
                 {profile.recommendations.map((rec, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -233,16 +242,17 @@ export default function QuizPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
       <div className="container mx-auto px-4 py-12">
-        <Link href="/" className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8"
+        >
           ← YK Buddy
         </Link>
 
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-white mb-4">
-              Discover Your Travel Style
-            </h1>
+            <h1 className="text-5xl font-bold text-white mb-4">Discover Your Travel Style</h1>
             <p className="text-xl text-gray-300">
               Answer 8 quick questions to get personalized recommendations
             </p>
@@ -251,7 +261,9 @@ export default function QuizPage() {
           {/* Progress Bar */}
           <div className="mb-8">
             <div className="flex justify-between text-sm text-gray-400 mb-2">
-              <span>Question {currentQuestion + 1} of {quizQuestions.length}</span>
+              <span>
+                Question {currentQuestion + 1} of {quizQuestions.length}
+              </span>
               <span>{Math.round(progress)}% Complete</span>
             </div>
             <div className="h-2 bg-white/10 rounded-full overflow-hidden">

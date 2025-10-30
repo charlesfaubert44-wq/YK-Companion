@@ -13,23 +13,28 @@ interface FAQ {
 const faqs: FAQ[] = [
   {
     question: 'How do I add my business to YK Buddy?',
-    answer: 'Send us an email at hello@ykbuddy.ca with your business details, including what you offer, your location, and any special features (like being Indigenous-owned). We support local businesses and are always excited to add new partners!',
+    answer:
+      'Send us an email at hello@ykbuddy.ca with your business details, including what you offer, your location, and any special features (like being Indigenous-owned). We support local businesses and are always excited to add new partners!',
   },
   {
     question: 'Can I contribute local knowledge?',
-    answer: 'Absolutely! We love hearing from locals. Share your favorite spots, insider tips, or corrections through the contact form or email. The more community knowledge we gather, the better YK Buddy becomes for everyone.',
+    answer:
+      'Absolutely! We love hearing from locals. Share your favorite spots, insider tips, or corrections through the contact form or email. The more community knowledge we gather, the better YK Buddy becomes for everyone.',
   },
   {
     question: 'How do I report incorrect information?',
-    answer: 'Use the contact form below or email us at hello@ykbuddy.ca with details about what\'s wrong. We\'ll update it as quickly as possible. We\'re committed to keeping information accurate and current.',
+    answer:
+      "Use the contact form below or email us at hello@ykbuddy.ca with details about what's wrong. We'll update it as quickly as possible. We're committed to keeping information accurate and current.",
   },
   {
     question: 'Do you have a newsletter or updates?',
-    answer: 'Yes! We send weekly updates about aurora forecasts, upcoming events, new activities, and community news. You can sign up for our newsletter through the website or by requesting it via email.',
+    answer:
+      'Yes! We send weekly updates about aurora forecasts, upcoming events, new activities, and community news. You can sign up for our newsletter through the website or by requesting it via email.',
   },
   {
     question: 'How can I support YK Buddy?',
-    answer: 'Share the platform with friends, leave feedback to help us improve, support our local partners, and spread the word! We\'re community-funded and every bit of support helps us continue serving Yellowknife.',
+    answer:
+      "Share the platform with friends, leave feedback to help us improve, support our local partners, and spread the word! We're community-funded and every bit of support helps us continue serving Yellowknife.",
   },
 ];
 
@@ -87,7 +92,10 @@ export default function ContactPage() {
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
       {/* Top Navigation */}
       <div className="fixed top-6 left-6 right-6 z-50 flex justify-between items-center">
-        <Link href="/" className="text-gray-400 hover:text-aurora-green transition-colors text-sm flex items-center gap-2">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-aurora-green transition-colors text-sm flex items-center gap-2"
+        >
           <span>←</span> Back to Home
         </Link>
         <LanguageSelector />
@@ -110,7 +118,9 @@ export default function ContactPage() {
           {/* Intro */}
           <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 text-center">
             <p className="text-lg text-gray-300 leading-relaxed">
-              YK Buddy is a community resource, and it gets better with your input. Whether you've spotted something wrong, have a great idea, or just want to say hi, we'd love to hear from you.
+              YK Buddy is a community resource, and it gets better with your input. Whether you've
+              spotted something wrong, have a great idea, or just want to say hi, we'd love to hear
+              from you.
             </p>
           </section>
 
@@ -153,7 +163,7 @@ export default function ContactPage() {
 
             {/* Location */}
             <button
-              onClick={() => alert('We\'re based in downtown Yellowknife!')}
+              onClick={() => alert("We're based in downtown Yellowknife!")}
               className="bg-gradient-to-br from-aurora-pink/20 to-aurora-pink/5 backdrop-blur-sm rounded-2xl p-6 border-2 border-aurora-pink/30 hover:border-aurora-pink/50 transition-all group text-center"
             >
               <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">📍</div>
@@ -169,7 +179,9 @@ export default function ContactPage() {
 
             {submitStatus === 'success' && (
               <div className="mb-6 p-4 bg-aurora-green/20 border-2 border-aurora-green rounded-lg text-center">
-                <p className="text-aurora-green font-semibold">✓ Message sent successfully! We'll get back to you within 24-48 hours.</p>
+                <p className="text-aurora-green font-semibold">
+                  ✓ Message sent successfully! We'll get back to you within 24-48 hours.
+                </p>
               </div>
             )}
 
@@ -265,7 +277,9 @@ export default function ContactPage() {
 
           {/* FAQ Section */}
           <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
                 <div
@@ -279,15 +293,19 @@ export default function ContactPage() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="text-lg font-semibold text-white flex-1">{faq.question}</h3>
-                    <span className={`text-2xl font-bold transition-transform ${
-                      expandedFAQ === index ? 'text-aurora-green rotate-45' : 'text-gray-500'
-                    }`}>
+                    <span
+                      className={`text-2xl font-bold transition-transform ${
+                        expandedFAQ === index ? 'text-aurora-green rotate-45' : 'text-gray-500'
+                      }`}
+                    >
                       +
                     </span>
                   </div>
-                  <div className={`overflow-hidden transition-all duration-300 ${
-                    expandedFAQ === index ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
-                  }`}>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      expandedFAQ === index ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+                    }`}
+                  >
                     <p className="text-gray-400 leading-relaxed border-t border-gray-700/50 pt-4">
                       {faq.answer}
                     </p>
@@ -299,36 +317,43 @@ export default function ContactPage() {
 
           {/* What to Contact About */}
           <section className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">What Can You Contact Us About?</h2>
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">
+              What Can You Contact Us About?
+            </h2>
             <div className="grid md:grid-cols-2 gap-4 text-gray-300">
               <div className="flex gap-3 p-4 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors">
                 <span className="text-2xl flex-shrink-0">🐛</span>
                 <div>
-                  <strong className="text-white">Bug Reports:</strong> Found something broken? Links not working? Let us know!
+                  <strong className="text-white">Bug Reports:</strong> Found something broken? Links
+                  not working? Let us know!
                 </div>
               </div>
               <div className="flex gap-3 p-4 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors">
                 <span className="text-2xl flex-shrink-0">💡</span>
                 <div>
-                  <strong className="text-white">Feature Ideas:</strong> Have an idea that would make YK Buddy better? We're all ears.
+                  <strong className="text-white">Feature Ideas:</strong> Have an idea that would
+                  make YK Buddy better? We're all ears.
                 </div>
               </div>
               <div className="flex gap-3 p-4 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors">
                 <span className="text-2xl flex-shrink-0">📝</span>
                 <div>
-                  <strong className="text-white">Content Updates:</strong> Know about an event or local tip that should be added? Share it!
+                  <strong className="text-white">Content Updates:</strong> Know about an event or
+                  local tip that should be added? Share it!
                 </div>
               </div>
               <div className="flex gap-3 p-4 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors">
                 <span className="text-2xl flex-shrink-0">🤝</span>
                 <div>
-                  <strong className="text-white">Partnerships:</strong> Run a local business? Let's chat about how we can work together.
+                  <strong className="text-white">Partnerships:</strong> Run a local business? Let's
+                  chat about how we can work together.
                 </div>
               </div>
               <div className="flex gap-3 p-4 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors md:col-span-2">
                 <span className="text-2xl flex-shrink-0">❤️</span>
                 <div>
-                  <strong className="text-white">Just Saying Hi:</strong> Seriously, we love hearing from people who use YK Buddy. Your stories make this worthwhile.
+                  <strong className="text-white">Just Saying Hi:</strong> Seriously, we love hearing
+                  from people who use YK Buddy. Your stories make this worthwhile.
                 </div>
               </div>
             </div>
@@ -339,15 +364,20 @@ export default function ContactPage() {
             <div className="text-5xl mb-4">⚠️</div>
             <h3 className="text-xl font-bold text-red-400 mb-3">Emergency Services</h3>
             <p className="text-gray-300 leading-relaxed">
-              For emergencies, dial <strong className="text-white">911</strong>. For non-emergency city services in Yellowknife, call <strong className="text-white">311</strong>.
+              For emergencies, dial <strong className="text-white">911</strong>. For non-emergency
+              city services in Yellowknife, call <strong className="text-white">311</strong>.
             </p>
           </section>
 
           {/* Community Note */}
           <section className="bg-gradient-to-br from-aurora-purple/20 to-aurora-pink/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-aurora-purple/30 text-center">
-            <h3 className="text-xl font-bold text-white mb-3">Built by the Community, For the Community</h3>
+            <h3 className="text-xl font-bold text-white mb-3">
+              Built by the Community, For the Community
+            </h3>
             <p className="text-gray-300 leading-relaxed">
-              YK Buddy exists because we believe Yellowknife deserves better digital resources. Every message, suggestion, and piece of feedback helps make this tool more useful for everyone. So thank you for taking the time to reach out. ❤️
+              YK Buddy exists because we believe Yellowknife deserves better digital resources.
+              Every message, suggestion, and piece of feedback helps make this tool more useful for
+              everyone. So thank you for taking the time to reach out. ❤️
             </p>
           </section>
         </div>
@@ -361,9 +391,7 @@ export default function ContactPage() {
             <p className="text-xs text-gray-500">
               On the traditional territory of the Yellowknives Dene First Nation
             </p>
-            <p className="text-xs text-gray-500 mt-2">
-              © 2025 YK Buddy. All rights reserved.
-            </p>
+            <p className="text-xs text-gray-500 mt-2">© 2025 YK Buddy. All rights reserved.</p>
           </div>
         </footer>
       </div>

@@ -53,9 +53,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900 flex items-center justify-center px-4">
           <div className="max-w-md w-full bg-gray-800/50 border border-gray-700 rounded-lg p-8 text-center">
             <div className="text-6xl mb-4">❄️</div>
-            <h1 className="text-2xl font-bold text-white mb-4">
-              Oops! Something went wrong
-            </h1>
+            <h1 className="text-2xl font-bold text-white mb-4">Oops! Something went wrong</h1>
             <p className="text-gray-300 mb-6">
               We encountered an unexpected error. Don't worry, it's not your fault!
             </p>

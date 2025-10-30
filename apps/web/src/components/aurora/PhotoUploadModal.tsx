@@ -102,7 +102,7 @@ export default function PhotoUploadModal({ eventId, onClose, onPhotoUploaded }: 
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => {
+                onChange={e => {
                   // Handle file upload
                 }}
               />
@@ -114,7 +114,7 @@ export default function PhotoUploadModal({ eventId, onClose, onPhotoUploaded }: 
             <label className="block text-white font-semibold mb-2">Caption</label>
             <textarea
               value={formData.caption}
-              onChange={(e) => setFormData({ ...formData, caption: e.target.value })}
+              onChange={e => setFormData({ ...formData, caption: e.target.value })}
               placeholder="Describe your aurora experience..."
               rows={3}
               className="w-full px-4 py-3 bg-dark-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-aurora-green transition-colors resize-none"
@@ -127,7 +127,7 @@ export default function PhotoUploadModal({ eventId, onClose, onPhotoUploaded }: 
             <input
               type="text"
               value={formData.location_name}
-              onChange={(e) => setFormData({ ...formData, location_name: e.target.value })}
+              onChange={e => setFormData({ ...formData, location_name: e.target.value })}
               placeholder="e.g., Frame Lake, Ingraham Trail Km 5"
               className="w-full px-4 py-3 bg-dark-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-aurora-green transition-colors"
             />
@@ -143,28 +143,30 @@ export default function PhotoUploadModal({ eventId, onClose, onPhotoUploaded }: 
               <input
                 type="number"
                 value={formData.iso || ''}
-                onChange={(e) => setFormData({ ...formData, iso: parseInt(e.target.value) || undefined })}
+                onChange={e =>
+                  setFormData({ ...formData, iso: parseInt(e.target.value) || undefined })
+                }
                 placeholder="ISO (e.g., 3200)"
                 className="px-4 py-3 bg-dark-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-aurora-green transition-colors"
               />
               <input
                 type="text"
                 value={formData.shutter_speed || ''}
-                onChange={(e) => setFormData({ ...formData, shutter_speed: e.target.value })}
+                onChange={e => setFormData({ ...formData, shutter_speed: e.target.value })}
                 placeholder="Shutter (e.g., 15s)"
                 className="px-4 py-3 bg-dark-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-aurora-green transition-colors"
               />
               <input
                 type="text"
                 value={formData.aperture || ''}
-                onChange={(e) => setFormData({ ...formData, aperture: e.target.value })}
+                onChange={e => setFormData({ ...formData, aperture: e.target.value })}
                 placeholder="Aperture (e.g., f/2.8)"
                 className="px-4 py-3 bg-dark-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-aurora-green transition-colors"
               />
               <input
                 type="text"
                 value={formData.camera_model || ''}
-                onChange={(e) => setFormData({ ...formData, camera_model: e.target.value })}
+                onChange={e => setFormData({ ...formData, camera_model: e.target.value })}
                 placeholder="Camera Model"
                 className="px-4 py-3 bg-dark-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-aurora-green transition-colors"
               />

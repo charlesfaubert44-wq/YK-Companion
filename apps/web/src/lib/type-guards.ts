@@ -107,7 +107,7 @@ export function isNonEmptyArray<T>(value: unknown): value is [T, ...T[]] {
  * }
  */
 export function isStringArray(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every((item) => typeof item === 'string');
+  return Array.isArray(value) && value.every(item => typeof item === 'string');
 }
 
 /**
@@ -116,7 +116,7 @@ export function isStringArray(value: unknown): value is string[] {
  * @returns True if value is an array of numbers
  */
 export function isNumberArray(value: unknown): value is number[] {
-  return Array.isArray(value) && value.every((item) => typeof item === 'number');
+  return Array.isArray(value) && value.every(item => typeof item === 'number');
 }
 
 /**
@@ -149,10 +149,7 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
  *   console.log(data.email);
  * }
  */
-export function hasProperty<K extends string>(
-  obj: unknown,
-  key: K
-): obj is Record<K, unknown> {
+export function hasProperty<K extends string>(obj: unknown, key: K): obj is Record<K, unknown> {
   return isPlainObject(obj) && key in obj;
 }
 
@@ -296,9 +293,7 @@ export function assertNonEmptyString(
  * @param value - Value to check
  * @returns True if value is a valid garage sale status
  */
-export function isGarageSaleStatus(
-  value: unknown
-): value is 'active' | 'completed' | 'cancelled' {
+export function isGarageSaleStatus(value: unknown): value is 'active' | 'completed' | 'cancelled' {
   return value === 'active' || value === 'completed' || value === 'cancelled';
 }
 
@@ -311,9 +306,7 @@ export function isGarageSaleStatus(
  *   const { latitude, longitude } = location;
  * }
  */
-export function isCoordinates(
-  value: unknown
-): value is { latitude: number; longitude: number } {
+export function isCoordinates(value: unknown): value is { latitude: number; longitude: number } {
   return (
     isPlainObject(value) &&
     hasProperty(value, 'latitude') &&

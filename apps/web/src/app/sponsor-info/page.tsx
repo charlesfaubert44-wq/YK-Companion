@@ -8,12 +8,42 @@ export default function SponsorInfoPage() {
   const [selectedPlan, setSelectedPlan] = useState<string>('basic');
 
   const positions = [
-    { id: 'home_top', name: 'Home - Top', multiplier: 2.0, description: 'Premium visibility at the top of the home page' },
-    { id: 'home_middle', name: 'Home - Middle', multiplier: 1.5, description: 'Good visibility in the middle section' },
-    { id: 'home_bottom', name: 'Home - Bottom', multiplier: 1.0, description: 'Footer area placement' },
-    { id: 'visiting', name: 'Visiting Section', multiplier: 1.7, description: 'Target tourists and visitors' },
-    { id: 'living', name: 'Living Section', multiplier: 1.4, description: 'Target local residents' },
-    { id: 'moving', name: 'Moving Section', multiplier: 1.6, description: 'Target people relocating to Yellowknife' }
+    {
+      id: 'home_top',
+      name: 'Home - Top',
+      multiplier: 2.0,
+      description: 'Premium visibility at the top of the home page',
+    },
+    {
+      id: 'home_middle',
+      name: 'Home - Middle',
+      multiplier: 1.5,
+      description: 'Good visibility in the middle section',
+    },
+    {
+      id: 'home_bottom',
+      name: 'Home - Bottom',
+      multiplier: 1.0,
+      description: 'Footer area placement',
+    },
+    {
+      id: 'visiting',
+      name: 'Visiting Section',
+      multiplier: 1.7,
+      description: 'Target tourists and visitors',
+    },
+    {
+      id: 'living',
+      name: 'Living Section',
+      multiplier: 1.4,
+      description: 'Target local residents',
+    },
+    {
+      id: 'moving',
+      name: 'Moving Section',
+      multiplier: 1.6,
+      description: 'Target people relocating to Yellowknife',
+    },
   ];
 
   const plans = [
@@ -25,9 +55,9 @@ export default function SponsorInfoPage() {
         'Standard listing with name and tagline',
         'Clickable link to your website',
         'Display in selected position',
-        'Basic analytics'
+        'Basic analytics',
       ],
-      color: 'aurora-blue'
+      color: 'aurora-blue',
     },
     {
       id: 'premium',
@@ -38,10 +68,10 @@ export default function SponsorInfoPage() {
         'Priority placement in position',
         'Clickable link to your website',
         'Detailed analytics dashboard',
-        'Featured badge'
+        'Featured badge',
       ],
       color: 'aurora-purple',
-      popular: true
+      popular: true,
     },
     {
       id: 'enterprise',
@@ -53,10 +83,10 @@ export default function SponsorInfoPage() {
         'Top priority in all positions',
         'Advanced analytics and insights',
         'Custom integration options',
-        'Dedicated account manager'
+        'Dedicated account manager',
       ],
-      color: 'yellow-400'
-    }
+      color: 'yellow-400',
+    },
   ];
 
   const calculatePrice = (days: number) => {
@@ -79,14 +109,18 @@ export default function SponsorInfoPage() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-16">
-          <Link href="/" className="text-aurora-blue hover:text-aurora-green transition-colors text-sm mb-4 inline-block">
+          <Link
+            href="/"
+            className="text-aurora-blue hover:text-aurora-green transition-colors text-sm mb-4 inline-block"
+          >
             ← Back to Home
           </Link>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
             Become a Premium Sponsor
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Showcase your business to thousands of Yellowknife visitors, residents, and newcomers every month
+            Showcase your business to thousands of Yellowknife visitors, residents, and newcomers
+            every month
           </p>
         </div>
 
@@ -110,7 +144,7 @@ export default function SponsorInfoPage() {
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Choose Your Plan</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {plans.map((plan) => (
+            {plans.map(plan => (
               <div
                 key={plan.id}
                 onClick={() => setSelectedPlan(plan.id)}
@@ -148,7 +182,9 @@ export default function SponsorInfoPage() {
 
                 {selectedPlan === plan.id && (
                   <div className="absolute bottom-3 left-3 right-3">
-                    <div className={`h-1 bg-gradient-to-r from-${plan.color} to-aurora-green rounded-full`}></div>
+                    <div
+                      className={`h-1 bg-gradient-to-r from-${plan.color} to-aurora-green rounded-full`}
+                    ></div>
                   </div>
                 )}
               </div>
@@ -160,7 +196,7 @@ export default function SponsorInfoPage() {
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Select Your Position</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {positions.map((position) => (
+            {positions.map(position => (
               <div
                 key={position.id}
                 onClick={() => setSelectedPosition(position.id)}
@@ -172,9 +208,7 @@ export default function SponsorInfoPage() {
               >
                 <h3 className="text-xl font-bold text-white mb-2">{position.name}</h3>
                 <p className="text-sm text-gray-400 mb-3">{position.description}</p>
-                <div className="text-sm text-aurora-green">
-                  {position.multiplier}x multiplier
-                </div>
+                <div className="text-sm text-aurora-green">{position.multiplier}x multiplier</div>
               </div>
             ))}
           </div>
@@ -187,9 +221,7 @@ export default function SponsorInfoPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <div className="text-center">
                 <div className="text-sm text-gray-400 mb-2">7 Days</div>
-                <div className="text-2xl font-bold text-white">
-                  ${calculatePrice(7).toFixed(2)}
-                </div>
+                <div className="text-2xl font-bold text-white">${calculatePrice(7).toFixed(2)}</div>
                 <div className="text-xs text-aurora-green mt-1">5% discount</div>
               </div>
               <div className="text-center">
@@ -237,8 +269,9 @@ export default function SponsorInfoPage() {
               <div className="text-3xl mb-3">🎯</div>
               <h3 className="text-xl font-bold text-white mb-3">Targeted Audience</h3>
               <p className="text-gray-300">
-                Reach people actively looking for businesses and services in Yellowknife - tourists planning trips,
-                residents exploring local options, and newcomers settling into the community.
+                Reach people actively looking for businesses and services in Yellowknife - tourists
+                planning trips, residents exploring local options, and newcomers settling into the
+                community.
               </p>
             </div>
 
@@ -246,8 +279,8 @@ export default function SponsorInfoPage() {
               <div className="text-3xl mb-3">📊</div>
               <h3 className="text-xl font-bold text-white mb-3">Analytics Dashboard</h3>
               <p className="text-gray-300">
-                Track impressions, clicks, and engagement with your sponsored listing. Understand your ROI
-                and make data-driven decisions about your advertising.
+                Track impressions, clicks, and engagement with your sponsored listing. Understand
+                your ROI and make data-driven decisions about your advertising.
               </p>
             </div>
 
@@ -255,8 +288,8 @@ export default function SponsorInfoPage() {
               <div className="text-3xl mb-3">🌟</div>
               <h3 className="text-xl font-bold text-white mb-3">Premium Visibility</h3>
               <p className="text-gray-300">
-                Stand out with eye-catching aurora-themed designs that capture attention. Enterprise sponsors
-                get animated backgrounds and top placement.
+                Stand out with eye-catching aurora-themed designs that capture attention. Enterprise
+                sponsors get animated backgrounds and top placement.
               </p>
             </div>
 
@@ -264,8 +297,8 @@ export default function SponsorInfoPage() {
               <div className="text-3xl mb-3">💼</div>
               <h3 className="text-xl font-bold text-white mb-3">Flexible Options</h3>
               <p className="text-gray-300">
-                Choose from multiple positions and plans to fit your budget and goals. Start with a week
-                and scale up to year-long campaigns.
+                Choose from multiple positions and plans to fit your budget and goals. Start with a
+                week and scale up to year-long campaigns.
               </p>
             </div>
           </div>
@@ -275,7 +308,8 @@ export default function SponsorInfoPage() {
         <div className="text-center bg-gradient-to-br from-aurora-green/20 to-aurora-blue/20 backdrop-blur-sm rounded-2xl border-2 border-aurora-blue/30 p-12">
           <h2 className="text-3xl font-bold text-white mb-4">Ready to Get Started?</h2>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join the growing list of businesses connecting with the Yellowknife community through YK Buddy.
+            Join the growing list of businesses connecting with the Yellowknife community through YK
+            Buddy.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="mailto:sponsors@ykbuddy.com">

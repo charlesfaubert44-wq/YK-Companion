@@ -6,10 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
-import {
-  sendContactFormNotification,
-  sendContactFormConfirmation,
-} from '@/lib/email/client';
+import { sendContactFormNotification, sendContactFormConfirmation } from '@/lib/email/client';
 import { checkRateLimit, rateLimitConfigs } from '@/lib/rate-limiting';
 
 // Validation schema with sanitization
@@ -24,11 +21,11 @@ export async function POST(request: NextRequest) {
   try {
     // Apply rate limiting (3 submissions per minute)
     const rateLimit = checkRateLimit(request, rateLimitConfigs.sensitive);
-    
+
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many requests. Please try again later.' },
-        { 
+        {
           status: 429,
           headers: rateLimit.headers,
         }
@@ -64,10 +61,7 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('Error saving contact submission:', error);
-      return NextResponse.json(
-        { error: 'Failed to submit contact form' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to submit contact form' }, { status: 500 });
     }
 
     // Send notification email to admin
@@ -98,9 +92,6 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: any) {
     console.error('Contact form error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

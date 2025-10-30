@@ -1,7 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ARCameraRecommendation, ARCameraSettings, SkillLevel } from '@/types/aurora-enhancements.types';
+import {
+  ARCameraRecommendation,
+  ARCameraSettings,
+  SkillLevel,
+} from '@/types/aurora-enhancements.types';
 
 interface Props {
   currentKP: number;
@@ -116,9 +120,7 @@ export default function ARCameraOverlay({ currentKP, onClose }: Props) {
     }
   };
 
-  const currentSettings = recommendation
-    ? recommendation[`${skillLevel}_settings`]
-    : null;
+  const currentSettings = recommendation ? recommendation[`${skillLevel}_settings`] : null;
 
   return (
     <div className="fixed inset-0 bg-black z-50">
@@ -145,7 +147,7 @@ export default function ARCameraOverlay({ currentKP, onClose }: Props) {
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/95 to-transparent p-6">
           {/* Skill Level Selector */}
           <div className="mb-4 flex gap-2">
-            {(['beginner', 'intermediate', 'advanced'] as SkillLevel[]).map((level) => (
+            {(['beginner', 'intermediate', 'advanced'] as SkillLevel[]).map(level => (
               <button
                 key={level}
                 onClick={() => setSkillLevel(level)}
@@ -168,7 +170,9 @@ export default function ARCameraOverlay({ currentKP, onClose }: Props) {
             </div>
             <div className="bg-dark-900 rounded-lg px-4 py-2">
               <span className="text-sm text-gray-400 mr-2">Brightness:</span>
-              <span className="text-sm font-bold text-white capitalize">{recommendation.brightness_level}</span>
+              <span className="text-sm font-bold text-white capitalize">
+                {recommendation.brightness_level}
+              </span>
             </div>
           </div>
 
@@ -180,15 +184,21 @@ export default function ARCameraOverlay({ currentKP, onClose }: Props) {
             </div>
             <div className="bg-dark-900/90 backdrop-blur rounded-lg p-3 border-2 border-aurora-green/30">
               <div className="text-xs text-gray-400 mb-1">Shutter</div>
-              <div className="text-2xl font-bold text-aurora-green">{currentSettings.shutter_speed}</div>
+              <div className="text-2xl font-bold text-aurora-green">
+                {currentSettings.shutter_speed}
+              </div>
             </div>
             <div className="bg-dark-900/90 backdrop-blur rounded-lg p-3 border-2 border-aurora-purple/30">
               <div className="text-xs text-gray-400 mb-1">Aperture</div>
-              <div className="text-2xl font-bold text-aurora-purple">{currentSettings.aperture}</div>
+              <div className="text-2xl font-bold text-aurora-purple">
+                {currentSettings.aperture}
+              </div>
             </div>
             <div className="bg-dark-900/90 backdrop-blur rounded-lg p-3 border-2 border-yellow-400/30">
               <div className="text-xs text-gray-400 mb-1">WB</div>
-              <div className="text-xl font-bold text-yellow-400">{currentSettings.white_balance}</div>
+              <div className="text-xl font-bold text-yellow-400">
+                {currentSettings.white_balance}
+              </div>
             </div>
           </div>
 

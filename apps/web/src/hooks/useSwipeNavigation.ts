@@ -64,10 +64,7 @@ export function useSwipeNavigation({
 }
 
 // Hook for page navigation with swipe gestures
-export function useSwipePageNavigation(pages: {
-  left?: string;
-  right?: string;
-}) {
+export function useSwipePageNavigation(pages: { left?: string; right?: string }) {
   const router = useRouter();
 
   useSwipeNavigation({

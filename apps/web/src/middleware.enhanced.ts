@@ -1,6 +1,6 @@
 /**
  * Enhanced Middleware with Security Headers and Rate Limiting
- * 
+ *
  * This file contains the enhanced middleware with CSP and rate limiting.
  * To use: rename to middleware.ts and backup the existing one
  */
@@ -90,10 +90,7 @@ export async function middleware(request: NextRequest) {
 /**
  * Apply rate limiting based on route
  */
-async function applyRateLimiting(
-  request: NextRequest,
-  pathname: string
-): Promise<Response | null> {
+async function applyRateLimiting(request: NextRequest, pathname: string): Promise<Response | null> {
   const ip = getClientIP(request);
 
   // Determine rate limit config based on route
@@ -168,10 +165,7 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
 
   // Strict Transport Security (HSTS) - only in production
   if (process.env.NODE_ENV === 'production') {
-    headers.set(
-      'Strict-Transport-Security',
-      'max-age=63072000; includeSubDomains; preload'
-    );
+    headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   }
 
   // DNS prefetch control
@@ -192,4 +186,3 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };
-

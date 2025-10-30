@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AuroraChallenge, ChallengeWinner, LeaderboardEntry, LeaderboardFilters } from '@/types/aurora-enhancements.types';
+import {
+  AuroraChallenge,
+  ChallengeWinner,
+  LeaderboardEntry,
+  LeaderboardFilters,
+} from '@/types/aurora-enhancements.types';
 import { AuroraPhoto } from '@/types/aurora.types';
 
 interface Props {
@@ -124,7 +129,9 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
       // Mock leaderboard
       const mockLeaderboard: LeaderboardEntry[] = Array.from({ length: 20 }, (_, i) => ({
         user_id: `user-${i}`,
-        photographer_name: ['Sarah', 'Mike', 'Emma', 'John', 'Lisa', 'David', 'Sophie', 'Alex'][i % 8] + ` ${i > 7 ? (i + 1) : ''}`,
+        photographer_name:
+          ['Sarah', 'Mike', 'Emma', 'John', 'Lisa', 'David', 'Sophie', 'Alex'][i % 8] +
+          ` ${i > 7 ? i + 1 : ''}`,
         total_photos: 50 - i * 2,
         total_likes: 500 - i * 20,
         avg_ai_score: 0.95 - i * 0.02,
@@ -167,10 +174,20 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
   };
 
   return (
-    <div className={onClose ? "fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 overflow-y-auto" : ""}>
-      <div className={`${onClose ? 'bg-dark-900 rounded-2xl max-w-6xl w-full border-2 border-aurora-purple/50 max-h-[90vh] overflow-y-auto' : 'w-full'}`}>
+    <div
+      className={
+        onClose
+          ? 'fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 overflow-y-auto'
+          : ''
+      }
+    >
+      <div
+        className={`${onClose ? 'bg-dark-900 rounded-2xl max-w-6xl w-full border-2 border-aurora-purple/50 max-h-[90vh] overflow-y-auto' : 'w-full'}`}
+      >
         {/* Header */}
-        <div className={`${onClose ? 'sticky top-0 bg-dark-900 border-b border-gray-800 p-6 z-10' : 'mb-6'}`}>
+        <div
+          className={`${onClose ? 'sticky top-0 bg-dark-900 border-b border-gray-800 p-6 z-10' : 'mb-6'}`}
+        >
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-3xl font-bold bg-gradient-to-r from-aurora-purple to-aurora-pink bg-clip-text text-transparent mb-2">
@@ -215,11 +232,11 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
           </div>
         </div>
 
-        <div className={onClose ? "p-6" : ""}>
+        <div className={onClose ? 'p-6' : ''}>
           {activeTab === 'challenges' ? (
             /* Challenges Tab */
             <div className="space-y-4">
-              {challenges.map((challenge) => (
+              {challenges.map(challenge => (
                 <div
                   key={challenge.id}
                   className="bg-dark-800 rounded-xl p-6 border-2 border-gray-700 hover:border-aurora-purple/50 transition-all"
@@ -242,15 +259,21 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <div className="bg-dark-900 rounded-lg p-3 text-center">
-                      <div className="text-2xl font-bold text-aurora-green">{challenge.participant_count}</div>
+                      <div className="text-2xl font-bold text-aurora-green">
+                        {challenge.participant_count}
+                      </div>
                       <div className="text-xs text-gray-400">Participants</div>
                     </div>
                     <div className="bg-dark-900 rounded-lg p-3 text-center">
-                      <div className="text-2xl font-bold text-aurora-blue">{challenge.entry_count}</div>
+                      <div className="text-2xl font-bold text-aurora-blue">
+                        {challenge.entry_count}
+                      </div>
                       <div className="text-xs text-gray-400">Entries</div>
                     </div>
                     <div className="bg-dark-900 rounded-lg p-3 text-center">
-                      <div className="text-2xl font-bold text-aurora-purple">{challenge.winner_count}</div>
+                      <div className="text-2xl font-bold text-aurora-purple">
+                        {challenge.winner_count}
+                      </div>
                       <div className="text-xs text-gray-400">Winners</div>
                     </div>
                     <div className="bg-dark-900 rounded-lg p-3 text-center">
@@ -262,31 +285,45 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
                   </div>
 
                   <div className="flex items-center gap-3 text-sm text-gray-400 mb-4">
-                    <span>📅 {new Date(challenge.start_date).toLocaleDateString()} - {new Date(challenge.end_date).toLocaleDateString()}</span>
+                    <span>
+                      📅 {new Date(challenge.start_date).toLocaleDateString()} -{' '}
+                      {new Date(challenge.end_date).toLocaleDateString()}
+                    </span>
                     {challenge.location_specific && <span>📍 Location-specific</span>}
                     {challenge.badge_name && <span>🏅 Badge: {challenge.badge_name}</span>}
                   </div>
 
                   {/* Winners (for completed challenges) */}
-                  {challenge.status === 'completed' && challenge.winners && challenge.winners.length > 0 && (
-                    <div className="bg-gradient-to-r from-yellow-500/10 to-aurora-purple/10 border border-yellow-500/30 rounded-lg p-4 mb-4">
-                      <div className="font-bold text-white mb-2">🏆 Winners</div>
-                      <div className="space-y-2">
-                        {challenge.winners.map((winner) => (
-                          <div key={winner.id} className="flex items-center justify-between text-sm">
-                            <div className="flex items-center gap-2">
-                              <span className="text-2xl">{winner.rank === 1 ? '🥇' : winner.rank === 2 ? '🥈' : '🥉'}</span>
-                              <span className="text-white font-semibold">{winner.photographer_name}</span>
+                  {challenge.status === 'completed' &&
+                    challenge.winners &&
+                    challenge.winners.length > 0 && (
+                      <div className="bg-gradient-to-r from-yellow-500/10 to-aurora-purple/10 border border-yellow-500/30 rounded-lg p-4 mb-4">
+                        <div className="font-bold text-white mb-2">🏆 Winners</div>
+                        <div className="space-y-2">
+                          {challenge.winners.map(winner => (
+                            <div
+                              key={winner.id}
+                              className="flex items-center justify-between text-sm"
+                            >
+                              <div className="flex items-center gap-2">
+                                <span className="text-2xl">
+                                  {winner.rank === 1 ? '🥇' : winner.rank === 2 ? '🥈' : '🥉'}
+                                </span>
+                                <span className="text-white font-semibold">
+                                  {winner.photographer_name}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-4">
+                                <span className="text-gray-400">❤️ {winner.community_votes}</span>
+                                <span className="text-aurora-green font-bold">
+                                  {winner.final_score.toFixed(1)}
+                                </span>
+                              </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                              <span className="text-gray-400">❤️ {winner.community_votes}</span>
-                              <span className="text-aurora-green font-bold">{winner.final_score.toFixed(1)}</span>
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
                   {/* Actions */}
                   {challenge.status === 'active' && (
@@ -309,10 +346,17 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
               <div className="bg-dark-800 rounded-xl p-4 mb-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-400 mb-2">Timeframe</label>
+                    <label className="block text-sm font-semibold text-gray-400 mb-2">
+                      Timeframe
+                    </label>
                     <select
                       value={filters.timeframe}
-                      onChange={(e) => setFilters({ ...filters, timeframe: e.target.value as LeaderboardFilters['timeframe'] })}
+                      onChange={e =>
+                        setFilters({
+                          ...filters,
+                          timeframe: e.target.value as LeaderboardFilters['timeframe'],
+                        })
+                      }
                       className="w-full px-4 py-2 bg-dark-900 text-white rounded-lg border border-gray-700 focus:border-aurora-purple"
                     >
                       <option value="today">Today</option>
@@ -322,10 +366,17 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-400 mb-2">Rank By</label>
+                    <label className="block text-sm font-semibold text-gray-400 mb-2">
+                      Rank By
+                    </label>
                     <select
                       value={filters.metric}
-                      onChange={(e) => setFilters({ ...filters, metric: e.target.value as LeaderboardFilters['metric'] })}
+                      onChange={e =>
+                        setFilters({
+                          ...filters,
+                          metric: e.target.value as LeaderboardFilters['metric'],
+                        })
+                      }
                       className="w-full px-4 py-2 bg-dark-900 text-white rounded-lg border border-gray-700 focus:border-aurora-purple"
                     >
                       <option value="total_likes">Total Likes</option>
@@ -342,7 +393,7 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
                 <div className="text-center py-12 text-gray-400">Loading leaderboard...</div>
               ) : (
                 <div className="space-y-2">
-                  {leaderboard.map((entry) => {
+                  {leaderboard.map(entry => {
                     const isCurrentUser = userId && entry.user_id === userId;
                     const metricValue = entry[filters.metric];
 
@@ -357,19 +408,32 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
                       >
                         <div className="flex items-center gap-4">
                           {/* Rank */}
-                          <div className={`text-2xl font-bold w-12 text-center ${
-                            entry.rank === 1 ? 'text-yellow-400' :
-                            entry.rank === 2 ? 'text-gray-300' :
-                            entry.rank === 3 ? 'text-orange-400' :
-                            'text-gray-500'
-                          }`}>
-                            {entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : entry.rank === 3 ? '🥉' : `#${entry.rank}`}
+                          <div
+                            className={`text-2xl font-bold w-12 text-center ${
+                              entry.rank === 1
+                                ? 'text-yellow-400'
+                                : entry.rank === 2
+                                  ? 'text-gray-300'
+                                  : entry.rank === 3
+                                    ? 'text-orange-400'
+                                    : 'text-gray-500'
+                            }`}
+                          >
+                            {entry.rank === 1
+                              ? '🥇'
+                              : entry.rank === 2
+                                ? '🥈'
+                                : entry.rank === 3
+                                  ? '🥉'
+                                  : `#${entry.rank}`}
                           </div>
 
                           {/* Photographer */}
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
-                              <span className="font-bold text-white">{entry.photographer_name}</span>
+                              <span className="font-bold text-white">
+                                {entry.photographer_name}
+                              </span>
                               {isCurrentUser && (
                                 <span className="px-2 py-0.5 bg-aurora-purple/20 text-aurora-purple text-xs rounded-full">
                                   You
@@ -377,7 +441,8 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
                               )}
                             </div>
                             <div className="text-sm text-gray-400">
-                              {entry.total_photos} photos · {entry.badge_count} badges · Last upload {new Date(entry.last_upload).toLocaleDateString()}
+                              {entry.total_photos} photos · {entry.badge_count} badges · Last upload{' '}
+                              {new Date(entry.last_upload).toLocaleDateString()}
                             </div>
                           </div>
 
@@ -388,7 +453,9 @@ export default function ChallengeLeaderboard({ userId, onClose }: Props) {
                                 ? (metricValue * 100).toFixed(0) + '%'
                                 : metricValue}
                             </div>
-                            <div className="text-xs text-gray-400">{getMetricLabel(filters.metric)}</div>
+                            <div className="text-xs text-gray-400">
+                              {getMetricLabel(filters.metric)}
+                            </div>
                           </div>
                         </div>
                       </div>

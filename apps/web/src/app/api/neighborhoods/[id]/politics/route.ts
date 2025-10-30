@@ -30,13 +30,13 @@ const politicsSchema = z.object({
 });
 
 // GET - Fetch politics discussions
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -67,10 +67,12 @@ export async function GET(
     // Build query
     let query = supabase
       .from('neighborhood_politics')
-      .select(`
+      .select(
+        `
         *,
         profiles:user_id(full_name, email)
-      `)
+      `
+      )
       .eq('neighborhood_id', neighborhoodId)
       .eq('is_archived', false);
 
@@ -91,30 +93,24 @@ export async function GET(
 
     if (error) {
       console.error('Error fetching politics:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch politics discussions' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch politics discussions' }, { status: 500 });
     }
 
     return NextResponse.json({ politics: politics || [] });
   } catch (error: any) {
     console.error('Politics GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST - Create a new politics discussion
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -157,26 +153,22 @@ export async function POST(
         user_id: user.id,
         ...politicsData,
       })
-      .select(`
+      .select(
+        `
         *,
         profiles:user_id(full_name, email)
-      `)
+      `
+      )
       .single();
 
     if (error) {
       console.error('Error creating politics post:', error);
-      return NextResponse.json(
-        { error: 'Failed to create politics post' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to create politics post' }, { status: 500 });
     }
 
     return NextResponse.json({ politics });
   } catch (error: any) {
     console.error('Politics creation error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

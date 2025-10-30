@@ -2,7 +2,7 @@ import { SITE_CONFIG } from './metadata';
 
 /**
  * Advanced Schema.org Types
- * 
+ *
  * Additional structured data schemas for rich search results:
  * - VideoObject
  * - Product (for premium features)
@@ -103,7 +103,7 @@ export interface CourseSchemaConfig {
 
 /**
  * Generate VideoObject schema
- * 
+ *
  * For video content (e.g., aurora webcam streams, tutorial videos)
  */
 export function generateVideoSchema(config: VideoSchemaConfig) {
@@ -127,7 +127,7 @@ export function generateVideoSchema(config: VideoSchemaConfig) {
 
 /**
  * Generate Product schema
- * 
+ *
  * For premium features, sponsored listings, or merchandise
  */
 export function generateProductSchema(config: ProductSchemaConfig) {
@@ -165,7 +165,7 @@ export function generateProductSchema(config: ProductSchemaConfig) {
 
 /**
  * Generate Review schema
- * 
+ *
  * For user reviews and testimonials
  */
 export function generateReviewSchema(config: ReviewSchemaConfig) {
@@ -194,7 +194,7 @@ export function generateReviewSchema(config: ReviewSchemaConfig) {
 
 /**
  * Generate AggregateRating schema
- * 
+ *
  * For overall ratings across multiple reviews
  */
 export function generateAggregateRatingSchema(config: {
@@ -220,7 +220,7 @@ export function generateAggregateRatingSchema(config: {
 
 /**
  * Generate HowTo schema
- * 
+ *
  * For step-by-step guides (e.g., "How to prepare for winter in Yellowknife")
  */
 export function generateHowToSchema(config: HowToSchemaConfig) {
@@ -253,7 +253,7 @@ export function generateHowToSchema(config: HowToSchemaConfig) {
 
 /**
  * Generate Course schema
- * 
+ *
  * For educational content or onboarding guides
  */
 export function generateCourseSchema(config: CourseSchemaConfig) {
@@ -293,7 +293,7 @@ export function generateCourseSchema(config: CourseSchemaConfig) {
 
 /**
  * Generate ItemList schema
- * 
+ *
  * For lists of items (e.g., "Top 10 Things to Do in Yellowknife")
  */
 export function generateItemListSchema(config: {
@@ -325,7 +325,7 @@ export function generateItemListSchema(config: {
 
 /**
  * Generate Place schema with enhanced details
- * 
+ *
  * For location-based content (attractions, businesses)
  */
 export function generatePlaceSchema(config: {
@@ -384,7 +384,7 @@ export function generatePlaceSchema(config: {
 
 /**
  * Generate WebApplication schema
- * 
+ *
  * For the YK Buddy web app itself
  */
 export function generateWebApplicationSchema() {
@@ -405,4 +405,3 @@ export function generateWebApplicationSchema() {
     screenshot: `${SITE_CONFIG.url}/og-image.jpg`,
   };
 }
-

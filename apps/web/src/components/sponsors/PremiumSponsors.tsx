@@ -29,7 +29,7 @@ export default function PremiumSponsors({
   showAll = false,
   maxSponsors = 6,
   layout = 'grid',
-  showPlaceholder = true
+  showPlaceholder = true,
 }: PremiumSponsorsProps) {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,11 +99,7 @@ export default function PremiumSponsors({
   };
 
   if (loading) {
-    return (
-      <div className="py-8">
-        {/* Reserve space while loading to prevent layout shift */}
-      </div>
-    );
+    return <div className="py-8">{/* Reserve space while loading to prevent layout shift */}</div>;
   }
 
   if (sponsors.length === 0 && showPlaceholder) {
@@ -116,7 +112,9 @@ export default function PremiumSponsors({
 
   const renderSponsor = (sponsor: Sponsor) => {
     const content = (
-      <div className={`relative group bg-gradient-to-br ${getPlanGradient(sponsor.plan_type)} backdrop-blur-sm rounded-xl border-2 ${getPlanBorderColor(sponsor.plan_type)} transition-all overflow-hidden ${sponsor.link ? 'cursor-pointer' : ''}`}>
+      <div
+        className={`relative group bg-gradient-to-br ${getPlanGradient(sponsor.plan_type)} backdrop-blur-sm rounded-xl border-2 ${getPlanBorderColor(sponsor.plan_type)} transition-all overflow-hidden ${sponsor.link ? 'cursor-pointer' : ''}`}
+      >
         {sponsor.plan_type === 'enterprise' && (
           <div className="absolute inset-0 overflow-hidden rounded-xl opacity-40">
             <div className="aurora-wave aurora-green"></div>
@@ -127,27 +125,32 @@ export default function PremiumSponsors({
 
         <div className="relative z-10 p-6">
           <div className="flex justify-between items-start mb-3">
-            <span className={`text-xs uppercase tracking-widest font-semibold ${
-              sponsor.plan_type === 'enterprise' ? 'text-yellow-400' :
-              sponsor.plan_type === 'premium' ? 'text-aurora-purple' :
-              'text-aurora-blue'
-            }`}>
-              {sponsor.plan_type === 'enterprise' && '✨ '}{sponsor.plan_type}
+            <span
+              className={`text-xs uppercase tracking-widest font-semibold ${
+                sponsor.plan_type === 'enterprise'
+                  ? 'text-yellow-400'
+                  : sponsor.plan_type === 'premium'
+                    ? 'text-aurora-purple'
+                    : 'text-aurora-blue'
+              }`}
+            >
+              {sponsor.plan_type === 'enterprise' && '✨ '}
+              {sponsor.plan_type}
             </span>
           </div>
 
-          <h3 className={`text-xl md:text-2xl font-bold mb-2 ${
-            sponsor.plan_type === 'enterprise'
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400'
-              : 'text-white'
-          }`}>
+          <h3
+            className={`text-xl md:text-2xl font-bold mb-2 ${
+              sponsor.plan_type === 'enterprise'
+                ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400'
+                : 'text-white'
+            }`}
+          >
             {sponsor.name}
           </h3>
 
           {sponsor.tagline && (
-            <p className="text-sm text-gray-300 italic mb-3">
-              {sponsor.tagline}
-            </p>
+            <p className="text-sm text-gray-300 italic mb-3">{sponsor.tagline}</p>
           )}
 
           {sponsor.link && (
@@ -181,11 +184,7 @@ export default function PremiumSponsors({
   };
 
   if (layout === 'list') {
-    return (
-      <div className="space-y-4 py-6">
-        {sponsors.map(renderSponsor)}
-      </div>
-    );
+    return <div className="space-y-4 py-6">{sponsors.map(renderSponsor)}</div>;
   }
 
   return (
@@ -220,7 +219,7 @@ export function AdSenseSlot({
   slot,
   format = 'auto',
   responsive = true,
-  style
+  style,
 }: {
   slot: string;
   format?: string;
@@ -253,7 +252,7 @@ export function AdSenseSlot({
 export function PremiumSponsorsWithAds({
   position,
   adSlot,
-  showAd = true
+  showAd = true,
 }: {
   position?: string;
   adSlot?: string;
@@ -262,18 +261,14 @@ export function PremiumSponsorsWithAds({
   return (
     <div className="max-w-6xl mx-auto px-4">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">
-          Premium Sponsors
-        </h2>
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">Premium Sponsors</h2>
         <PremiumSponsors position={position} maxSponsors={6} />
       </div>
 
       {showAd && adSlot && (
         <div className="border-t border-gray-700/30 pt-8">
           <div className="text-center">
-            <p className="text-xs text-gray-500 mb-4 uppercase tracking-wider">
-              Advertisement
-            </p>
+            <p className="text-xs text-gray-500 mb-4 uppercase tracking-wider">Advertisement</p>
             <AdSenseSlot slot={adSlot} />
           </div>
         </div>

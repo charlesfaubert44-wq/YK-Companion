@@ -52,8 +52,8 @@ export default function VisitorLogbookPage() {
               </span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Join thousands of visitors who have experienced the magic of Yellowknife.
-              Share your photos, stories, and memories from the true North!
+              Join thousands of visitors who have experienced the magic of Yellowknife. Share your
+              photos, stories, and memories from the true North!
             </p>
 
             {/* CTA Button */}
@@ -62,7 +62,12 @@ export default function VisitorLogbookPage() {
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-aurora-green to-aurora-blue text-white text-lg font-bold rounded-xl hover:shadow-2xl hover:shadow-aurora-green/30 transition-all transform hover:scale-105"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
               </svg>
               Share Your Experience
             </button>
@@ -134,7 +139,7 @@ export default function VisitorLogbookPage() {
                 >
                   All Experiences
                 </button>
-                {EXPERIENCE_TYPES.slice(0, 8).map((type) => {
+                {EXPERIENCE_TYPES.slice(0, 8).map(type => {
                   const config = EXPERIENCE_TYPE_CONFIG[type];
                   const isSelected = selectedFilter.experienceType === type;
 
@@ -165,7 +170,7 @@ export default function VisitorLogbookPage() {
             <div className="mt-4">
               <p className="text-sm font-medium text-gray-400 mb-3">Minimum Rating:</p>
               <div className="flex gap-2">
-                {[5, 4, 3].map((rating) => (
+                {[5, 4, 3].map(rating => (
                   <button
                     key={rating}
                     onClick={() =>

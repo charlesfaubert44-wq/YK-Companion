@@ -16,7 +16,7 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
   const menuItems = [
     { key: 'home', label: t('home'), href: '/', color: 'emerald', icon: '🏠' },
     { key: 'about', label: t('about'), onClick: onAboutClick, color: 'cyan', icon: '💡' },
-    { key: 'contact', label: t('contact'), onClick: onContactClick, color: 'purple', icon: '✉️' }
+    { key: 'contact', label: t('contact'), onClick: onContactClick, color: 'purple', icon: '✉️' },
   ];
 
   return (
@@ -27,17 +27,21 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
           <div
             className="absolute inset-0 blur-3xl"
             style={{
-              background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15), rgba(34, 211, 238, 0.15), rgba(139, 92, 246, 0.15))',
+              background:
+                'radial-gradient(circle, rgba(16, 185, 129, 0.15), rgba(34, 211, 238, 0.15), rgba(139, 92, 246, 0.15))',
             }}
           />
         </div>
 
-        <div className="group flex items-center gap-2 bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-md border-l border-r border-b border-slate-700/50 shadow-2xl px-6 py-4 hover:border-emerald-500/50 transition-all duration-500" style={{
-          borderBottomLeftRadius: '1rem',
-          borderBottomRightRadius: '1rem',
-          borderTopLeftRadius: '0',
-          borderTopRightRadius: '0',
-        }}>
+        <div
+          className="group flex items-center gap-2 bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-md border-l border-r border-b border-slate-700/50 shadow-2xl px-6 py-4 hover:border-emerald-500/50 transition-all duration-500"
+          style={{
+            borderBottomLeftRadius: '1rem',
+            borderBottomRightRadius: '1rem',
+            borderTopLeftRadius: '0',
+            borderTopRightRadius: '0',
+          }}
+        >
           {menuItems.map((item, index) => (
             <div key={item.key} className="flex items-center">
               {item.href ? (
@@ -59,14 +63,14 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
                             item.color === 'emerald'
                               ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(52, 211, 153, 0.2))'
                               : item.color === 'cyan'
-                              ? 'linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.2))'
-                              : 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(168, 85, 247, 0.2))',
+                                ? 'linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.2))'
+                                : 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(168, 85, 247, 0.2))',
                           boxShadow:
                             item.color === 'emerald'
                               ? '0 0 30px rgba(16, 185, 129, 0.4)'
                               : item.color === 'cyan'
-                              ? '0 0 30px rgba(34, 211, 238, 0.4)'
-                              : '0 0 30px rgba(139, 92, 246, 0.4)',
+                                ? '0 0 30px rgba(34, 211, 238, 0.4)'
+                                : '0 0 30px rgba(139, 92, 246, 0.4)',
                         }}
                       />
                     )}
@@ -76,7 +80,8 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
                       <span
                         className="text-lg transition-transform duration-300"
                         style={{
-                          transform: hoveredItem === item.key ? 'scale(1.3) rotate(12deg)' : 'scale(1)',
+                          transform:
+                            hoveredItem === item.key ? 'scale(1.3) rotate(12deg)' : 'scale(1)',
                         }}
                       >
                         {item.icon}
@@ -116,14 +121,14 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
                           item.color === 'emerald'
                             ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(52, 211, 153, 0.2))'
                             : item.color === 'cyan'
-                            ? 'linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.2))'
-                            : 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(168, 85, 247, 0.2))',
+                              ? 'linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.2))'
+                              : 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(168, 85, 247, 0.2))',
                         boxShadow:
                           item.color === 'emerald'
                             ? '0 0 30px rgba(16, 185, 129, 0.4)'
                             : item.color === 'cyan'
-                            ? '0 0 30px rgba(34, 211, 238, 0.4)'
-                            : '0 0 30px rgba(139, 92, 246, 0.4)',
+                              ? '0 0 30px rgba(34, 211, 238, 0.4)'
+                              : '0 0 30px rgba(139, 92, 246, 0.4)',
                       }}
                     />
                   )}
@@ -133,7 +138,8 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
                     <span
                       className="text-lg transition-transform duration-300"
                       style={{
-                        transform: hoveredItem === item.key ? 'scale(1.3) rotate(12deg)' : 'scale(1)',
+                        transform:
+                          hoveredItem === item.key ? 'scale(1.3) rotate(12deg)' : 'scale(1)',
                       }}
                     >
                       {item.icon}
@@ -176,14 +182,14 @@ export default function InteractiveMenu({ onAboutClick, onContactClick }: Intera
                   i % 3 === 0
                     ? 'rgba(16, 185, 129, 0.8)'
                     : i % 3 === 1
-                    ? 'rgba(34, 211, 238, 0.8)'
-                    : 'rgba(139, 92, 246, 0.8)',
+                      ? 'rgba(34, 211, 238, 0.8)'
+                      : 'rgba(139, 92, 246, 0.8)',
                 boxShadow: `0 0 8px ${
                   i % 3 === 0
                     ? 'rgba(16, 185, 129, 0.6)'
                     : i % 3 === 1
-                    ? 'rgba(34, 211, 238, 0.6)'
-                    : 'rgba(139, 92, 246, 0.6)'
+                      ? 'rgba(34, 211, 238, 0.6)'
+                      : 'rgba(139, 92, 246, 0.6)'
                 }`,
                 animation: `float ${3 + Math.random() * 2}s ease-in-out infinite`,
                 animationDelay: `${Math.random() * 2}s`,

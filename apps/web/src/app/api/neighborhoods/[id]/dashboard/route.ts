@@ -7,13 +7,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
 // GET - Fetch comprehensive dashboard data
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -24,10 +24,12 @@ export async function GET(
     // Check if user is an approved member
     const { data: membership, error: membershipError } = await supabase
       .from('neighborhood_members')
-      .select(`
+      .select(
+        `
         *,
         neighborhood:neighborhoods(*)
-      `)
+      `
+      )
       .eq('neighborhood_id', neighborhoodId)
       .eq('user_id', user.id)
       .single();
@@ -77,10 +79,12 @@ export async function GET(
       // Recent posts (last 10)
       supabase
         .from('neighborhood_posts')
-        .select(`
+        .select(
+          `
           *,
           profiles:user_id(full_name)
-        `)
+        `
+        )
         .eq('neighborhood_id', neighborhoodId)
         .eq('is_archived', false)
         .eq('moderation_status', 'approved')
@@ -91,10 +95,12 @@ export async function GET(
       // Active alerts (high and critical severity first)
       supabase
         .from('neighborhood_alerts')
-        .select(`
+        .select(
+          `
           *,
           profiles:user_id(full_name)
-        `)
+        `
+        )
         .eq('neighborhood_id', neighborhoodId)
         .eq('status', 'active')
         .order('severity', { ascending: false })
@@ -116,10 +122,12 @@ export async function GET(
       // Upcoming political meetings
       supabase
         .from('neighborhood_politics')
-        .select(`
+        .select(
+          `
           *,
           profiles:user_id(full_name)
-        `)
+        `
+        )
         .eq('neighborhood_id', neighborhoodId)
         .eq('is_archived', false)
         .in('topic_type', ['meeting', 'vote', 'city_council'])
@@ -149,10 +157,14 @@ export async function GET(
     };
 
     // Check for errors
-    if (recentPostsResult.error) console.error('Error fetching recent posts:', recentPostsResult.error);
-    if (activeAlertsResult.error) console.error('Error fetching active alerts:', activeAlertsResult.error);
-    if (featuredBusinessesResult.error) console.error('Error fetching businesses:', featuredBusinessesResult.error);
-    if (upcomingMeetingsResult.error) console.error('Error fetching meetings:', upcomingMeetingsResult.error);
+    if (recentPostsResult.error)
+      console.error('Error fetching recent posts:', recentPostsResult.error);
+    if (activeAlertsResult.error)
+      console.error('Error fetching active alerts:', activeAlertsResult.error);
+    if (featuredBusinessesResult.error)
+      console.error('Error fetching businesses:', featuredBusinessesResult.error);
+    if (upcomingMeetingsResult.error)
+      console.error('Error fetching meetings:', upcomingMeetingsResult.error);
 
     const dashboard = {
       neighborhood: membership.neighborhood,
@@ -174,9 +186,6 @@ export async function GET(
     return NextResponse.json({ dashboard });
   } catch (error: any) {
     console.error('Dashboard GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

@@ -139,7 +139,7 @@ export default function SwipeableCards({
     setDragOffset({ x: exitX, y: 0 });
 
     setTimeout(() => {
-      setCurrentIndex((prev) => prev + 1);
+      setCurrentIndex(prev => prev + 1);
       setDragOffset({ x: 0, y: 0 });
       setSwipeDirection(null);
       setIsExiting(false);
@@ -238,7 +238,10 @@ export default function SwipeableCards({
             rotateY(${dragOffset.x * 0.03}deg)
             translateZ(${isDragging ? '50px' : '0px'})
           `,
-          transition: isDragging || isExiting ? 'none' : 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
+          transition:
+            isDragging || isExiting
+              ? 'none'
+              : 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease',
           opacity,
           zIndex: 20,
           boxShadow: isDragging
@@ -260,7 +263,7 @@ export default function SwipeableCards({
         <div
           className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${50 + dragOffset.x * 0.05}% ${50 + dragOffset.y * 0.05}%, rgba(0, 255, 136, 0.3), transparent 70%)`
+            background: `radial-gradient(circle at ${50 + dragOffset.x * 0.05}% ${50 + dragOffset.y * 0.05}%, rgba(0, 255, 136, 0.3), transparent 70%)`,
           }}
         />
 
@@ -293,7 +296,7 @@ export default function SwipeableCards({
                 className="text-9xl mb-8 animate-float filter drop-shadow-2xl"
                 style={{
                   transform: `scale(${1 + Math.abs(dragOffset.x) * 0.0002})`,
-                  transition: 'transform 0.2s ease-out'
+                  transition: 'transform 0.2s ease-out',
                 }}
               >
                 {currentCard.emoji}
@@ -363,9 +366,7 @@ export default function SwipeableCards({
           {/* Enhanced progress indicator */}
           <div className="mt-6 text-center">
             <div className="inline-flex items-center gap-3 px-6 py-3 bg-slate-800/60 backdrop-blur-sm rounded-full border border-slate-700/50">
-              <span className="text-slate-400 text-sm font-medium">
-                {currentIndex + 1}
-              </span>
+              <span className="text-slate-400 text-sm font-medium">{currentIndex + 1}</span>
               <div className="flex gap-1.5">
                 {cards.map((_, idx) => (
                   <div
@@ -374,15 +375,13 @@ export default function SwipeableCards({
                       idx === currentIndex
                         ? 'w-8 bg-gradient-to-r from-aurora-green to-aurora-blue'
                         : idx < currentIndex
-                        ? 'w-2 bg-slate-600'
-                        : 'w-2 bg-slate-700'
+                          ? 'w-2 bg-slate-600'
+                          : 'w-2 bg-slate-700'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-slate-400 text-sm font-medium">
-                {cards.length}
-              </span>
+              <span className="text-slate-400 text-sm font-medium">{cards.length}</span>
             </div>
           </div>
         </div>
@@ -400,9 +399,7 @@ export default function SwipeableCards({
 
       {/* Helper text */}
       <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-center">
-        <p className="text-slate-500 text-sm">
-          Drag cards or use arrow keys
-        </p>
+        <p className="text-slate-500 text-sm">Drag cards or use arrow keys</p>
       </div>
     </div>
   );

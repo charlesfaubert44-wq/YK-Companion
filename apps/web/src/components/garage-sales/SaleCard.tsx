@@ -16,7 +16,7 @@ interface SaleCardProps {
 
 /**
  * SaleCard Component
- * 
+ *
  * Displays a garage sale in a card format with:
  * - Title, description, and host info
  * - Date, time, and location
@@ -25,7 +25,7 @@ interface SaleCardProps {
  * - Favorite button
  * - Distance display (if available)
  * - Directions link
- * 
+ *
  * @example
  * ```tsx
  * <SaleCard
@@ -136,16 +136,18 @@ export default function SaleCard({
       </div>
 
       {/* Description */}
-      {sale.description && (
-        <p className="text-sm text-gray-300 mb-3">{sale.description}</p>
-      )}
+      {sale.description && <p className="text-sm text-gray-300 mb-3">{sale.description}</p>}
 
       {/* Date & Time */}
       <div className="flex items-center gap-4 mb-3 text-sm flex-wrap">
         <div className="flex items-center gap-2">
           <span className="text-aurora-green">📅</span>
           <span className="text-white font-medium">
-            {saleDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+            {saleDate.toLocaleDateString('en-US', {
+              weekday: 'short',
+              month: 'short',
+              day: 'numeric',
+            })}
           </span>
           {daysUntil === 0 && (
             <span className="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs font-medium">
@@ -165,7 +167,9 @@ export default function SaleCard({
         </div>
         <div className="flex items-center gap-2">
           <span className="text-aurora-blue">🕐</span>
-          <span className="text-gray-400">{sale.start_time} - {sale.end_time}</span>
+          <span className="text-gray-400">
+            {sale.start_time} - {sale.end_time}
+          </span>
         </div>
       </div>
 
@@ -192,32 +196,24 @@ export default function SaleCard({
             </span>
           ))}
           {sale.tags.length > 5 && (
-            <span className="px-2 py-1 text-gray-500 text-xs">
-              +{sale.tags.length - 5} more
-            </span>
+            <span className="px-2 py-1 text-gray-500 text-xs">+{sale.tags.length - 5} more</span>
           )}
         </div>
       )}
 
       {/* Items */}
       {sale.items_description && (
-        <p className="text-sm text-gray-400 mb-3 italic">
-          Items: {sale.items_description}
-        </p>
+        <p className="text-sm text-gray-400 mb-3 italic">Items: {sale.items_description}</p>
       )}
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-3 border-t border-gray-700 flex-wrap gap-3">
         <div className="flex gap-3 text-xs">
           {sale.cash_only && (
-            <span className="text-green-400 flex items-center gap-1">
-              💵 Cash Only
-            </span>
+            <span className="text-green-400 flex items-center gap-1">💵 Cash Only</span>
           )}
           {sale.early_birds_welcome && (
-            <span className="text-yellow-400 flex items-center gap-1">
-              🐦 Early Birds OK
-            </span>
+            <span className="text-yellow-400 flex items-center gap-1">🐦 Early Birds OK</span>
           )}
         </div>
 
@@ -225,7 +221,7 @@ export default function SaleCard({
           href={`https://www.google.com/maps/dir/?api=1&destination=${sale.latitude},${sale.longitude}`}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
           className="px-4 py-2 bg-aurora-blue/20 text-aurora-blue hover:bg-aurora-blue/30 rounded-lg transition-all text-sm font-medium flex items-center gap-1"
         >
           Get Directions →
@@ -234,4 +230,3 @@ export default function SaleCard({
     </div>
   );
 }
-

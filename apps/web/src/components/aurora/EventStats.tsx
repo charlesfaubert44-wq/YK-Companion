@@ -16,33 +16,25 @@ export default function EventStats({ event }: Props) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {/* Photo Count */}
         <div className="text-center">
-          <div className="text-4xl font-bold text-aurora-green mb-1">
-            {event.photo_count}
-          </div>
+          <div className="text-4xl font-bold text-aurora-green mb-1">{event.photo_count}</div>
           <div className="text-sm text-gray-400">Photos</div>
         </div>
 
         {/* Participants */}
         <div className="text-center">
-          <div className="text-4xl font-bold text-aurora-blue mb-1">
-            {event.participant_count}
-          </div>
+          <div className="text-4xl font-bold text-aurora-blue mb-1">{event.participant_count}</div>
           <div className="text-sm text-gray-400">Participants</div>
         </div>
 
         {/* Duration */}
         <div className="text-center">
-          <div className="text-4xl font-bold text-aurora-purple mb-1">
-            {eventDuration}m
-          </div>
+          <div className="text-4xl font-bold text-aurora-purple mb-1">{eventDuration}m</div>
           <div className="text-sm text-gray-400">Duration</div>
         </div>
 
         {/* Visibility */}
         <div className="text-center">
-          <div className="text-4xl font-bold text-yellow-400 mb-1">
-            {event.visibility_score}/10
-          </div>
+          <div className="text-4xl font-bold text-yellow-400 mb-1">{event.visibility_score}/10</div>
           <div className="text-sm text-gray-400">Visibility</div>
         </div>
       </div>

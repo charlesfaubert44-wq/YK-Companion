@@ -32,7 +32,7 @@ describe('Supabase Client', () => {
 
   it('should create a client with proper configuration', () => {
     const client = createClient();
-    
+
     expect(client).toBeDefined();
     expect(client.auth).toBeDefined();
     expect(client.from).toBeDefined();
@@ -40,16 +40,15 @@ describe('Supabase Client', () => {
 
   it('should handle database queries', async () => {
     const client = createClient();
-    
+
     const query = client.from('test_table').select('*');
     expect(query).toBeDefined();
   });
 
   it('should handle authentication methods', () => {
     const client = createClient();
-    
+
     expect(client.auth.getSession).toBeDefined();
     expect(client.auth.onAuthStateChange).toBeDefined();
   });
 });
-

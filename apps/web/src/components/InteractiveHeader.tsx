@@ -54,7 +54,7 @@ export default function InteractiveHeader() {
             <div className="flex justify-between items-center h-12 pt-2">
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-2">
-                {navItems.map((item) => (
+                {navItems.map(item => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -80,7 +80,8 @@ export default function InteractiveHeader() {
                       className="group flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-northern-midnight/60 backdrop-blur-md border border-aurora-blue/30 hover:border-aurora-green/50 transition-all duration-300 shadow-lg"
                     >
                       <div className="w-7 h-7 rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple flex items-center justify-center text-xs font-bold">
-                        {profile?.full_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+                        {profile?.full_name?.charAt(0).toUpperCase() ||
+                          user.email?.charAt(0).toUpperCase()}
                       </div>
                       <svg
                         className={`w-3 h-3 text-gray-300 transition-transform duration-300 ${showUserMenu ? 'rotate-180' : ''}`}
@@ -88,22 +89,32 @@ export default function InteractiveHeader() {
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
                       </svg>
                     </button>
 
                     {/* User Dropdown */}
                     {showUserMenu && (
                       <>
-                        <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)}></div>
+                        <div
+                          className="fixed inset-0 z-40"
+                          onClick={() => setShowUserMenu(false)}
+                        ></div>
                         <div className="absolute right-0 mt-2 w-56 z-50 animate-in fade-in slide-in-from-top-5 duration-200">
                           <div className="bg-dark-900/95 backdrop-blur-xl border border-aurora-blue/30 rounded-xl shadow-2xl overflow-hidden">
                             <div className="px-3 py-3 bg-gradient-to-r from-aurora-green/10 to-aurora-blue/10 border-b border-aurora-blue/20">
                               <p className="text-xs text-gray-400">Signed in as</p>
-                              <p className="text-sm text-white font-semibold truncate">{profile?.full_name || user.email}</p>
+                              <p className="text-sm text-white font-semibold truncate">
+                                {profile?.full_name || user.email}
+                              </p>
                             </div>
                             <div className="py-1">
-                              {userMenuItems.map((item) => (
+                              {userMenuItems.map(item => (
                                 <Link
                                   key={item.href}
                                   href={item.href}
@@ -150,7 +161,8 @@ export default function InteractiveHeader() {
                     className="flex items-center space-x-2 px-2 py-1.5 rounded-lg bg-northern-midnight/60 backdrop-blur-md border border-aurora-blue/30 shadow-lg"
                   >
                     <div className="w-7 h-7 rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple flex items-center justify-center text-xs font-bold">
-                      {profile?.full_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+                      {profile?.full_name?.charAt(0).toUpperCase() ||
+                        user.email?.charAt(0).toUpperCase()}
                     </div>
                   </button>
                 ) : (
@@ -168,9 +180,15 @@ export default function InteractiveHeader() {
                   aria-label={showMenu ? 'Close menu' : 'Open menu'}
                 >
                   <div className="w-5 h-5 flex flex-col justify-center items-center">
-                    <span className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ${showMenu ? 'rotate-45 translate-y-1' : '-translate-y-1'}`}></span>
-                    <span className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ${showMenu ? 'opacity-0' : 'opacity-100'}`}></span>
-                    <span className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ${showMenu ? '-rotate-45 -translate-y-1' : 'translate-y-1'}`}></span>
+                    <span
+                      className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ${showMenu ? 'rotate-45 translate-y-1' : '-translate-y-1'}`}
+                    ></span>
+                    <span
+                      className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ${showMenu ? 'opacity-0' : 'opacity-100'}`}
+                    ></span>
+                    <span
+                      className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ${showMenu ? '-rotate-45 -translate-y-1' : 'translate-y-1'}`}
+                    ></span>
                   </div>
                 </button>
               </div>
@@ -183,14 +201,21 @@ export default function InteractiveHeader() {
               showMenu ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
             }`}
           >
-            <div className="absolute inset-0 bg-northern-midnight/95 backdrop-blur-xl" onClick={() => setShowMenu(false)}></div>
-            <div className={`relative max-w-md mx-auto p-4 pt-20 transition-all duration-500 ${showMenu ? 'translate-y-0' : '-translate-y-full'}`}>
+            <div
+              className="absolute inset-0 bg-northern-midnight/95 backdrop-blur-xl"
+              onClick={() => setShowMenu(false)}
+            ></div>
+            <div
+              className={`relative max-w-md mx-auto p-4 pt-20 transition-all duration-500 ${showMenu ? 'translate-y-0' : '-translate-y-full'}`}
+            >
               <div className="bg-dark-900/90 backdrop-blur-lg rounded-2xl border border-aurora-blue/30 shadow-2xl overflow-hidden">
                 <div className="p-3 space-y-1">
                   <Link
                     href="/"
                     className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
-                      pathname === '/' ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white' : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10'
+                      pathname === '/'
+                        ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white'
+                        : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10'
                     }`}
                     onClick={() => setShowMenu(false)}
                   >
@@ -234,12 +259,14 @@ export default function InteractiveHeader() {
                   <div className="px-4 py-1">
                     <span className="text-xs font-bold text-gray-500 uppercase">Pathways</span>
                   </div>
-                  {allNavItems.map((item) => (
+                  {allNavItems.map(item => (
                     <Link
                       key={item.href}
                       href={item.href}
                       className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
-                        pathname === item.href ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white' : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10'
+                        pathname === item.href
+                          ? 'bg-gradient-to-r from-aurora-green/20 to-aurora-blue/20 text-white'
+                          : 'text-gray-300 hover:bg-gradient-to-r hover:from-aurora-green/10 hover:to-aurora-blue/10'
                       }`}
                       onClick={() => setShowMenu(false)}
                     >
@@ -252,7 +279,7 @@ export default function InteractiveHeader() {
                 {user ? (
                   <>
                     <div className="border-t border-aurora-blue/20 p-3 space-y-1">
-                      {userMenuItems.map((item) => (
+                      {userMenuItems.map(item => (
                         <Link
                           key={item.href}
                           href={item.href}
@@ -297,10 +324,18 @@ export default function InteractiveHeader() {
 
       {/* Modals */}
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
-      <Modal isOpen={showAboutModal} onClose={() => setShowAboutModal(false)} title="About YK Buddy">
+      <Modal
+        isOpen={showAboutModal}
+        onClose={() => setShowAboutModal(false)}
+        title="About YK Buddy"
+      >
         <AboutContent />
       </Modal>
-      <Modal isOpen={showContactModal} onClose={() => setShowContactModal(false)} title="Contact Us">
+      <Modal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        title="Contact Us"
+      >
         <ContactContent />
       </Modal>
     </>

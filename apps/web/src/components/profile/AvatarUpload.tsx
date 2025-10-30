@@ -11,7 +11,7 @@ interface AvatarUploadProps {
 
 /**
  * AvatarUpload Component
- * 
+ *
  * Handles avatar image upload to Supabase Storage and profile update.
  * Includes image preview, upload progress, and error handling.
  */
@@ -25,7 +25,7 @@ export default function AvatarUpload({ userId, currentAvatarUrl }: AvatarUploadP
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setError(null);
-      
+
       if (!e.target.files || e.target.files.length === 0) {
         return;
       }
@@ -62,10 +62,10 @@ export default function AvatarUpload({ userId, currentAvatarUrl }: AvatarUploadP
       }
 
       const { avatarUrl: newAvatarUrl } = await response.json();
-      
+
       // Update profile with new avatar URL
       await updateProfile({ avatar_url: newAvatarUrl });
-      
+
       setAvatarUrl(newAvatarUrl);
     } catch (error) {
       console.error('Error uploading avatar:', error);
@@ -173,17 +173,10 @@ export default function AvatarUpload({ userId, currentAvatarUrl }: AvatarUploadP
       </div>
 
       {/* Error Message */}
-      {error && (
-        <div className="mt-3 text-red-400 text-sm text-center">
-          {error}
-        </div>
-      )}
+      {error && <div className="mt-3 text-red-400 text-sm text-center">{error}</div>}
 
       {/* Helper Text */}
-      <p className="mt-2 text-xs text-gray-500 text-center">
-        JPG, PNG or GIF. Max 5MB.
-      </p>
+      <p className="mt-2 text-xs text-gray-500 text-center">JPG, PNG or GIF. Max 5MB.</p>
     </div>
   );
 }
-

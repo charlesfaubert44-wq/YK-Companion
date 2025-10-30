@@ -27,9 +27,7 @@ export default function OfflinePage() {
         <div className="max-w-md w-full text-center">
           <div className="text-6xl mb-6">✅</div>
           <h1 className="text-3xl font-bold text-white mb-4">Back Online!</h1>
-          <p className="text-gray-400 mb-8">
-            Your connection has been restored.
-          </p>
+          <p className="text-gray-400 mb-8">Your connection has been restored.</p>
           <Link
             href="/"
             className="inline-block px-8 py-4 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all transform hover:scale-105"
@@ -47,7 +45,8 @@ export default function OfflinePage() {
         <div className="text-6xl mb-6">📡</div>
         <h1 className="text-3xl font-bold text-white mb-4">You're Offline</h1>
         <p className="text-gray-400 mb-8">
-          Don't worry! YK Buddy works offline too. Some features may be limited, but you can still access:
+          Don't worry! YK Buddy works offline too. Some features may be limited, but you can still
+          access:
         </p>
 
         <div className="space-y-4 mb-8">

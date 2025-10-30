@@ -19,10 +19,10 @@ interface ListViewProps {
 
 /**
  * ListView Component
- * 
+ *
  * Displays a list of garage sales in card format.
  * Handles empty states, loading states, and various interactions.
- * 
+ *
  * @example
  * ```tsx
  * <ListView
@@ -52,10 +52,7 @@ export default function ListView({
     return (
       <div className="space-y-4">
         {[1, 2, 3].map(i => (
-          <div 
-            key={i} 
-            className="bg-dark-800 rounded-xl p-4 border border-gray-700 animate-pulse"
-          >
+          <div key={i} className="bg-dark-800 rounded-xl p-4 border border-gray-700 animate-pulse">
             <div className="h-6 bg-dark-700 rounded w-3/4 mb-3"></div>
             <div className="h-4 bg-dark-700 rounded w-1/2 mb-2"></div>
             <div className="h-4 bg-dark-700 rounded w-full mb-2"></div>
@@ -114,4 +111,3 @@ export default function ListView({
     </div>
   );
 }
-

@@ -65,10 +65,8 @@ export default function GarageSaleCarousel({
         gap={16}
         snap={true}
       >
-        {sales.map((sale) => (
-          <CarouselCard key={sale.id}>
-            {renderCard(sale)}
-          </CarouselCard>
+        {sales.map(sale => (
+          <CarouselCard key={sale.id}>{renderCard(sale)}</CarouselCard>
         ))}
       </Carousel>
     );
@@ -88,18 +86,14 @@ export default function GarageSaleCarousel({
           gap={16}
           snap={true}
         >
-          {sales.map((sale) => (
-            <CarouselCard key={sale.id}>
-              {renderCard(sale)}
-            </CarouselCard>
+          {sales.map(sale => (
+            <CarouselCard key={sale.id}>{renderCard(sale)}</CarouselCard>
           ))}
         </Carousel>
       </div>
 
       {/* Desktop: Grid */}
-      <div className="hidden md:block space-y-4">
-        {sales.map(renderCard)}
-      </div>
+      <div className="hidden md:block space-y-4">{sales.map(renderCard)}</div>
     </>
   );
 }
@@ -168,18 +162,14 @@ function GarageSaleCard({
                   </span>
                 )}
                 {sale.save_count && sale.save_count > 0 && (
-                  <div className="text-gray-400 text-xs md:text-sm">
-                    ⭐ {sale.save_count}
-                  </div>
+                  <div className="text-gray-400 text-xs md:text-sm">⭐ {sale.save_count}</div>
                 )}
               </div>
             </div>
 
             {/* Description */}
             {sale.description && (
-              <p className="text-gray-300 text-sm mb-3 line-clamp-2">
-                {sale.description}
-              </p>
+              <p className="text-gray-300 text-sm mb-3 line-clamp-2">{sale.description}</p>
             )}
 
             {/* Date/Time */}
@@ -187,7 +177,11 @@ function GarageSaleCard({
               <div className="flex items-center gap-2">
                 <span className="text-gray-400">📅</span>
                 <span className="text-white font-medium">
-                  {saleDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                  {saleDate.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -201,7 +195,7 @@ function GarageSaleCard({
             {/* Tags */}
             {sale.tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3">
-                {sale.tags.slice(0, 3).map((tag) => (
+                {sale.tags.slice(0, 3).map(tag => (
                   <span
                     key={tag}
                     className="px-2 py-0.5 md:py-1 bg-aurora-purple/20 text-aurora-purple rounded text-xs font-medium"
@@ -231,12 +225,8 @@ function GarageSaleCard({
         {/* Footer */}
         <div className="flex items-center justify-between pt-3 border-t border-gray-700 mt-auto">
           <div className="flex gap-2 md:gap-3 text-xs md:text-sm flex-wrap">
-            {sale.cash_only && (
-              <span className="text-yellow-400">💵 Cash</span>
-            )}
-            {sale.early_birds_welcome && (
-              <span className="text-green-400">🐦 Early OK</span>
-            )}
+            {sale.cash_only && <span className="text-yellow-400">💵 Cash</span>}
+            {sale.early_birds_welcome && <span className="text-green-400">🐦 Early OK</span>}
           </div>
           <div className="flex gap-1.5 md:gap-2 flex-shrink-0">
             <button

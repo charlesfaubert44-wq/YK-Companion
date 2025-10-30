@@ -141,20 +141,12 @@ export function generateLocalBusinessSchema() {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 62.4540,
+      latitude: 62.454,
       longitude: -114.3718,
     },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ],
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       opens: '00:00',
       closes: '23:59',
     },
@@ -265,13 +257,14 @@ export function generateEventSchema(config: EventSchemaConfig) {
       '@type': 'Place',
       name: location.name,
       ...(location.address && { address: location.address }),
-      ...(location.latitude && location.longitude && {
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: location.latitude,
-          longitude: location.longitude,
-        },
-      }),
+      ...(location.latitude &&
+        location.longitude && {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: location.latitude,
+            longitude: location.longitude,
+          },
+        }),
     },
     ...(image && { image: [image] }),
     ...(url && { url: url }),
@@ -302,7 +295,7 @@ export function generateFAQSchema(faqs: FAQItem[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
+    mainEntity: faqs.map(faq => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: {
@@ -324,14 +317,7 @@ export function generateWebPageSchema(config: {
   datePublished?: string;
   dateModified?: string;
 }) {
-  const {
-    title,
-    description,
-    url,
-    breadcrumbs,
-    datePublished,
-    dateModified,
-  } = config;
+  const { title, description, url, breadcrumbs, datePublished, dateModified } = config;
 
   return {
     '@context': 'https://schema.org',
@@ -359,4 +345,3 @@ export function generateWebPageSchema(config: {
     ],
   };
 }
-

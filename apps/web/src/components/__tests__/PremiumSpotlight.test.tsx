@@ -112,10 +112,10 @@ describe('PremiumSpotlight', () => {
 
     await waitFor(() => {
       // Check for animation-related classes
-      const element = container.querySelector('[class*="aurora"]') || 
-                     container.querySelector('[class*="animate"]');
+      const element =
+        container.querySelector('[class*="aurora"]') ||
+        container.querySelector('[class*="animate"]');
       expect(element).toBeDefined();
     });
   });
 });
-

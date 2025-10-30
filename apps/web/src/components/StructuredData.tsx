@@ -1,16 +1,16 @@
 'use client';
 
 import Script from 'next/script';
-import { 
-  generateOrganizationSchema, 
-  generateWebSiteSchema, 
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
   generateLocalBusinessSchema,
   type BreadcrumbItem,
   type ArticleSchemaConfig,
   type EventSchemaConfig,
   type FAQItem,
 } from '@/lib/seo/structured-data';
-import { 
+import {
   generateBreadcrumbSchema,
   generateArticleSchema,
   generateEventSchema,
@@ -35,27 +35,27 @@ interface StructuredDataProps {
 
 /**
  * StructuredData Component
- * 
+ *
  * Renders JSON-LD structured data for enhanced SEO.
  * Supports multiple schema types and can be customized per page.
- * 
+ *
  * @example
  * // Basic usage (in layout.tsx for global schemas)
  * <StructuredData />
- * 
+ *
  * @example
  * // With breadcrumbs
- * <StructuredData 
+ * <StructuredData
  *   breadcrumbs={[
  *     { name: 'Home', url: '/' },
  *     { name: 'Living', url: '/living' },
  *     { name: 'Garage Sales', url: '/living/garage-sales' }
- *   ]} 
+ *   ]}
  * />
- * 
+ *
  * @example
  * // Article schema (for knowledge base)
- * <StructuredData 
+ * <StructuredData
  *   type="article"
  *   article={{
  *     title: 'Guide to Aurora Viewing',
@@ -65,10 +65,10 @@ interface StructuredDataProps {
  *     dateModified: '2024-01-15',
  *   }}
  * />
- * 
+ *
  * @example
  * // Event schema (for garage sales)
- * <StructuredData 
+ * <StructuredData
  *   type="event"
  *   event={{
  *     name: 'Community Garage Sale',
@@ -125,8 +125,8 @@ export default function StructuredData({
           id="breadcrumb-structured-data"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)) 
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
           }}
         />
       )}
@@ -137,8 +137,8 @@ export default function StructuredData({
           id="article-structured-data"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(generateArticleSchema(article)) 
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateArticleSchema(article)),
           }}
         />
       )}
@@ -149,8 +149,8 @@ export default function StructuredData({
           id="event-structured-data"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(generateEventSchema(event)) 
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateEventSchema(event)),
           }}
         />
       )}
@@ -161,8 +161,8 @@ export default function StructuredData({
           id="faq-structured-data"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(generateFAQSchema(faqs)) 
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateFAQSchema(faqs)),
           }}
         />
       )}
@@ -173,11 +173,13 @@ export default function StructuredData({
           id="webpage-structured-data"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(generateWebPageSchema({
-              ...webpage,
-              breadcrumbs,
-            })) 
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              generateWebPageSchema({
+                ...webpage,
+                breadcrumbs,
+              })
+            ),
           }}
         />
       )}
@@ -187,7 +189,7 @@ export default function StructuredData({
 
 /**
  * Breadcrumb Component
- * 
+ *
  * Helper component to generate breadcrumb structured data
  * Can be used in individual pages for page-specific breadcrumbs
  */
@@ -199,8 +201,8 @@ export function BreadcrumbStructuredData({ items }: { items: BreadcrumbItem[] })
       id="breadcrumb-data"
       type="application/ld+json"
       strategy="beforeInteractive"
-      dangerouslySetInnerHTML={{ 
-        __html: JSON.stringify(generateBreadcrumbSchema(items)) 
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(generateBreadcrumbSchema(items)),
       }}
     />
   );
@@ -208,7 +210,7 @@ export function BreadcrumbStructuredData({ items }: { items: BreadcrumbItem[] })
 
 /**
  * Article Structured Data Component
- * 
+ *
  * Helper component for knowledge base articles
  */
 export function ArticleStructuredData({ article }: { article: ArticleSchemaConfig }) {
@@ -217,8 +219,8 @@ export function ArticleStructuredData({ article }: { article: ArticleSchemaConfi
       id="article-data"
       type="application/ld+json"
       strategy="beforeInteractive"
-      dangerouslySetInnerHTML={{ 
-        __html: JSON.stringify(generateArticleSchema(article)) 
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(generateArticleSchema(article)),
       }}
     />
   );
@@ -226,7 +228,7 @@ export function ArticleStructuredData({ article }: { article: ArticleSchemaConfi
 
 /**
  * Event Structured Data Component
- * 
+ *
  * Helper component for events and garage sales
  */
 export function EventStructuredData({ event }: { event: EventSchemaConfig }) {
@@ -235,8 +237,8 @@ export function EventStructuredData({ event }: { event: EventSchemaConfig }) {
       id="event-data"
       type="application/ld+json"
       strategy="beforeInteractive"
-      dangerouslySetInnerHTML={{ 
-        __html: JSON.stringify(generateEventSchema(event)) 
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(generateEventSchema(event)),
       }}
     />
   );
@@ -244,7 +246,7 @@ export function EventStructuredData({ event }: { event: EventSchemaConfig }) {
 
 /**
  * FAQ Structured Data Component
- * 
+ *
  * Helper component for FAQ sections
  */
 export function FAQStructuredData({ faqs }: { faqs: FAQItem[] }) {
@@ -255,8 +257,8 @@ export function FAQStructuredData({ faqs }: { faqs: FAQItem[] }) {
       id="faq-data"
       type="application/ld+json"
       strategy="beforeInteractive"
-      dangerouslySetInnerHTML={{ 
-        __html: JSON.stringify(generateFAQSchema(faqs)) 
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(generateFAQSchema(faqs)),
       }}
     />
   );

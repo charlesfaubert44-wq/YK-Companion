@@ -57,7 +57,7 @@ export function useAdminAuth(): AdminAuthState {
     async function checkAdminStatus() {
       // Wait for auth to finish loading
       if (authLoading) {
-        setState((prev) => ({ ...prev, loading: true }));
+        setState(prev => ({ ...prev, loading: true }));
         return;
       }
 

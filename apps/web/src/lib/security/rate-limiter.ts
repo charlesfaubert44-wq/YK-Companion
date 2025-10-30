@@ -1,6 +1,6 @@
 /**
  * Rate Limiting Utilities
- * 
+ *
  * Implements rate limiting to prevent abuse of API endpoints
  */
 
@@ -25,7 +25,7 @@ const rateLimitStore: RateLimitStore = {};
  */
 function cleanupExpiredEntries(): void {
   const now = Date.now();
-  Object.keys(rateLimitStore).forEach((key) => {
+  Object.keys(rateLimitStore).forEach(key => {
     if (rateLimitStore[key].resetTime < now) {
       delete rateLimitStore[key];
     }
@@ -39,7 +39,7 @@ if (typeof setInterval !== 'undefined') {
 
 /**
  * Check if a request should be rate limited
- * 
+ *
  * @param identifier - Unique identifier (IP address, user ID, etc.)
  * @param config - Rate limit configuration
  * @returns Object with allowed status and remaining requests
@@ -143,7 +143,7 @@ export async function rateLimit(
 
   if (!allowed) {
     const retryAfter = Math.ceil((resetTime - Date.now()) / 1000);
-    
+
     return new Response(
       JSON.stringify({
         error: 'Rate limit exceeded',
@@ -204,4 +204,3 @@ export function getRateLimitStatus(identifier: string): {
 } | null {
   return rateLimitStore[identifier] || null;
 }
-

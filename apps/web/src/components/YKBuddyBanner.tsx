@@ -151,7 +151,8 @@ export default function YKBuddyBanner() {
           <div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse at center, rgba(52, 211, 153, 0.3) 0%, transparent 60%)',
+              background:
+                'radial-gradient(ellipse at center, rgba(52, 211, 153, 0.3) 0%, transparent 60%)',
               animation: 'aurora-wave-1 10s ease-in-out infinite',
             }}
           />
@@ -200,23 +201,49 @@ export default function YKBuddyBanner() {
       {/* Add Custom Animations */}
       <style jsx>{`
         @keyframes aurora-wave-1 {
-          0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.4; }
-          50% { transform: translateY(-10px) scaleY(1.1); opacity: 0.6; }
+          0%,
+          100% {
+            transform: translateY(0) scaleY(1);
+            opacity: 0.4;
+          }
+          50% {
+            transform: translateY(-10px) scaleY(1.1);
+            opacity: 0.6;
+          }
         }
 
         @keyframes aurora-wave-2 {
-          0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.35; }
-          50% { transform: translateY(-15px) scaleY(1.15); opacity: 0.5; }
+          0%,
+          100% {
+            transform: translateY(0) scaleY(1);
+            opacity: 0.35;
+          }
+          50% {
+            transform: translateY(-15px) scaleY(1.15);
+            opacity: 0.5;
+          }
         }
 
         @keyframes aurora-wave-3 {
-          0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.3; }
-          50% { transform: translateY(-8px) scaleY(1.08); opacity: 0.45; }
+          0%,
+          100% {
+            transform: translateY(0) scaleY(1);
+            opacity: 0.3;
+          }
+          50% {
+            transform: translateY(-8px) scaleY(1.08);
+            opacity: 0.45;
+          }
         }
 
         @keyframes aurora-text {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
+          0%,
+          100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
         }
       `}</style>
     </>

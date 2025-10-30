@@ -60,12 +60,8 @@ export default function UserTypeSelector({ isOpen, onComplete }: UserTypeSelecto
       <div className="bg-gradient-to-b from-northern-midnight to-dark-900 border border-aurora-green/20 rounded-3xl p-8 max-w-4xl w-full shadow-2xl">
         {/* Title */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-white mb-3">
-            Welcome to YK Buddy!
-          </h2>
-          <p className="text-xl text-gray-300">
-            Let's personalize your experience
-          </p>
+          <h2 className="text-4xl font-bold text-white mb-3">Welcome to YK Buddy!</h2>
+          <p className="text-xl text-gray-300">Let's personalize your experience</p>
         </div>
 
         {/* User type cards */}

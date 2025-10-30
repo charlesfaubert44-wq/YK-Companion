@@ -14,21 +14,18 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     if (!amount || !email || !sponsorTier) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     // Verify user authentication
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Create or retrieve Stripe customer
@@ -53,17 +50,15 @@ export async function POST(request: NextRequest) {
     });
 
     // Store payment intent in database
-    const { error: dbError } = await supabase
-      .from('payment_intents')
-      .insert({
-        id: paymentIntent.id,
-        user_id: user.id,
-        amount: amount,
-        currency: 'cad',
-        status: paymentIntent.status,
-        sponsor_tier: sponsorTier,
-        metadata: paymentIntent.metadata,
-      });
+    const { error: dbError } = await supabase.from('payment_intents').insert({
+      id: paymentIntent.id,
+      user_id: user.id,
+      amount: amount,
+      currency: 'cad',
+      status: paymentIntent.status,
+      sponsor_tier: sponsorTier,
+      metadata: paymentIntent.metadata,
+    });
 
     if (dbError) {
       console.error('Error storing payment intent:', dbError);
@@ -76,9 +71,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Error creating payment intent:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

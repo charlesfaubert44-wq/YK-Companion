@@ -63,9 +63,7 @@ export async function GET(request: NextRequest) {
 
     // Search filter
     if (search) {
-      query = query.or(
-        `email.ilike.%${search}%,full_name.ilike.%${search}%`
-      );
+      query = query.or(`email.ilike.%${search}%,full_name.ilike.%${search}%`);
     }
 
     // Pagination
@@ -100,25 +98,19 @@ export async function PATCH(request: NextRequest) {
     if (adminCheck instanceof NextResponse) return adminCheck;
 
     const { user: adminUser } = adminCheck;
-    
+
     // Ensure adminUser exists
     if (!adminUser) {
-      return NextResponse.json(
-        { error: 'Admin user not found' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Admin user not found' }, { status: 401 });
     }
-    
+
     const supabase = await createClient();
     const body = await request.json();
 
     const { userId, is_admin } = body;
 
     if (!userId || typeof is_admin !== 'boolean') {
-      return NextResponse.json(
-        { error: 'userId and is_admin are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'userId and is_admin are required' }, { status: 400 });
     }
 
     // Update admin status

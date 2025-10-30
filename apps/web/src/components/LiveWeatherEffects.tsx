@@ -79,7 +79,8 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
                 top: `-${Math.random() * 20}%`,
                 width: '2px',
                 height: `${condition === 'drizzle' ? 15 : 25}px`,
-                background: 'linear-gradient(to bottom, rgba(174, 194, 224, 0.8), rgba(174, 194, 224, 0.2))',
+                background:
+                  'linear-gradient(to bottom, rgba(174, 194, 224, 0.8), rgba(174, 194, 224, 0.2))',
                 opacity: 0.5 + Math.random() * 0.3,
                 animationDuration: `${condition === 'drizzle' ? 1.5 : 0.8}s`,
                 animationDelay: `${Math.random() * 2}s`,
@@ -104,7 +105,8 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
                   top: `-${Math.random() * 20}%`,
                   width: '3px',
                   height: '30px',
-                  background: 'linear-gradient(to bottom, rgba(174, 194, 224, 0.9), rgba(174, 194, 224, 0.3))',
+                  background:
+                    'linear-gradient(to bottom, rgba(174, 194, 224, 0.9), rgba(174, 194, 224, 0.3))',
                   opacity: 0.6 + Math.random() * 0.4,
                   animationDuration: '0.5s',
                   animationDelay: `${Math.random() * 1}s`,
@@ -118,33 +120,37 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
       )}
 
       {/* FOG/MIST EFFECT */}
-      {(condition === 'mist' || condition === 'fog' || condition === 'haze') && effectsSettings.fog && (
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0 animate-fog-drift"
-            style={{
-              background: 'radial-gradient(ellipse at 30% 50%, rgba(200, 200, 220, 0.4) 0%, transparent 70%)',
-              filter: 'blur(40px)',
-            }}
-          />
-          <div
-            className="absolute inset-0 animate-fog-drift-reverse"
-            style={{
-              background: 'radial-gradient(ellipse at 70% 50%, rgba(180, 180, 200, 0.35) 0%, transparent 70%)',
-              filter: 'blur(50px)',
-              animationDelay: '2s',
-            }}
-          />
-          <div
-            className="absolute inset-0 animate-fog-drift"
-            style={{
-              background: 'radial-gradient(ellipse at 50% 80%, rgba(190, 190, 210, 0.3) 0%, transparent 60%)',
-              filter: 'blur(60px)',
-              animationDelay: '4s',
-            }}
-          />
-        </div>
-      )}
+      {(condition === 'mist' || condition === 'fog' || condition === 'haze') &&
+        effectsSettings.fog && (
+          <div className="absolute inset-0">
+            <div
+              className="absolute inset-0 animate-fog-drift"
+              style={{
+                background:
+                  'radial-gradient(ellipse at 30% 50%, rgba(200, 200, 220, 0.4) 0%, transparent 70%)',
+                filter: 'blur(40px)',
+              }}
+            />
+            <div
+              className="absolute inset-0 animate-fog-drift-reverse"
+              style={{
+                background:
+                  'radial-gradient(ellipse at 70% 50%, rgba(180, 180, 200, 0.35) 0%, transparent 70%)',
+                filter: 'blur(50px)',
+                animationDelay: '2s',
+              }}
+            />
+            <div
+              className="absolute inset-0 animate-fog-drift"
+              style={{
+                background:
+                  'radial-gradient(ellipse at 50% 80%, rgba(190, 190, 210, 0.3) 0%, transparent 60%)',
+                filter: 'blur(60px)',
+                animationDelay: '4s',
+              }}
+            />
+          </div>
+        )}
 
       {/* CLOUDS DRIFTING */}
       {condition === 'clouds' && effectsSettings.clouds && (
@@ -158,7 +164,8 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
                 top: `${10 + i * 15}%`,
                 width: `${100 + i * 50}px`,
                 height: `${40 + i * 20}px`,
-                background: 'radial-gradient(ellipse, rgba(255, 255, 255, 0.15) 0%, transparent 70%)',
+                background:
+                  'radial-gradient(ellipse, rgba(255, 255, 255, 0.15) 0%, transparent 70%)',
                 filter: 'blur(25px)',
                 animationDuration: `${40 + i * 10}s`,
                 animationDelay: `${i * 5}s`,
@@ -180,7 +187,8 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
                 top: `${Math.random() * 100}%`,
                 width: `${10 + Math.random() * 20}px`,
                 height: '1px',
-                background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent)',
+                background:
+                  'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent)',
                 opacity: 0.3 + Math.random() * 0.3,
                 animationDuration: `${1 + Math.random() * 2}s`,
                 animationDelay: `${Math.random() * 3}s`,
@@ -247,10 +255,14 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
         }
 
         @keyframes lightning {
-          0%, 45%, 55%, 100% {
+          0%,
+          45%,
+          55%,
+          100% {
             background: transparent;
           }
-          48%, 52% {
+          48%,
+          52% {
             background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 0 100px rgba(200, 220, 255, 0.5);
           }
@@ -261,7 +273,8 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
         }
 
         @keyframes fog-drift {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateX(0) scale(1);
             opacity: 0.3;
           }
@@ -272,7 +285,8 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
         }
 
         @keyframes fog-drift-reverse {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateX(0) scale(1);
             opacity: 0.3;
           }
@@ -306,7 +320,8 @@ export default function LiveWeatherEffects({ weather }: LiveWeatherEffectsProps)
         }
 
         @keyframes sparkle-float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0) scale(1);
             opacity: 0.2;
           }

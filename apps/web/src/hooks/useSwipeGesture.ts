@@ -19,10 +19,7 @@ interface SwipeState {
   velocity: number;
 }
 
-export function useSwipeGesture(
-  elementRef: RefObject<HTMLElement>,
-  options: SwipeGestureOptions
-) {
+export function useSwipeGesture(elementRef: RefObject<HTMLElement>, options: SwipeGestureOptions) {
   const {
     onSwipeLeft,
     onSwipeRight,
@@ -165,10 +162,7 @@ interface LongPressOptions {
   enableHaptics?: boolean;
 }
 
-export function useLongPress(
-  elementRef: RefObject<HTMLElement>,
-  options: LongPressOptions
-) {
+export function useLongPress(elementRef: RefObject<HTMLElement>, options: LongPressOptions) {
   const { onLongPress, delay = 500, enableHaptics = true } = options;
   const [isLongPressing, setIsLongPressing] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -295,15 +289,7 @@ export function usePullToRefresh(
       element.removeEventListener('touchmove', handleTouchMove);
       element.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [
-    elementRef,
-    onRefresh,
-    threshold,
-    enableHaptics,
-    isPulling,
-    isRefreshing,
-    pullDistance,
-  ]);
+  }, [elementRef, onRefresh, threshold, enableHaptics, isPulling, isRefreshing, pullDistance]);
 
   return {
     isPulling,

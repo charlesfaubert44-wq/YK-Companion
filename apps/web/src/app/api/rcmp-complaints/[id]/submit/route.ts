@@ -10,13 +10,13 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // POST - Submit complaint to RCMP via email
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -33,10 +33,7 @@ export async function POST(
       .single();
 
     if (fetchError || !complaint) {
-      return NextResponse.json(
-        { error: 'Complaint not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Complaint not found' }, { status: 404 });
     }
 
     if (complaint.status === 'submitted') {
@@ -61,10 +58,7 @@ export async function POST(
 
       if (emailError) {
         console.error('Error sending email to RCMP:', emailError);
-        return NextResponse.json(
-          { error: 'Failed to send email to RCMP' },
-          { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to send email to RCMP' }, { status: 500 });
       }
 
       // Update complaint status
@@ -90,17 +84,11 @@ export async function POST(
       });
     } catch (emailError: any) {
       console.error('Email sending error:', emailError);
-      return NextResponse.json(
-        { error: 'Failed to send complaint email' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to send complaint email' }, { status: 500 });
     }
   } catch (error: any) {
     console.error('Complaint submission error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -175,41 +163,59 @@ function generateComplaintEmail(complaint: any): string {
             <p>${complaint.description}</p>
           </div>
 
-          ${complaint.suspect_description ? `
+          ${
+            complaint.suspect_description
+              ? `
           <div class="section">
             <h2>Suspect Description</h2>
             <p>${complaint.suspect_description}</p>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
 
-          ${complaint.vehicle_description ? `
+          ${
+            complaint.vehicle_description
+              ? `
           <div class="section">
             <h2>Vehicle Description</h2>
             <p>${complaint.vehicle_description}</p>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
 
-          ${complaint.witness_info ? `
+          ${
+            complaint.witness_info
+              ? `
           <div class="section">
             <h2>Witness Information</h2>
             <p>${complaint.witness_info}</p>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
 
-          ${!complaint.is_anonymous && complaint.complainant_name ? `
+          ${
+            !complaint.is_anonymous && complaint.complainant_name
+              ? `
           <div class="section">
             <h2>Complainant Contact Information</h2>
             ${complaint.complainant_name ? `<p><span class="label">Name:</span> ${complaint.complainant_name}</p>` : ''}
             ${complaint.complainant_phone ? `<p><span class="label">Phone:</span> ${complaint.complainant_phone}</p>` : ''}
             ${complaint.complainant_email ? `<p><span class="label">Email:</span> ${complaint.complainant_email}</p>` : ''}
           </div>
-          ` : `
+          `
+              : `
           <div class="section">
             <p><em>This complaint has been submitted anonymously.</em></p>
           </div>
-          `}
+          `
+          }
 
-          ${complaint.evidence_images?.length > 0 ? `
+          ${
+            complaint.evidence_images?.length > 0
+              ? `
           <div class="section">
             <h2>Evidence Attached</h2>
             <p><span class="label">Number of images:</span> ${complaint.evidence_images.length}</p>
@@ -218,7 +224,9 @@ function generateComplaintEmail(complaint: any): string {
               ${complaint.evidence_images.map((url: string) => `<li><a href="${url}">${url}</a></li>`).join('')}
             </ul>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
 
         <div class="footer">

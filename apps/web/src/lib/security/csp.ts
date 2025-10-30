@@ -1,6 +1,6 @@
 /**
  * Content Security Policy (CSP) Configuration
- * 
+ *
  * Implements strict CSP headers to prevent XSS and other injection attacks
  */
 
@@ -27,8 +27,7 @@ export function generateNonce(): string {
     return crypto.randomUUID();
   }
   // Fallback for environments without crypto.randomUUID
-  return Math.random().toString(36).substring(2, 15) + 
-         Math.random().toString(36).substring(2, 15);
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
 /**
@@ -59,11 +58,7 @@ export const cspDirectives: CSPDirectives = {
     'https://*.mapbox.com',
     'https://www.googletagmanager.com',
   ],
-  'font-src': [
-    "'self'",
-    'data:',
-    'https://fonts.gstatic.com',
-  ],
+  'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
   'connect-src': [
     "'self'",
     'https://*.supabase.co',
@@ -75,10 +70,7 @@ export const cspDirectives: CSPDirectives = {
     'https://vitals.vercel-insights.com',
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   ].filter(Boolean),
-  'frame-src': [
-    "'self'",
-    'https://js.stripe.com',
-  ],
+  'frame-src': ["'self'", 'https://js.stripe.com'],
   'object-src': ["'none'"],
   'base-uri': ["'self'"],
   'form-action': ["'self'"],
@@ -101,7 +93,7 @@ export function buildCSPHeader(directives: CSPDirectives, nonce?: string): strin
     }
 
     let directive = value as string[];
-    
+
     // Add nonce to script-src if provided
     if (key === 'script-src' && nonce) {
       directive = [...directive, `'nonce-${nonce}'`];
@@ -125,29 +117,15 @@ export function getCSPHeader(nonce?: string): string {
  */
 export const devCSPDirectives: CSPDirectives = {
   ...cspDirectives,
-  'script-src': [
-    "'self'",
-    "'unsafe-eval'",
-    "'unsafe-inline'",
-    'https:',
-  ],
-  'connect-src': [
-    "'self'",
-    'https:',
-    'wss:',
-    'http://localhost:*',
-    'ws://localhost:*',
-  ],
+  'script-src': ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'https:'],
+  'connect-src': ["'self'", 'https:', 'wss:', 'http://localhost:*', 'ws://localhost:*'],
 };
 
 /**
  * Get appropriate CSP based on environment
  */
 export function getEnvironmentCSP(nonce?: string): string {
-  const directives = process.env.NODE_ENV === 'production' 
-    ? cspDirectives 
-    : devCSPDirectives;
-  
+  const directives = process.env.NODE_ENV === 'production' ? cspDirectives : devCSPDirectives;
+
   return buildCSPHeader(directives, nonce);
 }
-

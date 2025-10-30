@@ -3,12 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { 
-  checkRateLimit, 
-  resetRateLimit, 
-  RATE_LIMITS,
-  getClientIP 
-} from '../rate-limiter';
+import { checkRateLimit, resetRateLimit, RATE_LIMITS, getClientIP } from '../rate-limiter';
 
 describe('Rate Limiter', () => {
   beforeEach(() => {
@@ -19,7 +14,7 @@ describe('Rate Limiter', () => {
   describe('checkRateLimit', () => {
     it('should allow requests within limit', () => {
       const config = { interval: 60000, maxRequests: 5 };
-      
+
       for (let i = 0; i < 5; i++) {
         const result = checkRateLimit('test-user', config);
         expect(result.allowed).toBe(true);
@@ -29,12 +24,12 @@ describe('Rate Limiter', () => {
 
     it('should block requests exceeding limit', () => {
       const config = { interval: 60000, maxRequests: 3 };
-      
+
       // Make 3 allowed requests
       checkRateLimit('test-user', config);
       checkRateLimit('test-user', config);
       checkRateLimit('test-user', config);
-      
+
       // 4th request should be blocked
       const result = checkRateLimit('test-user', config);
       expect(result.allowed).toBe(false);
@@ -43,17 +38,17 @@ describe('Rate Limiter', () => {
 
     it('should reset after interval expires', () => {
       const config = { interval: 100, maxRequests: 2 }; // 100ms interval
-      
+
       // Use up limit
       checkRateLimit('test-user', config);
       checkRateLimit('test-user', config);
-      
+
       // Should be blocked
       let result = checkRateLimit('test-user', config);
       expect(result.allowed).toBe(false);
-      
+
       // Wait for interval to expire
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         setTimeout(() => {
           // Should be allowed again after reset
           result = checkRateLimit('test-user', config);
@@ -65,11 +60,11 @@ describe('Rate Limiter', () => {
 
     it('should have independent limits per identifier', () => {
       const config = { interval: 60000, maxRequests: 2 };
-      
+
       // User 1 uses up their limit
       checkRateLimit('user1', config);
       checkRateLimit('user1', config);
-      
+
       // User 2 should still have their full limit
       const result = checkRateLimit('user2', config);
       expect(result.allowed).toBe(true);
@@ -79,9 +74,9 @@ describe('Rate Limiter', () => {
     it('should provide correct reset time', () => {
       const config = { interval: 60000, maxRequests: 5 };
       const before = Date.now();
-      
+
       const result = checkRateLimit('test-user', config);
-      
+
       const after = Date.now();
       expect(result.resetTime).toBeGreaterThan(before);
       expect(result.resetTime).toBeLessThan(after + config.interval + 1000);
@@ -95,7 +90,7 @@ describe('Rate Limiter', () => {
           'x-forwarded-for': '192.168.1.1, 10.0.0.1',
         },
       });
-      
+
       const ip = getClientIP(request);
       expect(ip).toBe('192.168.1.1');
     });
@@ -106,14 +101,14 @@ describe('Rate Limiter', () => {
           'x-real-ip': '192.168.1.1',
         },
       });
-      
+
       const ip = getClientIP(request);
       expect(ip).toBe('192.168.1.1');
     });
 
     it('should return unknown if no IP headers', () => {
       const request = new Request('http://localhost');
-      
+
       const ip = getClientIP(request);
       expect(ip).toBe('unknown');
     });
@@ -143,22 +138,21 @@ describe('Rate Limiter', () => {
   describe('resetRateLimit', () => {
     it('should clear rate limit for identifier', () => {
       const config = { interval: 60000, maxRequests: 1 };
-      
+
       // Use up limit
       checkRateLimit('test-user', config);
       checkRateLimit('test-user', config);
-      
+
       // Should be blocked
       let result = checkRateLimit('test-user', config);
       expect(result.allowed).toBe(false);
-      
+
       // Reset
       resetRateLimit('test-user');
-      
+
       // Should be allowed again
       result = checkRateLimit('test-user', config);
       expect(result.allowed).toBe(true);
     });
   });
 });
-

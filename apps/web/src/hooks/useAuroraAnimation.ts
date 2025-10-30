@@ -1,12 +1,12 @@
 /**
  * Aurora Animation Hooks for YK-Companion
- * 
+ *
  * Provides hooks for aurora-style animations including:
  * - Aurora motion values with spring animations
  * - Seasonal color transitions
  * - Mouse tracking integration
  * - Smooth spring animations
- * 
+ *
  * @module hooks/useAuroraAnimation
  */
 
@@ -50,17 +50,17 @@ export interface AuroraAnimationConfig {
 
 /**
  * Hook for aurora-style motion values
- * 
+ *
  * @param config - Configuration options
  * @returns Aurora motion values
- * 
+ *
  * @example
  * function AuroraElement() {
  *   const { x, y, scale, rotation, opacity } = useAuroraAnimation({
  *     intensity: 0.7,
  *     mouseTracking: true,
  *   });
- * 
+ *
  *   return (
  *     <div
  *       style={{
@@ -102,7 +102,7 @@ export function useAuroraAnimation(config: AuroraAnimationConfig = {}) {
     const handleMouseMove = (e: MouseEvent) => {
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
-      
+
       mousePositionRef.current = {
         x: (e.clientX - centerX) * mouseSensitivity,
         y: (e.clientY - centerY) * mouseSensitivity,
@@ -235,16 +235,16 @@ export interface SeasonalTransitionConfig {
 
 /**
  * Hook for seasonal color transitions
- * 
+ *
  * @param config - Configuration options
  * @returns Current seasonal colors and transition progress
- * 
+ *
  * @example
  * function SeasonalCard() {
  *   const { colors, transitionProgress } = useSeasonalTransition({
  *     duration: 2000,
  *   });
- * 
+ *
  *   return (
  *     <div
  *       style={{
@@ -261,7 +261,7 @@ export interface SeasonalTransitionConfig {
 export function useSeasonalTransition(config: SeasonalTransitionConfig = {}) {
   const {
     duration = 1000,
-    easing = (t) => t * (2 - t), // easeOut
+    easing = t => t * (2 - t), // easeOut
     season: specifiedSeason,
     autoDetect = true,
   } = config;
@@ -319,4 +319,3 @@ export function useSeasonalTransition(config: SeasonalTransitionConfig = {}) {
     transitionProgress,
   };
 }
-

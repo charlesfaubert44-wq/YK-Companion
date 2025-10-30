@@ -152,7 +152,7 @@ export default function BadgeDisplay({ userId, compact = false }: Props) {
   if (compact) {
     return (
       <div className="flex flex-wrap gap-2">
-        {badges.slice(0, 5).map((badge) => (
+        {badges.slice(0, 5).map(badge => (
           <div
             key={badge.id}
             title={`${badge.badge_name}: ${badge.badge_description}`}
@@ -162,9 +162,7 @@ export default function BadgeDisplay({ userId, compact = false }: Props) {
           </div>
         ))}
         {badges.length > 5 && (
-          <div className="text-sm text-gray-400 self-center">
-            +{badges.length - 5} more
-          </div>
+          <div className="text-sm text-gray-400 self-center">+{badges.length - 5} more</div>
         )}
       </div>
     );
@@ -182,11 +180,15 @@ export default function BadgeDisplay({ userId, compact = false }: Props) {
               <div className="text-sm text-gray-400">Photos</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-aurora-blue">{stats.total_likes_received}</div>
+              <div className="text-3xl font-bold text-aurora-blue">
+                {stats.total_likes_received}
+              </div>
               <div className="text-sm text-gray-400">Total Likes</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-aurora-purple">{(stats.avg_ai_score * 100).toFixed(0)}%</div>
+              <div className="text-3xl font-bold text-aurora-purple">
+                {(stats.avg_ai_score * 100).toFixed(0)}%
+              </div>
               <div className="text-sm text-gray-400">Avg Quality</div>
             </div>
             <div className="text-center">
@@ -209,13 +211,19 @@ export default function BadgeDisplay({ userId, compact = false }: Props) {
           </div>
           <div className="mb-2">
             <div className="flex justify-between text-sm text-gray-400 mb-1">
-              <span>{nextBadgeProgress.current} / {nextBadgeProgress.needed}</span>
-              <span>{nextBadgeProgress.needed - nextBadgeProgress.current} {nextBadgeProgress.label}</span>
+              <span>
+                {nextBadgeProgress.current} / {nextBadgeProgress.needed}
+              </span>
+              <span>
+                {nextBadgeProgress.needed - nextBadgeProgress.current} {nextBadgeProgress.label}
+              </span>
             </div>
             <div className="w-full bg-dark-900 rounded-full h-3">
               <div
                 className="bg-gradient-to-r from-aurora-purple to-aurora-pink h-3 rounded-full transition-all"
-                style={{ width: `${(nextBadgeProgress.current / nextBadgeProgress.needed) * 100}%` }}
+                style={{
+                  width: `${(nextBadgeProgress.current / nextBadgeProgress.needed) * 100}%`,
+                }}
               />
             </div>
           </div>
@@ -233,11 +241,13 @@ export default function BadgeDisplay({ userId, compact = false }: Props) {
         ) : badges.length === 0 ? (
           <div className="text-center py-8">
             <div className="text-6xl mb-3">🎯</div>
-            <p className="text-gray-400">No badges yet. Start uploading photos to earn your first badge!</p>
+            <p className="text-gray-400">
+              No badges yet. Start uploading photos to earn your first badge!
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {badges.map((badge) => (
+            {badges.map(badge => (
               <button
                 key={badge.id}
                 onClick={() => setSelectedBadge(badge)}
@@ -271,9 +281,7 @@ export default function BadgeDisplay({ userId, compact = false }: Props) {
               <div
                 key={type}
                 className={`bg-dark-900 rounded-lg p-4 border-2 transition-all ${
-                  earned
-                    ? 'border-aurora-green/30 opacity-50'
-                    : 'border-gray-700'
+                  earned ? 'border-aurora-green/30 opacity-50' : 'border-gray-700'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -304,7 +312,9 @@ export default function BadgeDisplay({ userId, compact = false }: Props) {
               <p className="text-gray-400 mb-4">{selectedBadge.badge_description}</p>
 
               <div className="bg-dark-800 rounded-lg p-4 mb-6 text-left">
-                <div className="text-sm font-semibold text-aurora-purple mb-2">Achievement Details</div>
+                <div className="text-sm font-semibold text-aurora-purple mb-2">
+                  Achievement Details
+                </div>
                 <div className="text-sm text-gray-300">{selectedBadge.earned_for}</div>
                 <div className="text-xs text-gray-500 mt-2">
                   Earned on {new Date(selectedBadge.earned_at).toLocaleString()}

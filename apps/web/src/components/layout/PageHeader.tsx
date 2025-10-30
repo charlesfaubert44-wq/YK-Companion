@@ -20,11 +20,7 @@ export default function PageHeader({ icon, title, description, className = '' }:
       <h1 className="text-5xl font-bold text-white mb-4 bg-gradient-to-r from-aurora-green via-aurora-blue to-white bg-clip-text text-transparent">
         {title}
       </h1>
-      {description && (
-        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-          {description}
-        </p>
-      )}
+      {description && <p className="text-xl text-gray-300 max-w-2xl mx-auto">{description}</p>}
     </div>
   );
 }

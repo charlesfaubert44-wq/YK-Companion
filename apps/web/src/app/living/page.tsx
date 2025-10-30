@@ -17,9 +17,21 @@ export default function LivingPage() {
 
   const checklistItems: ChecklistItem[] = [
     { id: '1', title: 'Switch to Winter Tires', description: 'Legally required by October 1st' },
-    { id: '2', title: 'Block Heater & Extension Cord', description: 'Test your block heater and get outdoor-rated cords' },
-    { id: '3', title: 'Emergency Winter Kit (Vehicle)', description: 'Blanket, candle, matches, shovel, sand/kitty litter' },
-    { id: '4', title: 'Home Heating Check', description: 'Service furnace, seal windows, stock up on fuel' },
+    {
+      id: '2',
+      title: 'Block Heater & Extension Cord',
+      description: 'Test your block heater and get outdoor-rated cords',
+    },
+    {
+      id: '3',
+      title: 'Emergency Winter Kit (Vehicle)',
+      description: 'Blanket, candle, matches, shovel, sand/kitty litter',
+    },
+    {
+      id: '4',
+      title: 'Home Heating Check',
+      description: 'Service furnace, seal windows, stock up on fuel',
+    },
   ];
 
   const toggleCheckbox = (id: string) => {
@@ -58,9 +70,7 @@ export default function LivingPage() {
             {/* Page Header */}
             <div className="text-center mb-12">
               <div className="text-6xl mb-4">🏠</div>
-              <h1 className="text-5xl font-bold text-white mb-4">
-                Living in Yellowknife
-              </h1>
+              <h1 className="text-5xl font-bold text-white mb-4">Living in Yellowknife</h1>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
                 Local events, seasonal guides, hidden gems, and community resources for residents.
               </p>
@@ -68,28 +78,38 @@ export default function LivingPage() {
 
             {/* Key Features for Residents */}
             <div className="grid md:grid-cols-2 gap-6 mb-12">
-              <Link href="/living/garage-sales" className="group transform transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+              <Link
+                href="/living/garage-sales"
+                className="group transform transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+              >
                 <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:border-aurora-green hover:shadow-2xl hover:shadow-aurora-green/20 transition-all h-full">
                   <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🛒</div>
                   <h3 className="text-2xl font-bold text-white mb-3">Garage Sale Planner</h3>
                   <p className="text-gray-300 mb-4">
-                    Find garage sales on the map, plan your route, and save your favorites. Smart itinerary generator included!
+                    Find garage sales on the map, plan your route, and save your favorites. Smart
+                    itinerary generator included!
                   </p>
                   <div className="text-aurora-green font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                    Find Sales <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    Find Sales{' '}
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </div>
                 </div>
               </Link>
 
-              <Link href="/living/neighborhoods" className="group transform transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+              <Link
+                href="/living/neighborhoods"
+                className="group transform transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+              >
                 <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:border-aurora-purple hover:shadow-2xl hover:shadow-aurora-purple/20 transition-all h-full">
                   <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🏘️</div>
                   <h3 className="text-2xl font-bold text-white mb-3">Your Neighborhood</h3>
                   <p className="text-gray-300 mb-4">
-                    Connect with neighbors, share alerts, discover local businesses, and build a stronger community together.
+                    Connect with neighbors, share alerts, discover local businesses, and build a
+                    stronger community together.
                   </p>
                   <div className="text-aurora-purple font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                    Join Your Community <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    Join Your Community{' '}
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </div>
                 </div>
               </Link>
@@ -100,7 +120,8 @@ export default function LivingPage() {
                   <div className="text-4xl mb-4">📅</div>
                   <h3 className="text-2xl font-bold text-white mb-3">Local Events</h3>
                   <p className="text-gray-300 mb-4">
-                    Community festivals, markets, sports leagues, and social gatherings happening this month.
+                    Community festivals, markets, sports leagues, and social gatherings happening
+                    this month.
                   </p>
                   <div className="text-gray-400 font-semibold inline-flex items-center gap-2">
                     Coming Soon <span className="animate-pulse">✨</span>
@@ -108,15 +129,20 @@ export default function LivingPage() {
                 </div>
               </div>
 
-              <Link href="/aurora" className="group transform transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+              <Link
+                href="/aurora"
+                className="group transform transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+              >
                 <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 hover:border-aurora-blue hover:shadow-2xl hover:shadow-aurora-blue/20 transition-all h-full">
                   <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🌌</div>
                   <h3 className="text-2xl font-bold text-white mb-3">Tonight's Aurora</h3>
                   <p className="text-gray-300 mb-4">
-                    Don't miss spectacular shows in your own backyard. Get real-time forecasts and alerts.
+                    Don't miss spectacular shows in your own backyard. Get real-time forecasts and
+                    alerts.
                   </p>
                   <div className="text-aurora-blue font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                    Check Tonight <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    Check Tonight{' '}
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </div>
                 </div>
               </Link>
@@ -141,7 +167,8 @@ export default function LivingPage() {
                   <div className="text-4xl mb-4">❄️</div>
                   <h3 className="text-2xl font-bold text-white mb-3">Seasonal Tips</h3>
                   <p className="text-gray-300 mb-4">
-                    Month-by-month reminders for vehicle prep, home maintenance, and seasonal activities.
+                    Month-by-month reminders for vehicle prep, home maintenance, and seasonal
+                    activities.
                   </p>
                   <div className="text-gray-400 font-semibold inline-flex items-center gap-2">
                     Coming Soon <span className="animate-pulse">✨</span>
@@ -156,17 +183,29 @@ export default function LivingPage() {
               <div className="space-y-4">
                 <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
                   <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-white font-semibold group-hover:text-aurora-green transition-colors">Farmers Market</h4>
-                    <span className="text-sm text-aurora-green px-3 py-1 bg-aurora-green/10 rounded-full">Every Saturday</span>
+                    <h4 className="text-white font-semibold group-hover:text-aurora-green transition-colors">
+                      Farmers Market
+                    </h4>
+                    <span className="text-sm text-aurora-green px-3 py-1 bg-aurora-green/10 rounded-full">
+                      Every Saturday
+                    </span>
                   </div>
-                  <p className="text-gray-400 text-sm">Local produce, crafts, and food trucks. Runs through September.</p>
+                  <p className="text-gray-400 text-sm">
+                    Local produce, crafts, and food trucks. Runs through September.
+                  </p>
                 </div>
                 <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
                   <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-white font-semibold group-hover:text-aurora-blue transition-colors">Folk on the Rocks Festival</h4>
-                    <span className="text-sm text-aurora-blue px-3 py-1 bg-aurora-blue/10 rounded-full">July 14-16</span>
+                    <h4 className="text-white font-semibold group-hover:text-aurora-blue transition-colors">
+                      Folk on the Rocks Festival
+                    </h4>
+                    <span className="text-sm text-aurora-blue px-3 py-1 bg-aurora-blue/10 rounded-full">
+                      July 14-16
+                    </span>
                   </div>
-                  <p className="text-gray-400 text-sm">Annual music festival featuring northern and Canadian artists at Long Lake.</p>
+                  <p className="text-gray-400 text-sm">
+                    Annual music festival featuring northern and Canadian artists at Long Lake.
+                  </p>
                 </div>
               </div>
             </div>
@@ -180,7 +219,9 @@ export default function LivingPage() {
                     onClick={() => toggleResource('recreation')}
                     className="w-full text-left p-4 flex justify-between items-center group hover:bg-white/10 transition-all"
                   >
-                    <h4 className="text-white font-semibold group-hover:text-aurora-green transition-colors">Recreation & Sports</h4>
+                    <h4 className="text-white font-semibold group-hover:text-aurora-green transition-colors">
+                      Recreation & Sports
+                    </h4>
                     <ChevronRight
                       className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
                         expandedResources === 'recreation' ? 'rotate-90 text-aurora-green' : ''
@@ -189,14 +230,24 @@ export default function LivingPage() {
                   </button>
                   <div
                     className={`overflow-hidden transition-all duration-300 ${
-                      expandedResources === 'recreation' ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                      expandedResources === 'recreation'
+                        ? 'max-h-48 opacity-100'
+                        : 'max-h-0 opacity-0'
                     }`}
                   >
                     <ul className="space-y-2 px-4 pb-4 text-gray-400 text-sm">
-                      <li className="hover:text-white transition-colors cursor-pointer">• Fieldhouse (Gym, Track, Courts)</li>
-                      <li className="hover:text-white transition-colors cursor-pointer">• Ruth Inch Memorial Pool</li>
-                      <li className="hover:text-white transition-colors cursor-pointer">• Multiplex (Ice Rinks)</li>
-                      <li className="hover:text-white transition-colors cursor-pointer">• Climbing Gym</li>
+                      <li className="hover:text-white transition-colors cursor-pointer">
+                        • Fieldhouse (Gym, Track, Courts)
+                      </li>
+                      <li className="hover:text-white transition-colors cursor-pointer">
+                        • Ruth Inch Memorial Pool
+                      </li>
+                      <li className="hover:text-white transition-colors cursor-pointer">
+                        • Multiplex (Ice Rinks)
+                      </li>
+                      <li className="hover:text-white transition-colors cursor-pointer">
+                        • Climbing Gym
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -206,7 +257,9 @@ export default function LivingPage() {
                     onClick={() => toggleResource('learning')}
                     className="w-full text-left p-4 flex justify-between items-center group hover:bg-white/10 transition-all"
                   >
-                    <h4 className="text-white font-semibold group-hover:text-aurora-blue transition-colors">Libraries & Learning</h4>
+                    <h4 className="text-white font-semibold group-hover:text-aurora-blue transition-colors">
+                      Libraries & Learning
+                    </h4>
                     <ChevronRight
                       className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
                         expandedResources === 'learning' ? 'rotate-90 text-aurora-blue' : ''
@@ -215,13 +268,21 @@ export default function LivingPage() {
                   </button>
                   <div
                     className={`overflow-hidden transition-all duration-300 ${
-                      expandedResources === 'learning' ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                      expandedResources === 'learning'
+                        ? 'max-h-48 opacity-100'
+                        : 'max-h-0 opacity-0'
                     }`}
                   >
                     <ul className="space-y-2 px-4 pb-4 text-gray-400 text-sm">
-                      <li className="hover:text-white transition-colors cursor-pointer">• Yellowknife Public Library</li>
-                      <li className="hover:text-white transition-colors cursor-pointer">• NWT Centennial Library</li>
-                      <li className="hover:text-white transition-colors cursor-pointer">• Prince of Wales Northern Heritage Centre</li>
+                      <li className="hover:text-white transition-colors cursor-pointer">
+                        • Yellowknife Public Library
+                      </li>
+                      <li className="hover:text-white transition-colors cursor-pointer">
+                        • NWT Centennial Library
+                      </li>
+                      <li className="hover:text-white transition-colors cursor-pointer">
+                        • Prince of Wales Northern Heritage Centre
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -249,7 +310,7 @@ export default function LivingPage() {
               </div>
 
               <div className="space-y-3">
-                {checklistItems.map((item) => (
+                {checklistItems.map(item => (
                   <div
                     key={item.id}
                     className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
@@ -265,18 +326,18 @@ export default function LivingPage() {
                       className="mt-1 w-5 h-5 rounded cursor-pointer accent-aurora-green"
                     />
                     <div className="flex-1">
-                      <div className={`font-semibold transition-all ${
-                        checkedItems.has(item.id)
-                          ? 'text-gray-400 line-through'
-                          : 'text-white'
-                      }`}>
+                      <div
+                        className={`font-semibold transition-all ${
+                          checkedItems.has(item.id) ? 'text-gray-400 line-through' : 'text-white'
+                        }`}
+                      >
                         {item.title}
                       </div>
-                      <div className={`text-sm transition-all ${
-                        checkedItems.has(item.id)
-                          ? 'text-gray-500'
-                          : 'text-gray-400'
-                      }`}>
+                      <div
+                        className={`text-sm transition-all ${
+                          checkedItems.has(item.id) ? 'text-gray-500' : 'text-gray-400'
+                        }`}
+                      >
                         {item.description}
                       </div>
                     </div>
@@ -286,7 +347,9 @@ export default function LivingPage() {
 
               {completionPercentage === 100 && (
                 <div className="mt-6 p-4 bg-aurora-green/20 border border-aurora-green/30 rounded-lg text-center animate-pulse">
-                  <span className="text-aurora-green font-semibold">🎉 All tasks completed! You're ready for winter!</span>
+                  <span className="text-aurora-green font-semibold">
+                    🎉 All tasks completed! You're ready for winter!
+                  </span>
                 </div>
               )}
             </div>

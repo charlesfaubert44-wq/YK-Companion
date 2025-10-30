@@ -30,14 +30,14 @@ export default function AdminPricingPlansPage() {
     plan_name: '',
     plan_type: 'basic',
     position: 'home_top',
-    base_price_per_day: 10.00,
+    base_price_per_day: 10.0,
     min_duration_days: 7,
     max_duration_days: 365,
     position_multiplier: 1.0,
     volume_discount_7days: 0.05,
     volume_discount_30days: 0.15,
     volume_discount_90days: 0.25,
-    description: ''
+    description: '',
   });
 
   useEffect(() => {
@@ -60,14 +60,14 @@ export default function AdminPricingPlansPage() {
       plan_name: '',
       plan_type: 'basic',
       position: 'home_top',
-      base_price_per_day: 10.00,
+      base_price_per_day: 10.0,
       min_duration_days: 7,
       max_duration_days: 365,
       position_multiplier: 1.0,
       volume_discount_7days: 0.05,
       volume_discount_30days: 0.15,
       volume_discount_90days: 0.25,
-      description: ''
+      description: '',
     });
     setEditingPlan(null);
     setShowNewPlanForm(false);
@@ -85,7 +85,7 @@ export default function AdminPricingPlansPage() {
       volume_discount_7days: Number(plan.volume_discount_7days),
       volume_discount_30days: Number(plan.volume_discount_30days),
       volume_discount_90days: Number(plan.volume_discount_90days),
-      description: plan.description || ''
+      description: plan.description || '',
     });
     setEditingPlan(plan);
     setShowNewPlanForm(true);
@@ -137,10 +137,7 @@ export default function AdminPricingPlansPage() {
 
   const deletePlan = async (id: string) => {
     if (confirm('Are you sure you want to delete this pricing plan?')) {
-      const { error } = await supabase
-        .from('premium_pricing_plans')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('premium_pricing_plans').delete().eq('id', id);
 
       if (!error) {
         fetchPlans();
@@ -158,7 +155,10 @@ export default function AdminPricingPlansPage() {
             <p className="text-gray-400">Manage premium spotlight pricing structure</p>
           </div>
           <div className="flex gap-4">
-            <Link href="/admin" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">
+            <Link
+              href="/admin"
+              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
               ← Back to Admin
             </Link>
             <button
@@ -177,14 +177,20 @@ export default function AdminPricingPlansPage() {
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <div className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/30 rounded-2xl p-6">
             <h3 className="text-xl font-bold text-yellow-400 mb-4">💡 Pricing Formula</h3>
-            <p className="text-gray-300 mb-4">
-              Premium Spotlight pricing is based on:
-            </p>
+            <p className="text-gray-300 mb-4">Premium Spotlight pricing is based on:</p>
             <ul className="space-y-2 text-gray-300 text-sm">
-              <li>• <strong>Position:</strong> Prime positions (home_top) cost more</li>
-              <li>• <strong>Duration:</strong> Longer = bigger discounts (7+, 30+, 90+ days)</li>
-              <li>• <strong>Plan Type:</strong> Basic, Premium, or Enterprise tiers</li>
-              <li>• <strong>Formula:</strong> (Base Price × Days) × (1 - Volume Discount)</li>
+              <li>
+                • <strong>Position:</strong> Prime positions (home_top) cost more
+              </li>
+              <li>
+                • <strong>Duration:</strong> Longer = bigger discounts (7+, 30+, 90+ days)
+              </li>
+              <li>
+                • <strong>Plan Type:</strong> Basic, Premium, or Enterprise tiers
+              </li>
+              <li>
+                • <strong>Formula:</strong> (Base Price × Days) × (1 - Volume Discount)
+              </li>
             </ul>
           </div>
 
@@ -225,7 +231,7 @@ export default function AdminPricingPlansPage() {
                     type="text"
                     required
                     value={formData.plan_name}
-                    onChange={(e) => setFormData({ ...formData, plan_name: e.target.value })}
+                    onChange={e => setFormData({ ...formData, plan_name: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     placeholder="Home Top - Premium"
                   />
@@ -238,7 +244,7 @@ export default function AdminPricingPlansPage() {
                   </label>
                   <select
                     value={formData.plan_type}
-                    onChange={(e) => setFormData({ ...formData, plan_type: e.target.value })}
+                    onChange={e => setFormData({ ...formData, plan_type: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   >
                     <option value="basic">Basic</option>
@@ -249,12 +255,10 @@ export default function AdminPricingPlansPage() {
 
                 {/* Position */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Position *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Position *</label>
                   <select
                     value={formData.position}
-                    onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                    onChange={e => setFormData({ ...formData, position: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   >
                     <option value="home_top">Home - Top</option>
@@ -277,7 +281,9 @@ export default function AdminPricingPlansPage() {
                     step="0.01"
                     min="0"
                     value={formData.base_price_per_day}
-                    onChange={(e) => setFormData({ ...formData, base_price_per_day: parseFloat(e.target.value) })}
+                    onChange={e =>
+                      setFormData({ ...formData, base_price_per_day: parseFloat(e.target.value) })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                 </div>
@@ -291,7 +297,9 @@ export default function AdminPricingPlansPage() {
                     type="number"
                     min="1"
                     value={formData.min_duration_days}
-                    onChange={(e) => setFormData({ ...formData, min_duration_days: parseInt(e.target.value) })}
+                    onChange={e =>
+                      setFormData({ ...formData, min_duration_days: parseInt(e.target.value) })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                 </div>
@@ -305,7 +313,9 @@ export default function AdminPricingPlansPage() {
                     type="number"
                     min="1"
                     value={formData.max_duration_days}
-                    onChange={(e) => setFormData({ ...formData, max_duration_days: parseInt(e.target.value) })}
+                    onChange={e =>
+                      setFormData({ ...formData, max_duration_days: parseInt(e.target.value) })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                 </div>
@@ -321,7 +331,9 @@ export default function AdminPricingPlansPage() {
                     min="0.1"
                     max="10"
                     value={formData.position_multiplier}
-                    onChange={(e) => setFormData({ ...formData, position_multiplier: parseFloat(e.target.value) })}
+                    onChange={e =>
+                      setFormData({ ...formData, position_multiplier: parseFloat(e.target.value) })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                   <p className="text-xs text-gray-500 mt-1">Higher = more expensive position</p>
@@ -338,10 +350,17 @@ export default function AdminPricingPlansPage() {
                     min="0"
                     max="1"
                     value={formData.volume_discount_7days}
-                    onChange={(e) => setFormData({ ...formData, volume_discount_7days: parseFloat(e.target.value) })}
+                    onChange={e =>
+                      setFormData({
+                        ...formData,
+                        volume_discount_7days: parseFloat(e.target.value),
+                      })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
-                  <p className="text-xs text-gray-500 mt-1">{(formData.volume_discount_7days * 100).toFixed(0)}% discount</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {(formData.volume_discount_7days * 100).toFixed(0)}% discount
+                  </p>
                 </div>
 
                 {/* 30 Day Discount */}
@@ -355,10 +374,17 @@ export default function AdminPricingPlansPage() {
                     min="0"
                     max="1"
                     value={formData.volume_discount_30days}
-                    onChange={(e) => setFormData({ ...formData, volume_discount_30days: parseFloat(e.target.value) })}
+                    onChange={e =>
+                      setFormData({
+                        ...formData,
+                        volume_discount_30days: parseFloat(e.target.value),
+                      })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
-                  <p className="text-xs text-gray-500 mt-1">{(formData.volume_discount_30days * 100).toFixed(0)}% discount</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {(formData.volume_discount_30days * 100).toFixed(0)}% discount
+                  </p>
                 </div>
 
                 {/* 90 Day Discount */}
@@ -372,10 +398,17 @@ export default function AdminPricingPlansPage() {
                     min="0"
                     max="1"
                     value={formData.volume_discount_90days}
-                    onChange={(e) => setFormData({ ...formData, volume_discount_90days: parseFloat(e.target.value) })}
+                    onChange={e =>
+                      setFormData({
+                        ...formData,
+                        volume_discount_90days: parseFloat(e.target.value),
+                      })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
-                  <p className="text-xs text-gray-500 mt-1">{(formData.volume_discount_90days * 100).toFixed(0)}% discount</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {(formData.volume_discount_90days * 100).toFixed(0)}% discount
+                  </p>
                 </div>
 
                 {/* Description */}
@@ -385,7 +418,7 @@ export default function AdminPricingPlansPage() {
                   </label>
                   <textarea
                     value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    onChange={e => setFormData({ ...formData, description: e.target.value })}
                     rows={3}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     placeholder="Brief description of this pricing plan"
@@ -418,20 +451,26 @@ export default function AdminPricingPlansPage() {
           <h2 className="text-2xl font-bold text-white mb-6">Current Pricing Plans</h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {plans.map((plan) => (
+            {plans.map(plan => (
               <div
                 key={plan.id}
                 className={`bg-gray-900/50 border-2 rounded-xl p-6 transition-all ${
-                  plan.is_active ? 'border-aurora-blue/30 hover:border-aurora-blue/60' : 'border-gray-700/30'
+                  plan.is_active
+                    ? 'border-aurora-blue/30 hover:border-aurora-blue/60'
+                    : 'border-gray-700/30'
                 }`}
               >
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-white mb-1">{plan.plan_name}</h3>
                     <div className="flex gap-2">
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        plan.is_active ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
-                      }`}>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                          plan.is_active
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-gray-500/20 text-gray-400'
+                        }`}
+                      >
                         {plan.is_active ? 'Active' : 'Inactive'}
                       </span>
                       <span className="px-2 py-1 bg-aurora-blue/20 text-aurora-blue rounded-full text-xs font-semibold">
@@ -448,19 +487,27 @@ export default function AdminPricingPlansPage() {
                   </div>
                   <div className="flex justify-between text-gray-400">
                     <span>Base Rate:</span>
-                    <span className="text-aurora-green font-semibold">${plan.base_price_per_day}/day</span>
+                    <span className="text-aurora-green font-semibold">
+                      ${plan.base_price_per_day}/day
+                    </span>
                   </div>
                   <div className="flex justify-between text-gray-400">
                     <span>7 Days:</span>
-                    <span className="text-white">{(plan.volume_discount_7days * 100).toFixed(0)}% off</span>
+                    <span className="text-white">
+                      {(plan.volume_discount_7days * 100).toFixed(0)}% off
+                    </span>
                   </div>
                   <div className="flex justify-between text-gray-400">
                     <span>30 Days:</span>
-                    <span className="text-white">{(plan.volume_discount_30days * 100).toFixed(0)}% off</span>
+                    <span className="text-white">
+                      {(plan.volume_discount_30days * 100).toFixed(0)}% off
+                    </span>
                   </div>
                   <div className="flex justify-between text-gray-400">
                     <span>90 Days:</span>
-                    <span className="text-white">{(plan.volume_discount_90days * 100).toFixed(0)}% off</span>
+                    <span className="text-white">
+                      {(plan.volume_discount_90days * 100).toFixed(0)}% off
+                    </span>
                   </div>
                 </div>
 
@@ -497,7 +544,9 @@ export default function AdminPricingPlansPage() {
           </div>
 
           {plans.length === 0 && (
-            <p className="text-gray-400 text-center py-8">No pricing plans yet. Create your first one above!</p>
+            <p className="text-gray-400 text-center py-8">
+              No pricing plans yet. Create your first one above!
+            </p>
           )}
         </div>
       </div>

@@ -140,22 +140,14 @@ export async function checkPermission(
  *   const { user, permissions } = adminCheck;
  * }
  */
-export async function requireAdmin(): Promise<
-  AdminCheckResult | NextResponse
-> {
+export async function requireAdmin(): Promise<AdminCheckResult | NextResponse> {
   const result = await checkAdminAuth();
 
   if (!result.isAdmin) {
     if (result.error === 'Not authenticated') {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
-    return NextResponse.json(
-      { error: 'Admin access required' },
-      { status: 403 }
-    );
+    return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
   }
 
   return result;
@@ -179,27 +171,17 @@ export async function requirePermission(
 
   if (!result.isAdmin) {
     if (result.error === 'Not authenticated') {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
-    return NextResponse.json(
-      { error: 'Admin access required' },
-      { status: 403 }
-    );
+    return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
   }
 
   // Check specific permission
   const hasPermission =
-    result.permissions?.is_super_admin ||
-    result.permissions?.[permission] === true;
+    result.permissions?.is_super_admin || result.permissions?.[permission] === true;
 
   if (!hasPermission) {
-    return NextResponse.json(
-      { error: `Permission denied: ${permission}` },
-      { status: 403 }
-    );
+    return NextResponse.json({ error: `Permission denied: ${permission}` }, { status: 403 });
   }
 
   return result;

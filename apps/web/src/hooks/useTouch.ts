@@ -231,13 +231,7 @@ export function useTouch(options: UseTouchOptions = {}): UseTouchReturn {
 
       onTouchMoveCallback?.(touches, e);
     },
-    [
-      enabled,
-      touchListToPoints,
-      addToHistory,
-      calculateCurrentVelocity,
-      onTouchMoveCallback,
-    ]
+    [enabled, touchListToPoints, addToHistory, calculateCurrentVelocity, onTouchMoveCallback]
   );
 
   /**
@@ -331,11 +325,13 @@ export function useTouch(options: UseTouchOptions = {}): UseTouchReturn {
  *   );
  * }
  */
-export function useMultiTouch(options: {
-  onPinch?: (scale: number, center: { x: number; y: number }) => void;
-  onRotate?: (angle: number) => void;
-  enabled?: boolean;
-} = {}): UseTouchReturn & {
+export function useMultiTouch(
+  options: {
+    onPinch?: (scale: number, center: { x: number; y: number }) => void;
+    onRotate?: (angle: number) => void;
+    enabled?: boolean;
+  } = {}
+): UseTouchReturn & {
   scale: number;
   rotation: number;
   center: { x: number; y: number } | null;
@@ -351,7 +347,7 @@ export function useMultiTouch(options: {
 
   const touch = useTouch({
     enabled,
-    onTouchStart: (touches) => {
+    onTouchStart: touches => {
       if (touches.length === 2) {
         initialDistance.current = getTouchDistance(touches[0], touches[1]);
         initialAngle.current = Math.atan2(
@@ -363,7 +359,7 @@ export function useMultiTouch(options: {
         setCenter(currentCenter);
       }
     },
-    onTouchMove: (touches) => {
+    onTouchMove: touches => {
       if (touches.length === 2) {
         const currentDistance = getTouchDistance(touches[0], touches[1]);
         const currentAngle = Math.atan2(
@@ -380,8 +376,7 @@ export function useMultiTouch(options: {
           onPinch?.(newScale, currentCenter);
         }
 
-        const newRotation =
-          ((currentAngle - initialAngle.current) * 180) / Math.PI;
+        const newRotation = ((currentAngle - initialAngle.current) * 180) / Math.PI;
         setRotation(newRotation);
         onRotate?.(newRotation);
       }
@@ -429,13 +424,15 @@ export function useMultiTouch(options: {
  *   );
  * }
  */
-export function useDrag(options: {
-  onDrag?: (x: number, y: number) => void;
-  onDragStart?: () => void;
-  onDragEnd?: () => void;
-  bounds?: { minX?: number; maxX?: number; minY?: number; maxY?: number };
-  enabled?: boolean;
-} = {}): UseTouchReturn & {
+export function useDrag(
+  options: {
+    onDrag?: (x: number, y: number) => void;
+    onDragStart?: () => void;
+    onDragEnd?: () => void;
+    bounds?: { minX?: number; maxX?: number; minY?: number; maxY?: number };
+    enabled?: boolean;
+  } = {}
+): UseTouchReturn & {
   position: { x: number; y: number };
   isDragging: boolean;
 } {
@@ -466,7 +463,7 @@ export function useDrag(options: {
 
   const touch = useTouch({
     enabled,
-    onTouchStart: (touches) => {
+    onTouchStart: touches => {
       if (touches.length === 1) {
         setIsDragging(true);
         startPos.current = { ...position };
@@ -477,7 +474,7 @@ export function useDrag(options: {
         onDragStart?.();
       }
     },
-    onTouchMove: (touches) => {
+    onTouchMove: touches => {
       if (touches.length === 1 && isDragging) {
         const deltaX = touches[0].clientX - initialTouchPos.current.x;
         const deltaY = touches[0].clientY - initialTouchPos.current.y;
@@ -527,10 +524,12 @@ export function useDrag(options: {
  *   );
  * }
  */
-export function useTouchPressure(options: {
-  onPressureChange?: (pressure: number) => void;
-  enabled?: boolean;
-} = {}): UseTouchReturn & {
+export function useTouchPressure(
+  options: {
+    onPressureChange?: (pressure: number) => void;
+    enabled?: boolean;
+  } = {}
+): UseTouchReturn & {
   pressure: number;
   hasPressureSupport: boolean;
 } {
@@ -541,7 +540,7 @@ export function useTouchPressure(options: {
 
   const touch = useTouch({
     enabled,
-    onTouchStart: (touches) => {
+    onTouchStart: touches => {
       if (touches.length === 1) {
         const force = (touches[0] as any).force;
         setHasPressureSupport(force !== undefined);
@@ -551,7 +550,7 @@ export function useTouchPressure(options: {
         }
       }
     },
-    onTouchMove: (touches) => {
+    onTouchMove: touches => {
       if (touches.length === 1) {
         const force = (touches[0] as any).force;
         if (force !== undefined) {

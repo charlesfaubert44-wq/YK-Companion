@@ -1,6 +1,6 @@
 /**
  * SEO and Metadata Library
- * 
+ *
  * This module provides comprehensive SEO utilities for the YK Buddy application.
  * It includes metadata generation, structured data, multilingual support,
  * dynamic content metadata, and SEO best practices.
@@ -77,4 +77,3 @@ export {
   SEO_TRANSLATIONS,
   type SupportedLanguage,
 } from './multilingual';
-

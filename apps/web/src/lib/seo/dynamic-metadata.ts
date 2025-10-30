@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 
 /**
  * Dynamic Metadata Generators
- * 
+ *
  * Functions for generating SEO metadata for dynamic content
  * from the database (garage sales, knowledge articles, etc.)
  */
@@ -42,13 +42,11 @@ interface KnowledgeArticle {
 
 /**
  * Generate metadata for a garage sale detail page
- * 
+ *
  * Fetches garage sale data and generates optimized metadata
  * including Open Graph tags and structured data preparation
  */
-export async function generateGarageSaleMetadata(
-  saleId: string
-): Promise<Metadata> {
+export async function generateGarageSaleMetadata(saleId: string): Promise<Metadata> {
   try {
     const supabase = await createClient();
 
@@ -82,11 +80,7 @@ export async function generateGarageSaleMetadata(
       : `Garage sale on ${formattedDate} in ${sale.location}, Yellowknife`;
 
     // Create keywords
-    const keywords = [
-      'garage sale yellowknife',
-      sale.location,
-      ...(sale.tags || []),
-    ];
+    const keywords = ['garage sale yellowknife', sale.location, ...(sale.tags || [])];
 
     return generatePageMetadata({
       title: `${sale.title} - Garage Sale in ${sale.location}`,
@@ -100,7 +94,7 @@ export async function generateGarageSaleMetadata(
     });
   } catch (error) {
     console.error('Error generating garage sale metadata:', error);
-    
+
     return generatePageMetadata({
       title: 'Garage Sale',
       description: 'View garage sale details in Yellowknife',
@@ -111,13 +105,11 @@ export async function generateGarageSaleMetadata(
 
 /**
  * Generate metadata for a knowledge base article
- * 
+ *
  * Fetches article data and generates optimized metadata
  * for better search visibility and social sharing
  */
-export async function generateKnowledgeArticleMetadata(
-  articleId: string
-): Promise<Metadata> {
+export async function generateKnowledgeArticleMetadata(articleId: string): Promise<Metadata> {
   try {
     const supabase = await createClient();
 
@@ -138,7 +130,7 @@ export async function generateKnowledgeArticleMetadata(
     }
 
     // Create description from excerpt or content
-    const description = 
+    const description =
       article.excerpt ||
       article.content?.substring(0, 160).replace(/<[^>]*>/g, '') ||
       'Helpful information about living in Yellowknife';
@@ -164,7 +156,7 @@ export async function generateKnowledgeArticleMetadata(
     });
   } catch (error) {
     console.error('Error generating knowledge article metadata:', error);
-    
+
     return generatePageMetadata({
       title: 'Knowledge Article',
       description: 'Learn more about Yellowknife',
@@ -230,10 +222,12 @@ export async function fetchKnowledgeArticleForSchema(
  * Get all published garage sales for sitemap
  * Returns recent and upcoming sales
  */
-export async function getGarageSalesForSitemap(): Promise<Array<{
-  id: string;
-  updated_at: string;
-}>> {
+export async function getGarageSalesForSitemap(): Promise<
+  Array<{
+    id: string;
+    updated_at: string;
+  }>
+> {
   try {
     const supabase = await createClient();
 
@@ -262,10 +256,12 @@ export async function getGarageSalesForSitemap(): Promise<Array<{
 /**
  * Get all published knowledge articles for sitemap
  */
-export async function getKnowledgeArticlesForSitemap(): Promise<Array<{
-  id: string;
-  updated_at: string;
-}>> {
+export async function getKnowledgeArticlesForSitemap(): Promise<
+  Array<{
+    id: string;
+    updated_at: string;
+  }>
+> {
   try {
     const supabase = await createClient();
 
@@ -286,4 +282,3 @@ export async function getKnowledgeArticlesForSitemap(): Promise<Array<{
     return [];
   }
 }
-

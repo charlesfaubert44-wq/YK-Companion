@@ -7,20 +7,24 @@ interface PixelButtonProps {
   className?: string;
 }
 
-export function PixelButton({ 
-  variant = 'primary', 
+export function PixelButton({
+  variant = 'primary',
   size = 'md',
-  children, 
+  children,
   onClick,
   href,
   className = '',
 }: PixelButtonProps) {
-  const baseStyles = 'font-pixel uppercase inline-block text-center transition-all duration-75 border-4';
-  
+  const baseStyles =
+    'font-pixel uppercase inline-block text-center transition-all duration-75 border-4';
+
   const variantStyles = {
-    primary: 'bg-aurora-green text-dark-900 border-pixel-white shadow-pixel-green hover:shadow-pixel-hover',
-    secondary: 'bg-aurora-blue text-pixel-white border-pixel-white shadow-pixel-blue hover:shadow-pixel-hover',
-    accent: 'bg-aurora-purple text-pixel-white border-pixel-white shadow-pixel-purple hover:shadow-pixel-hover',
+    primary:
+      'bg-aurora-green text-dark-900 border-pixel-white shadow-pixel-green hover:shadow-pixel-hover',
+    secondary:
+      'bg-aurora-blue text-pixel-white border-pixel-white shadow-pixel-blue hover:shadow-pixel-hover',
+    accent:
+      'bg-aurora-purple text-pixel-white border-pixel-white shadow-pixel-purple hover:shadow-pixel-hover',
   };
 
   const sizeStyles = {
@@ -41,20 +45,14 @@ export function PixelButton({
 
   if (href) {
     return (
-      <a
-        href={href}
-        className={combinedStyles}
-      >
+      <a href={href} className={combinedStyles}>
         {children}
       </a>
     );
   }
 
   return (
-    <button
-      onClick={onClick}
-      className={combinedStyles}
-    >
+    <button onClick={onClick} className={combinedStyles}>
       {children}
     </button>
   );

@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 
 /**
  * Middleware for security headers, request handling, and admin route protection
@@ -22,40 +22,36 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/', request.url));
     }
 
-    const supabase = createServerClient(
-      supabaseUrl,
-      supabaseAnonKey,
-      {
-        cookies: {
-          get(name: string) {
-            return request.cookies.get(name)?.value
-          },
-          set(name: string, value: string, options: CookieOptions) {
-            response.cookies.set({
-              name,
-              value,
-              ...options,
-            })
-          },
-          remove(name: string, options: CookieOptions) {
-            response.cookies.set({
-              name,
-              value: '',
-              ...options,
-            })
-          },
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value;
         },
-      }
-    )
+        set(name: string, value: string, options: CookieOptions) {
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          });
+        },
+        remove(name: string, options: CookieOptions) {
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          });
+        },
+      },
+    });
 
     // Get user session
     const {
       data: { user },
-    } = await supabase.auth.getUser()
+    } = await supabase.auth.getUser();
 
     // If no user, redirect to home
     if (!user) {
-      return NextResponse.redirect(new URL('/', request.url))
+      return NextResponse.redirect(new URL('/', request.url));
     }
 
     // Check if user is admin
@@ -63,11 +59,11 @@ export async function middleware(request: NextRequest) {
       .from('profiles')
       .select('is_admin')
       .eq('id', user.id)
-      .single()
+      .single();
 
     // If not admin, redirect to home
     if (!profile?.is_admin) {
-      return NextResponse.redirect(new URL('/', request.url))
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 
@@ -75,19 +71,19 @@ export async function middleware(request: NextRequest) {
   const securityHeaders = {
     // Prevent clickjacking attacks
     'X-Frame-Options': 'DENY',
-    
+
     // Prevent MIME type sniffing
     'X-Content-Type-Options': 'nosniff',
-    
+
     // Enable XSS protection (legacy browsers)
     'X-XSS-Protection': '1; mode=block',
-    
+
     // Referrer policy
     'Referrer-Policy': 'strict-origin-when-cross-origin',
-    
+
     // Permissions policy (limit browser features)
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=(self)',
-    
+
     // Content Security Policy
     // Note: Next.js requires 'unsafe-inline' for hydration scripts and webpack HMR
     // For maximum security, consider implementing nonce-based CSP in the future
@@ -104,20 +100,20 @@ export async function middleware(request: NextRequest) {
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
-      "upgrade-insecure-requests",
+      'upgrade-insecure-requests',
     ].join('; '),
-  }
+  };
 
   // Apply security headers
   Object.entries(securityHeaders).forEach(([key, value]) => {
-    response.headers.set(key, value)
-  })
+    response.headers.set(key, value);
+  });
 
   // Rate limiting headers (for informational purposes)
-  response.headers.set('X-RateLimit-Limit', '100')
-  response.headers.set('X-RateLimit-Remaining', '99')
-  
-  return response
+  response.headers.set('X-RateLimit-Limit', '100');
+  response.headers.set('X-RateLimit-Remaining', '99');
+
+  return response;
 }
 
 export const config = {
@@ -131,4 +127,4 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
-}
+};

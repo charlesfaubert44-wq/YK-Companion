@@ -14,19 +14,74 @@ export default function BannerShowcasePage() {
 
   const bannerVariations = [
     // Seasonal Banners
-    { id: 'winter' as BannerTheme, name: 'Winter', category: 'seasonal', description: 'Aurora and frozen landscapes' },
-    { id: 'spring' as BannerTheme, name: 'Spring', category: 'seasonal', description: 'Ice breakup and returning birds' },
-    { id: 'summer' as BannerTheme, name: 'Summer', category: 'seasonal', description: 'Midnight sun and wildflowers' },
-    { id: 'fall' as BannerTheme, name: 'Fall', category: 'seasonal', description: 'Autumn colors and migrating geese' },
+    {
+      id: 'winter' as BannerTheme,
+      name: 'Winter',
+      category: 'seasonal',
+      description: 'Aurora and frozen landscapes',
+    },
+    {
+      id: 'spring' as BannerTheme,
+      name: 'Spring',
+      category: 'seasonal',
+      description: 'Ice breakup and returning birds',
+    },
+    {
+      id: 'summer' as BannerTheme,
+      name: 'Summer',
+      category: 'seasonal',
+      description: 'Midnight sun and wildflowers',
+    },
+    {
+      id: 'fall' as BannerTheme,
+      name: 'Fall',
+      category: 'seasonal',
+      description: 'Autumn colors and migrating geese',
+    },
 
     // Holiday Themes
-    { id: 'halloween' as BannerTheme, name: 'Halloween', category: 'holiday', description: 'Spooky northern lights and pumpkins' },
-    { id: 'remembrance' as BannerTheme, name: 'Remembrance Day', category: 'holiday', description: 'Respectful tribute with poppies' },
-    { id: 'christmas' as BannerTheme, name: 'Christmas', category: 'holiday', description: 'Festive northern lights' },
-    { id: 'newyear' as BannerTheme, name: 'New Year', category: 'holiday', description: 'Fireworks over Great Slave Lake' },
-    { id: 'canada' as BannerTheme, name: 'Canada Day', category: 'holiday', description: 'Red and white with maple leaves' },
-    { id: 'indigenous' as BannerTheme, name: 'Indigenous Peoples Day', category: 'holiday', description: 'Cultural celebration' },
-    { id: 'easter' as BannerTheme, name: 'Easter', category: 'holiday', description: 'Spring renewal theme' },
+    {
+      id: 'halloween' as BannerTheme,
+      name: 'Halloween',
+      category: 'holiday',
+      description: 'Spooky northern lights and pumpkins',
+    },
+    {
+      id: 'remembrance' as BannerTheme,
+      name: 'Remembrance Day',
+      category: 'holiday',
+      description: 'Respectful tribute with poppies',
+    },
+    {
+      id: 'christmas' as BannerTheme,
+      name: 'Christmas',
+      category: 'holiday',
+      description: 'Festive northern lights',
+    },
+    {
+      id: 'newyear' as BannerTheme,
+      name: 'New Year',
+      category: 'holiday',
+      description: 'Fireworks over Great Slave Lake',
+    },
+    {
+      id: 'canada' as BannerTheme,
+      name: 'Canada Day',
+      category: 'holiday',
+      description: 'Red and white with maple leaves',
+    },
+    {
+      id: 'indigenous' as BannerTheme,
+      name: 'Indigenous Peoples Day',
+      category: 'holiday',
+      description: 'Cultural celebration',
+    },
+    {
+      id: 'easter' as BannerTheme,
+      name: 'Easter',
+      category: 'holiday',
+      description: 'Spring renewal theme',
+    },
   ];
 
   const categories = {
@@ -71,12 +126,10 @@ export default function BannerShowcasePage() {
       const updates = Object.keys(weatherSettings).map(key => ({
         key,
         value: weatherSettings[key],
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       }));
 
-      const { error } = await supabase
-        .from('site_settings')
-        .upsert(updates, { onConflict: 'key' });
+      const { error } = await supabase.from('site_settings').upsert(updates, { onConflict: 'key' });
 
       if (!error) {
         alert('Weather settings saved successfully!');
@@ -108,9 +161,7 @@ export default function BannerShowcasePage() {
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent">
                 Banner Management
               </h1>
-              <p className="text-gray-300 mt-2">
-                Preview and manage all banner variations
-              </p>
+              <p className="text-gray-300 mt-2">Preview and manage all banner variations</p>
             </div>
           </div>
         </div>
@@ -141,9 +192,11 @@ export default function BannerShowcasePage() {
 
               {/* Seasonal */}
               <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">Seasonal</h3>
+                <h3 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">
+                  Seasonal
+                </h3>
                 <div className="space-y-2">
-                  {categories.seasonal.map((variation) => (
+                  {categories.seasonal.map(variation => (
                     <button
                       key={variation.id}
                       onClick={() => setPreviewTheme(variation.id)}
@@ -161,9 +214,11 @@ export default function BannerShowcasePage() {
 
               {/* Holidays */}
               <div>
-                <h3 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">Holidays</h3>
+                <h3 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">
+                  Holidays
+                </h3>
                 <div className="space-y-2">
-                  {categories.holiday.map((variation) => (
+                  {categories.holiday.map(variation => (
                     <button
                       key={variation.id}
                       onClick={() => setPreviewTheme(variation.id)}
@@ -212,7 +267,9 @@ export default function BannerShowcasePage() {
                 <div className="mt-4 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
                   <div className="flex items-center gap-2 text-emerald-400">
                     <span className="text-xl">✓</span>
-                    <span className="font-semibold">This banner is currently active on your site</span>
+                    <span className="font-semibold">
+                      This banner is currently active on your site
+                    </span>
                   </div>
                 </div>
               )}
@@ -229,7 +286,9 @@ export default function BannerShowcasePage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Auto Detection:</span>
-                    <span className={`font-semibold ${settings.autoDetect ? 'text-emerald-400' : 'text-gray-400'}`}>
+                    <span
+                      className={`font-semibold ${settings.autoDetect ? 'text-emerald-400' : 'text-gray-400'}`}
+                    >
                       {settings.autoDetect ? 'Enabled' : 'Disabled'}
                     </span>
                   </div>
@@ -292,10 +351,12 @@ export default function BannerShowcasePage() {
                     <input
                       type="checkbox"
                       checked={weatherSettings.weather_force_enabled === true}
-                      onChange={(e) => setWeatherSettings({
-                        ...weatherSettings,
-                        weather_force_enabled: e.target.checked
-                      })}
+                      onChange={e =>
+                        setWeatherSettings({
+                          ...weatherSettings,
+                          weather_force_enabled: e.target.checked,
+                        })
+                      }
                       className="w-5 h-5"
                     />
                     <span className="text-white font-medium">Enable Force Weather</span>
@@ -304,10 +365,12 @@ export default function BannerShowcasePage() {
                   {weatherSettings.weather_force_enabled && (
                     <select
                       value={weatherSettings.weather_force_condition || 'none'}
-                      onChange={(e) => setWeatherSettings({
-                        ...weatherSettings,
-                        weather_force_condition: e.target.value
-                      })}
+                      onChange={e =>
+                        setWeatherSettings({
+                          ...weatherSettings,
+                          weather_force_condition: e.target.value,
+                        })
+                      }
                       className="flex-1 min-w-[200px] px-4 py-2 bg-dark-700 border border-aurora-green/30 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     >
                       <option value="none">None (Use Live Weather)</option>
@@ -331,15 +394,19 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_enabled !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_enabled: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_enabled: e.target.checked,
+                      })
+                    }
                     className="w-5 h-5"
                   />
                   <div>
                     <div className="text-white font-medium">Enable All Weather Effects</div>
-                    <div className="text-sm text-gray-400">Master toggle for all weather effects on banners</div>
+                    <div className="text-sm text-gray-400">
+                      Master toggle for all weather effects on banners
+                    </div>
                   </div>
                 </label>
               </div>
@@ -350,10 +417,12 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_snow !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_snow: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_snow: e.target.checked,
+                      })
+                    }
                     disabled={weatherSettings.weather_effects_enabled === false}
                     className="w-4 h-4"
                   />
@@ -367,10 +436,12 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_rain !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_rain: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_rain: e.target.checked,
+                      })
+                    }
                     disabled={weatherSettings.weather_effects_enabled === false}
                     className="w-4 h-4"
                   />
@@ -384,10 +455,12 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_thunderstorm !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_thunderstorm: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_thunderstorm: e.target.checked,
+                      })
+                    }
                     disabled={weatherSettings.weather_effects_enabled === false}
                     className="w-4 h-4"
                   />
@@ -401,10 +474,12 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_fog !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_fog: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_fog: e.target.checked,
+                      })
+                    }
                     disabled={weatherSettings.weather_effects_enabled === false}
                     className="w-4 h-4"
                   />
@@ -418,10 +493,12 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_clouds !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_clouds: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_clouds: e.target.checked,
+                      })
+                    }
                     disabled={weatherSettings.weather_effects_enabled === false}
                     className="w-4 h-4"
                   />
@@ -435,10 +512,12 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_wind !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_wind: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_wind: e.target.checked,
+                      })
+                    }
                     disabled={weatherSettings.weather_effects_enabled === false}
                     className="w-4 h-4"
                   />
@@ -452,10 +531,12 @@ export default function BannerShowcasePage() {
                   <input
                     type="checkbox"
                     checked={weatherSettings.weather_effects_clear !== false}
-                    onChange={(e) => setWeatherSettings({
-                      ...weatherSettings,
-                      weather_effects_clear: e.target.checked
-                    })}
+                    onChange={e =>
+                      setWeatherSettings({
+                        ...weatherSettings,
+                        weather_effects_clear: e.target.checked,
+                      })
+                    }
                     disabled={weatherSettings.weather_effects_enabled === false}
                     className="w-4 h-4"
                   />

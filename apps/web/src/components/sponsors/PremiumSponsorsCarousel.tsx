@@ -102,11 +102,7 @@ export default function PremiumSponsorsCarousel({
   };
 
   if (loading) {
-    return (
-      <div className="py-8">
-        {/* Reserve space while loading to prevent layout shift */}
-      </div>
-    );
+    return <div className="py-8">{/* Reserve space while loading to prevent layout shift */}</div>;
   }
 
   if (sponsors.length === 0 && showPlaceholder) {
@@ -119,7 +115,9 @@ export default function PremiumSponsorsCarousel({
 
   const renderSponsor = (sponsor: Sponsor) => {
     const content = (
-      <div className={`relative group bg-gradient-to-br ${getPlanGradient(sponsor.plan_type)} backdrop-blur-sm rounded-xl border-2 ${getPlanBorderColor(sponsor.plan_type)} transition-all overflow-hidden h-full ${sponsor.link ? 'cursor-pointer' : ''}`}>
+      <div
+        className={`relative group bg-gradient-to-br ${getPlanGradient(sponsor.plan_type)} backdrop-blur-sm rounded-xl border-2 ${getPlanBorderColor(sponsor.plan_type)} transition-all overflow-hidden h-full ${sponsor.link ? 'cursor-pointer' : ''}`}
+      >
         {sponsor.plan_type === 'enterprise' && (
           <div className="absolute inset-0 overflow-hidden rounded-xl opacity-40">
             <div className="aurora-wave aurora-green"></div>
@@ -130,27 +128,32 @@ export default function PremiumSponsorsCarousel({
 
         <div className="relative z-10 p-6 h-full flex flex-col">
           <div className="flex justify-between items-start mb-3">
-            <span className={`text-xs uppercase tracking-widest font-semibold ${
-              sponsor.plan_type === 'enterprise' ? 'text-yellow-400' :
-              sponsor.plan_type === 'premium' ? 'text-aurora-purple' :
-              'text-aurora-blue'
-            }`}>
-              {sponsor.plan_type === 'enterprise' && '✨ '}{sponsor.plan_type}
+            <span
+              className={`text-xs uppercase tracking-widest font-semibold ${
+                sponsor.plan_type === 'enterprise'
+                  ? 'text-yellow-400'
+                  : sponsor.plan_type === 'premium'
+                    ? 'text-aurora-purple'
+                    : 'text-aurora-blue'
+              }`}
+            >
+              {sponsor.plan_type === 'enterprise' && '✨ '}
+              {sponsor.plan_type}
             </span>
           </div>
 
-          <h3 className={`text-xl md:text-2xl font-bold mb-2 ${
-            sponsor.plan_type === 'enterprise'
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400'
-              : 'text-white'
-          }`}>
+          <h3
+            className={`text-xl md:text-2xl font-bold mb-2 ${
+              sponsor.plan_type === 'enterprise'
+                ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400'
+                : 'text-white'
+            }`}
+          >
             {sponsor.name}
           </h3>
 
           {sponsor.tagline && (
-            <p className="text-sm text-gray-300 italic mb-3 flex-grow">
-              {sponsor.tagline}
-            </p>
+            <p className="text-sm text-gray-300 italic mb-3 flex-grow">{sponsor.tagline}</p>
           )}
 
           {sponsor.link && (
@@ -168,12 +171,7 @@ export default function PremiumSponsorsCarousel({
 
     if (sponsor.link) {
       return (
-        <a
-          href={sponsor.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block h-full"
-        >
+        <a href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block h-full">
           {content}
         </a>
       );
@@ -196,10 +194,8 @@ export default function PremiumSponsorsCarousel({
           gap={16}
           snap={true}
         >
-          {sponsors.map((sponsor) => (
-            <CarouselCard key={sponsor.id}>
-              {renderSponsor(sponsor)}
-            </CarouselCard>
+          {sponsors.map(sponsor => (
+            <CarouselCard key={sponsor.id}>{renderSponsor(sponsor)}</CarouselCard>
           ))}
         </Carousel>
       </div>

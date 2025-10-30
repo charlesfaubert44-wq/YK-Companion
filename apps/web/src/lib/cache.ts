@@ -1,19 +1,19 @@
 /**
  * Client-side caching utility
- * 
+ *
  * Reduces unnecessary API calls and improves performance.
  * Uses in-memory Map with TTL expiration.
- * 
+ *
  * @module cache
- * 
+ *
  * @example
  * ```ts
  * // Cache API response
- * const data = await cache.getOrFetch('garage-sales', 
+ * const data = await cache.getOrFetch('garage-sales',
  *   async () => fetch('/api/garage-sales').then(r => r.json()),
  *   CACHE_TTL.MEDIUM
  * );
- * 
+ *
  * // Manual cache management
  * cache.set('user-data', userData, CACHE_TTL.SHORT);
  * const cached = cache.get('user-data');
@@ -35,17 +35,17 @@ class Cache {
    */
   get<T>(key: string): T | null {
     const entry = this.store.get(key);
-    
+
     if (!entry) {
       return null;
     }
-    
+
     // Check if expired
     if (Date.now() > entry.expiresAt) {
       this.store.delete(key);
       return null;
     }
-    
+
     return entry.data as T;
   }
 
@@ -54,7 +54,7 @@ class Cache {
    */
   set<T>(key: string, data: T, ttl?: number): void {
     const expiresAt = Date.now() + (ttl || this.defaultTTL);
-    
+
     this.store.set(key, {
       data,
       timestamp: Date.now(),
@@ -81,27 +81,23 @@ class Cache {
    */
   has(key: string): boolean {
     const entry = this.store.get(key);
-    
+
     if (!entry) {
       return false;
     }
-    
+
     if (Date.now() > entry.expiresAt) {
       this.store.delete(key);
       return false;
     }
-    
+
     return true;
   }
 
   /**
    * Get or fetch data (with caching)
    */
-  async getOrFetch<T>(
-    key: string,
-    fetchFn: () => Promise<T>,
-    ttl?: number
-  ): Promise<T> {
+  async getOrFetch<T>(key: string, fetchFn: () => Promise<T>, ttl?: number): Promise<T> {
     // Try to get from cache
     const cached = this.get<T>(key);
     if (cached !== null) {
@@ -119,7 +115,7 @@ class Cache {
    */
   cleanup(): void {
     const now = Date.now();
-    
+
     for (const [key, entry] of this.store.entries()) {
       if (now > entry.expiresAt) {
         this.store.delete(key);
@@ -142,5 +138,3 @@ export const CACHE_TTL = {
   LONG: 30 * 60 * 1000, // 30 minutes
   VERY_LONG: 60 * 60 * 1000, // 1 hour
 } as const;
-
-

@@ -1,6 +1,6 @@
 /**
  * Vitest Setup File
- * 
+ *
  * Runs before all tests to set up global test environment
  */
 
@@ -51,4 +51,3 @@ global.console = {
   error: vi.fn(),
   warn: vi.fn(),
 };
-

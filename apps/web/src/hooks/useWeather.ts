@@ -24,10 +24,7 @@ export interface UseWeatherOptions {
  * Uses OpenWeatherMap API with automatic refresh and fallback data
  */
 export function useWeather(options: UseWeatherOptions = {}) {
-  const {
-    refreshInterval = 600000,
-    enableFallback = true
-  } = options;
+  const { refreshInterval = 600000, enableFallback = true } = options;
 
   const { language } = useLanguage();
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -41,7 +38,7 @@ export function useWeather(options: UseWeatherOptions = {}) {
         setError(null);
 
         // Yellowknife coordinates
-        const lat = 62.4540;
+        const lat = 62.454;
         const lon = -114.3718;
 
         const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
@@ -61,9 +58,9 @@ export function useWeather(options: UseWeatherOptions = {}) {
             cache: 'no-store', // Always fetch fresh data
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
-              'Pragma': 'no-cache',
-              'Expires': '0'
-            }
+              Pragma: 'no-cache',
+              Expires: '0',
+            },
           }
         );
 
@@ -74,7 +71,13 @@ export function useWeather(options: UseWeatherOptions = {}) {
         const data = await response.json();
 
         // Validate the response structure
-        if (!data || !data.main || !data.weather || !Array.isArray(data.weather) || data.weather.length === 0) {
+        if (
+          !data ||
+          !data.main ||
+          !data.weather ||
+          !Array.isArray(data.weather) ||
+          data.weather.length === 0
+        ) {
           throw new Error('Invalid weather API response format');
         }
 
@@ -85,7 +88,7 @@ export function useWeather(options: UseWeatherOptions = {}) {
           feels_like: data.main.feels_like,
           condition: data.weather[0].main,
           timestamp: new Date().toLocaleString(),
-          location: data.name
+          location: data.name,
         });
 
         const weatherData = {
@@ -175,11 +178,11 @@ export function useWeather(options: UseWeatherOptions = {}) {
 
 /**
  * Get weather emoji based on condition and time of day
- * 
+ *
  * @param {string} condition - Weather condition (e.g., 'Clear', 'Rain', 'Snow')
  * @param {string} iconCode - OpenWeatherMap icon code (e.g., '01d', '01n')
  * @returns {string} Emoji representing the weather condition
- * 
+ *
  * @example
  * ```ts
  * const emoji = getWeatherEmoji('Clear', '01d'); // Returns '☀️'
@@ -211,13 +214,13 @@ export function getWeatherEmoji(condition: string, iconCode: string): string {
 
 /**
  * Get temperature color class based on Celsius value
- * 
+ *
  * Returns Tailwind CSS color class appropriate for the temperature.
  * Uses blue tones for freezing temps, through to red for hot temps.
- * 
+ *
  * @param {number} temp - Temperature in Celsius
  * @returns {string} Tailwind CSS color class (e.g., 'text-blue-400')
- * 
+ *
  * @example
  * ```ts
  * const colorClass = getTempColor(-25); // Returns 'text-blue-400'

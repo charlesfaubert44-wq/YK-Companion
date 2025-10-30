@@ -45,33 +45,25 @@ export class ApiError extends Error {
  */
 export const CommonErrors = {
   // Client errors (4xx)
-  BadRequest: (message = 'Bad request', details?: any) =>
-    new ApiError(400, message, details),
+  BadRequest: (message = 'Bad request', details?: any) => new ApiError(400, message, details),
 
-  Unauthorized: (message = 'Authentication required') =>
-    new ApiError(401, message),
+  Unauthorized: (message = 'Authentication required') => new ApiError(401, message),
 
-  Forbidden: (message = 'Access denied') =>
-    new ApiError(403, message),
+  Forbidden: (message = 'Access denied') => new ApiError(403, message),
 
-  NotFound: (resource = 'Resource') =>
-    new ApiError(404, `${resource} not found`),
+  NotFound: (resource = 'Resource') => new ApiError(404, `${resource} not found`),
 
-  Conflict: (message = 'Resource already exists') =>
-    new ApiError(409, message),
+  Conflict: (message = 'Resource already exists') => new ApiError(409, message),
 
   ValidationError: (errors: Record<string, string>) =>
     new ApiError(422, 'Validation failed', { errors }),
 
   // Server errors (5xx)
-  InternalError: (message = 'Internal server error') =>
-    new ApiError(500, message),
+  InternalError: (message = 'Internal server error') => new ApiError(500, message),
 
-  NotImplemented: (message = 'Feature not implemented') =>
-    new ApiError(501, message),
+  NotImplemented: (message = 'Feature not implemented') => new ApiError(501, message),
 
-  ServiceUnavailable: (message = 'Service temporarily unavailable') =>
-    new ApiError(503, message),
+  ServiceUnavailable: (message = 'Service temporarily unavailable') => new ApiError(503, message),
 };
 
 /**
@@ -81,10 +73,7 @@ export const CommonErrors = {
  * @param path Optional request path
  * @returns NextResponse with error details
  */
-export function createErrorResponse(
-  error: unknown,
-  path?: string
-): NextResponse<ApiErrorResponse> {
+export function createErrorResponse(error: unknown, path?: string): NextResponse<ApiErrorResponse> {
   // Handle ApiError instances
   if (error instanceof ApiError) {
     const response: ApiErrorResponse = {
@@ -108,9 +97,8 @@ export function createErrorResponse(
   if (error instanceof Error) {
     const response: ApiErrorResponse = {
       error: 'InternalServerError',
-      message: process.env.NODE_ENV === 'development'
-        ? error.message
-        : 'An unexpected error occurred',
+      message:
+        process.env.NODE_ENV === 'development' ? error.message : 'An unexpected error occurred',
       statusCode: 500,
       timestamp: new Date().toISOString(),
       path,
@@ -196,9 +184,7 @@ export function mapSupabaseError(error: any): ApiError {
 
   // Generic Supabase error
   return CommonErrors.InternalError(
-    process.env.NODE_ENV === 'development'
-      ? error.message
-      : 'Database operation failed'
+    process.env.NODE_ENV === 'development' ? error.message : 'Database operation failed'
   );
 }
 
@@ -216,10 +202,7 @@ export function successResponse<T>(
   data: T,
   status: number = 200
 ): NextResponse<{ success: true; data: T }> {
-  return NextResponse.json(
-    { success: true, data },
-    { status }
-  );
+  return NextResponse.json({ success: true, data }, { status });
 }
 
 /**

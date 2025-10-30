@@ -6,14 +6,14 @@ import { GarageSale, GarageSaleFilters, Coordinates } from '@/types/garage-sales
 
 /**
  * Custom hook for managing garage sales data and operations
- * 
+ *
  * Provides:
  * - Fetching garage sales from Supabase
  * - Filtering by search, date range, distance, etc.
  * - CRUD operations for garage sales
  * - Distance calculations from user location
  * - Favorites/saved sales management
- * 
+ *
  * @example
  * ```tsx
  * const { sales, loading, fetchSales, addSale, deleteSale } = useGarageSales();
@@ -28,17 +28,22 @@ export function useGarageSales(userLocation?: Coordinates) {
   /**
    * Calculate distance between two coordinates in kilometers using Haversine formula
    */
-  const calculateDistance = useCallback((lat1: number, lon1: number, lat2: number, lon2: number): number => {
-    const R = 6371; // Earth's radius in km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  }, []);
+  const calculateDistance = useCallback(
+    (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+      const R = 6371; // Earth's radius in km
+      const dLat = ((lat2 - lat1) * Math.PI) / 180;
+      const dLon = ((lon2 - lon1) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    },
+    []
+  );
 
   /**
    * Fetch garage sales from Supabase with optional filters
@@ -53,13 +58,15 @@ export function useGarageSales(userLocation?: Coordinates) {
 
       let query = supabase
         .from('garage_sales')
-        .select(`
+        .select(
+          `
           *,
           profiles!garage_sales_user_id_fkey (
             full_name,
             email
           )
-        `)
+        `
+        )
         .eq('status', 'active')
         .eq('is_active', true);
 
@@ -118,12 +125,13 @@ export function useGarageSales(userLocation?: Coordinates) {
       // Apply search filter (client-side)
       if (filters.search) {
         const query = filters.search.toLowerCase();
-        transformedSales = transformedSales.filter(sale =>
-          sale.title.toLowerCase().includes(query) ||
-          sale.description?.toLowerCase().includes(query) ||
-          sale.items_description?.toLowerCase().includes(query) ||
-          sale.address.toLowerCase().includes(query) ||
-          sale.tags.some(tag => tag.toLowerCase().includes(query))
+        transformedSales = transformedSales.filter(
+          sale =>
+            sale.title.toLowerCase().includes(query) ||
+            sale.description?.toLowerCase().includes(query) ||
+            sale.items_description?.toLowerCase().includes(query) ||
+            sale.address.toLowerCase().includes(query) ||
+            sale.tags.some(tag => tag.toLowerCase().includes(query))
         );
       }
 
@@ -136,8 +144,8 @@ export function useGarageSales(userLocation?: Coordinates) {
 
       // Apply distance filter
       if (filters.max_distance_km !== undefined && userLocation) {
-        transformedSales = transformedSales.filter(sale =>
-          sale.distance_km !== undefined && sale.distance_km <= filters.max_distance_km!
+        transformedSales = transformedSales.filter(
+          sale => sale.distance_km !== undefined && sale.distance_km <= filters.max_distance_km!
         );
       }
 
@@ -155,7 +163,7 @@ export function useGarageSales(userLocation?: Coordinates) {
       const error = err as Error;
       console.error('Error in fetchSales:', error);
       setError(error);
-      
+
       // Load mock data for demo purposes
       loadMockData();
     } finally {
@@ -172,9 +180,9 @@ export function useGarageSales(userLocation?: Coordinates) {
         id: '1',
         user_id: '1',
         title: 'Moving Sale - Everything Must Go!',
-        description: 'We\'re moving south! Furniture, appliances, tools, winter gear.',
+        description: "We're moving south! Furniture, appliances, tools, winter gear.",
         address: '50 Street, Yellowknife, NT',
-        latitude: 62.4540,
+        latitude: 62.454,
         longitude: -114.3718,
         location_details: null,
         sale_date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -196,8 +204,8 @@ export function useGarageSales(userLocation?: Coordinates) {
         title: 'Multi-Family Garage Sale',
         description: 'Three families! Kids toys, clothes, household items.',
         address: 'Bretzlaff Drive, Yellowknife, NT',
-        latitude: 62.4620,
-        longitude: -114.3950,
+        latitude: 62.462,
+        longitude: -114.395,
         location_details: 'Driveway and garage',
         sale_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         start_time: '10:00',
@@ -218,8 +226,8 @@ export function useGarageSales(userLocation?: Coordinates) {
         title: 'Tools & Equipment Sale',
         description: 'Downsizing workshop. Power tools, hand tools, fishing gear.',
         address: 'Lessard Drive, Yellowknife, NT',
-        latitude: 62.4450,
-        longitude: -114.3600,
+        latitude: 62.445,
+        longitude: -114.36,
         location_details: null,
         sale_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         start_time: '08:00',
@@ -254,77 +262,84 @@ export function useGarageSales(userLocation?: Coordinates) {
   /**
    * Add or update a garage sale
    */
-  const saveSale = useCallback(async (saleData: Partial<GarageSale>, userId: string): Promise<GarageSale | null> => {
-    try {
-      const supabase = createClient();
+  const saveSale = useCallback(
+    async (saleData: Partial<GarageSale>, userId: string): Promise<GarageSale | null> => {
+      try {
+        const supabase = createClient();
 
-      if (saleData.id) {
-        // Update existing sale
-        const { data, error } = await supabase
-          .from('garage_sales')
-          .update({
-            ...saleData,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', saleData.id)
-          .eq('user_id', userId)
-          .select(`
+        if (saleData.id) {
+          // Update existing sale
+          const { data, error } = await supabase
+            .from('garage_sales')
+            .update({
+              ...saleData,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', saleData.id)
+            .eq('user_id', userId)
+            .select(
+              `
             *,
             profiles!garage_sales_user_id_fkey (
               full_name,
               email
             )
-          `)
-          .single();
+          `
+            )
+            .single();
 
-        if (error) throw error;
+          if (error) throw error;
 
-        const savedSale: GarageSale = {
-          ...data,
-          host_name: data.profiles?.full_name || 'Anonymous',
-          host_email: data.profiles?.email,
-        };
+          const savedSale: GarageSale = {
+            ...data,
+            host_name: data.profiles?.full_name || 'Anonymous',
+            host_email: data.profiles?.email,
+          };
 
-        // Update local state
-        setSales(prev => prev.map(s => s.id === savedSale.id ? savedSale : s));
-        return savedSale;
-      } else {
-        // Create new sale
-        const { data, error } = await supabase
-          .from('garage_sales')
-          .insert({
-            ...saleData,
-            user_id: userId,
-            status: 'active',
-            is_active: true,
-          })
-          .select(`
+          // Update local state
+          setSales(prev => prev.map(s => (s.id === savedSale.id ? savedSale : s)));
+          return savedSale;
+        } else {
+          // Create new sale
+          const { data, error } = await supabase
+            .from('garage_sales')
+            .insert({
+              ...saleData,
+              user_id: userId,
+              status: 'active',
+              is_active: true,
+            })
+            .select(
+              `
             *,
             profiles!garage_sales_user_id_fkey (
               full_name,
               email
             )
-          `)
-          .single();
+          `
+            )
+            .single();
 
-        if (error) throw error;
+          if (error) throw error;
 
-        const savedSale: GarageSale = {
-          ...data,
-          host_name: data.profiles?.full_name || 'Anonymous',
-          host_email: data.profiles?.email,
-        };
+          const savedSale: GarageSale = {
+            ...data,
+            host_name: data.profiles?.full_name || 'Anonymous',
+            host_email: data.profiles?.email,
+          };
 
-        // Add to local state
-        setSales(prev => [savedSale, ...prev]);
-        return savedSale;
+          // Add to local state
+          setSales(prev => [savedSale, ...prev]);
+          return savedSale;
+        }
+      } catch (error) {
+        console.error('Error saving garage sale:', error);
+        setError(error as Error);
+        return null;
       }
-    } catch (error) {
-      console.error('Error saving garage sale:', error);
-      setError(error as Error);
-      return null;
-    }
-  }, []);
+    },
+    []
+  );
 
   /**
    * Delete a garage sale
@@ -378,12 +393,10 @@ export function useGarageSales(userLocation?: Coordinates) {
         return false;
       } else {
         // Add to favorites
-        const { error } = await supabase
-          .from('saved_garage_sales')
-          .insert({
-            user_id: userId,
-            sale_id: saleId,
-          });
+        const { error } = await supabase.from('saved_garage_sales').insert({
+          user_id: userId,
+          sale_id: saleId,
+        });
 
         if (error) throw error;
         return true;
@@ -433,4 +446,3 @@ export function useGarageSales(userLocation?: Coordinates) {
     getFavorites,
   };
 }
-

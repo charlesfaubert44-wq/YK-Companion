@@ -29,10 +29,9 @@ describe('useDebounce', () => {
   it('should debounce value changes', async () => {
     try {
       const { useDebounce } = await import('@/hooks/useDebounce');
-      const { result, rerender } = renderHook(
-        ({ value, delay }) => useDebounce(value, delay),
-        { initialProps: { value: 'initial', delay: 500 } }
-      );
+      const { result, rerender } = renderHook(({ value, delay }) => useDebounce(value, delay), {
+        initialProps: { value: 'initial', delay: 500 },
+      });
 
       expect(result.current).toBe('initial');
 
@@ -59,10 +58,9 @@ describe('useDebounce', () => {
   it('should cancel previous timeout on rapid changes', async () => {
     try {
       const { useDebounce } = await import('@/hooks/useDebounce');
-      const { result, rerender } = renderHook(
-        ({ value, delay }) => useDebounce(value, delay),
-        { initialProps: { value: 'first', delay: 500 } }
-      );
+      const { result, rerender } = renderHook(({ value, delay }) => useDebounce(value, delay), {
+        initialProps: { value: 'first', delay: 500 },
+      });
 
       // Rapid changes
       rerender({ value: 'second', delay: 500 });
@@ -95,11 +93,9 @@ describe('useDebounce', () => {
   it('should handle different delay values', async () => {
     try {
       const { useDebounce } = await import('@/hooks/useDebounce');
-      
+
       // Test with short delay
-      const { result: shortResult } = renderHook(() => 
-        useDebounce('value', 100)
-      );
+      const { result: shortResult } = renderHook(() => useDebounce('value', 100));
 
       act(() => {
         vi.advanceTimersByTime(100);
@@ -136,4 +132,3 @@ describe('useDebounce', () => {
     }
   });
 });
-

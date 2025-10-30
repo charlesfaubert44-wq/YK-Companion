@@ -1,6 +1,6 @@
 /**
  * SEO Library - Legacy Export File
- * 
+ *
  * This file maintains backward compatibility with existing imports.
  * New code should import from '@/lib/seo' directly.
  */

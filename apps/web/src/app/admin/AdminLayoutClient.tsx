@@ -67,23 +67,17 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
-          <AdminHeader
-            onMenuClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-          />
+          <AdminHeader onMenuClick={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
 
           {/* Page Content */}
           <main className="flex-1 overflow-x-hidden">
-            <div className="container mx-auto px-4 py-6 md:px-6 md:py-8">
-              {children}
-            </div>
+            <div className="container mx-auto px-4 py-6 md:px-6 md:py-8">{children}</div>
           </main>
 
           {/* Footer */}
           <footer className="border-t border-aurora-green/10 py-4 px-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
-              <div>
-                © {new Date().getFullYear()} YK Buddy. Admin Panel.
-              </div>
+              <div>© {new Date().getFullYear()} YK Buddy. Admin Panel.</div>
               <div className="flex items-center gap-4">
                 <a href="/" className="hover:text-aurora-green transition-colors">
                   Site Home
@@ -104,4 +98,3 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
     </div>
   );
 }
-

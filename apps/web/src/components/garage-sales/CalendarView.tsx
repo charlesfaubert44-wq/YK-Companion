@@ -10,7 +10,7 @@ interface CalendarViewProps {
 
 /**
  * CalendarView Component
- * 
+ *
  * Displays garage sales in a monthly calendar format with:
  * - Month navigation (previous/next)
  * - Color-coded sale indicators
@@ -18,7 +18,7 @@ interface CalendarViewProps {
  * - Multiple sales per day support
  * - Detailed sale list below calendar
  * - Click to scroll to sale details
- * 
+ *
  * @example
  * ```tsx
  * <CalendarView
@@ -27,22 +27,22 @@ interface CalendarViewProps {
  * />
  * ```
  */
-export default function CalendarView({
-  sales,
-  onSaleClick,
-}: CalendarViewProps) {
+export default function CalendarView({ sales, onSaleClick }: CalendarViewProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   // Group sales by date
   const salesByDate = useMemo(() => {
-    return sales.reduce((acc, sale) => {
-      const date = sale.sale_date;
-      if (!acc[date]) {
-        acc[date] = [];
-      }
-      acc[date].push(sale);
-      return acc;
-    }, {} as Record<string, GarageSale[]>);
+    return sales.reduce(
+      (acc, sale) => {
+        const date = sale.sale_date;
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+        acc[date].push(sale);
+        return acc;
+      },
+      {} as Record<string, GarageSale[]>
+    );
   }, [sales]);
 
   // Get calendar configuration for current month
@@ -55,12 +55,12 @@ export default function CalendarView({
     const startingDayOfWeek = firstDay.getDay();
 
     const days: (number | null)[] = [];
-    
+
     // Add empty slots for days before month starts
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(null);
     }
-    
+
     // Add days of the month
     for (let i = 1; i <= daysInMonth; i++) {
       days.push(i);
@@ -109,8 +109,10 @@ export default function CalendarView({
       .filter(([date]) => {
         // Only show sales in the current month view
         const saleDate = new Date(date);
-        return saleDate.getMonth() === calendarConfig.month &&
-               saleDate.getFullYear() === calendarConfig.year;
+        return (
+          saleDate.getMonth() === calendarConfig.month &&
+          saleDate.getFullYear() === calendarConfig.year
+        );
       });
   }, [salesByDate, calendarConfig.month, calendarConfig.year]);
 
@@ -137,7 +139,7 @@ export default function CalendarView({
           <span>←</span>
           <span className="hidden sm:inline">Previous</span>
         </button>
-        
+
         <div className="flex items-center gap-2">
           <h3 className="text-xl font-bold text-white">
             {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
@@ -149,7 +151,7 @@ export default function CalendarView({
             Today
           </button>
         </div>
-        
+
         <button
           onClick={goToNextMonth}
           className="flex items-center gap-2 px-4 py-2 text-aurora-green hover:bg-dark-700 rounded-lg transition-all font-medium"
@@ -252,14 +254,19 @@ export default function CalendarView({
               ({sortedSalesDates.reduce((sum, [, sales]) => sum + sales.length, 0)} total)
             </span>
           </h3>
-          
+
           {sortedSalesDates.map(([date, dateSales]) => {
             const saleDate = new Date(date + 'T00:00:00');
             const dayOfWeek = saleDate.toLocaleDateString('en-US', { weekday: 'long' });
-            const monthDay = saleDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+            const monthDay = saleDate.toLocaleDateString('en-US', {
+              month: 'long',
+              day: 'numeric',
+            });
             const today = new Date();
-            const daysUntil = Math.ceil((saleDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-            
+            const daysUntil = Math.ceil(
+              (saleDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+            );
+
             return (
               <div key={date} id={`day-sales-${date}`} className="space-y-3">
                 <div className="flex items-center gap-3">
@@ -280,7 +287,7 @@ export default function CalendarView({
                     ({dateSales.length} {dateSales.length === 1 ? 'sale' : 'sales'})
                   </span>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {dateSales.map(sale => (
                     <button
@@ -296,7 +303,9 @@ export default function CalendarView({
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-aurora-blue flex items-center gap-1">
                           <span>🕐</span>
-                          <span>{sale.start_time} - {sale.end_time}</span>
+                          <span>
+                            {sale.start_time} - {sale.end_time}
+                          </span>
                         </span>
                         {sale.distance_km !== undefined && (
                           <span className="text-aurora-purple">
@@ -317,9 +326,7 @@ export default function CalendarView({
                             </span>
                           ))}
                           {sale.tags.length > 3 && (
-                            <span className="text-gray-500 text-xs">
-                              +{sale.tags.length - 3}
-                            </span>
+                            <span className="text-gray-500 text-xs">+{sale.tags.length - 3}</span>
                           )}
                         </div>
                       )}
@@ -354,4 +361,3 @@ export default function CalendarView({
     </div>
   );
 }
-

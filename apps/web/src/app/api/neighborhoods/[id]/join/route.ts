@@ -13,13 +13,13 @@ const joinRequestSchema = z.object({
 });
 
 // POST - Request to join a neighborhood
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -46,10 +46,7 @@ export async function POST(
       .single();
 
     if (neighborhoodError || !neighborhood) {
-      return NextResponse.json(
-        { error: 'Neighborhood not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Neighborhood not found' }, { status: 404 });
     }
 
     if (!neighborhood.is_active) {
@@ -102,10 +99,7 @@ export async function POST(
 
     if (membershipError) {
       console.error('Error creating membership:', membershipError);
-      return NextResponse.json(
-        { error: 'Failed to submit join request' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to submit join request' }, { status: 500 });
     }
 
     // TODO: Send email notification to neighborhood admins
@@ -119,21 +113,18 @@ export async function POST(
     });
   } catch (error: any) {
     console.error('Join request error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
 // GET - Check membership status
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -144,20 +135,19 @@ export async function GET(
     // Get user's membership status
     const { data: membership, error } = await supabase
       .from('neighborhood_members')
-      .select(`
+      .select(
+        `
         *,
         neighborhood:neighborhoods(*)
-      `)
+      `
+      )
       .eq('neighborhood_id', neighborhoodId)
       .eq('user_id', user.id)
       .single();
 
     if (error && error.code !== 'PGRST116') {
       console.error('Error fetching membership:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch membership status' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch membership status' }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -167,9 +157,6 @@ export async function GET(
     });
   } catch (error: any) {
     console.error('Membership check error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

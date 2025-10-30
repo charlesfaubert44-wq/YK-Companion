@@ -52,7 +52,7 @@ export default function AdminSponsorsPage() {
     search: '',
     position: 'all',
     paymentStatus: 'all',
-    activeStatus: 'all'
+    activeStatus: 'all',
   });
 
   // Pagination
@@ -71,7 +71,7 @@ export default function AdminSponsorsPage() {
     contact_email: '',
     contact_name: '',
     notes: '',
-    payment_status: 'pending'
+    payment_status: 'pending',
   });
 
   useEffect(() => {
@@ -116,10 +116,11 @@ export default function AdminSponsorsPage() {
     // Search filter
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
-      filtered = filtered.filter(s =>
-        s.name.toLowerCase().includes(searchLower) ||
-        s.tagline?.toLowerCase().includes(searchLower) ||
-        s.contact_email?.toLowerCase().includes(searchLower)
+      filtered = filtered.filter(
+        s =>
+          s.name.toLowerCase().includes(searchLower) ||
+          s.tagline?.toLowerCase().includes(searchLower) ||
+          s.contact_email?.toLowerCase().includes(searchLower)
       );
     }
 
@@ -185,7 +186,7 @@ export default function AdminSponsorsPage() {
       contact_email: '',
       contact_name: '',
       notes: '',
-      payment_status: 'pending'
+      payment_status: 'pending',
     });
     setEditingId(null);
     setShowForm(false);
@@ -203,7 +204,7 @@ export default function AdminSponsorsPage() {
       contact_email: sponsor.contact_email || '',
       contact_name: sponsor.contact_name || '',
       notes: sponsor.notes || '',
-      payment_status: sponsor.payment_status
+      payment_status: sponsor.payment_status,
     });
     setEditingId(sponsor.id);
     setShowForm(true);
@@ -230,21 +231,16 @@ export default function AdminSponsorsPage() {
       contact_name: formData.contact_name || null,
       notes: formData.notes || null,
       payment_status: formData.payment_status,
-      is_active: true
+      is_active: true,
     };
 
     let error;
     if (editingId) {
       // Update existing sponsor
-      ({ error } = await supabase
-        .from('premium_sponsors')
-        .update(sponsorData)
-        .eq('id', editingId));
+      ({ error } = await supabase.from('premium_sponsors').update(sponsorData).eq('id', editingId));
     } else {
       // Create new sponsor
-      ({ error } = await supabase
-        .from('premium_sponsors')
-        .insert([sponsorData]));
+      ({ error } = await supabase.from('premium_sponsors').insert([sponsorData]));
     }
 
     if (!error) {
@@ -280,10 +276,7 @@ export default function AdminSponsorsPage() {
 
   const deleteSponsor = async (id: string) => {
     if (confirm('Are you sure you want to delete this sponsor?')) {
-      const { error } = await supabase
-        .from('premium_sponsors')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('premium_sponsors').delete().eq('id', id);
 
       if (!error) {
         fetchSponsors();
@@ -338,7 +331,18 @@ export default function AdminSponsorsPage() {
 
   const exportToCSV = () => {
     const csv = [
-      ['Name', 'Tagline', 'Position', 'Plan', 'Start Date', 'End Date', 'Price', 'Payment Status', 'Active', 'Contact'],
+      [
+        'Name',
+        'Tagline',
+        'Position',
+        'Plan',
+        'Start Date',
+        'End Date',
+        'Price',
+        'Payment Status',
+        'Active',
+        'Contact',
+      ],
       ...filteredSponsors.map(s => [
         s.name,
         s.tagline || '',
@@ -349,9 +353,11 @@ export default function AdminSponsorsPage() {
         s.total_price,
         s.payment_status,
         s.is_active ? 'Yes' : 'No',
-        s.contact_email || ''
-      ])
-    ].map(row => row.join(',')).join('\n');
+        s.contact_email || '',
+      ]),
+    ]
+      .map(row => row.join(','))
+      .join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -375,10 +381,15 @@ export default function AdminSponsorsPage() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">Premium Sponsors</h1>
-            <p className="text-gray-400">Manage premium spotlight placements ({filteredSponsors.length} sponsors)</p>
+            <p className="text-gray-400">
+              Manage premium spotlight placements ({filteredSponsors.length} sponsors)
+            </p>
           </div>
           <div className="flex gap-4">
-            <Link href="/admin" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">
+            <Link
+              href="/admin"
+              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
               ← Back to Admin
             </Link>
             <button
@@ -421,7 +432,7 @@ export default function AdminSponsorsPage() {
                     type="text"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={e => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     placeholder="Northern Lights Tours Inc."
                   />
@@ -436,7 +447,7 @@ export default function AdminSponsorsPage() {
                     type="text"
                     maxLength={100}
                     value={formData.tagline}
-                    onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+                    onChange={e => setFormData({ ...formData, tagline: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     placeholder="Experience the magic of the North"
                   />
@@ -451,7 +462,7 @@ export default function AdminSponsorsPage() {
                   <input
                     type="url"
                     value={formData.link}
-                    onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                    onChange={e => setFormData({ ...formData, link: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     placeholder="https://example.com"
                   />
@@ -459,12 +470,10 @@ export default function AdminSponsorsPage() {
 
                 {/* Position */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Position *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Position *</label>
                   <select
                     value={formData.position}
-                    onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                    onChange={e => setFormData({ ...formData, position: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   >
                     <option value="home_top">Home - Top (Premium)</option>
@@ -483,7 +492,7 @@ export default function AdminSponsorsPage() {
                   </label>
                   <select
                     value={formData.plan_type}
-                    onChange={(e) => setFormData({ ...formData, plan_type: e.target.value })}
+                    onChange={e => setFormData({ ...formData, plan_type: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   >
                     <option value="basic">Basic</option>
@@ -503,7 +512,9 @@ export default function AdminSponsorsPage() {
                     min="1"
                     max="365"
                     value={formData.duration_days}
-                    onChange={(e) => setFormData({ ...formData, duration_days: parseInt(e.target.value) || 1 })}
+                    onChange={e =>
+                      setFormData({ ...formData, duration_days: parseInt(e.target.value) || 1 })
+                    }
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                   <p className="text-xs text-gray-500 mt-1">
@@ -520,7 +531,7 @@ export default function AdminSponsorsPage() {
                     type="date"
                     required
                     value={formData.start_date}
-                    onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                    onChange={e => setFormData({ ...formData, start_date: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                 </div>
@@ -532,7 +543,7 @@ export default function AdminSponsorsPage() {
                   </label>
                   <select
                     value={formData.payment_status}
-                    onChange={(e) => setFormData({ ...formData, payment_status: e.target.value })}
+                    onChange={e => setFormData({ ...formData, payment_status: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   >
                     <option value="pending">Pending</option>
@@ -550,7 +561,7 @@ export default function AdminSponsorsPage() {
                   <input
                     type="text"
                     value={formData.contact_name}
-                    onChange={(e) => setFormData({ ...formData, contact_name: e.target.value })}
+                    onChange={e => setFormData({ ...formData, contact_name: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                 </div>
@@ -563,7 +574,7 @@ export default function AdminSponsorsPage() {
                   <input
                     type="email"
                     value={formData.contact_email}
-                    onChange={(e) => setFormData({ ...formData, contact_email: e.target.value })}
+                    onChange={e => setFormData({ ...formData, contact_email: e.target.value })}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                   />
                 </div>
@@ -575,7 +586,7 @@ export default function AdminSponsorsPage() {
                   </label>
                   <textarea
                     value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                    onChange={e => setFormData({ ...formData, notes: e.target.value })}
                     rows={3}
                     className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
                     placeholder="Any internal notes or special arrangements"
@@ -588,16 +599,24 @@ export default function AdminSponsorsPage() {
                 <h3 className="text-xl font-bold text-yellow-400 mb-4">Pricing Calculation</h3>
                 {selectedPlan ? (
                   <div className="space-y-2 text-gray-300">
-                    <p><strong>Plan:</strong> {selectedPlan.plan_name}</p>
-                    <p><strong>Base Rate:</strong> ${selectedPlan.base_price_per_day}/day</p>
-                    <p><strong>Duration:</strong> {formData.duration_days} days</p>
+                    <p>
+                      <strong>Plan:</strong> {selectedPlan.plan_name}
+                    </p>
+                    <p>
+                      <strong>Base Rate:</strong> ${selectedPlan.base_price_per_day}/day
+                    </p>
+                    <p>
+                      <strong>Duration:</strong> {formData.duration_days} days
+                    </p>
                     {formData.duration_days >= 7 && (
                       <p className="text-aurora-green">
-                        <strong>Volume Discount Applied:</strong> {
-                          formData.duration_days >= 90 ? selectedPlan.volume_discount_90days * 100 :
-                          formData.duration_days >= 30 ? selectedPlan.volume_discount_30days * 100 :
-                          selectedPlan.volume_discount_7days * 100
-                        }%
+                        <strong>Volume Discount Applied:</strong>{' '}
+                        {formData.duration_days >= 90
+                          ? selectedPlan.volume_discount_90days * 100
+                          : formData.duration_days >= 30
+                            ? selectedPlan.volume_discount_30days * 100
+                            : selectedPlan.volume_discount_7days * 100}
+                        %
                       </p>
                     )}
                     <div className="pt-4 border-t border-yellow-500/30">
@@ -640,7 +659,7 @@ export default function AdminSponsorsPage() {
                 type="text"
                 placeholder="Search sponsors..."
                 value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                onChange={e => setFilters({ ...filters, search: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               />
             </div>
@@ -649,7 +668,7 @@ export default function AdminSponsorsPage() {
             <div>
               <select
                 value={filters.position}
-                onChange={(e) => setFilters({ ...filters, position: e.target.value })}
+                onChange={e => setFilters({ ...filters, position: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All Positions</option>
@@ -666,7 +685,7 @@ export default function AdminSponsorsPage() {
             <div>
               <select
                 value={filters.paymentStatus}
-                onChange={(e) => setFilters({ ...filters, paymentStatus: e.target.value })}
+                onChange={e => setFilters({ ...filters, paymentStatus: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All Payment Status</option>
@@ -681,7 +700,7 @@ export default function AdminSponsorsPage() {
             <div>
               <select
                 value={filters.activeStatus}
-                onChange={(e) => setFilters({ ...filters, activeStatus: e.target.value })}
+                onChange={e => setFilters({ ...filters, activeStatus: e.target.value })}
                 className="w-full px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:border-aurora-blue focus:outline-none"
               >
                 <option value="all">All Status</option>
@@ -695,7 +714,9 @@ export default function AdminSponsorsPage() {
         {/* Bulk Actions */}
         {selectedSponsors.length > 0 && (
           <div className="bg-aurora-blue/10 border border-aurora-blue/30 rounded-xl p-4 mb-6 flex items-center justify-between">
-            <span className="text-white font-semibold">{selectedSponsors.length} sponsor(s) selected</span>
+            <span className="text-white font-semibold">
+              {selectedSponsors.length} sponsor(s) selected
+            </span>
             <div className="flex gap-3">
               <button
                 onClick={() => bulkUpdatePaymentStatus('paid')}
@@ -739,7 +760,10 @@ export default function AdminSponsorsPage() {
               <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={selectedSponsors.length === paginatedSponsors.length && paginatedSponsors.length > 0}
+                  checked={
+                    selectedSponsors.length === paginatedSponsors.length &&
+                    paginatedSponsors.length > 0
+                  }
                   onChange={toggleSelectAll}
                   className="w-4 h-4"
                 />
@@ -756,7 +780,7 @@ export default function AdminSponsorsPage() {
                   : 'No sponsors match your filters.'}
               </p>
             ) : (
-              paginatedSponsors.map((sponsor) => (
+              paginatedSponsors.map(sponsor => (
                 <div
                   key={sponsor.id}
                   className="bg-gray-900/50 border border-gray-700 rounded-xl p-6 hover:border-aurora-blue/50 transition-all"
@@ -776,16 +800,24 @@ export default function AdminSponsorsPage() {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="text-xl font-bold text-yellow-400">{sponsor.name}</h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          sponsor.is_active ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
-                        }`}>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            sponsor.is_active
+                              ? 'bg-green-500/20 text-green-400'
+                              : 'bg-gray-500/20 text-gray-400'
+                          }`}
+                        >
                           {sponsor.is_active ? 'Active' : 'Inactive'}
                         </span>
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          sponsor.payment_status === 'paid' ? 'bg-green-500/20 text-green-400' :
-                          sponsor.payment_status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
-                          'bg-red-500/20 text-red-400'
-                        }`}>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            sponsor.payment_status === 'paid'
+                              ? 'bg-green-500/20 text-green-400'
+                              : sponsor.payment_status === 'pending'
+                                ? 'bg-yellow-500/20 text-yellow-400'
+                                : 'bg-red-500/20 text-red-400'
+                          }`}
+                        >
                           {sponsor.payment_status}
                         </span>
                       </div>
@@ -796,7 +828,8 @@ export default function AdminSponsorsPage() {
 
                       <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-400 mb-3">
                         <div>
-                          <span className="text-gray-500">Position:</span> {sponsor.position.replace('_', ' ')}
+                          <span className="text-gray-500">Position:</span>{' '}
+                          {sponsor.position.replace('_', ' ')}
                         </div>
                         <div>
                           <span className="text-gray-500">Plan:</span> {sponsor.plan_type}
@@ -805,19 +838,27 @@ export default function AdminSponsorsPage() {
                           <span className="text-gray-500">Price:</span> ${sponsor.total_price}
                         </div>
                         <div>
-                          <span className="text-gray-500">Start:</span> {new Date(sponsor.start_date).toLocaleDateString()}
+                          <span className="text-gray-500">Start:</span>{' '}
+                          {new Date(sponsor.start_date).toLocaleDateString()}
                         </div>
                         <div>
-                          <span className="text-gray-500">End:</span> {new Date(sponsor.end_date).toLocaleDateString()}
+                          <span className="text-gray-500">End:</span>{' '}
+                          {new Date(sponsor.end_date).toLocaleDateString()}
                         </div>
                         <div>
-                          <span className="text-gray-500">Duration:</span> {sponsor.duration_days} days
+                          <span className="text-gray-500">Duration:</span> {sponsor.duration_days}{' '}
+                          days
                         </div>
                       </div>
 
                       {sponsor.link && (
                         <div className="mb-2">
-                          <a href={sponsor.link} target="_blank" rel="noopener noreferrer" className="text-aurora-blue hover:text-aurora-green text-sm">
+                          <a
+                            href={sponsor.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-aurora-blue hover:text-aurora-green text-sm"
+                          >
                             {sponsor.link} →
                           </a>
                         </div>
@@ -825,7 +866,8 @@ export default function AdminSponsorsPage() {
 
                       {sponsor.contact_name && (
                         <div className="text-sm text-gray-500">
-                          Contact: {sponsor.contact_name} {sponsor.contact_email && `(${sponsor.contact_email})`}
+                          Contact: {sponsor.contact_name}{' '}
+                          {sponsor.contact_email && `(${sponsor.contact_email})`}
                         </div>
                       )}
                     </div>

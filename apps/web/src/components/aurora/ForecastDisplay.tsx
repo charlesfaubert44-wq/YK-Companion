@@ -55,7 +55,8 @@ export default function ForecastDisplay({ compact = false }: Props) {
             confidence_score: 0.7 + Math.random() * 0.25,
             model_version: 'v2.1',
             data_source: 'NOAA',
-            actual_kp: day === 0 && hour < new Date().getHours() ? baseKP + (Math.random() - 0.5) * 1 : null,
+            actual_kp:
+              day === 0 && hour < new Date().getHours() ? baseKP + (Math.random() - 0.5) * 1 : null,
             accuracy_score: null,
             created_at: new Date().toISOString(),
           });
@@ -73,9 +74,24 @@ export default function ForecastDisplay({ compact = false }: Props) {
     try {
       // TODO: Replace with actual Supabase call
       const mockAccuracy: ForecastAccuracy[] = [
-        { data_source: 'NOAA', avg_accuracy: 0.87, total_forecasts: 1542, accurate_forecasts: 1341 },
-        { data_source: 'Space Weather', avg_accuracy: 0.82, total_forecasts: 1120, accurate_forecasts: 918 },
-        { data_source: 'Aurora Watch', avg_accuracy: 0.79, total_forecasts: 890, accurate_forecasts: 703 },
+        {
+          data_source: 'NOAA',
+          avg_accuracy: 0.87,
+          total_forecasts: 1542,
+          accurate_forecasts: 1341,
+        },
+        {
+          data_source: 'Space Weather',
+          avg_accuracy: 0.82,
+          total_forecasts: 1120,
+          accurate_forecasts: 918,
+        },
+        {
+          data_source: 'Aurora Watch',
+          avg_accuracy: 0.79,
+          total_forecasts: 890,
+          accurate_forecasts: 703,
+        },
       ];
 
       setAccuracy(mockAccuracy);
@@ -101,14 +117,16 @@ export default function ForecastDisplay({ compact = false }: Props) {
 
   const getBestViewingTimes = (dayForecasts: AuroraForecast[]) => {
     const goodHours = dayForecasts
-      .filter(f => f.predicted_kp >= 4.0 && f.forecast_hour >= 20 || f.forecast_hour <= 4)
+      .filter(f => (f.predicted_kp >= 4.0 && f.forecast_hour >= 20) || f.forecast_hour <= 4)
       .sort((a, b) => b.predicted_kp - a.predicted_kp)
       .slice(0, 3);
 
     return goodHours;
   };
 
-  const selectedDateString = new Date(Date.now() + selectedDay * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const selectedDateString = new Date(Date.now() + selectedDay * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split('T')[0];
   const dayForecasts = forecasts.filter(f => f.forecast_date === selectedDateString);
   const bestTimes = getBestViewingTimes(dayForecasts);
 
@@ -132,7 +150,9 @@ export default function ForecastDisplay({ compact = false }: Props) {
           <div className="flex-1">
             <div className="text-sm text-gray-400">Next Good Viewing</div>
             <div className="font-bold text-white">
-              {new Date(`${nextGoodForecast.forecast_date}T${nextGoodForecast.forecast_hour.toString().padStart(2, '0')}:00`).toLocaleString('en-US', {
+              {new Date(
+                `${nextGoodForecast.forecast_date}T${nextGoodForecast.forecast_hour.toString().padStart(2, '0')}:00`
+              ).toLocaleString('en-US', {
                 weekday: 'short',
                 hour: 'numeric',
                 minute: '2-digit',
@@ -143,7 +163,9 @@ export default function ForecastDisplay({ compact = false }: Props) {
             <div className="text-2xl font-bold" style={{ color: kpInfo.color }}>
               KP {nextGoodForecast.predicted_kp.toFixed(1)}
             </div>
-            <div className="text-xs text-gray-400">{nextGoodForecast.predicted_probability}% chance</div>
+            <div className="text-xs text-gray-400">
+              {nextGoodForecast.predicted_probability}% chance
+            </div>
           </div>
         </div>
       </div>
@@ -157,7 +179,7 @@ export default function ForecastDisplay({ compact = false }: Props) {
         <div className="bg-dark-800 rounded-xl p-6">
           <h3 className="text-xl font-bold text-white mb-4">🎯 Forecast Accuracy</h3>
           <div className="grid md:grid-cols-3 gap-4">
-            {accuracy.map((acc) => (
+            {accuracy.map(acc => (
               <div key={acc.data_source} className="bg-dark-900 rounded-lg p-4 text-center">
                 <div className="text-sm text-gray-400 mb-1">{acc.data_source}</div>
                 <div className="text-3xl font-bold text-aurora-green mb-1">
@@ -174,7 +196,7 @@ export default function ForecastDisplay({ compact = false }: Props) {
 
       {/* Day Selector */}
       <div className="flex gap-2">
-        {[0, 1, 2].map((day) => (
+        {[0, 1, 2].map(day => (
           <button
             key={day}
             onClick={() => setSelectedDay(day)}
@@ -194,16 +216,20 @@ export default function ForecastDisplay({ compact = false }: Props) {
         <div className="bg-gradient-to-r from-aurora-green/10 to-aurora-blue/10 border border-aurora-green/30 rounded-xl p-6">
           <h3 className="text-xl font-bold text-white mb-4">⭐ Best Viewing Times</h3>
           <div className="grid md:grid-cols-3 gap-4">
-            {bestTimes.map((forecast) => {
+            {bestTimes.map(forecast => {
               const kpInfo = getKPLevelInfo(forecast.predicted_kp);
               return (
                 <div key={forecast.id} className="bg-dark-900 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">🌌</div>
-                  <div className="font-bold text-white mb-1">{getHourLabel(forecast.forecast_hour)}</div>
+                  <div className="font-bold text-white mb-1">
+                    {getHourLabel(forecast.forecast_hour)}
+                  </div>
                   <div className="text-3xl font-bold mb-1" style={{ color: kpInfo.color }}>
                     {forecast.predicted_kp.toFixed(1)}
                   </div>
-                  <div className="text-xs text-gray-400">{forecast.predicted_probability}% probability</div>
+                  <div className="text-xs text-gray-400">
+                    {forecast.predicted_probability}% probability
+                  </div>
                   <div className="text-xs text-gray-500 mt-2">
                     {forecast.confidence_level} confidence
                   </div>
@@ -226,7 +252,7 @@ export default function ForecastDisplay({ compact = false }: Props) {
             <div className="relative h-48 mb-6">
               {/* Grid lines */}
               <div className="absolute inset-0 flex flex-col justify-between">
-                {[9, 7, 5, 3, 1].map((kp) => (
+                {[9, 7, 5, 3, 1].map(kp => (
                   <div key={kp} className="flex items-center">
                     <span className="text-xs text-gray-500 w-8">{kp}</span>
                     <div className="flex-1 border-t border-gray-700/50" />
@@ -280,36 +306,36 @@ export default function ForecastDisplay({ compact = false }: Props) {
 
             {/* Hour Labels */}
             <div className="flex justify-between text-xs text-gray-500 pl-8">
-              {[0, 6, 12, 18, 23].map((hour) => (
+              {[0, 6, 12, 18, 23].map(hour => (
                 <span key={hour}>{getHourLabel(hour)}</span>
               ))}
             </div>
 
             {/* Hourly Details */}
             <div className="mt-6 grid grid-cols-4 md:grid-cols-8 gap-2">
-              {dayForecasts.filter((_, i) => i % 3 === 0).map((forecast) => {
-                const kpInfo = getKPLevelInfo(forecast.predicted_kp);
-                const isGood = forecast.predicted_kp >= 4.0;
+              {dayForecasts
+                .filter((_, i) => i % 3 === 0)
+                .map(forecast => {
+                  const kpInfo = getKPLevelInfo(forecast.predicted_kp);
+                  const isGood = forecast.predicted_kp >= 4.0;
 
-                return (
-                  <div
-                    key={forecast.id}
-                    className={`bg-dark-900 rounded-lg p-2 text-center border-2 transition-all ${
-                      isGood ? 'border-aurora-green/50' : 'border-gray-700'
-                    }`}
-                  >
-                    <div className="text-xs text-gray-400 mb-1">
-                      {getHourLabel(forecast.forecast_hour)}
+                  return (
+                    <div
+                      key={forecast.id}
+                      className={`bg-dark-900 rounded-lg p-2 text-center border-2 transition-all ${
+                        isGood ? 'border-aurora-green/50' : 'border-gray-700'
+                      }`}
+                    >
+                      <div className="text-xs text-gray-400 mb-1">
+                        {getHourLabel(forecast.forecast_hour)}
+                      </div>
+                      <div className="text-lg font-bold" style={{ color: kpInfo.color }}>
+                        {forecast.predicted_kp.toFixed(1)}
+                      </div>
+                      <div className="text-xs text-gray-500">{forecast.predicted_probability}%</div>
                     </div>
-                    <div className="text-lg font-bold" style={{ color: kpInfo.color }}>
-                      {forecast.predicted_kp.toFixed(1)}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {forecast.predicted_probability}%
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </>
         )}
@@ -317,9 +343,9 @@ export default function ForecastDisplay({ compact = false }: Props) {
 
       {/* Forecast Info */}
       <div className="bg-dark-800 rounded-lg p-4 text-sm text-gray-400">
-        <strong className="text-white">About Forecasts:</strong> Predictions are based on NOAA solar wind data
-        and historical aurora patterns. Forecasts are most accurate within 24 hours. Actual conditions may
-        vary due to local weather and geomagnetic activity.
+        <strong className="text-white">About Forecasts:</strong> Predictions are based on NOAA solar
+        wind data and historical aurora patterns. Forecasts are most accurate within 24 hours.
+        Actual conditions may vary due to local weather and geomagnetic activity.
       </div>
     </div>
   );

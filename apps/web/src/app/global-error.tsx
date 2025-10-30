@@ -20,25 +20,36 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <div style={{
-          minHeight: '100vh',
-          background: 'linear-gradient(to bottom, #0A1128, #1a1a2e)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1rem',
-        }}>
-          <div style={{
-            maxWidth: '28rem',
-            width: '100%',
-            background: 'rgba(31, 41, 55, 0.5)',
-            border: '1px solid rgba(55, 65, 81, 1)',
-            borderRadius: '0.5rem',
-            padding: '2rem',
-            textAlign: 'center',
-          }}>
+        <div
+          style={{
+            minHeight: '100vh',
+            background: 'linear-gradient(to bottom, #0A1128, #1a1a2e)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem',
+          }}
+        >
+          <div
+            style={{
+              maxWidth: '28rem',
+              width: '100%',
+              background: 'rgba(31, 41, 55, 0.5)',
+              border: '1px solid rgba(55, 65, 81, 1)',
+              borderRadius: '0.5rem',
+              padding: '2rem',
+              textAlign: 'center',
+            }}
+          >
             <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>❄️</div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white', marginBottom: '1rem' }}>
+            <h1
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: 'white',
+                marginBottom: '1rem',
+              }}
+            >
               Application Error
             </h1>
             <p style={{ color: '#D1D5DB', marginBottom: '1.5rem' }}>
@@ -64,5 +75,3 @@ export default function GlobalError({
     </html>
   );
 }
-
-

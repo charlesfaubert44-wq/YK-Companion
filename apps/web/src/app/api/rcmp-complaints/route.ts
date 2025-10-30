@@ -44,7 +44,10 @@ const complaintSchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -57,10 +60,12 @@ export async function GET(request: NextRequest) {
     // Build query
     let query = supabase
       .from('rcmp_complaints')
-      .select(`
+      .select(
+        `
         *,
         neighborhood:neighborhoods(name)
-      `)
+      `
+      )
       .eq('user_id', user.id);
 
     if (status) {
@@ -77,19 +82,13 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error('Error fetching complaints:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch complaints' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch complaints' }, { status: 500 });
     }
 
     return NextResponse.json({ complaints: complaints || [] });
   } catch (error: any) {
     console.error('Complaints GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -97,7 +96,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -128,21 +130,15 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('Error creating complaint:', error);
-      return NextResponse.json(
-        { error: 'Failed to create complaint' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to create complaint' }, { status: 500 });
     }
 
     return NextResponse.json({
       complaint,
-      message: 'Complaint created as draft. You can review and submit it to RCMP.'
+      message: 'Complaint created as draft. You can review and submit it to RCMP.',
     });
   } catch (error: any) {
     console.error('Complaint creation error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

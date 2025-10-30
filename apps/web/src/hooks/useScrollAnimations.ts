@@ -1,12 +1,12 @@
 /**
  * Scroll Animation Hooks for YK-Companion
- * 
+ *
  * Provides hooks for scroll-based animations including:
  * - Intersection Observer based animations
  * - Parallax scroll effects
  * - Scroll progress tracking
  * - Staggered list animations
- * 
+ *
  * @module hooks/useScrollAnimations
  */
 
@@ -34,17 +34,17 @@ export interface ScrollAnimationConfig {
 
 /**
  * Hook for scroll-triggered animations using Intersection Observer
- * 
+ *
  * @param config - Configuration options
  * @returns Animation state and ref
- * 
+ *
  * @example
  * function AnimatedSection() {
  *   const { ref, isVisible, progress } = useScrollAnimations({
  *     threshold: 0.2,
  *     triggerOnce: true,
  *   });
- * 
+ *
  *   return (
  *     <div
  *       ref={ref}
@@ -60,12 +60,7 @@ export interface ScrollAnimationConfig {
  * }
  */
 export function useScrollAnimations(config: ScrollAnimationConfig = {}) {
-  const {
-    threshold = 0.1,
-    rootMargin = '0px',
-    triggerOnce = false,
-    onAnimate,
-  } = config;
+  const { threshold = 0.1, rootMargin = '0px', triggerOnce = false, onAnimate } = config;
 
   const [isVisible, setIsVisible] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -74,12 +69,12 @@ export function useScrollAnimations(config: ScrollAnimationConfig = {}) {
     threshold,
     rootMargin,
     triggerOnce,
-    onEnter: (entry) => {
+    onEnter: entry => {
       setIsVisible(true);
       setProgress(entry.intersectionRatio);
       onAnimate?.(entry.intersectionRatio);
     },
-    onChange: (entry) => {
+    onChange: entry => {
       setProgress(entry.intersectionRatio);
       onAnimate?.(entry.intersectionRatio);
     },
@@ -115,14 +110,14 @@ export interface ParallaxConfig {
 
 /**
  * Hook for parallax scroll effects
- * 
+ *
  * @param config - Configuration options
  * @returns Parallax offset and ref
- * 
+ *
  * @example
  * function ParallaxBackground() {
  *   const { ref, offset } = useParallax({ speed: 0.5 });
- * 
+ *
  *   return (
  *     <div
  *       ref={ref}
@@ -136,12 +131,7 @@ export interface ParallaxConfig {
  * }
  */
 export function useParallax(config: ParallaxConfig = {}) {
-  const {
-    speed = 0.5,
-    startOffset = 0,
-    endOffset = Infinity,
-    enabled = true,
-  } = config;
+  const { speed = 0.5, startOffset = 0, endOffset = Infinity, enabled = true } = config;
 
   const [offset, setOffset] = useState(0);
   const elementRef = useRef<HTMLElement | null>(null);
@@ -156,10 +146,10 @@ export function useParallax(config: ParallaxConfig = {}) {
       if (!elementRef.current) return;
 
       const scrollY = window.scrollY;
-      
+
       // Check if we're in the valid scroll range
       const elementTop = elementRef.current.getBoundingClientRect().top + scrollY;
-      
+
       if (scrollY < startOffset || scrollY > endOffset) {
         setOffset(0);
         return;
@@ -201,14 +191,14 @@ export interface ScrollProgressConfig {
 
 /**
  * Hook to track scroll progress (0-1)
- * 
+ *
  * @param config - Configuration options
  * @returns Scroll progress value (0 to 1)
- * 
+ *
  * @example
  * function ScrollIndicator() {
  *   const progress = useScrollProgress();
- * 
+ *
  *   return (
  *     <div
  *       style={{
@@ -221,7 +211,11 @@ export interface ScrollProgressConfig {
  * }
  */
 export function useScrollProgress(config: ScrollProgressConfig = {}) {
-  const { target = typeof window !== 'undefined' ? window : undefined, startOffset = 0, endOffset = 0 } = config;
+  const {
+    target = typeof window !== 'undefined' ? window : undefined,
+    startOffset = 0,
+    endOffset = 0,
+  } = config;
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -252,8 +246,9 @@ export function useScrollProgress(config: ScrollProgressConfig = {}) {
 
       const maxScroll = scrollHeight - clientHeight - startOffset - endOffset;
       const currentScroll = Math.max(0, scrollTop - startOffset);
-      const calculatedProgress = maxScroll > 0 ? Math.min(1, Math.max(0, currentScroll / maxScroll)) : 0;
-      
+      const calculatedProgress =
+        maxScroll > 0 ? Math.min(1, Math.max(0, currentScroll / maxScroll)) : 0;
+
       setProgress(calculatedProgress);
     };
 
@@ -306,17 +301,17 @@ export interface StaggerAnimationConfig {
 
 /**
  * Hook for staggered list animations
- * 
+ *
  * @param config - Configuration options
  * @returns Array of refs and animation states for each item
- * 
+ *
  * @example
  * function StaggeredList({ items }: { items: string[] }) {
  *   const { refs, states } = useStaggerAnimation({
  *     itemCount: items.length,
  *     staggerDelay: 100,
  *   });
- * 
+ *
  *   return (
  *     <>
  *       {items.map((item, index) => (
@@ -337,12 +332,7 @@ export interface StaggerAnimationConfig {
  * }
  */
 export function useStaggerAnimation(config: StaggerAnimationConfig) {
-  const {
-    staggerDelay = 100,
-    rootMargin = '0px',
-    threshold = 0.1,
-    itemCount,
-  } = config;
+  const { staggerDelay = 100, rootMargin = '0px', threshold = 0.1, itemCount } = config;
 
   const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
   const refs = useRef<(HTMLElement | null)[]>([]);
@@ -351,18 +341,18 @@ export function useStaggerAnimation(config: StaggerAnimationConfig) {
   useEffect(() => {
     // Create a single observer for all items
     observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           const index = refs.current.indexOf(entry.target as HTMLElement);
           if (index === -1) return;
 
           if (entry.isIntersecting) {
             // Stagger the visibility with delay
             setTimeout(() => {
-              setVisibleItems((prev) => new Set(prev).add(index));
+              setVisibleItems(prev => new Set(prev).add(index));
             }, index * staggerDelay);
           } else {
-            setVisibleItems((prev) => {
+            setVisibleItems(prev => {
               const next = new Set(prev);
               next.delete(index);
               return next;
@@ -377,7 +367,7 @@ export function useStaggerAnimation(config: StaggerAnimationConfig) {
     );
 
     // Observe all items
-    refs.current.forEach((ref) => {
+    refs.current.forEach(ref => {
       if (ref && observerRef.current) {
         observerRef.current.observe(ref);
       }
@@ -404,4 +394,3 @@ export function useStaggerAnimation(config: StaggerAnimationConfig) {
     states: Array.from({ length: itemCount }, (_, index) => visibleItems.has(index)),
   };
 }
-

@@ -46,7 +46,7 @@ describe('Performance Optimization Utilities', () => {
 
       debouncedFn('first');
       vi.advanceTimersByTime(50);
-      
+
       debouncedFn('second');
       vi.advanceTimersByTime(50);
 
@@ -101,7 +101,7 @@ describe('Performance Optimization Utilities', () => {
 
       vi.advanceTimersByTime(50);
       throttledFn('second');
-      
+
       // Should still be only 1 call
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
@@ -165,7 +165,7 @@ describe('Performance Optimization Utilities', () => {
   describe('getConnectionQuality', () => {
     it('should return unknown when connection API is not available', () => {
       const quality = getConnectionQuality();
-      
+
       expect(quality).toHaveProperty('effectiveType');
       expect(quality).toHaveProperty('saveData');
       expect(quality.effectiveType).toBe('unknown');
@@ -185,7 +185,7 @@ describe('Performance Optimization Utilities', () => {
       });
 
       const quality = getConnectionQuality();
-      
+
       expect(quality.effectiveType).toBe('4g');
       expect(quality.downlink).toBe(10);
       expect(quality.rtt).toBe(50);
@@ -193,4 +193,3 @@ describe('Performance Optimization Utilities', () => {
     });
   });
 });
-

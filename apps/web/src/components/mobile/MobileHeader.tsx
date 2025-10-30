@@ -82,10 +82,7 @@ export default function MobileHeader({ theme, onMenuClick }: MobileHeaderProps) 
                 YK Buddy
               </h1>
               {!loading && weather && (
-                <span
-                  className="text-xs font-medium"
-                  style={{ color: theme.secondary }}
-                >
+                <span className="text-xs font-medium" style={{ color: theme.secondary }}>
                   {Math.round(weather.temp)}°C
                 </span>
               )}
@@ -151,7 +148,8 @@ export default function MobileHeader({ theme, onMenuClick }: MobileHeaderProps) 
 
       <style jsx>{`
         @keyframes aurora-wave {
-          0%, 100% {
+          0%,
+          100% {
             background-position: 0% 0%;
             opacity: 0.6;
           }
@@ -162,7 +160,8 @@ export default function MobileHeader({ theme, onMenuClick }: MobileHeaderProps) 
         }
 
         @keyframes twinkle {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.2;
             transform: scale(1);
           }

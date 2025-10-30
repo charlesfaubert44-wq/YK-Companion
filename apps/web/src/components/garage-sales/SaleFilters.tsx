@@ -12,7 +12,7 @@ interface SaleFiltersProps {
 
 /**
  * SaleFilters Component
- * 
+ *
  * Provides comprehensive filtering options for garage sales:
  * - Text search
  * - Date range (from/to)
@@ -20,7 +20,7 @@ interface SaleFiltersProps {
  * - Distance radius
  * - Cash only filter
  * - Early birds filter
- * 
+ *
  * @example
  * ```tsx
  * <SaleFilters
@@ -65,7 +65,7 @@ export default function SaleFilters({
     onFiltersChange(clearedFilters);
   };
 
-  const hasActiveFilters = 
+  const hasActiveFilters =
     localFilters.search ||
     localFilters.date_from ||
     localFilters.date_to ||
@@ -75,7 +75,9 @@ export default function SaleFilters({
     localFilters.early_birds_only !== undefined;
 
   const today = new Date().toISOString().split('T')[0];
-  const oneMonthFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const oneMonthFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split('T')[0];
 
   return (
     <div className="space-y-4">
@@ -85,20 +87,20 @@ export default function SaleFilters({
           type="text"
           placeholder="Search by title, description, items, or location..."
           value={localFilters.search || ''}
-          onChange={(e) => handleChange({ search: e.target.value || undefined })}
+          onChange={e => handleChange({ search: e.target.value || undefined })}
           className="w-full px-4 py-3 pl-10 bg-dark-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-aurora-green focus:outline-none"
         />
-        <svg 
-          className="absolute left-3 top-3.5 w-5 h-5 text-gray-500" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="absolute left-3 top-3.5 w-5 h-5 text-gray-500"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>
         {localFilters.search && (
@@ -115,13 +117,16 @@ export default function SaleFilters({
       <div className="flex flex-wrap gap-2">
         {/* Date Quick Filters */}
         <button
-          onClick={() => handleChange({ 
-            date_from: today, 
-            date_to: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] 
-          })}
+          onClick={() =>
+            handleChange({
+              date_from: today,
+              date_to: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            })
+          }
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-            localFilters.date_from === today && 
-            localFilters.date_to === new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+            localFilters.date_from === today &&
+            localFilters.date_to ===
+              new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
               ? 'bg-aurora-green text-white'
               : 'bg-dark-800 text-gray-400 hover:text-white border border-gray-700'
           }`}
@@ -142,9 +147,11 @@ export default function SaleFilters({
 
         {/* Cash Only */}
         <button
-          onClick={() => handleChange({ 
-            cash_only: localFilters.cash_only === true ? undefined : true 
-          })}
+          onClick={() =>
+            handleChange({
+              cash_only: localFilters.cash_only === true ? undefined : true,
+            })
+          }
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
             localFilters.cash_only === true
               ? 'bg-green-500/20 text-green-400 border border-green-500/30'
@@ -156,9 +163,11 @@ export default function SaleFilters({
 
         {/* Early Birds */}
         <button
-          onClick={() => handleChange({ 
-            early_birds_only: localFilters.early_birds_only === true ? undefined : true 
-          })}
+          onClick={() =>
+            handleChange({
+              early_birds_only: localFilters.early_birds_only === true ? undefined : true,
+            })
+          }
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
             localFilters.early_birds_only === true
               ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
@@ -196,16 +205,14 @@ export default function SaleFilters({
         <div className="bg-dark-800 rounded-xl p-4 border border-gray-700 space-y-4">
           {/* Date Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Date Range
-            </label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Date Range</label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs text-gray-400 mb-1">From</label>
                 <input
                   type="date"
                   value={localFilters.date_from || ''}
-                  onChange={(e) => handleChange({ date_from: e.target.value || undefined })}
+                  onChange={e => handleChange({ date_from: e.target.value || undefined })}
                   className="w-full px-3 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white text-sm focus:border-aurora-green focus:outline-none"
                 />
               </div>
@@ -214,7 +221,7 @@ export default function SaleFilters({
                 <input
                   type="date"
                   value={localFilters.date_to || ''}
-                  onChange={(e) => handleChange({ date_to: e.target.value || undefined })}
+                  onChange={e => handleChange({ date_to: e.target.value || undefined })}
                   className="w-full px-3 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white text-sm focus:border-aurora-green focus:outline-none"
                 />
               </div>
@@ -224,9 +231,7 @@ export default function SaleFilters({
           {/* Distance Filter */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-gray-300">
-                Maximum Distance
-              </label>
+              <label className="block text-sm font-medium text-gray-300">Maximum Distance</label>
               {!userLocation && onRequestLocation && (
                 <button
                   onClick={onRequestLocation}
@@ -244,7 +249,7 @@ export default function SaleFilters({
                   max="50"
                   step="1"
                   value={localFilters.max_distance_km || 50}
-                  onChange={(e) => handleChange({ max_distance_km: Number(e.target.value) })}
+                  onChange={e => handleChange({ max_distance_km: Number(e.target.value) })}
                   className="w-full h-2 bg-dark-700 rounded-lg appearance-none cursor-pointer accent-aurora-green"
                 />
                 <div className="flex items-center justify-between text-sm">
@@ -260,17 +265,13 @@ export default function SaleFilters({
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-gray-500 italic">
-                Enable location to filter by distance
-              </p>
+              <p className="text-sm text-gray-500 italic">Enable location to filter by distance</p>
             )}
           </div>
 
           {/* Tags Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Item Categories
-            </label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Item Categories</label>
             <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto">
               {GARAGE_SALE_TAGS.map(tag => {
                 const isSelected = localFilters.tags?.includes(tag) || false;
@@ -334,4 +335,3 @@ export default function SaleFilters({
     </div>
   );
 }
-

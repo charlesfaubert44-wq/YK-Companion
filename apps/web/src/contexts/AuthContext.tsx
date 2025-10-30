@@ -22,17 +22,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
  * Authentication Provider Component
- * 
+ *
  * Manages user authentication state and provides auth methods throughout the app.
  * Automatically handles session persistence, token refresh, and profile management.
- * 
+ *
  * @example
  * ```tsx
  * <AuthProvider>
  *   <App />
  * </AuthProvider>
  * ```
- * 
+ *
  * @param {Object} props - Component props
  * @param {ReactNode} props.children - Child components that will have access to auth context
  * @returns {JSX.Element} Provider component wrapping children
@@ -41,7 +41,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [supabaseClient, setSupabaseClient] = useState<ReturnType<typeof createClient> | null>(null);
+  const [supabaseClient, setSupabaseClient] = useState<ReturnType<typeof createClient> | null>(
+    null
+  );
 
   // Initialize Supabase client
   useEffect(() => {
@@ -76,7 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         logDebug('Initial session check', {
           hasSession: !!session,
           userId: session?.user?.id,
-          email: session?.user?.email
+          email: session?.user?.email,
         });
 
         setUser(session?.user ?? null);
@@ -108,7 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         event,
         hasSession: !!session,
         userId: session?.user?.id,
-        email: session?.user?.email
+        email: session?.user?.email,
       });
 
       setUser(session?.user ?? null);
@@ -129,7 +131,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Fetches user profile from the database
-   * 
+   *
    * @param {string} userId - The user's unique ID
    * @returns {Promise<void>} Resolves when profile is fetched and set
    * @private
@@ -170,13 +172,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Creates a new user account
-   * 
+   *
    * @param {string} email - User's email address
    * @param {string} password - User's password (min 6 characters)
    * @param {string} fullName - User's full name
    * @param {string} [address] - Optional user address
    * @returns {Promise<{data: any, error: Error | null}>} Result object with user data or error
-   * 
+   *
    * @example
    * ```ts
    * const { data, error } = await signUp('user@example.com', 'password123', 'John Doe');
@@ -187,7 +189,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
    */
   const signUp = async (email: string, password: string, fullName: string, address?: string) => {
     if (!supabaseClient) {
-      const error = new Error('Authentication is not configured. Please set up Supabase credentials in .env.local');
+      const error = new Error(
+        'Authentication is not configured. Please set up Supabase credentials in .env.local'
+      );
       logError('SignUp failed: Supabase not configured', error);
       return { data: null, error };
     }
@@ -212,11 +216,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Signs in an existing user
-   * 
+   *
    * @param {string} email - User's email address
    * @param {string} password - User's password
    * @returns {Promise<{data: any, error: Error | null}>} Result object with session data or error
-   * 
+   *
    * @example
    * ```ts
    * const { error } = await signIn('user@example.com', 'password123');
@@ -229,7 +233,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!supabaseClient) {
       return {
         data: null,
-        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local')
+        error: new Error(
+          'Authentication is not configured. Please set up Supabase credentials in .env.local'
+        ),
       };
     }
     const { data, error } = await supabaseClient.auth.signInWithPassword({
@@ -241,11 +247,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Signs in using Google OAuth
-   * 
+   *
    * Redirects user to Google sign-in page and returns to callback URL
-   * 
+   *
    * @returns {Promise<{data: any, error: Error | null}>} Result object with OAuth data or error
-   * 
+   *
    * @example
    * ```ts
    * const { error } = await signInWithGoogle();
@@ -256,7 +262,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!supabaseClient) {
       return {
         data: null,
-        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local')
+        error: new Error(
+          'Authentication is not configured. Please set up Supabase credentials in .env.local'
+        ),
       };
     }
     const { data, error } = await supabaseClient.auth.signInWithOAuth({
@@ -270,11 +278,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Signs in using Apple OAuth
-   * 
+   *
    * Redirects user to Apple sign-in page and returns to callback URL
-   * 
+   *
    * @returns {Promise<{data: any, error: Error | null}>} Result object with OAuth data or error
-   * 
+   *
    * @example
    * ```ts
    * const { error } = await signInWithApple();
@@ -285,7 +293,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!supabaseClient) {
       return {
         data: null,
-        error: new Error('Authentication is not configured. Please set up Supabase credentials in .env.local')
+        error: new Error(
+          'Authentication is not configured. Please set up Supabase credentials in .env.local'
+        ),
       };
     }
     const { data, error } = await supabaseClient.auth.signInWithOAuth({
@@ -299,11 +309,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Signs out the current user
-   * 
+   *
    * Clears session, user state, and profile data
-   * 
+   *
    * @returns {Promise<void>} Resolves when sign out is complete
-   * 
+   *
    * @example
    * ```ts
    * await signOut();
@@ -323,26 +333,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * Updates the current user's profile
-   * 
+   *
    * @param {Partial<Profile>} updates - Profile fields to update
    * @returns {Promise<void>} Resolves when profile is updated
    * @throws {Error} If update fails or user is not authenticated
-   * 
+   *
    * @example
    * ```ts
-   * await updateProfile({ 
+   * await updateProfile({
    *   full_name: 'Jane Doe',
-   *   user_type: 'visiting' 
+   *   user_type: 'visiting'
    * });
    * ```
    */
   const updateProfile = async (updates: Partial<Profile>) => {
     if (!user || !supabaseClient) return;
 
-    const { error } = await supabaseClient
-      .from('profiles')
-      .update(updates)
-      .eq('id', user.id);
+    const { error } = await supabaseClient.from('profiles').update(updates).eq('id', user.id);
 
     if (error) throw error;
 
@@ -371,22 +378,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 /**
  * Hook to access authentication context
- * 
+ *
  * Must be used within an AuthProvider component tree.
  * Provides access to current user, profile, loading state, and auth methods.
- * 
+ *
  * @returns {AuthContextType} Authentication context with user data and methods
  * @throws {Error} If used outside of AuthProvider
- * 
+ *
  * @example
  * ```tsx
  * function MyComponent() {
  *   const { user, profile, signIn, signOut } = useAuth();
- *   
+ *
  *   if (!user) {
  *     return <LoginForm onSubmit={signIn} />;
  *   }
- *   
+ *
  *   return (
  *     <div>
  *       <p>Welcome, {profile?.full_name}!</p>

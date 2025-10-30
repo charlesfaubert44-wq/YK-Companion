@@ -22,7 +22,7 @@ interface SavedArticle {
 
 /**
  * SavedArticles Component
- * 
+ *
  * Displays user's saved knowledge articles with ability to remove from saved.
  */
 export default function SavedArticles({ userId }: SavedArticlesProps) {
@@ -82,12 +82,8 @@ export default function SavedArticles({ userId }: SavedArticlesProps) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">📰</div>
-        <h3 className="text-2xl font-bold text-white mb-2">
-          No Saved Articles
-        </h3>
-        <p className="text-gray-400 mb-6">
-          You haven't saved any articles yet
-        </p>
+        <h3 className="text-2xl font-bold text-white mb-2">No Saved Articles</h3>
+        <p className="text-gray-400 mb-6">You haven't saved any articles yet</p>
         <Link
           href="/knowledge"
           className="inline-block px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition"
@@ -100,15 +96,13 @@ export default function SavedArticles({ userId }: SavedArticlesProps) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {savedArticles.map((saved) => (
+      {savedArticles.map(saved => (
         <div
           key={saved.id}
           className="bg-dark-900/50 backdrop-blur-lg border border-gray-700/50 rounded-xl p-6 hover:border-aurora-blue/50 transition"
         >
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-xl font-bold text-white pr-4">
-              {saved.article.title}
-            </h3>
+            <h3 className="text-xl font-bold text-white pr-4">{saved.article.title}</h3>
             <button
               onClick={() => handleRemove(saved.id)}
               disabled={removing === saved.id}
@@ -128,9 +122,7 @@ export default function SavedArticles({ userId }: SavedArticlesProps) {
           )}
 
           {saved.article.excerpt && (
-            <p className="text-gray-400 text-sm line-clamp-3 mb-4">
-              {saved.article.excerpt}
-            </p>
+            <p className="text-gray-400 text-sm line-clamp-3 mb-4">{saved.article.excerpt}</p>
           )}
 
           <Link
@@ -148,4 +140,3 @@ export default function SavedArticles({ userId }: SavedArticlesProps) {
     </div>
   );
 }
-

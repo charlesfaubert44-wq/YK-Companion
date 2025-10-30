@@ -1,11 +1,11 @@
 /**
  * Page Transition Component
- * 
+ *
  * Provides smooth page transitions with multiple transition types:
  * - Fade transitions
  * - Slide transitions
  * - Aurora-curtain transitions
- * 
+ *
  * @module components/transitions/PageTransition
  */
 
@@ -36,10 +36,10 @@ export interface PageTransitionProps {
 
 /**
  * PageTransition component
- * 
+ *
  * @param props - Component props
  * @returns Transitioned page content
- * 
+ *
  * @example
  * export default function Page() {
  *   return (
@@ -71,15 +71,18 @@ export default function PageTransition({
     }
 
     // Trigger transition
-    const timeout = setTimeout(() => {
-      setIsVisible(true);
-      if (type === 'aurora-curtain') {
-        // Hide curtain after a short delay
-        setTimeout(() => {
-          setShowAuroraCurtain(false);
-        }, duration / 2);
-      }
-    }, type === 'aurora-curtain' ? 50 : 0);
+    const timeout = setTimeout(
+      () => {
+        setIsVisible(true);
+        if (type === 'aurora-curtain') {
+          // Hide curtain after a short delay
+          setTimeout(() => {
+            setShowAuroraCurtain(false);
+          }, duration / 2);
+        }
+      },
+      type === 'aurora-curtain' ? 50 : 0
+    );
 
     return () => clearTimeout(timeout);
   }, [pathname, children, type, duration]);
@@ -151,4 +154,3 @@ export default function PageTransition({
     </div>
   );
 }
-

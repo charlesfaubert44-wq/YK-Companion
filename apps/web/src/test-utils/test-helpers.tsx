@@ -1,6 +1,6 @@
 /**
  * Test Utilities and Helpers
- * 
+ *
  * Custom render functions and test utilities for React Testing Library
  */
 
@@ -54,10 +54,8 @@ const AllTheProviders = ({ children }: AllTheProvidersProps) => {
 /**
  * Custom render with providers
  */
-export const renderWithProviders = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
-) => render(ui, { wrapper: AllTheProviders, ...options });
+export const renderWithProviders = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
+  render(ui, { wrapper: AllTheProviders, ...options });
 
 /**
  * Render with just Auth Provider
@@ -66,10 +64,8 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => (
   <AuthProvider>{children}</AuthProvider>
 );
 
-export const renderWithAuth = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
-) => render(ui, { wrapper: AuthWrapper, ...options });
+export const renderWithAuth = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
+  render(ui, { wrapper: AuthWrapper, ...options });
 
 /**
  * Render with just Language Provider
@@ -78,15 +74,13 @@ const LanguageWrapper = ({ children }: { children: React.ReactNode }) => (
   <LanguageProvider>{children}</LanguageProvider>
 );
 
-export const renderWithLanguage = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
-) => render(ui, { wrapper: LanguageWrapper, ...options });
+export const renderWithLanguage = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
+  render(ui, { wrapper: LanguageWrapper, ...options });
 
 /**
  * Wait for async updates
  */
-export const waitForAsync = () => new Promise((resolve) => setTimeout(resolve, 0));
+export const waitForAsync = () => new Promise(resolve => setTimeout(resolve, 0));
 
 /**
  * Create mock user data
@@ -169,4 +163,3 @@ export const createMockArticle = (overrides = {}) => ({
 // Re-export everything from @testing-library/react
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
-

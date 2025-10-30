@@ -14,10 +14,10 @@ export const EXPERIENCE_TYPES = [
   'summer-activities',
   'local-events',
   'shopping',
-  'other'
+  'other',
 ] as const;
 
-export type ExperienceType = typeof EXPERIENCE_TYPES[number];
+export type ExperienceType = (typeof EXPERIENCE_TYPES)[number];
 
 // Visit duration options
 export const VISIT_DURATIONS = [
@@ -26,10 +26,10 @@ export const VISIT_DURATIONS = [
   '1 week',
   '2 weeks',
   '1 month',
-  '2+ months'
+  '2+ months',
 ] as const;
 
-export type VisitDuration = typeof VISIT_DURATIONS[number];
+export type VisitDuration = (typeof VISIT_DURATIONS)[number];
 
 // Core database types
 export interface VisitorLogbookEntry {
@@ -170,62 +170,65 @@ export interface LogbookFormErrors {
 }
 
 // Experience type labels and icons
-export const EXPERIENCE_TYPE_CONFIG: Record<ExperienceType, { label: string; icon: string; color: string }> = {
+export const EXPERIENCE_TYPE_CONFIG: Record<
+  ExperienceType,
+  { label: string; icon: string; color: string }
+> = {
   aurora: {
     label: 'Northern Lights',
     icon: '✨',
-    color: 'aurora-green'
+    color: 'aurora-green',
   },
   hiking: {
     label: 'Hiking & Nature',
     icon: '🥾',
-    color: 'emerald-500'
+    color: 'emerald-500',
   },
   culture: {
     label: 'Culture & History',
     icon: '🏛️',
-    color: 'purple-500'
+    color: 'purple-500',
   },
   food: {
     label: 'Food & Dining',
     icon: '🍽️',
-    color: 'orange-500'
+    color: 'orange-500',
   },
   wildlife: {
     label: 'Wildlife',
     icon: '🦌',
-    color: 'green-600'
+    color: 'green-600',
   },
   photography: {
     label: 'Photography',
     icon: '📸',
-    color: 'blue-500'
+    color: 'blue-500',
   },
   'winter-activities': {
     label: 'Winter Activities',
     icon: '❄️',
-    color: 'cyan-400'
+    color: 'cyan-400',
   },
   'summer-activities': {
     label: 'Summer Activities',
     icon: '☀️',
-    color: 'yellow-500'
+    color: 'yellow-500',
   },
   'local-events': {
     label: 'Local Events',
     icon: '🎉',
-    color: 'pink-500'
+    color: 'pink-500',
   },
   shopping: {
     label: 'Shopping',
     icon: '🛍️',
-    color: 'indigo-500'
+    color: 'indigo-500',
   },
   other: {
     label: 'Other',
     icon: '🌟',
-    color: 'gray-500'
-  }
+    color: 'gray-500',
+  },
 };
 
 // Rating labels
@@ -234,5 +237,5 @@ export const RATING_LABELS = {
   2: 'Fair',
   3: 'Good',
   4: 'Very Good',
-  5: 'Excellent'
+  5: 'Excellent',
 } as const;

@@ -85,7 +85,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             <div
               className="absolute inset-0 transition-all duration-700"
               style={{
-                background: 'radial-gradient(ellipse 120% 100% at 50% 30%, rgba(16, 185, 129, 0.5) 0%, rgba(52, 211, 153, 0.3) 40%, transparent 70%)',
+                background:
+                  'radial-gradient(ellipse 120% 100% at 50% 30%, rgba(16, 185, 129, 0.5) 0%, rgba(52, 211, 153, 0.3) 40%, transparent 70%)',
                 filter: 'blur(60px)',
                 transform: isHovered ? 'scale(1.1)' : 'scale(1)',
               }}
@@ -93,7 +94,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             <div
               className="absolute inset-0 transition-all duration-1000"
               style={{
-                background: 'radial-gradient(ellipse 100% 80% at 30% 40%, rgba(139, 92, 246, 0.4) 0%, rgba(196, 181, 253, 0.2) 50%, transparent 70%)',
+                background:
+                  'radial-gradient(ellipse 100% 80% at 30% 40%, rgba(139, 92, 246, 0.4) 0%, rgba(196, 181, 253, 0.2) 50%, transparent 70%)',
                 filter: 'blur(50px)',
                 transform: isHovered ? 'translateX(10px)' : 'translateX(0)',
               }}
@@ -101,7 +103,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             <div
               className="absolute inset-0 transition-all duration-500"
               style={{
-                background: 'radial-gradient(ellipse 90% 70% at 70% 35%, rgba(34, 211, 238, 0.3) 0%, transparent 60%)',
+                background:
+                  'radial-gradient(ellipse 90% 70% at 70% 35%, rgba(34, 211, 238, 0.3) 0%, transparent 60%)',
                 filter: 'blur(40px)',
                 transform: isHovered ? 'translateX(-10px)' : 'translateX(0)',
               }}
@@ -128,7 +131,11 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
         {/* Frozen landscape layers - Robbie Craig style */}
         <div className="absolute bottom-0 left-0 right-0 h-40">
           {/* Distant mountains */}
-          <svg viewBox="0 0 1920 300" className="w-full h-full absolute bottom-0" preserveAspectRatio="none">
+          <svg
+            viewBox="0 0 1920 300"
+            className="w-full h-full absolute bottom-0"
+            preserveAspectRatio="none"
+          >
             <defs>
               <linearGradient id="mountainGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#1e293b" stopOpacity="0.9" />
@@ -173,7 +180,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
                   background: 'linear-gradient(to top, #0f172a, #1e293b)',
                   transform: isHovered ? `translateY(-${2}px)` : 'translateY(0)',
                   transitionDelay: `${i * 20}ms`,
-                }}>
+                }}
+              >
                 <div
                   className="absolute -top-3 left-1/2 -translate-x-1/2 w-0 h-0"
                   style={{
@@ -194,13 +202,18 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
           onMouseLeave={() => setWeatherHovered(false)}
           style={{
             transform: weatherHovered ? 'scale(1.05)' : 'scale(1)',
-            boxShadow: weatherHovered ? '0 0 30px rgba(16, 185, 129, 0.4), 0 0 60px rgba(16, 185, 129, 0.15)' : '0 0 15px rgba(16, 185, 129, 0.15)',
+            boxShadow: weatherHovered
+              ? '0 0 30px rgba(16, 185, 129, 0.4), 0 0 60px rgba(16, 185, 129, 0.15)'
+              : '0 0 15px rgba(16, 185, 129, 0.15)',
           }}
         >
           <div className="flex items-center gap-2">
             {/* Weather Emoji Icon */}
             {weather && (
-              <div className="text-xl md:text-2xl transition-transform duration-300" style={{ transform: weatherHovered ? 'scale(1.1) rotate(10deg)' : 'scale(1)' }}>
+              <div
+                className="text-xl md:text-2xl transition-transform duration-300"
+                style={{ transform: weatherHovered ? 'scale(1.1) rotate(10deg)' : 'scale(1)' }}
+              >
                 {getWeatherEmoji(weather.condition, weather.icon)}
               </div>
             )}
@@ -219,11 +232,7 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
               </div>
               {weather && weatherHovered && (
                 <div className="text-[10px] text-emerald-400/80 mt-0.5 animate-fadeIn">
-                  {weather.isFallback ? (
-                    <>seasonal avg</>
-                  ) : (
-                    <>feels {weather.feels_like}°C</>
-                  )}
+                  {weather.isFallback ? <>seasonal avg</> : <>feels {weather.feels_like}°C</>}
                 </div>
               )}
             </div>
@@ -264,7 +273,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
                 style={{
                   textShadow: '0 0 40px rgba(16, 185, 129, 0.6), 4px 4px 0px rgba(15, 23, 42, 0.8)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 YK
               </span>
               <span
@@ -272,7 +282,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
                 style={{
                   textShadow: '0 0 40px rgba(16, 185, 129, 0.7), 4px 4px 0px rgba(15, 23, 42, 0.8)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 BUDDY
               </span>
             </h1>
@@ -296,22 +307,41 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
 
         <style jsx>{`
           @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+              opacity: 0;
+              transform: translateY(-5px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
           .animate-fadeIn {
             animation: fadeIn 0.3s ease-out forwards;
           }
           @keyframes glow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.1); }
+            0%,
+            100% {
+              filter: brightness(1);
+            }
+            50% {
+              filter: brightness(1.1);
+            }
           }
           @keyframes pulse-subtle {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.95; }
+            0%,
+            100% {
+              transform: scale(1);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1.03);
+              opacity: 0.95;
+            }
           }
           @keyframes color-shift-1 {
-            0%, 100% {
+            0%,
+            100% {
               color: #ffffff;
               filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
             }
@@ -329,7 +359,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             }
           }
           @keyframes color-shift-2 {
-            0%, 100% {
+            0%,
+            100% {
               color: #6ee7b7;
               filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.7));
             }
@@ -359,7 +390,8 @@ export const WinterBanner = ({ temperature, weather }: BannerProps) => {
             animation: color-shift-2 8s ease-in-out infinite 0.5s;
           }
           @keyframes color-shift-slogan {
-            0%, 100% {
+            0%,
+            100% {
               color: #a7f3d0;
             }
             33% {
@@ -410,9 +442,11 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
           <div
             className="w-28 h-28 rounded-full relative"
             style={{
-              background: 'radial-gradient(circle, #fef08a 0%, #fde047 40%, #facc15 70%, #f59e0b 100%)',
+              background:
+                'radial-gradient(circle, #fef08a 0%, #fde047 40%, #facc15 70%, #f59e0b 100%)',
               boxShadow: '0 0 80px rgba(250, 204, 21, 0.6), 0 0 120px rgba(251, 191, 36, 0.4)',
-            }}>
+            }}
+          >
             {/* Sun rays */}
             {[...Array(12)].map((_, i) => (
               <div
@@ -433,26 +467,28 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         {/* Migrating birds */}
-        {isHovered && [...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-fly"
-            style={{
-              left: `${20 + i * 10}%`,
-              top: `${15 + Math.random() * 20}%`,
-              animationDelay: `${i * 0.3}s`,
-            }}>
-            <svg width="40" height="24" viewBox="0 0 40 24">
-              <path
-                d="M4,12 Q10,6 20,12 Q30,6 36,12"
-                stroke="#1e293b"
-                strokeWidth="2.5"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-        ))}
+        {isHovered &&
+          [...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute animate-fly"
+              style={{
+                left: `${20 + i * 10}%`,
+                top: `${15 + Math.random() * 20}%`,
+                animationDelay: `${i * 0.3}s`,
+              }}
+            >
+              <svg width="40" height="24" viewBox="0 0 40 24">
+                <path
+                  d="M4,12 Q10,6 20,12 Q30,6 36,12"
+                  stroke="#1e293b"
+                  strokeWidth="2.5"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+          ))}
 
         {/* Ice breakup - Great Slave Lake */}
         <div className="absolute bottom-0 left-0 right-0 h-36">
@@ -477,7 +513,9 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
                   height: `${25 + i * 3}px`,
                   background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe, #bae6fd)',
                   clipPath: 'polygon(10% 0%, 90% 0%, 100% 70%, 75% 100%, 25% 100%, 0% 70%)',
-                  transform: isHovered ? `translateY(5px) rotate(${i * 5}deg)` : `rotate(${i * 3}deg)`,
+                  transform: isHovered
+                    ? `translateY(5px) rotate(${i * 5}deg)`
+                    : `rotate(${i * 3}deg)`,
                   boxShadow: '0 4px 8px rgba(59, 130, 246, 0.3)',
                   border: '1px solid rgba(191, 219, 254, 0.8)',
                 }}
@@ -486,9 +524,21 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
           </div>
 
           {/* Muddy shoreline */}
-          <svg viewBox="0 0 1920 80" className="w-full h-20 absolute bottom-0" preserveAspectRatio="none">
-            <path d="M0,40 Q200,30 400,45 T800,35 T1200,48 T1920,43 L1920,80 L0,80 Z" fill="#78350f" opacity="0.8"/>
-            <path d="M0,50 Q150,45 300,52 T600,48 T1200,55 T1920,52 L1920,80 L0,80 Z" fill="#92400e" opacity="0.9"/>
+          <svg
+            viewBox="0 0 1920 80"
+            className="w-full h-20 absolute bottom-0"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,40 Q200,30 400,45 T800,35 T1200,48 T1920,43 L1920,80 L0,80 Z"
+              fill="#78350f"
+              opacity="0.8"
+            />
+            <path
+              d="M0,50 Q150,45 300,52 T600,48 T1200,55 T1920,52 L1920,80 L0,80 Z"
+              fill="#92400e"
+              opacity="0.9"
+            />
           </svg>
         </div>
 
@@ -516,17 +566,21 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
               <span
                 className="inline-block transition-all duration-700 animate-color-shift-spring-1"
                 style={{
-                  textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
+                  textShadow:
+                    '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(56, 189, 248, 0.4)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 YK
               </span>
               <span
                 className="inline-block transition-all duration-700 animate-color-shift-spring-2"
                 style={{
-                  textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(16, 185, 129, 0.4)',
+                  textShadow:
+                    '3px 3px 0px rgba(255, 255, 255, 0.9), 2px 2px 30px rgba(16, 185, 129, 0.4)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 BUDDY
               </span>
             </h1>
@@ -535,20 +589,40 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
 
         <style jsx>{`
           @keyframes fly {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
+            0%,
+            100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-12px);
+            }
           }
-          .animate-fly { animation: fly 3s ease-in-out infinite; }
+          .animate-fly {
+            animation: fly 3s ease-in-out infinite;
+          }
           @keyframes glow-spring {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.08); }
+            0%,
+            100% {
+              filter: brightness(1);
+            }
+            50% {
+              filter: brightness(1.08);
+            }
           }
           @keyframes pulse-subtle {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.95; }
+            0%,
+            100% {
+              transform: scale(1);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1.03);
+              opacity: 0.95;
+            }
           }
           @keyframes color-shift-spring-1 {
-            0%, 100% {
+            0%,
+            100% {
               color: #1e293b;
               filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.5));
             }
@@ -566,7 +640,8 @@ export const SpringBanner = ({ temperature, weather }: BannerProps) => {
             }
           }
           @keyframes color-shift-spring-2 {
-            0%, 100% {
+            0%,
+            100% {
               color: #059669;
               filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
             }
@@ -631,7 +706,8 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
             <div
               className="absolute w-48 h-48 rounded-full -left-8 -top-8 transition-all duration-700"
               style={{
-                background: 'radial-gradient(circle, rgba(254, 243, 199, 0.6) 0%, rgba(253, 224, 71, 0.3) 40%, transparent 70%)',
+                background:
+                  'radial-gradient(circle, rgba(254, 243, 199, 0.6) 0%, rgba(253, 224, 71, 0.3) 40%, transparent 70%)',
                 filter: 'blur(40px)',
                 opacity: isHovered ? 1 : 0.7,
               }}
@@ -641,10 +717,12 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
             <div
               className="relative w-32 h-32 rounded-full"
               style={{
-                background: 'radial-gradient(circle at 35% 35%, #fef3c7 0%, #fde047 30%, #facc15 60%, #f59e0b 85%, #f97316 100%)',
-                boxShadow: '0 0 100px rgba(251, 191, 36, 0.8), 0 0 150px rgba(249, 115, 22, 0.5), inset -15px -15px 40px rgba(249, 115, 22, 0.4)',
-              }}>
-
+                background:
+                  'radial-gradient(circle at 35% 35%, #fef3c7 0%, #fde047 30%, #facc15 60%, #f59e0b 85%, #f97316 100%)',
+                boxShadow:
+                  '0 0 100px rgba(251, 191, 36, 0.8), 0 0 150px rgba(249, 115, 22, 0.5), inset -15px -15px 40px rgba(249, 115, 22, 0.4)',
+              }}
+            >
               {/* Rotating rays */}
               <div className={`absolute inset-0 ${isHovered ? 'animate-spin-slow' : ''}`}>
                 {[...Array(16)].map((_, i) => (
@@ -654,7 +732,8 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
                     style={{
                       width: '6px',
                       height: '55px',
-                      background: 'linear-gradient(to bottom, rgba(254, 243, 199, 0.9) 0%, rgba(253, 224, 71, 0.5) 50%, transparent 100%)',
+                      background:
+                        'linear-gradient(to bottom, rgba(254, 243, 199, 0.9) 0%, rgba(253, 224, 71, 0.5) 50%, transparent 100%)',
                       transform: `translate(-50%, -50%) rotate(${i * 22.5}deg) translateY(-90px)`,
                       borderRadius: '3px',
                       boxShadow: '0 0 10px rgba(251, 191, 36, 0.5)',
@@ -672,22 +751,25 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         {/* Wildflower meadow */}
         <div className="absolute bottom-20 left-0 right-0 flex justify-around px-8">
           {[
-            {color: '#ec4899', stem: '#22c55e'},
-            {color: '#a855f7', stem: '#16a34a'},
-            {color: '#f59e0b', stem: '#22c55e'},
-            {color: '#ef4444', stem: '#15803d'},
-            {color: '#3b82f6', stem: '#22c55e'},
-            {color: '#ec4899', stem: '#16a34a'},
-            {color: '#f59e0b', stem: '#22c55e'},
-            {color: '#a855f7', stem: '#15803d'},
+            { color: '#ec4899', stem: '#22c55e' },
+            { color: '#a855f7', stem: '#16a34a' },
+            { color: '#f59e0b', stem: '#22c55e' },
+            { color: '#ef4444', stem: '#15803d' },
+            { color: '#3b82f6', stem: '#22c55e' },
+            { color: '#ec4899', stem: '#16a34a' },
+            { color: '#f59e0b', stem: '#22c55e' },
+            { color: '#a855f7', stem: '#15803d' },
           ].map((flower, i) => (
             <div
               key={i}
               className="relative transition-all duration-500"
               style={{
-                transform: isHovered ? `translateY(-10px) rotate(${(i - 4) * 5}deg)` : 'translateY(0)',
+                transform: isHovered
+                  ? `translateY(-10px) rotate(${(i - 4) * 5}deg)`
+                  : 'translateY(0)',
                 transitionDelay: `${i * 50}ms`,
-              }}>
+              }}
+            >
               <div
                 className="w-2 h-16 rounded-full mx-auto"
                 style={{
@@ -700,7 +782,8 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
                   background: `radial-gradient(circle at 30% 30%, ${flower.color}, ${flower.color}dd)`,
                   boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
                   border: '2px solid rgba(255, 255, 255, 0.5)',
-                }}>
+                }}
+              >
                 <div className="absolute inset-2 rounded-full bg-white/40" />
                 <div className="absolute inset-4 rounded-full bg-yellow-200/60" />
               </div>
@@ -747,17 +830,21 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
               <span
                 className="inline-block transition-all duration-700 animate-color-shift-summer-1"
                 style={{
-                  textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
+                  textShadow:
+                    '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(249, 115, 22, 0.5)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 YK
               </span>
               <span
                 className="inline-block transition-all duration-700 animate-color-shift-summer-2"
                 style={{
-                  textShadow: '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(234, 179, 8, 0.5)',
+                  textShadow:
+                    '3px 3px 0px rgba(254, 243, 199, 0.9), 2px 2px 30px rgba(234, 179, 8, 0.5)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 BUDDY
               </span>
             </h1>
@@ -765,18 +852,37 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         <style jsx>{`
-          @keyframes spin-slow { to { transform: rotate(360deg); } }
-          .animate-spin-slow { animation: spin-slow 30s linear infinite; }
+          @keyframes spin-slow {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+          .animate-spin-slow {
+            animation: spin-slow 30s linear infinite;
+          }
           @keyframes glow-summer {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.1); }
+            0%,
+            100% {
+              filter: brightness(1);
+            }
+            50% {
+              filter: brightness(1.1);
+            }
           }
           @keyframes pulse-subtle {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.95; }
+            0%,
+            100% {
+              transform: scale(1);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1.03);
+              opacity: 0.95;
+            }
           }
           @keyframes color-shift-summer-1 {
-            0%, 100% {
+            0%,
+            100% {
               color: #c2410c;
               filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.6));
             }
@@ -794,7 +900,8 @@ export const SummerBanner = ({ temperature, weather }: BannerProps) => {
             }
           }
           @keyframes color-shift-summer-2 {
-            0%, 100% {
+            0%,
+            100% {
               color: #eab308;
               filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.7));
             }
@@ -851,26 +958,28 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-orange-300/60 via-pink-300/40 to-transparent" />
 
         {/* Falling leaves */}
-        {isHovered && [...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-fall"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: '-40px',
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${4 + Math.random() * 3}s`,
-            }}>
-            <svg width="32" height="32" viewBox="0 0 32 32">
-              <path
-                d="M16,2 Q18,8 16,16 Q24,12 30,16 Q24,20 16,16 Q18,24 16,30 Q14,24 16,16 Q8,20 2,16 Q8,12 16,16 Q14,8 16,2 Z"
-                fill={['#dc2626', '#ea580c', '#f59e0b', '#eab308'][Math.floor(Math.random() * 4)]}
-                stroke="#78350f"
-                strokeWidth="1.5"
-              />
-            </svg>
-          </div>
-        ))}
+        {isHovered &&
+          [...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute animate-fall"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: '-40px',
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${4 + Math.random() * 3}s`,
+              }}
+            >
+              <svg width="32" height="32" viewBox="0 0 32 32">
+                <path
+                  d="M16,2 Q18,8 16,16 Q24,12 30,16 Q24,20 16,16 Q18,24 16,30 Q14,24 16,16 Q8,20 2,16 Q8,12 16,16 Q14,8 16,2 Z"
+                  fill={['#dc2626', '#ea580c', '#f59e0b', '#eab308'][Math.floor(Math.random() * 4)]}
+                  stroke="#78350f"
+                  strokeWidth="1.5"
+                />
+              </svg>
+            </div>
+          ))}
 
         {/* Vibrant fall forest */}
         <div className="absolute bottom-24 left-0 right-0 flex justify-around px-8">
@@ -890,13 +999,43 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
               style={{
                 transform: isHovered ? `scale(1.08) translateY(-5px)` : 'scale(1)',
                 transitionDelay: `${i * 40}ms`,
-              }}>
+              }}
+            >
               <svg width="50" height="100" viewBox="0 0 50 100">
-                <rect x="20" y="50" width="10" height="50" fill="#78350f" stroke="#451a03" strokeWidth="2"/>
-                <circle cx="25" cy="30" r="18" fill={colors[0]} opacity="0.95" style={{filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'}}/>
-                <circle cx="17" cy="38" r="14" fill={colors[1]} opacity="0.95" style={{filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'}}/>
-                <circle cx="33" cy="38" r="14" fill={colors[2]} opacity="0.95" style={{filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'}}/>
-                <circle cx="22" cy="28" r="6" fill="rgba(255,255,255,0.3)"/>
+                <rect
+                  x="20"
+                  y="50"
+                  width="10"
+                  height="50"
+                  fill="#78350f"
+                  stroke="#451a03"
+                  strokeWidth="2"
+                />
+                <circle
+                  cx="25"
+                  cy="30"
+                  r="18"
+                  fill={colors[0]}
+                  opacity="0.95"
+                  style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}
+                />
+                <circle
+                  cx="17"
+                  cy="38"
+                  r="14"
+                  fill={colors[1]}
+                  opacity="0.95"
+                  style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}
+                />
+                <circle
+                  cx="33"
+                  cy="38"
+                  r="14"
+                  fill={colors[2]}
+                  opacity="0.95"
+                  style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}
+                />
+                <circle cx="22" cy="28" r="6" fill="rgba(255,255,255,0.3)" />
               </svg>
             </div>
           ))}
@@ -905,9 +1044,21 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
         {/* Frost-touched ground */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-amber-700 via-amber-800 to-amber-900">
           <div className="absolute inset-0 bg-white/10" />
-          <svg viewBox="0 0 1920 150" className="w-full h-full absolute bottom-0" preserveAspectRatio="none">
-            <path d="M0,60 Q240,50 480,65 T960,55 T1920,60 L1920,150 L0,150 Z" fill="#92400e" opacity="0.9"/>
-            <path d="M0,80 Q200,70 400,85 T800,75 T1920,85 L1920,150 L0,150 Z" fill="#78350f" opacity="0.95"/>
+          <svg
+            viewBox="0 0 1920 150"
+            className="w-full h-full absolute bottom-0"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,60 Q240,50 480,65 T960,55 T1920,60 L1920,150 L0,150 Z"
+              fill="#92400e"
+              opacity="0.9"
+            />
+            <path
+              d="M0,80 Q200,70 400,85 T800,75 T1920,85 L1920,150 L0,150 Z"
+              fill="#78350f"
+              opacity="0.95"
+            />
           </svg>
         </div>
 
@@ -933,17 +1084,21 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
               <span
                 className="inline-block transition-all duration-700 animate-color-shift-fall-1"
                 style={{
-                  textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
+                  textShadow:
+                    '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(234, 88, 12, 0.6)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 YK
               </span>
               <span
                 className="inline-block transition-all duration-700 animate-color-shift-fall-2"
                 style={{
-                  textShadow: '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(253, 224, 71, 0.6)',
+                  textShadow:
+                    '5px 5px 0px #78350f, 8px 8px 0px rgba(120, 53, 15, 0.5), 2px 2px 40px rgba(253, 224, 71, 0.6)',
                   transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                }}>
+                }}
+              >
                 BUDDY
               </span>
             </h1>
@@ -952,22 +1107,47 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
 
         <style jsx>{`
           @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+            0% {
+              transform: translateY(0) rotate(0deg);
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateY(300px) rotate(360deg);
+              opacity: 0;
+            }
           }
-          .animate-fall { animation: fall linear forwards; }
+          .animate-fall {
+            animation: fall linear forwards;
+          }
           @keyframes glow-fall {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.08); }
+            0%,
+            100% {
+              filter: brightness(1);
+            }
+            50% {
+              filter: brightness(1.08);
+            }
           }
           @keyframes pulse-subtle {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.95; }
+            0%,
+            100% {
+              transform: scale(1);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1.03);
+              opacity: 0.95;
+            }
           }
           @keyframes color-shift-fall-1 {
-            0%, 100% {
+            0%,
+            100% {
               color: #ffffff;
               filter: drop-shadow(0 0 20px rgba(234, 88, 12, 0.6));
             }
@@ -985,7 +1165,8 @@ export const FallBanner = ({ temperature, weather }: BannerProps) => {
             }
           }
           @keyframes color-shift-fall-2 {
-            0%, 100% {
+            0%,
+            100% {
               color: #fde047;
               filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.7));
             }
@@ -1039,15 +1220,28 @@ export const HalloweenBanner = ({ temperature, weather }: BannerProps) => {
           style={{ opacity: isHovered ? 0.8 : 0.5 }}
         />
 
-        <div className="absolute bottom-8 left-10 text-6xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}>🎃</div>
-        <div className="absolute bottom-6 right-16 text-5xl opacity-80 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(-10deg)' : 'scale(1)' }}>🎃</div>
+        <div
+          className="absolute bottom-8 left-10 text-6xl transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1)' }}
+        >
+          🎃
+        </div>
+        <div
+          className="absolute bottom-6 right-16 text-5xl opacity-80 transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2) rotate(-10deg)' : 'scale(1)' }}
+        >
+          🎃
+        </div>
 
         <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-orange-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-orange-400/50">
           <div className="text-xl md:text-3xl font-black text-orange-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(249, 115, 22, 0.8)'}}>
+          <h1
+            className="text-7xl font-black text-white"
+            style={{ textShadow: '0 0 40px rgba(249, 115, 22, 0.8)' }}
+          >
             YK <span className="text-orange-400">BUDDY</span>
           </h1>
           <p className="text-orange-200 text-sm mt-3 opacity-90">Happy Halloween, Yellowknife!</p>
@@ -1062,20 +1256,35 @@ export const RemembranceBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative w-full h-64 overflow-hidden cursor-pointer"
+    <div
+      className="relative w-full h-64 overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}>
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-gray-800 via-gray-700 to-gray-900">
         <div className="absolute top-0 left-0 right-0 h-1 bg-red-600" />
-        <div className="absolute bottom-10 right-12 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}>🌺</div>
-        <div className="absolute bottom-12 right-32 text-4xl opacity-80 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}>🌺</div>
+        <div
+          className="absolute bottom-10 right-12 text-5xl transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}
+        >
+          🌺
+        </div>
+        <div
+          className="absolute bottom-12 right-32 text-4xl opacity-80 transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.15)' : 'scale(1)' }}
+        >
+          🌺
+        </div>
 
         <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-gray-800/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-red-500/40">
           <div className="text-xl md:text-3xl font-black text-gray-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '3px 3px 0px rgba(0, 0, 0, 0.5)'}}>
+          <h1
+            className="text-7xl font-black text-white"
+            style={{ textShadow: '3px 3px 0px rgba(0, 0, 0, 0.5)' }}
+          >
             YK <span className="text-red-500">BUDDY</span>
           </h1>
           <p className="text-gray-300 text-sm mt-3 opacity-90">Lest We Forget</p>
@@ -1090,30 +1299,53 @@ export const ChristmasBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative w-full h-64 overflow-hidden cursor-pointer"
+    <div
+      className="relative w-full h-64 overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}>
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-green-900 via-red-900 to-green-950">
-        <div className="absolute inset-0 bg-gradient-to-b from-green-500/30 via-red-500/20 to-transparent blur-3xl" style={{ opacity: isHovered ? 0.8 : 0.5 }} />
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-green-500/30 via-red-500/20 to-transparent blur-3xl"
+          style={{ opacity: isHovered ? 0.8 : 0.5 }}
+        />
 
         {[...Array(20)].map((_, i) => (
-          <div key={i} className="absolute text-white text-xl opacity-60 transition-all duration-300"
+          <div
+            key={i}
+            className="absolute text-white text-xl opacity-60 transition-all duration-300"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 80}%`,
               transform: isHovered ? `scale(1.5)` : 'scale(1)',
-            }}>❄️</div>
+            }}
+          >
+            ❄️
+          </div>
         ))}
 
-        <div className="absolute bottom-8 left-10 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🎄</div>
-        <div className="absolute bottom-10 right-12 text-4xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>⛄</div>
+        <div
+          className="absolute bottom-8 left-10 text-5xl transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}
+        >
+          🎄
+        </div>
+        <div
+          className="absolute bottom-10 right-12 text-4xl transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}
+        >
+          ⛄
+        </div>
 
         <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-green-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-green-400/50">
           <div className="text-xl md:text-3xl font-black text-green-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(34, 197, 94, 0.6)'}}>
+          <h1
+            className="text-7xl font-black text-white"
+            style={{ textShadow: '0 0 40px rgba(34, 197, 94, 0.6)' }}
+          >
             YK <span className="text-red-400">BUDDY</span>
           </h1>
           <p className="text-green-200 text-sm mt-3 opacity-90">Merry Christmas, Yellowknife!</p>
@@ -1128,21 +1360,46 @@ export const NewYearBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative w-full h-64 overflow-hidden cursor-pointer"
+    <div
+      className="relative w-full h-64 overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}>
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-purple-900 to-blue-950">
-        <div className="absolute top-10 left-20 text-6xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3) rotate(20deg)' : 'scale(1)' }}>🎆</div>
-        <div className="absolute top-8 right-24 text-5xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3) rotate(-20deg)' : 'scale(1)' }}>✨</div>
-        <div className="absolute top-16 left-1/2 text-6xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}>🎇</div>
-        <div className="absolute top-12 right-1/3 text-4xl transition-all duration-500" style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}>💫</div>
+        <div
+          className="absolute top-10 left-20 text-6xl transition-all duration-500"
+          style={{ transform: isHovered ? 'scale(1.3) rotate(20deg)' : 'scale(1)' }}
+        >
+          🎆
+        </div>
+        <div
+          className="absolute top-8 right-24 text-5xl transition-all duration-500"
+          style={{ transform: isHovered ? 'scale(1.3) rotate(-20deg)' : 'scale(1)' }}
+        >
+          ✨
+        </div>
+        <div
+          className="absolute top-16 left-1/2 text-6xl transition-all duration-500"
+          style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}
+        >
+          🎇
+        </div>
+        <div
+          className="absolute top-12 right-1/3 text-4xl transition-all duration-500"
+          style={{ transform: isHovered ? 'scale(1.3)' : 'scale(1)' }}
+        >
+          💫
+        </div>
 
         <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-indigo-900/80 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-yellow-400/50">
           <div className="text-xl md:text-3xl font-black text-yellow-300">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '0 0 40px rgba(234, 179, 8, 0.8)'}}>
+          <h1
+            className="text-7xl font-black text-white"
+            style={{ textShadow: '0 0 40px rgba(234, 179, 8, 0.8)' }}
+          >
             YK <span className="text-yellow-400">BUDDY</span>
           </h1>
           <p className="text-yellow-200 text-sm mt-3 opacity-90">Happy New Year, Yellowknife!</p>
@@ -1157,21 +1414,47 @@ export const CanadaDayBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative w-full h-64 overflow-hidden cursor-pointer"
+    <div
+      className="relative w-full h-64 overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}>
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-red-600 via-white to-red-600">
-        <div className="absolute top-10 left-16 text-6xl text-red-600 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(20deg)' : 'scale(1)' }}>🍁</div>
-        <div className="absolute top-8 right-20 text-5xl text-red-700 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2) rotate(-20deg)' : 'scale(1)' }}>🍁</div>
-        <div className="absolute bottom-12 left-1/3 text-4xl text-red-600 opacity-70 transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🍁</div>
+        <div
+          className="absolute top-10 left-16 text-6xl text-red-600 transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2) rotate(20deg)' : 'scale(1)' }}
+        >
+          🍁
+        </div>
+        <div
+          className="absolute top-8 right-20 text-5xl text-red-700 transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2) rotate(-20deg)' : 'scale(1)' }}
+        >
+          🍁
+        </div>
+        <div
+          className="absolute bottom-12 left-1/3 text-4xl text-red-600 opacity-70 transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}
+        >
+          🍁
+        </div>
 
         <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-red-600/50">
           <div className="text-xl md:text-3xl font-black text-red-700">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-red-700" style={{textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)'}}>
-            YK <span className="text-white" style={{textShadow: '3px 3px 0px rgba(220, 38, 38, 0.9)'}}>BUDDY</span>
+          <h1
+            className="text-7xl font-black text-red-700"
+            style={{ textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)' }}
+          >
+            YK{' '}
+            <span
+              className="text-white"
+              style={{ textShadow: '3px 3px 0px rgba(220, 38, 38, 0.9)' }}
+            >
+              BUDDY
+            </span>
           </h1>
           <p className="text-red-700 text-sm mt-3 opacity-90">Happy Canada Day!</p>
         </div>
@@ -1195,7 +1478,10 @@ export const IndigenousBanner = ({ temperature, weather }: BannerProps) => {
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-white" style={{textShadow: '4px 4px 0px rgba(120, 53, 15, 0.8)'}}>
+          <h1
+            className="text-7xl font-black text-white"
+            style={{ textShadow: '4px 4px 0px rgba(120, 53, 15, 0.8)' }}
+          >
             YK <span className="text-yellow-300">BUDDY</span>
           </h1>
           <p className="text-yellow-100 text-sm mt-3 opacity-90">Celebrating Indigenous Peoples</p>
@@ -1210,20 +1496,40 @@ export const EasterBanner = ({ temperature, weather }: BannerProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative w-full h-64 overflow-hidden cursor-pointer"
+    <div
+      className="relative w-full h-64 overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}>
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-pink-300 via-purple-300 to-blue-300">
-        <div className="absolute bottom-10 left-12 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🌸</div>
-        <div className="absolute bottom-8 right-16 text-5xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🐰</div>
-        <div className="absolute top-12 left-1/3 text-4xl transition-transform duration-500" style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}>🥚</div>
+        <div
+          className="absolute bottom-10 left-12 text-5xl transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}
+        >
+          🌸
+        </div>
+        <div
+          className="absolute bottom-8 right-16 text-5xl transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}
+        >
+          🐰
+        </div>
+        <div
+          className="absolute top-12 left-1/3 text-4xl transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.2)' : 'scale(1)' }}
+        >
+          🥚
+        </div>
 
         <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-purple-200/90 backdrop-blur-md px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl border border-purple-400/50">
           <div className="text-xl md:text-3xl font-black text-purple-700">{temperature}°C</div>
         </div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-7xl font-black text-purple-900" style={{textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)'}}>
+          <h1
+            className="text-7xl font-black text-purple-900"
+            style={{ textShadow: '3px 3px 0px rgba(255, 255, 255, 0.9)' }}
+          >
             YK <span className="text-pink-600">BUDDY</span>
           </h1>
           <p className="text-purple-700 text-sm mt-3 opacity-90">Happy Easter, Yellowknife!</p>

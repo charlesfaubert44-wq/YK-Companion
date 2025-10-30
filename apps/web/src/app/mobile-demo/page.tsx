@@ -49,19 +49,19 @@ const SEASONAL_THEMES = {
     accent: '#FFD700',
     glow: 'rgba(220, 38, 38, 0.3)',
   },
-  newYear: {
+  newyear: {
     primary: '#a366ff',
     secondary: '#4d94ff',
     accent: '#FFD700',
     glow: 'rgba(163, 102, 255, 0.4)',
   },
-  canadaDay: {
+  canada: {
     primary: '#dc2626',
     secondary: '#f8f8f8',
     accent: '#dc2626',
     glow: 'rgba(220, 38, 38, 0.3)',
   },
-  indigenousPeoples: {
+  indigenous: {
     primary: '#fbbf24',
     secondary: '#dc2626',
     accent: '#059669',
@@ -105,10 +105,7 @@ export default function MobileDemoPage() {
             border: `1px solid ${theme.primary}60`,
           }}
         >
-          <span
-            className="text-sm font-semibold"
-            style={{ color: theme.primary }}
-          >
+          <span className="text-sm font-semibold" style={{ color: theme.primary }}>
             {currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme
           </span>
         </div>
@@ -116,10 +113,7 @@ export default function MobileDemoPage() {
 
       {/* Feature Cards Section */}
       <div className="space-y-4">
-        <h2
-          className="text-xl font-bold px-1"
-          style={{ color: theme.primary }}
-        >
+        <h2 className="text-xl font-bold px-1" style={{ color: theme.primary }}>
           Explore Features
         </h2>
 
@@ -158,10 +152,7 @@ export default function MobileDemoPage() {
 
       {/* Content Cards Section */}
       <div className="space-y-4 mt-8">
-        <h2
-          className="text-xl font-bold px-1"
-          style={{ color: theme.primary }}
-        >
+        <h2 className="text-xl font-bold px-1" style={{ color: theme.primary }}>
           Popular Content
         </h2>
 
@@ -197,10 +188,7 @@ export default function MobileDemoPage() {
 
       {/* Quick Actions Grid */}
       <div className="space-y-4 mt-8">
-        <h2
-          className="text-xl font-bold px-1"
-          style={{ color: theme.primary }}
-        >
+        <h2 className="text-xl font-bold px-1" style={{ color: theme.primary }}>
           Quick Actions
         </h2>
 
@@ -212,15 +200,8 @@ export default function MobileDemoPage() {
             }}
             onClick={() => router.push('/saved')}
           >
-            <Heart
-              size={32}
-              className="mx-auto mb-3"
-              style={{ color: theme.primary }}
-            />
-            <p
-              className="text-sm font-semibold"
-              style={{ color: theme.primary }}
-            >
+            <Heart size={32} className="mx-auto mb-3" style={{ color: theme.primary }} />
+            <p className="text-sm font-semibold" style={{ color: theme.primary }}>
               Saved
             </p>
           </button>
@@ -232,15 +213,8 @@ export default function MobileDemoPage() {
             }}
             onClick={() => router.push('/contact')}
           >
-            <MessageCircle
-              size={32}
-              className="mx-auto mb-3"
-              style={{ color: theme.primary }}
-            />
-            <p
-              className="text-sm font-semibold"
-              style={{ color: theme.primary }}
-            >
+            <MessageCircle size={32} className="mx-auto mb-3" style={{ color: theme.primary }} />
+            <p className="text-sm font-semibold" style={{ color: theme.primary }}>
               Contact
             </p>
           </button>
@@ -255,18 +229,12 @@ export default function MobileDemoPage() {
           border: `1px solid ${theme.primary}30`,
         }}
       >
-        <h3
-          className="text-lg font-bold mb-4"
-          style={{ color: theme.primary }}
-        >
+        <h3 className="text-lg font-bold mb-4" style={{ color: theme.primary }}>
           Try These Gestures
         </h3>
         <ul className="space-y-3 text-sm text-gray-300">
           <li className="flex items-start">
-            <span
-              className="mr-3 text-lg"
-              style={{ color: theme.accent }}
-            >
+            <span className="mr-3 text-lg" style={{ color: theme.accent }}>
               →
             </span>
             <span>
@@ -274,36 +242,30 @@ export default function MobileDemoPage() {
             </span>
           </li>
           <li className="flex items-start">
-            <span
-              className="mr-3 text-lg"
-              style={{ color: theme.accent }}
-            >
+            <span className="mr-3 text-lg" style={{ color: theme.accent }}>
               ☰
             </span>
             <span>
-              <strong style={{ color: theme.primary }}>Tap menu icon</strong> in header to open navigation
+              <strong style={{ color: theme.primary }}>Tap menu icon</strong> in header to open
+              navigation
             </span>
           </li>
           <li className="flex items-start">
-            <span
-              className="mr-3 text-lg"
-              style={{ color: theme.accent }}
-            >
+            <span className="mr-3 text-lg" style={{ color: theme.accent }}>
               ⬇
             </span>
             <span>
-              <strong style={{ color: theme.primary }}>Use bottom nav</strong> to switch between main sections
+              <strong style={{ color: theme.primary }}>Use bottom nav</strong> to switch between
+              main sections
             </span>
           </li>
           <li className="flex items-start">
-            <span
-              className="mr-3 text-lg"
-              style={{ color: theme.accent }}
-            >
+            <span className="mr-3 text-lg" style={{ color: theme.accent }}>
               ✨
             </span>
             <span>
-              <strong style={{ color: theme.primary }}>Haptic feedback</strong> confirms your interactions
+              <strong style={{ color: theme.primary }}>Haptic feedback</strong> confirms your
+              interactions
             </span>
           </li>
         </ul>

@@ -52,13 +52,9 @@ export default function WeatherWidget() {
             <span className={`text-3xl font-bold ${getTempColor(weather.temp)}`}>
               {weather.temp}°
             </span>
-            <span className="text-sm text-gray-500">
-              feels {weather.feels_like}°
-            </span>
+            <span className="text-sm text-gray-500">feels {weather.feels_like}°</span>
           </div>
-          <p className="text-xs text-gray-400 capitalize mt-1">
-            {weather.description}
-          </p>
+          <p className="text-xs text-gray-400 capitalize mt-1">{weather.description}</p>
         </div>
 
         {/* Additional Details */}

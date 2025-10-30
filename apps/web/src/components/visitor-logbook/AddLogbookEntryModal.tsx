@@ -46,7 +46,7 @@ export default function AddLogbookEntryModal({
   // Pre-fill name from profile
   useEffect(() => {
     if (profile?.full_name) {
-      setFormData((prev) => ({ ...prev, visitor_name: profile.full_name || '' }));
+      setFormData(prev => ({ ...prev, visitor_name: profile.full_name || '' }));
     }
   }, [profile]);
 
@@ -59,7 +59,7 @@ export default function AddLogbookEntryModal({
     }
 
     if (!formData.visitor_location.trim() || formData.visitor_location.length < 2) {
-      newErrors.visitor_location = 'Please enter where you\'re from';
+      newErrors.visitor_location = "Please enter where you're from";
     }
 
     if (!formData.title.trim() || formData.title.length < 3) {
@@ -127,7 +127,7 @@ export default function AddLogbookEntryModal({
     setUploadingPhotos(true);
 
     try {
-      const uploadPromises = files.map(async (file) => {
+      const uploadPromises = files.map(async file => {
         const formDataToSend = new FormData();
         formDataToSend.append('photo', file);
 
@@ -147,11 +147,10 @@ export default function AddLogbookEntryModal({
 
       const uploadedUrls = await Promise.all(uploadPromises);
 
-      setFormData((prev) => ({
+      setFormData(prev => ({
         ...prev,
         uploadedPhotoUrls: [...prev.uploadedPhotoUrls, ...uploadedUrls],
       }));
-
     } catch (error) {
       console.error('Error uploading photos:', error);
       setErrors({
@@ -174,9 +173,7 @@ export default function AddLogbookEntryModal({
   // Toggle experience type
   const toggleExperienceType = (type: ExperienceType) => {
     const current = formData.experience_type;
-    const updated = current.includes(type)
-      ? current.filter((t) => t !== type)
-      : [...current, type];
+    const updated = current.includes(type) ? current.filter(t => t !== type) : [...current, type];
 
     setFormData({ ...formData, experience_type: updated });
     setErrors({ ...errors, experience_type: undefined });
@@ -232,10 +229,11 @@ export default function AddLogbookEntryModal({
         onClose();
         resetForm();
       }, 2000);
-
     } catch (error) {
       console.error('Error submitting entry:', error);
-      alert(error instanceof Error ? error.message : 'Failed to submit your entry. Please try again.');
+      alert(
+        error instanceof Error ? error.message : 'Failed to submit your entry. Please try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -275,7 +273,12 @@ export default function AddLogbookEntryModal({
             aria-label="Close"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -293,13 +296,11 @@ export default function AddLogbookEntryModal({
           {/* Personal Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Your Name *
-              </label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Your Name *</label>
               <input
                 type="text"
                 value={formData.visitor_name}
-                onChange={(e) => setFormData({ ...formData, visitor_name: e.target.value })}
+                onChange={e => setFormData({ ...formData, visitor_name: e.target.value })}
                 className="w-full px-4 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aurora-green focus:border-transparent"
                 placeholder="John Doe"
               />
@@ -315,7 +316,7 @@ export default function AddLogbookEntryModal({
               <input
                 type="text"
                 value={formData.visitor_location}
-                onChange={(e) => setFormData({ ...formData, visitor_location: e.target.value })}
+                onChange={e => setFormData({ ...formData, visitor_location: e.target.value })}
                 className="w-full px-4 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aurora-green focus:border-transparent"
                 placeholder="Toronto, ON"
               />
@@ -328,14 +329,12 @@ export default function AddLogbookEntryModal({
           {/* Visit Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Visit Date *
-              </label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Visit Date *</label>
               <input
                 type="date"
                 value={formData.visit_date}
                 max={new Date().toISOString().split('T')[0]}
-                onChange={(e) => setFormData({ ...formData, visit_date: e.target.value })}
+                onChange={e => setFormData({ ...formData, visit_date: e.target.value })}
                 className="w-full px-4 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-aurora-green focus:border-transparent"
               />
               {errors.visit_date && (
@@ -349,11 +348,11 @@ export default function AddLogbookEntryModal({
               </label>
               <select
                 value={formData.visit_duration}
-                onChange={(e) => setFormData({ ...formData, visit_duration: e.target.value })}
+                onChange={e => setFormData({ ...formData, visit_duration: e.target.value })}
                 className="w-full px-4 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-aurora-green focus:border-transparent"
               >
                 <option value="">Select duration...</option>
-                {VISIT_DURATIONS.map((duration) => (
+                {VISIT_DURATIONS.map(duration => (
                   <option key={duration} value={duration}>
                     {duration}
                   </option>
@@ -370,15 +369,13 @@ export default function AddLogbookEntryModal({
             <input
               type="text"
               value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              onChange={e => setFormData({ ...formData, title: e.target.value })}
               className="w-full px-4 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aurora-green focus:border-transparent"
               placeholder="Amazing Northern Lights Adventure!"
               maxLength={100}
             />
             <div className="flex justify-between mt-1">
-              {errors.title && (
-                <p className="text-sm text-red-400">{errors.title}</p>
-              )}
+              {errors.title && <p className="text-sm text-red-400">{errors.title}</p>}
               <p className="text-sm text-gray-400 ml-auto">{formData.title.length}/100</p>
             </div>
           </div>
@@ -390,16 +387,14 @@ export default function AddLogbookEntryModal({
             </label>
             <textarea
               value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              onChange={e => setFormData({ ...formData, message: e.target.value })}
               rows={6}
               className="w-full px-4 py-2 bg-dark-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aurora-green focus:border-transparent resize-none"
               placeholder="Tell us about your visit to Yellowknife! What did you love? What made it memorable?"
               maxLength={2000}
             />
             <div className="flex justify-between mt-1">
-              {errors.message && (
-                <p className="text-sm text-red-400">{errors.message}</p>
-              )}
+              {errors.message && <p className="text-sm text-red-400">{errors.message}</p>}
               <p className="text-sm text-gray-400 ml-auto">{formData.message.length}/2000</p>
             </div>
           </div>
@@ -410,7 +405,7 @@ export default function AddLogbookEntryModal({
               What Did You Experience? * (Select all that apply)
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-              {EXPERIENCE_TYPES.map((type) => {
+              {EXPERIENCE_TYPES.map(type => {
                 const config = EXPERIENCE_TYPE_CONFIG[type];
                 const isSelected = formData.experience_type.includes(type);
 
@@ -438,11 +433,9 @@ export default function AddLogbookEntryModal({
 
           {/* Rating */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-3">
-              Overall Rating *
-            </label>
+            <label className="block text-sm font-medium text-gray-300 mb-3">Overall Rating *</label>
             <div className="flex items-center gap-2">
-              {[1, 2, 3, 4, 5].map((star) => (
+              {[1, 2, 3, 4, 5].map(star => (
                 <button
                   key={star}
                   type="button"
@@ -534,8 +527,18 @@ export default function AddLogbookEntryModal({
                       onClick={() => removePhoto(index)}
                       className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                     >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
                       </svg>
                     </button>
                     {index === 0 && (
@@ -548,9 +551,7 @@ export default function AddLogbookEntryModal({
               </div>
             )}
 
-            {errors.photos && (
-              <p className="mt-2 text-sm text-red-400">{errors.photos}</p>
-            )}
+            {errors.photos && <p className="mt-2 text-sm text-red-400">{errors.photos}</p>}
           </div>
 
           {/* Submit Buttons */}

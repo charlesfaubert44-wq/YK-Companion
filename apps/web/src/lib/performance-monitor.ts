@@ -1,9 +1,9 @@
 /**
  * Performance Monitoring Utility
- * 
+ *
  * Tracks and reports performance metrics for the application.
  * Integrates with Web Vitals and provides custom metric tracking.
- * 
+ *
  * @module performance-monitor
  */
 
@@ -75,16 +75,12 @@ class PerformanceMonitor {
 
   /**
    * Record a performance metric
-   * 
+   *
    * @param {string} name - Metric name
    * @param {number} value - Metric value
    * @param {string} [rating] - Optional rating override
    */
-  recordMetric(
-    name: string,
-    value: number,
-    rating?: 'good' | 'needs-improvement' | 'poor'
-  ): void {
+  recordMetric(name: string, value: number, rating?: 'good' | 'needs-improvement' | 'poor'): void {
     const metric: PerformanceMetric = {
       name,
       value,
@@ -119,11 +115,11 @@ class PerformanceMonitor {
    */
   private inferRating(name: string, value: number): 'good' | 'needs-improvement' | 'poor' {
     const metricKey = name.toUpperCase() as keyof typeof VITALS_THRESHOLDS;
-    
+
     if (VITALS_THRESHOLDS[metricKey]) {
       return getRating(metricKey, value);
     }
-    
+
     // Default thresholds for custom metrics
     if (value < 1000) return 'good';
     if (value < 3000) return 'needs-improvement';
@@ -179,7 +175,7 @@ class PerformanceMonitor {
   getAverageMetric(name: string): number | null {
     const metrics = this.getMetricsByName(name);
     if (metrics.length === 0) return null;
-    
+
     const sum = metrics.reduce((acc, m) => acc + m.value, 0);
     return sum / metrics.length;
   }
@@ -197,7 +193,7 @@ export const performanceMonitor = new PerformanceMonitor();
 
 /**
  * Measure execution time of a function
- * 
+ *
  * @example
  * ```ts
  * const result = await measurePerformance('fetchData', async () => {
@@ -205,19 +201,16 @@ export const performanceMonitor = new PerformanceMonitor();
  * });
  * ```
  */
-export async function measurePerformance<T>(
-  name: string,
-  fn: () => Promise<T>
-): Promise<T> {
+export async function measurePerformance<T>(name: string, fn: () => Promise<T>): Promise<T> {
   const start = performance.now();
-  
+
   try {
     const result = await fn();
     const duration = performance.now() - start;
-    
+
     performanceMonitor.recordMetric(name, duration);
     logInfo(`${name} completed`, { duration: Math.round(duration) });
-    
+
     return result;
   } catch (error) {
     const duration = performance.now() - start;
@@ -228,7 +221,7 @@ export async function measurePerformance<T>(
 
 /**
  * Measure synchronous function performance
- * 
+ *
  * @example
  * ```ts
  * const result = measureSync('computation', () => {
@@ -238,13 +231,13 @@ export async function measurePerformance<T>(
  */
 export function measureSync<T>(name: string, fn: () => T): T {
   const start = performance.now();
-  
+
   try {
     const result = fn();
     const duration = performance.now() - start;
-    
+
     performanceMonitor.recordMetric(name, duration);
-    
+
     return result;
   } catch (error) {
     const duration = performance.now() - start;
@@ -256,22 +249,18 @@ export function measureSync<T>(name: string, fn: () => T): T {
 /**
  * Report Web Vitals to analytics
  * Use in _app.tsx or layout.tsx
- * 
+ *
  * @example
  * ```ts
  * import { reportWebVitals } from '@/lib/performance-monitor';
- * 
+ *
  * export function reportWebVitals(metric: any) {
  *   performanceMonitor.recordMetric(metric.name, metric.value);
  * }
  * ```
  */
 export function reportWebVitals(metric: any): void {
-  performanceMonitor.recordMetric(
-    metric.name,
-    metric.value,
-    metric.rating
-  );
+  performanceMonitor.recordMetric(metric.name, metric.value, metric.rating);
 }
 
 /**
@@ -284,7 +273,7 @@ export function getPerformanceSummary(): {
 } {
   const metrics = performanceMonitor.getMetrics();
   const metricNames = [...new Set(metrics.map(m => m.name))];
-  
+
   const averages: Record<string, number> = {};
   for (const name of metricNames) {
     const avg = performanceMonitor.getAverageMetric(name);
@@ -292,13 +281,12 @@ export function getPerformanceSummary(): {
       averages[name] = Math.round(avg);
     }
   }
-  
+
   const poorMetrics = metrics.filter(m => m.rating === 'poor');
-  
+
   return {
     metrics,
     averages,
     poorMetrics,
   };
 }
-

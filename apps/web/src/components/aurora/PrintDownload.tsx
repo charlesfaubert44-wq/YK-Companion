@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { PrintOptions, PrintDownload as PrintDownloadType } from '@/types/aurora-enhancements.types';
+import {
+  PrintOptions,
+  PrintDownload as PrintDownloadType,
+} from '@/types/aurora-enhancements.types';
 import { AuroraMosaic } from '@/types/aurora.types';
 
 interface Props {
@@ -26,7 +29,7 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
   const [downloadInfo, setDownloadInfo] = useState<PrintDownloadType | null>(null);
 
   const updateOptions = (updates: Partial<PrintOptions>) => {
-    setOptions((prev) => ({ ...prev, ...updates }));
+    setOptions(prev => ({ ...prev, ...updates }));
   };
 
   const updateResolution = (resolution: PrintOptions['resolution']) => {
@@ -127,7 +130,7 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
               <div>
                 <label className="block text-lg font-bold text-white mb-3">📐 Resolution</label>
                 <div className="grid grid-cols-3 gap-3">
-                  {(['4K', '8K', '12K'] as const).map((res) => (
+                  {(['4K', '8K', '12K'] as const).map(res => (
                     <button
                       key={res}
                       onClick={() => updateResolution(res)}
@@ -150,9 +153,11 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
 
               {/* DPI Selection */}
               <div>
-                <label className="block text-lg font-bold text-white mb-3">📊 DPI (Print Quality)</label>
+                <label className="block text-lg font-bold text-white mb-3">
+                  📊 DPI (Print Quality)
+                </label>
                 <div className="grid grid-cols-3 gap-3">
-                  {[150, 300, 600].map((dpi) => (
+                  {[150, 300, 600].map(dpi => (
                     <button
                       key={dpi}
                       onClick={() => updateOptions({ dpi: dpi as PrintOptions['dpi'] })}
@@ -177,7 +182,7 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
               <div>
                 <label className="block text-lg font-bold text-white mb-3">💾 File Format</label>
                 <div className="grid grid-cols-3 gap-3">
-                  {(['JPG', 'PNG', 'TIFF'] as const).map((format) => (
+                  {(['JPG', 'PNG', 'TIFF'] as const).map(format => (
                     <button
                       key={format}
                       onClick={() => updateOptions({ format })}
@@ -202,7 +207,7 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
               <div>
                 <label className="block text-lg font-bold text-white mb-3">🎨 Color Profile</label>
                 <div className="grid grid-cols-3 gap-3">
-                  {(['sRGB', 'AdobeRGB', 'ProPhoto'] as const).map((profile) => (
+                  {(['sRGB', 'AdobeRGB', 'ProPhoto'] as const).map(profile => (
                     <button
                       key={profile}
                       onClick={() => updateOptions({ color_profile: profile })}
@@ -268,8 +273,9 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
 
               {/* Info */}
               <div className="bg-dark-800 rounded-lg p-4 text-sm text-gray-400">
-                <strong className="text-white">Note:</strong> High-resolution downloads may take a few moments to generate.
-                Download links expire after 24 hours. For commercial use, please review our licensing terms.
+                <strong className="text-white">Note:</strong> High-resolution downloads may take a
+                few moments to generate. Download links expire after 24 hours. For commercial use,
+                please review our licensing terms.
               </div>
             </>
           ) : (
@@ -277,9 +283,7 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
             <div className="text-center py-8">
               <div className="text-7xl mb-6">✅</div>
               <h3 className="text-3xl font-bold text-white mb-4">Download Ready!</h3>
-              <p className="text-gray-400 mb-6">
-                Your high-resolution mosaic is ready to download
-              </p>
+              <p className="text-gray-400 mb-6">Your high-resolution mosaic is ready to download</p>
 
               {downloadInfo && (
                 <>
@@ -287,7 +291,9 @@ export default function PrintDownload({ mosaic, onClose }: Props) {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <div className="text-sm text-gray-400">File Size</div>
-                        <div className="text-xl font-bold text-white">{downloadInfo.file_size_mb} MB</div>
+                        <div className="text-xl font-bold text-white">
+                          {downloadInfo.file_size_mb} MB
+                        </div>
                       </div>
                       <div>
                         <div className="text-sm text-gray-400">Resolution</div>

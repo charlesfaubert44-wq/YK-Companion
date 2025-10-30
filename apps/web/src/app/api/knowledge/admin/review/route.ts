@@ -14,17 +14,15 @@ export async function POST(request: NextRequest) {
     if (adminCheck instanceof NextResponse) return adminCheck;
 
     const { user } = adminCheck;
-    
+
     // Ensure user exists
     if (!user) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'User not found' }, { status: 401 });
     }
-    
+
     const supabase = await createClient();
-    const { submission_id, ...reviewInput }: ReviewSubmissionInput & { submission_id: string } = await request.json();
+    const { submission_id, ...reviewInput }: ReviewSubmissionInput & { submission_id: string } =
+      await request.json();
 
     // Validate input
     if (!submission_id || !reviewInput.status) {
@@ -54,12 +52,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Log admin activity
-    await logAdminActivity(
-      'review_knowledge_submission',
-      'knowledge_submission',
-      submission_id,
-      { status: reviewInput.status }
-    );
+    await logAdminActivity('review_knowledge_submission', 'knowledge_submission', submission_id, {
+      status: reviewInput.status,
+    });
 
     return NextResponse.json({
       message: `Submission ${reviewInput.status} successfully`,

@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
-import type { KnowledgeSubmissionWithCategory, KnowledgeStats, SubmissionStatus } from '@/types/knowledge.types';
+import type {
+  KnowledgeSubmissionWithCategory,
+  KnowledgeStats,
+  SubmissionStatus,
+} from '@/types/knowledge.types';
 
 export default function AdminKnowledgePage() {
   const { profile, loading: authLoading } = useAuth();
@@ -11,7 +15,8 @@ export default function AdminKnowledgePage() {
   const [stats, setStats] = useState<KnowledgeStats | null>(null);
   const [filter, setFilter] = useState<SubmissionStatus | 'all'>('pending');
   const [loading, setLoading] = useState(true);
-  const [selectedSubmission, setSelectedSubmission] = useState<KnowledgeSubmissionWithCategory | null>(null);
+  const [selectedSubmission, setSelectedSubmission] =
+    useState<KnowledgeSubmissionWithCategory | null>(null);
   const [reviewNotes, setReviewNotes] = useState('');
   const [rejectionReason, setRejectionReason] = useState('');
 
@@ -56,7 +61,10 @@ export default function AdminKnowledgePage() {
     }
   };
 
-  const handleReview = async (submissionId: string, status: 'approved' | 'rejected' | 'flagged') => {
+  const handleReview = async (
+    submissionId: string,
+    status: 'approved' | 'rejected' | 'flagged'
+  ) => {
     try {
       const response = await fetch('/api/knowledge/admin/review', {
         method: 'POST',
@@ -167,7 +175,7 @@ export default function AdminKnowledgePage() {
 
         {/* Filters */}
         <div className="flex gap-2 mb-6">
-          {['all', 'pending', 'approved', 'rejected', 'flagged'].map((status) => (
+          {['all', 'pending', 'approved', 'rejected', 'flagged'].map(status => (
             <button
               key={status}
               onClick={() => setFilter(status as any)}
@@ -192,11 +200,13 @@ export default function AdminKnowledgePage() {
           <div className="text-center py-20 bg-gray-800/30 rounded-2xl border-2 border-gray-700/50">
             <div className="text-6xl mb-4">📭</div>
             <h3 className="text-2xl font-bold text-white mb-3">No submissions found</h3>
-            <p className="text-gray-400">No {filter !== 'all' ? filter : ''} submissions at the moment.</p>
+            <p className="text-gray-400">
+              No {filter !== 'all' ? filter : ''} submissions at the moment.
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
-            {submissions.map((submission) => (
+            {submissions.map(submission => (
               <div
                 key={submission.id}
                 className="bg-gray-800/50 border-2 border-gray-700/50 rounded-xl p-6 hover:border-gray-600 transition-all"
@@ -205,7 +215,9 @@ export default function AdminKnowledgePage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-xl font-bold text-white">{submission.title}</h3>
-                      <span className={`text-xs px-3 py-1 rounded-full border ${statusColors[submission.status]}`}>
+                      <span
+                        className={`text-xs px-3 py-1 rounded-full border ${statusColors[submission.status]}`}
+                      >
                         {submission.status}
                       </span>
                       <span className="text-xs px-2 py-1 bg-gray-700/50 rounded-full text-gray-400 capitalize">
@@ -228,7 +240,10 @@ export default function AdminKnowledgePage() {
                     {submission.tags && submission.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-3">
                         {submission.tags.map((tag, idx) => (
-                          <span key={idx} className="text-xs px-2 py-1 bg-aurora-green/10 text-aurora-green rounded">
+                          <span
+                            key={idx}
+                            className="text-xs px-2 py-1 bg-aurora-green/10 text-aurora-green rounded"
+                          >
                             #{tag}
                           </span>
                         ))}
@@ -267,14 +282,14 @@ export default function AdminKnowledgePage() {
                     <h4 className="text-white font-semibold mb-3">Rejection Details</h4>
                     <textarea
                       value={rejectionReason}
-                      onChange={(e) => setRejectionReason(e.target.value)}
+                      onChange={e => setRejectionReason(e.target.value)}
                       placeholder="Reason for rejection (required)"
                       className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 mb-3"
                       rows={3}
                     />
                     <textarea
                       value={reviewNotes}
-                      onChange={(e) => setReviewNotes(e.target.value)}
+                      onChange={e => setReviewNotes(e.target.value)}
                       placeholder="Additional notes (optional)"
                       className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 mb-3"
                       rows={2}

@@ -5,10 +5,7 @@ import { createClient } from '@/lib/supabase/server';
  * GET /api/visitor-logbook/[id]
  * Fetch a single visitor logbook entry
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
     const { id } = params;
@@ -20,14 +17,13 @@ export async function GET(
       .single();
 
     if (error || !entry) {
-      return NextResponse.json(
-        { success: false, error: 'Entry not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Entry not found' }, { status: 404 });
     }
 
     // Check if entry is viewable (approved or owned by user)
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     const isOwner = user && entry.user_id === user.id;
     const isViewable = entry.is_approved && entry.is_active;
 
@@ -64,7 +60,6 @@ export async function GET(
         user_liked: userLiked,
       },
     });
-
   } catch (error) {
     console.error('Error in GET /api/visitor-logbook/[id]:', error);
     return NextResponse.json(
@@ -78,21 +73,18 @@ export async function GET(
  * PUT /api/visitor-logbook/[id]
  * Update a visitor logbook entry (only by owner)
  */
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
     const { id } = params;
 
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     // Fetch existing entry
@@ -103,10 +95,7 @@ export async function PUT(
       .single();
 
     if (fetchError || !existingEntry) {
-      return NextResponse.json(
-        { success: false, error: 'Entry not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Entry not found' }, { status: 404 });
     }
 
     // Check ownership
@@ -119,7 +108,16 @@ export async function PUT(
 
     // Parse request body
     const body = await request.json();
-    const allowedFields = ['title', 'message', 'visitor_location', 'visit_date', 'visit_duration', 'experience_type', 'rating', 'photos'];
+    const allowedFields = [
+      'title',
+      'message',
+      'visitor_location',
+      'visit_date',
+      'visit_duration',
+      'experience_type',
+      'rating',
+      'photos',
+    ];
 
     // Filter only allowed fields
     const updates: any = {};
@@ -153,9 +151,8 @@ export async function PUT(
     return NextResponse.json({
       success: true,
       data: updatedEntry,
-      message: 'Entry updated successfully'
+      message: 'Entry updated successfully',
     });
-
   } catch (error) {
     console.error('Error in PUT /api/visitor-logbook/[id]:', error);
     return NextResponse.json(
@@ -169,21 +166,18 @@ export async function PUT(
  * DELETE /api/visitor-logbook/[id]
  * Soft-delete a visitor logbook entry (only by owner)
  */
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
     const { id } = params;
 
     // Check authentication
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     // Fetch existing entry
@@ -194,10 +188,7 @@ export async function DELETE(
       .single();
 
     if (fetchError || !existingEntry) {
-      return NextResponse.json(
-        { success: false, error: 'Entry not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Entry not found' }, { status: 404 });
     }
 
     // Check ownership
@@ -224,9 +215,8 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: 'Entry deleted successfully'
+      message: 'Entry deleted successfully',
     });
-
   } catch (error) {
     console.error('Error in DELETE /api/visitor-logbook/[id]:', error);
     return NextResponse.json(

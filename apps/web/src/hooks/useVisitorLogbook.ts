@@ -1,9 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  VisitorLogbookEntry,
-  LogbookFilters,
-  ExperienceType,
-} from '@/types/visitor-logbook.types';
+import { VisitorLogbookEntry, LogbookFilters, ExperienceType } from '@/types/visitor-logbook.types';
 
 interface UseVisitorLogbookOptions {
   autoFetch?: boolean;
@@ -14,13 +10,7 @@ interface UseVisitorLogbookOptions {
 }
 
 export function useVisitorLogbook(options: UseVisitorLogbookOptions = {}) {
-  const {
-    autoFetch = true,
-    featured,
-    experienceType,
-    rating,
-    limit = 20,
-  } = options;
+  const { autoFetch = true, featured, experienceType, rating, limit = 20 } = options;
 
   const [entries, setEntries] = useState<VisitorLogbookEntry[]>([]);
   const [loading, setLoading] = useState(false);
@@ -29,36 +19,38 @@ export function useVisitorLogbook(options: UseVisitorLogbookOptions = {}) {
   const [offset, setOffset] = useState(0);
 
   // Fetch entries
-  const fetchEntries = useCallback(async (customOffset = 0) => {
-    try {
-      setLoading(true);
-      setError(null);
+  const fetchEntries = useCallback(
+    async (customOffset = 0) => {
+      try {
+        setLoading(true);
+        setError(null);
 
-      const params = new URLSearchParams();
-      if (featured) params.append('featured', 'true');
-      if (experienceType) params.append('experience_type', experienceType);
-      if (rating) params.append('rating', rating.toString());
-      params.append('limit', limit.toString());
-      params.append('offset', customOffset.toString());
+        const params = new URLSearchParams();
+        if (featured) params.append('featured', 'true');
+        if (experienceType) params.append('experience_type', experienceType);
+        if (rating) params.append('rating', rating.toString());
+        params.append('limit', limit.toString());
+        params.append('offset', customOffset.toString());
 
-      const response = await fetch(`/api/visitor-logbook?${params.toString()}`);
-      const result = await response.json();
+        const response = await fetch(`/api/visitor-logbook?${params.toString()}`);
+        const result = await response.json();
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to fetch entries');
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || 'Failed to fetch entries');
+        }
+
+        setEntries(customOffset === 0 ? result.data : [...entries, ...result.data]);
+        setTotal(result.total || 0);
+        setOffset(customOffset);
+      } catch (err) {
+        console.error('Error fetching logbook entries:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch entries');
+      } finally {
+        setLoading(false);
       }
-
-      setEntries(customOffset === 0 ? result.data : [...entries, ...result.data]);
-      setTotal(result.total || 0);
-      setOffset(customOffset);
-
-    } catch (err) {
-      console.error('Error fetching logbook entries:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch entries');
-    } finally {
-      setLoading(false);
-    }
-  }, [featured, experienceType, rating, limit]);
+    },
+    [featured, experienceType, rating, limit]
+  );
 
   // Load more entries
   const loadMore = useCallback(() => {
@@ -85,8 +77,8 @@ export function useVisitorLogbook(options: UseVisitorLogbookOptions = {}) {
       }
 
       // Update local state
-      setEntries((prevEntries) =>
-        prevEntries.map((entry) =>
+      setEntries(prevEntries =>
+        prevEntries.map(entry =>
           entry.id === entryId
             ? {
                 ...entry,
@@ -105,31 +97,34 @@ export function useVisitorLogbook(options: UseVisitorLogbookOptions = {}) {
   }, []);
 
   // Create new entry
-  const createEntry = useCallback(async (entryData: any) => {
-    try {
-      const response = await fetch('/api/visitor-logbook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(entryData),
-      });
+  const createEntry = useCallback(
+    async (entryData: any) => {
+      try {
+        const response = await fetch('/api/visitor-logbook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(entryData),
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to create entry');
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || 'Failed to create entry');
+        }
+
+        // Refresh entries to show new entry (if approved)
+        refresh();
+
+        return result;
+      } catch (err) {
+        console.error('Error creating entry:', err);
+        throw err;
       }
-
-      // Refresh entries to show new entry (if approved)
-      refresh();
-
-      return result;
-    } catch (err) {
-      console.error('Error creating entry:', err);
-      throw err;
-    }
-  }, [refresh]);
+    },
+    [refresh]
+  );
 
   // Delete entry
   const deleteEntry = useCallback(async (entryId: string) => {
@@ -145,9 +140,7 @@ export function useVisitorLogbook(options: UseVisitorLogbookOptions = {}) {
       }
 
       // Remove from local state
-      setEntries((prevEntries) =>
-        prevEntries.filter((entry) => entry.id !== entryId)
-      );
+      setEntries(prevEntries => prevEntries.filter(entry => entry.id !== entryId));
 
       return result;
     } catch (err) {

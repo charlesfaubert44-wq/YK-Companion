@@ -8,7 +8,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ykbuddy.com';
 
 /**
  * Enhanced Dynamic Sitemap Generator
- * 
+ *
  * Generates a comprehensive sitemap with:
  * - All public pages with proper priorities
  * - Dynamic content URLs (garage sales, knowledge articles)
@@ -21,116 +21,116 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static routes configuration
   const staticRoutes = [
     // Homepage - Highest priority, updated daily
-    { 
-      path: '', 
-      priority: 1.0, 
+    {
+      path: '',
+      priority: 1.0,
       changeFreq: 'daily' as const,
       lastModified: currentDate,
     },
 
     // Main pathway pages - Very high priority
-    { 
-      path: '/visiting', 
-      priority: 0.9, 
+    {
+      path: '/visiting',
+      priority: 0.9,
       changeFreq: 'weekly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/living', 
-      priority: 0.9, 
+    {
+      path: '/living',
+      priority: 0.9,
       changeFreq: 'weekly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/moving', 
-      priority: 0.9, 
+    {
+      path: '/moving',
+      priority: 0.9,
       changeFreq: 'weekly' as const,
       lastModified: currentDate,
     },
 
     // Key features - High priority
-    { 
-      path: '/living/garage-sales', 
-      priority: 0.9, 
+    {
+      path: '/living/garage-sales',
+      priority: 0.9,
       changeFreq: 'daily' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/aurora-live', 
-      priority: 0.9, 
+    {
+      path: '/aurora-live',
+      priority: 0.9,
       changeFreq: 'hourly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/aurora', 
-      priority: 0.8, 
+    {
+      path: '/aurora',
+      priority: 0.8,
       changeFreq: 'daily' as const,
       lastModified: currentDate,
     },
 
     // Information and discovery pages - Medium-high priority
-    { 
-      path: '/about', 
-      priority: 0.8, 
+    {
+      path: '/about',
+      priority: 0.8,
       changeFreq: 'monthly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/contact', 
-      priority: 0.8, 
+    {
+      path: '/contact',
+      priority: 0.8,
       changeFreq: 'monthly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/knowledge', 
-      priority: 0.8, 
+    {
+      path: '/knowledge',
+      priority: 0.8,
       changeFreq: 'weekly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/discover', 
-      priority: 0.8, 
+    {
+      path: '/discover',
+      priority: 0.8,
       changeFreq: 'weekly' as const,
       lastModified: currentDate,
     },
 
     // Interactive tools - Medium priority
-    { 
-      path: '/calculator', 
-      priority: 0.7, 
+    {
+      path: '/calculator',
+      priority: 0.7,
       changeFreq: 'monthly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/quiz', 
-      priority: 0.7, 
+    {
+      path: '/quiz',
+      priority: 0.7,
       changeFreq: 'monthly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/seasonal', 
-      priority: 0.7, 
+    {
+      path: '/seasonal',
+      priority: 0.7,
       changeFreq: 'weekly' as const,
       lastModified: currentDate,
     },
 
     // Additional pages - Lower priority
-    { 
-      path: '/sponsor-info', 
-      priority: 0.6, 
+    {
+      path: '/sponsor-info',
+      priority: 0.6,
       changeFreq: 'monthly' as const,
       lastModified: currentDate,
     },
-    { 
-      path: '/sitemap-page', 
-      priority: 0.5, 
+    {
+      path: '/sitemap-page',
+      priority: 0.5,
       changeFreq: 'monthly' as const,
       lastModified: currentDate,
     },
   ];
 
   // Convert static routes to sitemap entries
-  const staticSitemapEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
+  const staticSitemapEntries: MetadataRoute.Sitemap = staticRoutes.map(route => ({
     url: `${siteUrl}${route.path}`,
     lastModified: route.lastModified,
     changeFrequency: route.changeFreq,
@@ -144,7 +144,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     // Garage sales (recent and upcoming)
     const garageSales = await getGarageSalesForSitemap();
-    dynamicGarageSales = garageSales.map((sale) => ({
+    dynamicGarageSales = garageSales.map(sale => ({
       url: `${siteUrl}/living/garage-sales/${sale.id}`,
       lastModified: new Date(sale.updated_at),
       changeFrequency: 'daily' as const,
@@ -153,7 +153,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Knowledge base articles
     const articles = await getKnowledgeArticlesForSitemap();
-    dynamicKnowledgeArticles = articles.map((article) => ({
+    dynamicKnowledgeArticles = articles.map(article => ({
       url: `${siteUrl}/knowledge/${article.id}`,
       lastModified: new Date(article.updated_at),
       changeFrequency: 'weekly' as const,
@@ -165,22 +165,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Combine all entries
-  return [
-    ...staticSitemapEntries,
-    ...dynamicGarageSales,
-    ...dynamicKnowledgeArticles,
-  ];
+  return [...staticSitemapEntries, ...dynamicGarageSales, ...dynamicKnowledgeArticles];
 }
 
 /**
  * Multilingual Sitemap Support
- * 
+ *
  * For future multilingual support, create language-specific sitemaps:
- * 
+ *
  * File structure:
  * - app/sitemap.ts (this file - main sitemap with all content)
  * - app/[lang]/sitemap.ts (language-specific sitemaps)
- * 
+ *
  * Example implementation for /fr/sitemap.xml:
  * ```typescript
  * export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -192,7 +188,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
  *   }));
  * }
  * ```
- * 
+ *
  * With hreflang alternates in metadata:
  * - Implemented via multilingual.ts utilities
  * - Use generateHreflangLinks() in page metadata

@@ -30,7 +30,9 @@ export default function AppLayout({
   const [showContactModal, setShowContactModal] = useState(false);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 ${className}`}>
+    <div
+      className={`min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900 ${className}`}
+    >
       {/* Language Selector - Top Right */}
       <div className="fixed top-6 right-6 z-50">
         <LanguageSelector />
@@ -51,9 +53,7 @@ export default function AppLayout({
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Breadcrumbs */}
-          {breadcrumbs && breadcrumbs.length > 0 && (
-            <Breadcrumbs items={breadcrumbs} />
-          )}
+          {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
 
           {/* Page Content */}
           {children}
@@ -61,9 +61,7 @@ export default function AppLayout({
           {/* Footer */}
           <footer className="mt-12 pt-6 border-t border-gray-700/30">
             <div className="text-center space-y-2">
-              <p className="text-sm text-gray-400">
-                {t('footer')}
-              </p>
+              <p className="text-sm text-gray-400">{t('footer')}</p>
             </div>
           </footer>
         </div>

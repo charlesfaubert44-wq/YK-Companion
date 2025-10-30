@@ -27,15 +27,15 @@ describe('useAdminAuth', () => {
 
   it('should return admin status for admin user', async () => {
     const mockAdminProfile = createMockProfile({ is_admin: true });
-    
+
     const { createClient } = await import('@/lib/supabase/client');
     const mockClient = createClient();
-    
+
     (mockClient.auth.getUser as any).mockResolvedValue({
       data: { user: createMockUser() },
       error: null,
     });
-    
+
     const mockFrom = mockClient.from as any;
     mockFrom().single.mockResolvedValue({
       data: mockAdminProfile,
@@ -57,15 +57,15 @@ describe('useAdminAuth', () => {
 
   it('should return false for non-admin user', async () => {
     const mockUserProfile = createMockProfile({ is_admin: false });
-    
+
     const { createClient } = await import('@/lib/supabase/client');
     const mockClient = createClient();
-    
+
     (mockClient.auth.getUser as any).mockResolvedValue({
       data: { user: createMockUser() },
       error: null,
     });
-    
+
     const mockFrom = mockClient.from as any;
     mockFrom().single.mockResolvedValue({
       data: mockUserProfile,
@@ -87,7 +87,7 @@ describe('useAdminAuth', () => {
   it('should return false when user is not authenticated', async () => {
     const { createClient } = await import('@/lib/supabase/client');
     const mockClient = createClient();
-    
+
     (mockClient.auth.getUser as any).mockResolvedValue({
       data: { user: null },
       error: null,
@@ -124,7 +124,7 @@ describe('useAdminAuth', () => {
   it('should handle errors gracefully', async () => {
     const { createClient } = await import('@/lib/supabase/client');
     const mockClient = createClient();
-    
+
     (mockClient.auth.getUser as any).mockResolvedValue({
       data: { user: null },
       error: new Error('Auth error'),
@@ -143,4 +143,3 @@ describe('useAdminAuth', () => {
     }
   });
 });
-

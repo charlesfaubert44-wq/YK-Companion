@@ -2,7 +2,7 @@ import { SITE_CONFIG } from './metadata';
 
 /**
  * Multilingual SEO Support
- * 
+ *
  * Utilities for generating hreflang tags and language-specific metadata
  * Supports: English, French, Dene, Inuktitut
  */
@@ -38,7 +38,7 @@ export const LANGUAGE_CONFIG = {
 
 /**
  * Generate hreflang alternate links for a page
- * 
+ *
  * Used to tell search engines about language/regional variations
  * of the same page
  */
@@ -49,10 +49,10 @@ export function generateHreflangLinks(
   const links: Array<{ hreflang: string; href: string }> = [];
 
   // Add link for each available language
-  availableLanguages.forEach((lang) => {
+  availableLanguages.forEach(lang => {
     const langCode = LANGUAGE_CONFIG[lang].code;
     const href = `${SITE_CONFIG.url}${lang === 'en' ? '' : `/${lang}`}${path}`;
-    
+
     links.push({
       hreflang: langCode,
       href,
@@ -70,7 +70,7 @@ export function generateHreflangLinks(
 
 /**
  * Generate language-specific metadata
- * 
+ *
  * Returns metadata object with language-specific title, description, etc.
  */
 export function generateLanguageMetadata(
@@ -106,33 +106,33 @@ export function generateLanguageMetadata(
 
 /**
  * Translations for common SEO terms
- * 
+ *
  * Helpful for generating metadata in different languages
  */
 export const SEO_TRANSLATIONS = {
   siteTitle: {
     en: 'YK Buddy - Your Yellowknife Companion',
     fr: 'YK Buddy - Votre compagnon de Yellowknife',
-    dene: 'YK Buddy - Nįłį wegots\'ą',
+    dene: "YK Buddy - Nįłį wegots'ą",
     inuktitut: 'YK Buddy - ᐃᓚᖓᑦ Yellowknife',
   },
   siteDescription: {
     en: 'Your friendly companion for exploring Yellowknife - whether you are visiting, living here, or planning to move.',
     fr: 'Votre compagnon amical pour explorer Yellowknife - que vous soyez en visite, que vous y viviez ou que vous prévoyiez de déménager.',
-    dene: 'Yellowknife wegots\'ą nedhé - gots\'įh, gots\'ę́dé, edádhe ts\'ǫ́ gots\'ǫ.',
+    dene: "Yellowknife wegots'ą nedhé - gots'įh, gots'ę́dé, edádhe ts'ǫ́ gots'ǫ.",
     inuktitut: 'ᐃᓚᖓᑦ Yellowknife ᑐᑭᓯᒋᐊᕐᕕᒃ - ᑕᐃᑉᓱᒪᓐᓂᐊᕐᓗᑎᑦ, ᐃᓪᓕᕐᓗᑎᑦ, ᓅᑉᓗᑎᑦ ᐅᕝᕙᓘᓐᓃᑦ.',
   },
   pathways: {
     visiting: {
       en: 'Visiting',
       fr: 'Visite',
-      dene: 'Gots\'įh',
+      dene: "Gots'įh",
       inuktitut: 'ᑕᐃᑉᓱᒪᓐᓂᐊᕐᓂᖅ',
     },
     living: {
       en: 'Living',
       fr: 'Vivre',
-      dene: 'Gots\'ę́dé',
+      dene: "Gots'ę́dé",
       inuktitut: 'ᐃᓪᓕᕐᓂᖅ',
     },
     moving: {
@@ -146,19 +146,19 @@ export const SEO_TRANSLATIONS = {
     aurora: {
       en: 'Aurora Forecast',
       fr: 'Prévisions aurores boréales',
-      dene: 'Yahdaht\'á',
+      dene: "Yahdaht'á",
       inuktitut: 'ᐊᕐᓴᖅᑐᐃᑦ ᓯᓚᑦᑐᖅ',
     },
     garageSales: {
       en: 'Garage Sales',
       fr: 'Ventes de garage',
-      dene: 'Nįdeé ts\'edı',
+      dene: "Nįdeé ts'edı",
       inuktitut: 'ᐊᐅᓚᔾᔭᐅᕙᒃᑐᑦ',
     },
     knowledge: {
       en: 'Knowledge Base',
       fr: 'Base de connaissances',
-      dene: 'Įt\'ah xə',
+      dene: "Įt'ah xə",
       inuktitut: 'ᖃᐅᔨᒪᔭᐅᔪᑦ',
     },
   },
@@ -166,19 +166,19 @@ export const SEO_TRANSLATIONS = {
     readMore: {
       en: 'Read More',
       fr: 'Lire la suite',
-      dene: 'K\'áh xálį',
+      dene: "K'áh xálį",
       inuktitut: 'ᐊᑐᓂ',
     },
     learnMore: {
       en: 'Learn More',
       fr: 'En savoir plus',
-      dene: 'K\'áh įt\'ah',
+      dene: "K'áh įt'ah",
       inuktitut: 'ᐃᓕᓐᓂᐊᕐᓂᖅ',
     },
     search: {
       en: 'Search',
       fr: 'Rechercher',
-      dene: 'Náįts\'edé',
+      dene: "Náįts'edé",
       inuktitut: 'ᐅᔭᕐᓂᖅ',
     },
   },
@@ -186,7 +186,7 @@ export const SEO_TRANSLATIONS = {
 
 /**
  * Generate OpenGraph locale alternates
- * 
+ *
  * For social media platforms to show correct language version
  */
 export function generateOpenGraphLocales(
@@ -194,13 +194,13 @@ export function generateOpenGraphLocales(
   availableLanguages: SupportedLanguage[]
 ): string[] {
   return availableLanguages
-    .filter((lang) => lang !== currentLanguage)
-    .map((lang) => LANGUAGE_CONFIG[lang].code);
+    .filter(lang => lang !== currentLanguage)
+    .map(lang => LANGUAGE_CONFIG[lang].code);
 }
 
 /**
  * Get language from path
- * 
+ *
  * Extracts language code from URL path (e.g., /fr/about -> 'fr')
  */
 export function getLanguageFromPath(path: string): SupportedLanguage {
@@ -213,13 +213,11 @@ export function getLanguageFromPath(path: string): SupportedLanguage {
 
 /**
  * Generate language sitemap index
- * 
+ *
  * Creates a sitemap index that points to language-specific sitemaps
  */
-export function generateLanguageSitemapIndex(
-  languages: SupportedLanguage[] = ['en']
-): string {
-  const sitemaps = languages.map((lang) => {
+export function generateLanguageSitemapIndex(languages: SupportedLanguage[] = ['en']): string {
+  const sitemaps = languages.map(lang => {
     const langPath = lang === 'en' ? '' : `/${lang}`;
     return `  <sitemap>
     <loc>${SITE_CONFIG.url}${langPath}/sitemap.xml</loc>
@@ -235,13 +233,10 @@ ${sitemaps.join('\n')}
 
 /**
  * Generate structured data with language support
- * 
+ *
  * Adds inLanguage property to schemas
  */
-export function addLanguageToSchema(
-  schema: any,
-  language: SupportedLanguage
-): any {
+export function addLanguageToSchema(schema: any, language: SupportedLanguage): any {
   return {
     ...schema,
     inLanguage: LANGUAGE_CONFIG[language].code,
@@ -282,4 +277,3 @@ export function createMultilingualMetadata(
     },
   };
 }
-

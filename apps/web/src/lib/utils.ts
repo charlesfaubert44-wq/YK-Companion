@@ -45,12 +45,7 @@ export function formatTime(timeString: string): string {
  * @example
  * calculateDistance(62.4540, -114.3718, 62.4580, -114.3800) // 0.68
  */
-export function calculateDistance(
-  lat1: number,
-  lon1: number,
-  lat2: number,
-  lon2: number
-): number {
+export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   // Haversine formula for calculating distance between two coordinates
   const R = 6371; // Earth's radius in km
   const dLat = toRadians(lat2 - lat1);
@@ -58,10 +53,7 @@ export function calculateDistance(
 
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c;
@@ -118,7 +110,10 @@ export function formatRelativeTime(date: string | Date): string {
 
     if (interval >= 1) {
       const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
-      return rtf.format(diffInSeconds > 0 ? -interval : interval, unit as Intl.RelativeTimeFormatUnit);
+      return rtf.format(
+        diffInSeconds > 0 ? -interval : interval,
+        unit as Intl.RelativeTimeFormatUnit
+      );
     }
   }
 
@@ -298,7 +293,7 @@ export function generateId(prefix?: string): string {
  * await sleep(500); // Wait 500ms
  */
 export function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**
@@ -311,12 +306,15 @@ export function sleep(ms: number): Promise<void> {
  * // { A: [{type: 'A', val: 1}, {type: 'A', val: 3}], B: [{type: 'B', val: 2}] }
  */
 export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
-  return array.reduce((result, item) => {
-    const groupKey = String(item[key]);
-    if (!result[groupKey]) {
-      result[groupKey] = [];
-    }
-    result[groupKey].push(item);
-    return result;
-  }, {} as Record<string, T[]>);
+  return array.reduce(
+    (result, item) => {
+      const groupKey = String(item[key]);
+      if (!result[groupKey]) {
+        result[groupKey] = [];
+      }
+      result[groupKey].push(item);
+      return result;
+    },
+    {} as Record<string, T[]>
+  );
 }

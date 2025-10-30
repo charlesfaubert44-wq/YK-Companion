@@ -1,6 +1,6 @@
 /**
  * Performance Optimization Utilities
- * 
+ *
  * Tools for improving application performance
  */
 
@@ -19,7 +19,7 @@ export async function lazyLoad<T>(importFn: () => Promise<T>): Promise<T> {
  */
 export function preloadRoute(href: string): void {
   if (typeof window === 'undefined') return;
-  
+
   const link = document.createElement('link');
   link.rel = 'prefetch';
   link.href = href;
@@ -33,7 +33,7 @@ export function preloadRoute(href: string): void {
 export function preconnect(urls: string[]): void {
   if (typeof window === 'undefined') return;
 
-  urls.forEach((url) => {
+  urls.forEach(url => {
     const link = document.createElement('link');
     link.rel = 'preconnect';
     link.href = url;
@@ -96,12 +96,9 @@ export function throttle<T extends (...args: any[]) => any>(
  * @param label - Label for the measurement
  * @returns Result of the function
  */
-export async function measurePerformance<T>(
-  fn: () => Promise<T> | T,
-  label: string
-): Promise<T> {
+export async function measurePerformance<T>(fn: () => Promise<T> | T, label: string): Promise<T> {
   const start = performance.now();
-  
+
   try {
     const result = await fn();
     const end = performance.now();
@@ -138,10 +135,7 @@ export async function measurePerformance<T>(
  * @param callback - Function to run when idle
  * @param options - Idle callback options
  */
-export function runWhenIdle(
-  callback: () => void,
-  options?: IdleRequestOptions
-): void {
+export function runWhenIdle(callback: () => void, options?: IdleRequestOptions): void {
   if (typeof window === 'undefined') {
     callback();
     return;
@@ -251,4 +245,3 @@ export function reportWebVitals(metric: {
     });
   }
 }
-

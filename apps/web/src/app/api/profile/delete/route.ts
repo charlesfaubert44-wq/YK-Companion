@@ -9,7 +9,10 @@ import { createClient } from '@/lib/supabase/server';
 export async function DELETE(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -46,10 +49,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Delete user profile
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .delete()
-      .eq('id', user.id);
+    const { error: profileError } = await supabase.from('profiles').delete().eq('id', user.id);
 
     if (profileError) {
       console.error('Error deleting profile:', profileError);
@@ -71,10 +71,6 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Account deletion error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
-

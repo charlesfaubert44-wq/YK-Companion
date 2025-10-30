@@ -167,9 +167,7 @@ export default function SwipeablePageTransition({
       </div>
 
       {/* Swipe hint - Shows on first visit */}
-      {enableBackSwipe && (
-        <SwipeHint theme={theme} />
-      )}
+      {enableBackSwipe && <SwipeHint theme={theme} />}
     </div>
   );
 }
@@ -208,27 +206,27 @@ function SwipeHint({ theme }: { theme?: any }) {
       >
         ←
       </div>
-      <span
-        className="text-sm font-medium"
-        style={{ color: theme?.primary || '#00ff88' }}
-      >
+      <span className="text-sm font-medium" style={{ color: theme?.primary || '#00ff88' }}>
         Swipe to go back
       </span>
 
       <style jsx>{`
         @keyframes slide-hint {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0;
             transform: translateX(-20px) translateY(-50%);
           }
-          10%, 90% {
+          10%,
+          90% {
             opacity: 1;
             transform: translateX(0) translateY(-50%);
           }
         }
 
         @keyframes swipe-arrow {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateX(0);
           }
           50% {

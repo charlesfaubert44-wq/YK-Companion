@@ -1,9 +1,9 @@
 /**
  * Sentry Error Monitoring Integration
- * 
+ *
  * Provides enhanced error tracking and reporting to Sentry.
  * Includes context enrichment, user identification, and custom error boundaries.
- * 
+ *
  * @module sentry-integration
  */
 
@@ -22,40 +22,40 @@ export function initializeSentry() {
 
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    
+
     // Adjust this value in production
     tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
-    
+
     // Capture 100% of errors
     sampleRate: 1.0,
-    
+
     // Environment
     environment: process.env.NEXT_PUBLIC_ENV || process.env.NODE_ENV || 'development',
-    
+
     // Release tracking
     release: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
 
     // Session replay (useful for debugging)
     replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
-    
+
     // Don't send errors in development
     enabled: process.env.NODE_ENV === 'production',
-    
+
     // Beforeend hook to filter/modify events
     beforeSend(event, hint) {
       // Filter out known non-critical errors
       if (event.exception?.values?.[0]?.value?.includes('ResizeObserver')) {
         return null; // Don't send ResizeObserver errors
       }
-      
+
       if (event.exception?.values?.[0]?.value?.includes('Loading chunk')) {
         return null; // Don't send chunk loading errors (network issues)
       }
-      
+
       return event;
     },
-    
+
     // Integrations
     integrations: [
       Sentry.replayIntegration({
@@ -68,10 +68,10 @@ export function initializeSentry() {
 
 /**
  * Capture error with context
- * 
+ *
  * @param {Error} error - Error object
  * @param {Object} context - Additional context
- * 
+ *
  * @example
  * ```ts
  * try {
@@ -88,7 +88,7 @@ export function initializeSentry() {
 export function captureError(error: Error | unknown, context?: Record<string, any>): void {
   // Log locally first
   logError('Error captured by Sentry integration', error as Error, context);
-  
+
   // Capture in Sentry if initialized
   if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.captureException(error, {
@@ -99,7 +99,7 @@ export function captureError(error: Error | unknown, context?: Record<string, an
 
 /**
  * Capture message (non-error event)
- * 
+ *
  * @param {string} message - Message to capture
  * @param {Sentry.SeverityLevel} level - Severity level
  * @param {Object} context - Additional context
@@ -120,9 +120,9 @@ export function captureMessage(
 /**
  * Set user context for error tracking
  * Call this when user logs in
- * 
+ *
  * @param {Object} user - User object
- * 
+ *
  * @example
  * ```ts
  * setUserContext({
@@ -159,7 +159,7 @@ export function clearUserContext(): void {
 /**
  * Add breadcrumb for debugging
  * Breadcrumbs appear in error reports to show user journey
- * 
+ *
  * @example
  * ```ts
  * addBreadcrumb({
@@ -188,7 +188,7 @@ export function addBreadcrumb(breadcrumb: {
 
 /**
  * Start a new transaction for performance monitoring
- * 
+ *
  * @example
  * ```ts
  * const transaction = startTransaction('checkout-flow', 'payment');
@@ -204,9 +204,9 @@ export function addBreadcrumb(breadcrumb: {
  */
 export function startTransaction(name: string, op: string = 'custom') {
   if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    return Sentry.startSpan({ name, op }, (span) => span);
+    return Sentry.startSpan({ name, op }, span => span);
   }
-  
+
   // Return mock transaction if Sentry not configured
   return {
     end: () => {},
@@ -219,7 +219,7 @@ export function startTransaction(name: string, op: string = 'custom') {
 /**
  * Wrap async function with error boundary
  * Automatically captures and reports errors
- * 
+ *
  * @example
  * ```ts
  * const safeFunction = withErrorBoundary(
@@ -256,4 +256,3 @@ export function withErrorBoundary<T extends (...args: any[]) => Promise<any>>(
 export function isSentryInitialized(): boolean {
   return !!process.env.NEXT_PUBLIC_SENTRY_DSN;
 }
-

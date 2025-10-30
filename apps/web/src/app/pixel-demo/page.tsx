@@ -80,22 +80,13 @@ export default function PixelDemoPage() {
         <div className="bg-dark-800 border-2 border-aurora-green p-8 rounded-lg">
           <h3 className="font-mono text-lg text-white mb-4">Interactive Demo</h3>
           <div className="flex flex-wrap gap-4">
-            <PixelButton
-              variant="primary"
-              onClick={() => alert('Primary button clicked!')}
-            >
+            <PixelButton variant="primary" onClick={() => alert('Primary button clicked!')}>
               Click Me!
             </PixelButton>
-            <PixelButton
-              variant="secondary"
-              onClick={() => alert('Secondary button clicked!')}
-            >
+            <PixelButton variant="secondary" onClick={() => alert('Secondary button clicked!')}>
               Click Me Too!
             </PixelButton>
-            <PixelButton
-              variant="accent"
-              href="#pixel-cards"
-            >
+            <PixelButton variant="accent" href="#pixel-cards">
               Link Button
             </PixelButton>
           </div>
@@ -110,77 +101,39 @@ export default function PixelDemoPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card with icon and title */}
-          <PixelCard
-            borderColor="green"
-            hover
-            icon="🎮"
-            title="GAMING"
-          >
+          <PixelCard borderColor="green" hover icon="🎮" title="GAMING">
             <p className="text-gray-300">
               Retro-style gaming UI with nostalgic vibes and modern functionality
             </p>
           </PixelCard>
 
           {/* Card with blue border */}
-          <PixelCard
-            borderColor="blue"
-            hover
-            icon="❄️"
-            title="NORTHERN"
-          >
+          <PixelCard borderColor="blue" hover icon="❄️" title="NORTHERN">
             <p className="text-gray-300">
               Aurora-inspired design capturing the magic of the northern lights
             </p>
           </PixelCard>
 
           {/* Card with purple border */}
-          <PixelCard
-            borderColor="purple"
-            hover
-            icon="⭐"
-            title="PREMIUM"
-          >
-            <p className="text-gray-300">
-              High-quality pixel art aesthetic with smooth animations
-            </p>
+          <PixelCard borderColor="purple" hover icon="⭐" title="PREMIUM">
+            <p className="text-gray-300">High-quality pixel art aesthetic with smooth animations</p>
           </PixelCard>
 
           {/* Card with pink border */}
-          <PixelCard
-            borderColor="pink"
-            hover
-            icon="🌸"
-            title="ACCENT"
-          >
-            <p className="text-gray-300">
-              Warm accent colors for special highlights and CTAs
-            </p>
+          <PixelCard borderColor="pink" hover icon="🌸" title="ACCENT">
+            <p className="text-gray-300">Warm accent colors for special highlights and CTAs</p>
           </PixelCard>
 
           {/* Card with white border */}
-          <PixelCard
-            borderColor="white"
-            hover
-            icon="💎"
-            title="CLASSIC"
-          >
-            <p className="text-gray-300">
-              Classic white borders for a clean, minimalist look
-            </p>
+          <PixelCard borderColor="white" hover icon="💎" title="CLASSIC">
+            <p className="text-gray-300">Classic white borders for a clean, minimalist look</p>
           </PixelCard>
 
           {/* Mixed content card */}
-          <PixelCard
-            borderColor="green"
-            hover
-          >
+          <PixelCard borderColor="green" hover>
             <div className="space-y-4">
-              <h3 className="font-pixel text-lg text-aurora-green">
-                CUSTOM CARD
-              </h3>
-              <p className="text-gray-300">
-                Cards can contain any custom content you need
-              </p>
+              <h3 className="font-pixel text-lg text-aurora-green">CUSTOM CARD</h3>
+              <p className="text-gray-300">Cards can contain any custom content you need</p>
               <PixelButton variant="primary" size="sm">
                 Action
               </PixelButton>
@@ -229,13 +182,13 @@ export default function PixelDemoPage() {
           <div className="space-y-4">
             <h3 className="font-pixel text-lg text-white mb-4">Import Components</h3>
             <pre className="bg-dark-900 p-4 rounded text-aurora-green font-mono text-sm overflow-x-auto">
-{`import { PixelButton } from '@/components/pixel/PixelButton';
+              {`import { PixelButton } from '@/components/pixel/PixelButton';
 import { PixelCard } from '@/components/pixel/PixelCard';`}
             </pre>
 
             <h3 className="font-pixel text-lg text-white mb-4 mt-6">Button Examples</h3>
             <pre className="bg-dark-900 p-4 rounded text-aurora-blue font-mono text-sm overflow-x-auto">
-{`<PixelButton variant="primary" size="md">
+              {`<PixelButton variant="primary" size="md">
   Click Me
 </PixelButton>
 
@@ -246,7 +199,7 @@ import { PixelCard } from '@/components/pixel/PixelCard';`}
 
             <h3 className="font-pixel text-lg text-white mb-4 mt-6">Card Examples</h3>
             <pre className="bg-dark-900 p-4 rounded text-aurora-purple font-mono text-sm overflow-x-auto">
-{`<PixelCard
+              {`<PixelCard
   borderColor="green"
   hover
   icon="🎮"
@@ -261,9 +214,7 @@ import { PixelCard } from '@/components/pixel/PixelCard';`}
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center">
-        <p className="font-pixel text-sm text-gray-500">
-          YK BUDDY PIXEL UI v1.0
-        </p>
+        <p className="font-pixel text-sm text-gray-500">YK BUDDY PIXEL UI v1.0</p>
       </footer>
     </div>
   );

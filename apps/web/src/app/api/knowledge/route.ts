@@ -14,8 +14,8 @@ export async function GET(request: NextRequest) {
     // Parse filters from query params
     const filters: KnowledgeFilters = {
       category_id: searchParams.get('category_id') || undefined,
-      content_type: searchParams.get('content_type') as any || undefined,
-      season: searchParams.get('season') as any || undefined,
+      content_type: (searchParams.get('content_type') as any) || undefined,
+      season: (searchParams.get('season') as any) || undefined,
       search: searchParams.get('search') || undefined,
       is_featured: searchParams.get('is_featured') === 'true' ? true : undefined,
       limit: parseInt(searchParams.get('limit') || '20'),
@@ -24,10 +24,12 @@ export async function GET(request: NextRequest) {
 
     let query = supabase
       .from('knowledge_submissions')
-      .select(`
+      .select(
+        `
         *,
         category:knowledge_categories(*)
-      `)
+      `
+      )
       .eq('status', 'approved')
       .order('created_at', { ascending: false });
 
@@ -76,7 +78,9 @@ export async function POST(request: NextRequest) {
     const body: CreateKnowledgeSubmissionInput = await request.json();
 
     // Get current user (if authenticated)
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     // Validation
     if (!body.title || !body.content || !body.content_type) {
@@ -114,10 +118,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({
-      message: 'Submission created successfully. It will be reviewed by our team.',
-      data,
-    }, { status: 201 });
+    return NextResponse.json(
+      {
+        message: 'Submission created successfully. It will be reviewed by our team.',
+        data,
+      },
+      { status: 201 }
+    );
   } catch (error: any) {
     console.error('Unexpected error in POST /api/knowledge:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });

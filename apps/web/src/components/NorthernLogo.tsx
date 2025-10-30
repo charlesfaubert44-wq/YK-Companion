@@ -6,7 +6,9 @@ export default function NorthernLogo({ size = 140 }: { size?: number }) {
   const [isHovered, setIsHovered] = useState(false);
   const [time, setTime] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const [stars, setStars] = useState<Array<{ x: number; y: number; size: number; delay: number }>>([]);
+  const [stars, setStars] = useState<Array<{ x: number; y: number; size: number; delay: number }>>(
+    []
+  );
 
   useEffect(() => {
     // Generate star field
@@ -20,7 +22,7 @@ export default function NorthernLogo({ size = 140 }: { size?: number }) {
 
     // Smooth continuous animation
     const interval = setInterval(() => {
-      setTime((prev) => (prev + 0.02) % (Math.PI * 2));
+      setTime(prev => (prev + 0.02) % (Math.PI * 2));
     }, 50);
 
     return () => clearInterval(interval);
@@ -60,35 +62,64 @@ export default function NorthernLogo({ size = 140 }: { size?: number }) {
       />
 
       {/* Main SVG - Beautiful Aurora Display */}
-      <svg
-        width={size}
-        height={size}
-        viewBox="0 0 200 200"
-        className="relative z-10"
-      >
+      <svg width={size} height={size} viewBox="0 0 200 200" className="relative z-10">
         <defs>
           {/* Aurora gradient definitions */}
           <linearGradient id="green-blue" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#00ff88" stopOpacity="0.8">
-              <animate attributeName="stopOpacity" values="0.6;0.9;0.6" dur="3s" repeatCount="indefinite" />
+              <animate
+                attributeName="stopOpacity"
+                values="0.6;0.9;0.6"
+                dur="3s"
+                repeatCount="indefinite"
+              />
             </stop>
             <stop offset="50%" stopColor="#4d94ff" stopOpacity="0.7">
-              <animate attributeName="stopOpacity" values="0.5;0.8;0.5" dur="3s" begin="0.5s" repeatCount="indefinite" />
+              <animate
+                attributeName="stopOpacity"
+                values="0.5;0.8;0.5"
+                dur="3s"
+                begin="0.5s"
+                repeatCount="indefinite"
+              />
             </stop>
             <stop offset="100%" stopColor="#00ff88" stopOpacity="0.8">
-              <animate attributeName="stopOpacity" values="0.6;0.9;0.6" dur="3s" begin="1s" repeatCount="indefinite" />
+              <animate
+                attributeName="stopOpacity"
+                values="0.6;0.9;0.6"
+                dur="3s"
+                begin="1s"
+                repeatCount="indefinite"
+              />
             </stop>
           </linearGradient>
 
           <linearGradient id="purple-pink" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#a366ff" stopOpacity="0.7">
-              <animate attributeName="stopOpacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite" />
+              <animate
+                attributeName="stopOpacity"
+                values="0.5;0.8;0.5"
+                dur="4s"
+                repeatCount="indefinite"
+              />
             </stop>
             <stop offset="50%" stopColor="#ff66cc" stopOpacity="0.6">
-              <animate attributeName="stopOpacity" values="0.4;0.7;0.4" dur="4s" begin="0.5s" repeatCount="indefinite" />
+              <animate
+                attributeName="stopOpacity"
+                values="0.4;0.7;0.4"
+                dur="4s"
+                begin="0.5s"
+                repeatCount="indefinite"
+              />
             </stop>
             <stop offset="100%" stopColor="#a366ff" stopOpacity="0.7">
-              <animate attributeName="stopOpacity" values="0.5;0.8;0.5" dur="4s" begin="1s" repeatCount="indefinite" />
+              <animate
+                attributeName="stopOpacity"
+                values="0.5;0.8;0.5"
+                dur="4s"
+                begin="1s"
+                repeatCount="indefinite"
+              />
             </stop>
           </linearGradient>
 
@@ -249,10 +280,46 @@ export default function NorthernLogo({ size = 140 }: { size?: number }) {
 
           {/* Star rays */}
           <g opacity={isHovered ? '0.9' : '0.6'} className="transition-opacity duration-300">
-            <line x1="100" y1="85" x2="100" y2="92" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" filter="url(#softGlow)" />
-            <line x1="100" y1="108" x2="100" y2="115" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" filter="url(#softGlow)" />
-            <line x1="85" y1="100" x2="92" y2="100" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" filter="url(#softGlow)" />
-            <line x1="108" y1="100" x2="115" y2="100" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" filter="url(#softGlow)" />
+            <line
+              x1="100"
+              y1="85"
+              x2="100"
+              y2="92"
+              stroke="#FFD700"
+              strokeWidth="2"
+              strokeLinecap="round"
+              filter="url(#softGlow)"
+            />
+            <line
+              x1="100"
+              y1="108"
+              x2="100"
+              y2="115"
+              stroke="#FFD700"
+              strokeWidth="2"
+              strokeLinecap="round"
+              filter="url(#softGlow)"
+            />
+            <line
+              x1="85"
+              y1="100"
+              x2="92"
+              y2="100"
+              stroke="#FFD700"
+              strokeWidth="2"
+              strokeLinecap="round"
+              filter="url(#softGlow)"
+            />
+            <line
+              x1="108"
+              y1="100"
+              x2="115"
+              y2="100"
+              stroke="#FFD700"
+              strokeWidth="2"
+              strokeLinecap="round"
+              filter="url(#softGlow)"
+            />
           </g>
         </g>
 

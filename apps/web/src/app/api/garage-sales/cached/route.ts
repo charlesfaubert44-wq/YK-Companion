@@ -1,6 +1,6 @@
 /**
  * Cached Garage Sales API
- * 
+ *
  * Provides cached garage sales data for improved performance.
  * Uses Next.js caching with revalidation tags.
  */
@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 
 /**
  * GET - Fetch cached garage sales
- * 
+ *
  * This endpoint uses server-side caching to reduce database load
  * and improve response times for frequently accessed data.
  */
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   try {
     // Apply rate limiting
     const rateLimit = checkRateLimit(request, rateLimitConfigs.read);
-    
+
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many requests' },
@@ -43,13 +43,15 @@ export async function GET(request: NextRequest) {
 
         const { data, error } = await supabase
           .from('garage_sales')
-          .select(`
+          .select(
+            `
             *,
             profiles!garage_sales_user_id_fkey (
               full_name,
               email
             )
-          `)
+          `
+          )
           .eq('status', status)
           .eq('is_active', true)
           .gte('sale_date', today)
@@ -76,10 +78,6 @@ export async function GET(request: NextRequest) {
     );
   } catch (error: any) {
     console.error('Cached garage sales API error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
-

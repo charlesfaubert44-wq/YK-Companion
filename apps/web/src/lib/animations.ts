@@ -174,10 +174,7 @@ export function spring(config: SpringConfig = {}): EasingFunction {
       const wd = w0 * Math.sqrt(1 - zeta * zeta);
       const A = 1;
       const B = (zeta * w0 + velocity) / wd;
-      return (
-        1 -
-        Math.exp(-zeta * w0 * t) * (A * Math.cos(wd * t) + B * Math.sin(wd * t))
-      );
+      return 1 - Math.exp(-zeta * w0 * t) * (A * Math.cos(wd * t) + B * Math.sin(wd * t));
     } else if (zeta === 1) {
       // Critically damped
       return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
@@ -219,12 +216,9 @@ export function createTransform(transform: Transform): string {
   if (transform.scale !== undefined) parts.push(`scale(${transform.scale})`);
 
   if (transform.rotate !== undefined) parts.push(`rotate(${transform.rotate}deg)`);
-  if (transform.rotateX !== undefined)
-    parts.push(`rotateX(${transform.rotateX}deg)`);
-  if (transform.rotateY !== undefined)
-    parts.push(`rotateY(${transform.rotateY}deg)`);
-  if (transform.rotateZ !== undefined)
-    parts.push(`rotateZ(${transform.rotateZ}deg)`);
+  if (transform.rotateX !== undefined) parts.push(`rotateX(${transform.rotateX}deg)`);
+  if (transform.rotateY !== undefined) parts.push(`rotateY(${transform.rotateY}deg)`);
+  if (transform.rotateZ !== undefined) parts.push(`rotateZ(${transform.rotateZ}deg)`);
 
   if (transform.skewX !== undefined) parts.push(`skewX(${transform.skewX}deg)`);
   if (transform.skewY !== undefined) parts.push(`skewY(${transform.skewY}deg)`);
@@ -241,10 +235,7 @@ export function createTransform(transform: Transform): string {
  * @example
  * applyTransform(element, { x: 100, scale: 1.2 });
  */
-export function applyTransform(
-  element: HTMLElement,
-  transform: Transform
-): void {
+export function applyTransform(element: HTMLElement, transform: Transform): void {
   element.style.transform = createTransform(transform);
 }
 
@@ -264,18 +255,12 @@ export function applyTransform(
  * );
  * // Result: { x: 50, scale: 1.25 }
  */
-export function interpolateTransform(
-  from: Transform,
-  to: Transform,
-  progress: number
-): Transform {
+export function interpolateTransform(from: Transform, to: Transform, progress: number): Transform {
   const result: Transform = {};
 
-  const keys = new Set([...Object.keys(from), ...Object.keys(to)]) as Set<
-    keyof Transform
-  >;
+  const keys = new Set([...Object.keys(from), ...Object.keys(to)]) as Set<keyof Transform>;
 
-  keys.forEach((key) => {
+  keys.forEach(key => {
     const fromValue = from[key] ?? (key.includes('scale') ? 1 : 0);
     const toValue = to[key] ?? (key.includes('scale') ? 1 : 0);
     result[key] = fromValue + (toValue - fromValue) * progress;
@@ -391,7 +376,7 @@ export function smoothScrollTo(
   duration: number = 500,
   easing: EasingFunction = easeInOutCubic
 ): Promise<void> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const startY = window.scrollY;
     const targetY =
       typeof target === 'number' ? target : target.getBoundingClientRect().top + startY;
@@ -400,7 +385,7 @@ export function smoothScrollTo(
 
     animate(
       duration,
-      (progress) => {
+      progress => {
         window.scrollTo(0, startY + distance * progress);
         if (progress === 1) resolve();
       },
@@ -472,14 +457,10 @@ export function createIntersectionAnimationObserver(
   callback: (entry: IntersectionObserverEntry) => void,
   config: IntersectionAnimationConfig = {}
 ): IntersectionObserver {
-  const {
-    root = null,
-    rootMargin = '0px',
-    threshold = 0.1,
-  } = config;
+  const { root = null, rootMargin = '0px', threshold = 0.1 } = config;
 
   return new IntersectionObserver(
-    (entries) => {
+    entries => {
       entries.forEach(callback);
     },
     {

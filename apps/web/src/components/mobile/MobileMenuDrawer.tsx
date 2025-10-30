@@ -2,7 +2,19 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { X, Home, Compass, Map, Heart, Settings, LogOut, BookOpen, Calculator, Users, Share2 } from 'lucide-react';
+import {
+  X,
+  Home,
+  Compass,
+  Map,
+  Heart,
+  Settings,
+  LogOut,
+  BookOpen,
+  Calculator,
+  Users,
+  Share2,
+} from 'lucide-react';
 import { hapticFeedback, lockBodyScroll, unlockBodyScroll } from '@/lib/mobile';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -46,7 +58,7 @@ const MENU_SECTIONS = [
 
 export default function MobileMenuDrawer({ isOpen, onClose, theme }: MobileMenuDrawerProps) {
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     if (isOpen) {
@@ -64,9 +76,9 @@ export default function MobileMenuDrawer({ isOpen, onClose, theme }: MobileMenuD
     onClose();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     hapticFeedback();
-    logout();
+    await signOut();
     onClose();
   };
 
@@ -117,7 +129,7 @@ export default function MobileMenuDrawer({ isOpen, onClose, theme }: MobileMenuD
               </h2>
               {user && (
                 <p className="text-sm text-gray-400 mt-1">
-                  Welcome, {user.displayName || 'Explorer'}
+                  Welcome, {user.email?.split('@')[0] || 'Explorer'}
                 </p>
               )}
             </div>
@@ -166,7 +178,7 @@ export default function MobileMenuDrawer({ isOpen, onClose, theme }: MobileMenuD
                       onClick={() => handleNavClick(item.path)}
                       className="w-full flex items-center space-x-3 px-3 py-3 rounded-lg touch-feedback transition-all active:scale-95 group hover:bg-white/5"
                       style={{
-                        animationDelay: `${(sectionIndex * 50) + (itemIndex * 30)}ms`,
+                        animationDelay: `${sectionIndex * 50 + itemIndex * 30}ms`,
                         animation: 'slideInLeft 0.3s ease-out backwards',
                       }}
                     >
@@ -288,7 +300,8 @@ export default function MobileMenuDrawer({ isOpen, onClose, theme }: MobileMenuD
         }
 
         @keyframes aurora-pulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
             transform: scale(1);
           }
@@ -299,7 +312,8 @@ export default function MobileMenuDrawer({ isOpen, onClose, theme }: MobileMenuD
         }
 
         @keyframes aurora-wave {
-          0%, 100% {
+          0%,
+          100% {
             background-position: 0% 0%;
           }
           50% {
@@ -308,7 +322,8 @@ export default function MobileMenuDrawer({ isOpen, onClose, theme }: MobileMenuD
         }
 
         @keyframes twinkle {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.2;
           }
           50% {

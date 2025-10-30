@@ -101,7 +101,7 @@ export function clearLocalStorageByPrefix(prefix: string): number {
     let cleared = 0;
     const keys = Object.keys(localStorage);
 
-    keys.forEach((key) => {
+    keys.forEach(key => {
       if (key.startsWith(prefix)) {
         localStorage.removeItem(key);
         cleared++;
@@ -130,7 +130,7 @@ export function getLocalStorageByPrefix<T>(prefix: string): Record<string, T> {
     const result: Record<string, T> = {};
     const keys = Object.keys(localStorage);
 
-    keys.forEach((key) => {
+    keys.forEach(key => {
       if (key.startsWith(prefix)) {
         const value = getLocalStorage<T>(key);
         if (value !== null) {

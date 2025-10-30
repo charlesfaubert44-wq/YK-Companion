@@ -32,11 +32,15 @@ export default function CalculatorPage() {
   };
 
   const calculateCosts = () => {
-    const accommodationCost = pricing.accommodation[accommodation as keyof typeof pricing.accommodation] * nights * (accommodation === 'luxury' ? 1 : travelers);
+    const accommodationCost =
+      pricing.accommodation[accommodation as keyof typeof pricing.accommodation] *
+      nights *
+      (accommodation === 'luxury' ? 1 : travelers);
 
-    const activitiesCost = activities.reduce((sum, activity) => {
-      return sum + (pricing.activities[activity as keyof typeof pricing.activities] || 0);
-    }, 0) * travelers;
+    const activitiesCost =
+      activities.reduce((sum, activity) => {
+        return sum + (pricing.activities[activity as keyof typeof pricing.activities] || 0);
+      }, 0) * travelers;
 
     const foodCost = pricing.food * travelers * nights;
     const carCost = rentalCar ? pricing.rentalCar * nights : 0;
@@ -58,7 +62,7 @@ export default function CalculatorPage() {
 
   const toggleActivity = (activity: string) => {
     if (activities.includes(activity)) {
-      setActivities(activities.filter((a) => a !== activity));
+      setActivities(activities.filter(a => a !== activity));
     } else {
       setActivities([...activities, activity]);
     }
@@ -67,16 +71,17 @@ export default function CalculatorPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
       <div className="container mx-auto px-4 py-12">
-        <Link href="/" className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-aurora-green transition inline-flex items-center gap-2 mb-8"
+        >
           ← YK Buddy
         </Link>
 
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-white mb-4">
-              Trip Cost Calculator
-            </h1>
+            <h1 className="text-5xl font-bold text-white mb-4">Trip Cost Calculator</h1>
             <p className="text-xl text-gray-300">
               Remote travel is expensive—we get it. Here's the real breakdown, no surprises.
             </p>
@@ -87,9 +92,7 @@ export default function CalculatorPage() {
             <div className="space-y-6">
               {/* Travelers */}
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20">
-                <label className="block text-white font-semibold mb-3">
-                  Number of Travelers
-                </label>
+                <label className="block text-white font-semibold mb-3">Number of Travelers</label>
                 <div className="flex items-center gap-4">
                   <button
                     onClick={() => setTravelers(Math.max(1, travelers - 1))}
@@ -111,15 +114,13 @@ export default function CalculatorPage() {
 
               {/* Nights */}
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20">
-                <label className="block text-white font-semibold mb-3">
-                  Number of Nights
-                </label>
+                <label className="block text-white font-semibold mb-3">Number of Nights</label>
                 <input
                   type="range"
                   min="1"
                   max="14"
                   value={nights}
-                  onChange={(e) => setNights(parseInt(e.target.value))}
+                  onChange={e => setNights(parseInt(e.target.value))}
                   className="w-full"
                 />
                 <div className="flex justify-between text-sm text-gray-400 mt-2">
@@ -131,11 +132,9 @@ export default function CalculatorPage() {
 
               {/* Season */}
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20">
-                <label className="block text-white font-semibold mb-3">
-                  Season
-                </label>
+                <label className="block text-white font-semibold mb-3">Season</label>
                 <div className="grid grid-cols-2 gap-3">
-                  {['winter', 'spring', 'summer', 'fall'].map((s) => (
+                  {['winter', 'spring', 'summer', 'fall'].map(s => (
                     <button
                       key={s}
                       onClick={() => setSeason(s)}
@@ -153,15 +152,13 @@ export default function CalculatorPage() {
 
               {/* Accommodation */}
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20">
-                <label className="block text-white font-semibold mb-3">
-                  Accommodation Type
-                </label>
+                <label className="block text-white font-semibold mb-3">Accommodation Type</label>
                 <div className="space-y-2">
                   {[
                     { key: 'budget', label: 'Budget ($120/night)', emoji: '🏨' },
                     { key: 'moderate', label: 'Moderate ($200/night)', emoji: '🏨' },
                     { key: 'luxury', label: 'Luxury ($400/night)', emoji: '✨' },
-                  ].map((option) => (
+                  ].map(option => (
                     <button
                       key={option.key}
                       onClick={() => setAccommodation(option.key)}
@@ -180,18 +177,21 @@ export default function CalculatorPage() {
 
               {/* Activities */}
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20">
-                <label className="block text-white font-semibold mb-3">
-                  Select Activities
-                </label>
+                <label className="block text-white font-semibold mb-3">Select Activities</label>
                 <div className="space-y-2">
                   {[
                     { key: 'aurora', label: 'Aurora Viewing Tour', price: 180, emoji: '🌌' },
                     { key: 'dogsledding', label: 'Dog Sledding', price: 250, emoji: '🐕' },
                     { key: 'fishing', label: 'Great Slave Lake Fishing', price: 150, emoji: '🎣' },
-                    { key: 'cultural', label: 'Indigenous Cultural Experience', price: 100, emoji: '🏔️' },
+                    {
+                      key: 'cultural',
+                      label: 'Indigenous Cultural Experience',
+                      price: 100,
+                      emoji: '🏔️',
+                    },
                     { key: 'icefishing', label: 'Ice Fishing', price: 180, emoji: '🧊' },
                     { key: 'snowmobile', label: 'Snowmobile Adventure', price: 300, emoji: '🏍️' },
-                  ].map((activity) => (
+                  ].map(activity => (
                     <button
                       key={activity.key}
                       onClick={() => toggleActivity(activity.key)}
@@ -215,17 +215,13 @@ export default function CalculatorPage() {
               <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20">
                 <label className="flex items-center justify-between cursor-pointer">
                   <div>
-                    <span className="block text-white font-semibold mb-1">
-                      Rental Car
-                    </span>
-                    <span className="text-sm text-gray-400">
-                      $80/day
-                    </span>
+                    <span className="block text-white font-semibold mb-1">Rental Car</span>
+                    <span className="text-sm text-gray-400">$80/day</span>
                   </div>
                   <input
                     type="checkbox"
                     checked={rentalCar}
-                    onChange={(e) => setRentalCar(e.target.checked)}
+                    onChange={e => setRentalCar(e.target.checked)}
                     className="w-6 h-6"
                   />
                 </label>
@@ -235,19 +231,21 @@ export default function CalculatorPage() {
             {/* Right Column - Results */}
             <div className="lg:sticky lg:top-8 h-fit">
               <div className="bg-gradient-to-br from-aurora-green/20 to-aurora-blue/20 backdrop-blur-lg p-8 rounded-2xl border-2 border-aurora-green/30">
-                <h2 className="text-2xl font-bold text-white mb-6">
-                  Trip Cost Estimate
-                </h2>
+                <h2 className="text-2xl font-bold text-white mb-6">Trip Cost Estimate</h2>
 
                 {/* Cost Breakdown */}
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
                     <span className="text-gray-300">Accommodation</span>
-                    <span className="text-white font-bold">${costs.accommodation.toLocaleString()}</span>
+                    <span className="text-white font-bold">
+                      ${costs.accommodation.toLocaleString()}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
                     <span className="text-gray-300">Activities</span>
-                    <span className="text-white font-bold">${costs.activities.toLocaleString()}</span>
+                    <span className="text-white font-bold">
+                      ${costs.activities.toLocaleString()}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
                     <span className="text-gray-300">Food & Dining</span>
@@ -255,7 +253,9 @@ export default function CalculatorPage() {
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
                     <span className="text-gray-300">Transportation</span>
-                    <span className="text-white font-bold">${costs.transportation.toLocaleString()}</span>
+                    <span className="text-white font-bold">
+                      ${costs.transportation.toLocaleString()}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
                     <span className="text-gray-300">Other (tips, misc)</span>
@@ -285,7 +285,8 @@ export default function CalculatorPage() {
                     💡 Money-Saving Tip
                   </h3>
                   <p className="text-sm text-gray-300">
-                    Visit in shoulder season (Sep-Oct or Apr-May) to save 20-30% on accommodation and activities!
+                    Visit in shoulder season (Sep-Oct or Apr-May) to save 20-30% on accommodation
+                    and activities!
                   </p>
                 </div>
 

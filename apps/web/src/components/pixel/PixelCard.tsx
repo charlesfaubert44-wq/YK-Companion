@@ -69,7 +69,10 @@ export function PixelCard({
   };
 
   const hoverEffect = hover ? 'card-pixel-hover cursor-pointer' : '';
-  const shadowStyle = isHovered && hover ? 'shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)]' : 'shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]';
+  const shadowStyle =
+    isHovered && hover
+      ? 'shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)]'
+      : 'shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]';
 
   return (
     <div
@@ -92,7 +95,8 @@ export function PixelCard({
         <div
           className="h-full w-full"
           style={{
-            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.5) 2px, rgba(0, 0, 0, 0.5) 4px)',
+            backgroundImage:
+              'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.5) 2px, rgba(0, 0, 0, 0.5) 4px)',
           }}
         />
       </div>
@@ -183,16 +187,20 @@ export function PixelCard({
         </div>
 
         {/* Decorative pixel corners */}
-        <div className="absolute top-2 left-2 w-4 h-4 border-t-4 border-l-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+        <div
+          className="absolute top-2 left-2 w-4 h-4 border-t-4 border-l-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
           style={{ borderColor: glowColors[borderColor] }}
         />
-        <div className="absolute top-2 right-2 w-4 h-4 border-t-4 border-r-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+        <div
+          className="absolute top-2 right-2 w-4 h-4 border-t-4 border-r-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
           style={{ borderColor: glowColors[borderColor] }}
         />
-        <div className="absolute bottom-2 left-2 w-4 h-4 border-b-4 border-l-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+        <div
+          className="absolute bottom-2 left-2 w-4 h-4 border-b-4 border-l-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
           style={{ borderColor: glowColors[borderColor] }}
         />
-        <div className="absolute bottom-2 right-2 w-4 h-4 border-b-4 border-r-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+        <div
+          className="absolute bottom-2 right-2 w-4 h-4 border-b-4 border-r-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
           style={{ borderColor: glowColors[borderColor] }}
         />
       </div>
@@ -212,7 +220,8 @@ export function PixelCard({
         <div
           className="h-full w-full"
           style={{
-            background: 'radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.6) 100%)',
+            background:
+              'radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.6) 100%)',
           }}
         />
       </div>
@@ -220,26 +229,56 @@ export function PixelCard({
       {/* CSS Animations for glitch effects */}
       <style jsx>{`
         @keyframes glitch-bar-1 {
-          0%, 100% { transform: translateX(-100%); opacity: 0; }
-          50% { transform: translateX(100%); opacity: 0.7; }
+          0%,
+          100% {
+            transform: translateX(-100%);
+            opacity: 0;
+          }
+          50% {
+            transform: translateX(100%);
+            opacity: 0.7;
+          }
         }
 
         @keyframes glitch-bar-2 {
-          0%, 100% { transform: translateX(100%); opacity: 0; }
-          50% { transform: translateX(-100%); opacity: 0.7; }
+          0%,
+          100% {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          50% {
+            transform: translateX(-100%);
+            opacity: 0.7;
+          }
         }
 
         @keyframes glitch-text {
-          0%, 100% { transform: translate(0, 0); }
-          20% { transform: translate(-2px, 2px); }
-          40% { transform: translate(2px, -2px); }
-          60% { transform: translate(-2px, -2px); }
-          80% { transform: translate(2px, 2px); }
+          0%,
+          100% {
+            transform: translate(0, 0);
+          }
+          20% {
+            transform: translate(-2px, 2px);
+          }
+          40% {
+            transform: translate(2px, -2px);
+          }
+          60% {
+            transform: translate(-2px, -2px);
+          }
+          80% {
+            transform: translate(2px, 2px);
+          }
         }
 
         @keyframes pulse-border {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 1; }
+          0%,
+          100% {
+            opacity: 0.5;
+          }
+          50% {
+            opacity: 1;
+          }
         }
 
         .animate-glitch-bar-1 {

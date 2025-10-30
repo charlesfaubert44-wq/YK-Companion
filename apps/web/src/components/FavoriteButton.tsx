@@ -12,20 +12,20 @@ interface FavoriteButtonProps {
 
 /**
  * FavoriteButton Component
- * 
+ *
  * Reusable button for adding/removing items from favorites.
  * Handles authentication checks and provides visual feedback.
- * 
+ *
  * @example
  * ```tsx
  * <FavoriteButton itemType="garage-sales" itemId="sale-123" />
  * ```
  */
-export default function FavoriteButton({ 
-  itemType, 
-  itemId, 
+export default function FavoriteButton({
+  itemType,
+  itemId,
   className = '',
-  showText = false 
+  showText = false,
 }: FavoriteButtonProps) {
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
@@ -67,7 +67,7 @@ export default function FavoriteButton({
         if (response.ok) {
           const { favorites } = await response.json();
           const favorite = favorites.find((fav: any) => fav.item_id === itemId);
-          
+
           if (favorite) {
             const deleteResponse = await fetch(`/api/favorites?id=${favorite.id}`, {
               method: 'DELETE',
@@ -119,4 +119,3 @@ export default function FavoriteButton({
     </button>
   );
 }
-

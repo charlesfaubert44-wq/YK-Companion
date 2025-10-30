@@ -65,21 +65,21 @@ const SEASONAL_THEMES = {
     background: 'from-red-950 via-green-950 to-emerald-950',
     glow: 'rgba(220, 38, 38, 0.3)',
   },
-  newYear: {
+  newyear: {
     primary: '#a366ff',
     secondary: '#4d94ff',
     accent: '#FFD700',
     background: 'from-purple-950 via-indigo-950 to-blue-950',
     glow: 'rgba(163, 102, 255, 0.4)',
   },
-  canadaDay: {
+  canada: {
     primary: '#dc2626',
     secondary: '#f8f8f8',
     accent: '#dc2626',
     background: 'from-red-950 via-white/10 to-red-950',
     glow: 'rgba(220, 38, 38, 0.3)',
   },
-  indigenousPeoples: {
+  indigenous: {
     primary: '#fbbf24',
     secondary: '#dc2626',
     accent: '#059669',
@@ -158,12 +158,7 @@ export default function MobileAppWrapper({
       </div>
 
       {/* Header */}
-      {showHeader && (
-        <MobileHeader
-          theme={theme}
-          onMenuClick={() => setMenuOpen(true)}
-        />
-      )}
+      {showHeader && <MobileHeader theme={theme} onMenuClick={() => setMenuOpen(true)} />}
 
       {/* Main content with safe area insets */}
       <main
@@ -191,16 +186,13 @@ export default function MobileAppWrapper({
       {showBottomNav && <MobileBottomNav theme={theme} />}
 
       {/* Menu Drawer */}
-      <MobileMenuDrawer
-        isOpen={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        theme={theme}
-      />
+      <MobileMenuDrawer isOpen={menuOpen} onClose={() => setMenuOpen(false)} theme={theme} />
 
       {/* Global styles for mobile animations */}
       <style jsx global>{`
         @keyframes aurora-pulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
             transform: scale(1);
           }
@@ -211,7 +203,8 @@ export default function MobileAppWrapper({
         }
 
         @keyframes twinkle {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
             transform: scale(1);
           }

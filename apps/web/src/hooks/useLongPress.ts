@@ -84,9 +84,7 @@ export interface UseLongPressReturn {
  *   );
  * }
  */
-export function useLongPress(
-  options: UseLongPressOptions = {}
-): UseLongPressReturn {
+export function useLongPress(options: UseLongPressOptions = {}): UseLongPressReturn {
   const {
     delay = 500,
     onLongPress,
@@ -175,7 +173,17 @@ export function useLongPress(
         reset();
       }, delay);
     },
-    [enabled, preventDefault, stopPropagation, delay, haptic, onStart, onLongPress, onProgress, reset]
+    [
+      enabled,
+      preventDefault,
+      stopPropagation,
+      delay,
+      haptic,
+      onStart,
+      onLongPress,
+      onProgress,
+      reset,
+    ]
   );
 
   /**
@@ -284,15 +292,15 @@ export function useLongPressWithAnimation(
 
   const longPress = useLongPress({
     ...longPressOptions,
-    onStart: (e) => {
+    onStart: e => {
       setScale(scaleTo);
       longPressOptions.onStart?.(e);
     },
-    onCancel: (e) => {
+    onCancel: e => {
       setScale(scaleFrom);
       longPressOptions.onCancel?.(e);
     },
-    onLongPress: (e) => {
+    onLongPress: e => {
       setScale(scaleFrom);
       longPressOptions.onLongPress?.(e);
     },
@@ -335,7 +343,7 @@ export function useLongPressContextMenu(
 ): UseLongPressReturn {
   return useLongPress({
     ...options,
-    onLongPress: (e) => {
+    onLongPress: e => {
       const position = {
         x: 'touches' in e ? e.changedTouches[0].clientX : e.clientX,
         y: 'touches' in e ? e.changedTouches[0].clientY : e.clientY,

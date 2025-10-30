@@ -85,10 +85,20 @@ export default function AIPhotoScoring({ photo, onClose }: Props) {
   };
 
   return (
-    <div className={onClose ? "fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 overflow-y-auto" : ""}>
-      <div className={`${onClose ? 'bg-dark-900 rounded-2xl max-w-4xl w-full border-2 border-aurora-purple/50 max-h-[90vh] overflow-y-auto' : 'w-full'}`}>
+    <div
+      className={
+        onClose
+          ? 'fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 overflow-y-auto'
+          : ''
+      }
+    >
+      <div
+        className={`${onClose ? 'bg-dark-900 rounded-2xl max-w-4xl w-full border-2 border-aurora-purple/50 max-h-[90vh] overflow-y-auto' : 'w-full'}`}
+      >
         {/* Header */}
-        <div className={`${onClose ? 'sticky top-0 bg-dark-900 border-b border-gray-800 p-6 z-10' : 'mb-6'}`}>
+        <div
+          className={`${onClose ? 'sticky top-0 bg-dark-900 border-b border-gray-800 p-6 z-10' : 'mb-6'}`}
+        >
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-3xl font-bold bg-gradient-to-r from-aurora-purple to-aurora-pink bg-clip-text text-transparent mb-2">
@@ -109,16 +119,21 @@ export default function AIPhotoScoring({ photo, onClose }: Props) {
           </div>
         </div>
 
-        <div className={onClose ? "p-6" : ""}>
+        <div className={onClose ? 'p-6' : ''}>
           {analyzing ? (
             /* Analyzing State */
             <div className="text-center py-12">
               <div className="inline-block animate-spin text-6xl mb-4">🔍</div>
               <h3 className="text-2xl font-bold text-white mb-2">Analyzing Photo...</h3>
-              <p className="text-gray-400">Our AI is evaluating composition, color, and technical quality</p>
+              <p className="text-gray-400">
+                Our AI is evaluating composition, color, and technical quality
+              </p>
               <div className="mt-6 max-w-md mx-auto">
                 <div className="bg-dark-800 rounded-full h-2 overflow-hidden">
-                  <div className="bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple h-full animate-pulse" style={{ width: '70%' }} />
+                  <div
+                    className="bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple h-full animate-pulse"
+                    style={{ width: '70%' }}
+                  />
                 </div>
               </div>
             </div>
@@ -131,7 +146,9 @@ export default function AIPhotoScoring({ photo, onClose }: Props) {
                 <div className={`text-7xl font-bold mb-2 ${getScoreColor(scoreBreakdown.overall)}`}>
                   {(scoreBreakdown.overall * 100).toFixed(0)}
                 </div>
-                <div className="text-2xl font-bold text-white">{getScoreLabel(scoreBreakdown.overall)}</div>
+                <div className="text-2xl font-bold text-white">
+                  {getScoreLabel(scoreBreakdown.overall)}
+                </div>
               </div>
 
               {/* Score Breakdown */}
@@ -143,7 +160,9 @@ export default function AIPhotoScoring({ photo, onClose }: Props) {
                       <span className="text-2xl">📐</span>
                       <h3 className="text-xl font-bold text-white">Composition</h3>
                     </div>
-                    <div className={`text-3xl font-bold ${getScoreColor(scoreBreakdown.composition.score)}`}>
+                    <div
+                      className={`text-3xl font-bold ${getScoreColor(scoreBreakdown.composition.score)}`}
+                    >
                       {(scoreBreakdown.composition.score * 100).toFixed(0)}
                     </div>
                   </div>
@@ -172,7 +191,9 @@ export default function AIPhotoScoring({ photo, onClose }: Props) {
                       <span className="text-2xl">🎨</span>
                       <h3 className="text-xl font-bold text-white">Color</h3>
                     </div>
-                    <div className={`text-3xl font-bold ${getScoreColor(scoreBreakdown.color.score)}`}>
+                    <div
+                      className={`text-3xl font-bold ${getScoreColor(scoreBreakdown.color.score)}`}
+                    >
                       {(scoreBreakdown.color.score * 100).toFixed(0)}
                     </div>
                   </div>
@@ -201,7 +222,9 @@ export default function AIPhotoScoring({ photo, onClose }: Props) {
                       <span className="text-2xl">⚙️</span>
                       <h3 className="text-xl font-bold text-white">Technical</h3>
                     </div>
-                    <div className={`text-3xl font-bold ${getScoreColor(scoreBreakdown.technical.score)}`}>
+                    <div
+                      className={`text-3xl font-bold ${getScoreColor(scoreBreakdown.technical.score)}`}
+                    >
                       {(scoreBreakdown.technical.score * 100).toFixed(0)}
                     </div>
                   </div>
@@ -288,7 +311,9 @@ export default function AIPhotoScoring({ photo, onClose }: Props) {
             <div className="text-center py-12">
               <div className="text-6xl mb-4">❌</div>
               <h3 className="text-2xl font-bold text-white mb-2">Analysis Failed</h3>
-              <p className="text-gray-400 mb-6">We couldn't analyze this photo. Please try again.</p>
+              <p className="text-gray-400 mb-6">
+                We couldn't analyze this photo. Please try again.
+              </p>
               <button
                 onClick={analyzePhoto}
                 className="px-6 py-3 bg-aurora-purple text-white font-bold rounded-lg hover:bg-aurora-purple/90 transition-colors"

@@ -35,12 +35,12 @@ export default function AdminAnalyticsPage() {
     newUsersThisWeek: 0,
     usersByType: { visiting: 0, living: 0, moving: 0 },
     revenueByMonth: [],
-    sponsorsByPosition: []
+    sponsorsByPosition: [],
   });
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState({
     start: new Date(new Date().getFullYear(), 0, 1).toISOString().split('T')[0], // Start of year
-    end: new Date().toISOString().split('T')[0] // Today
+    end: new Date().toISOString().split('T')[0], // Today
   });
 
   useEffect(() => {
@@ -116,7 +116,8 @@ export default function AdminAnalyticsPage() {
         .gte('created_at', firstDayOfMonth.toISOString())
         .eq('payment_status', 'paid');
 
-      const revenueThisMonth = monthlySponsors?.reduce((sum: number, s: any) => sum + Number(s.total_price), 0) || 0;
+      const revenueThisMonth =
+        monthlySponsors?.reduce((sum: number, s: any) => sum + Number(s.total_price), 0) || 0;
 
       // Calculate revenue YTD
       const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1).toISOString();
@@ -126,7 +127,8 @@ export default function AdminAnalyticsPage() {
         .gte('created_at', firstDayOfYear)
         .eq('payment_status', 'paid');
 
-      const revenueYTD = ytdSponsors?.reduce((sum: number, s: any) => sum + Number(s.total_price), 0) || 0;
+      const revenueYTD =
+        ytdSponsors?.reduce((sum: number, s: any) => sum + Number(s.total_price), 0) || 0;
 
       // Revenue by month (last 12 months)
       const revenueByMonth = [];
@@ -134,7 +136,14 @@ export default function AdminAnalyticsPage() {
         const date = new Date();
         date.setMonth(date.getMonth() - i);
         const monthStart = new Date(date.getFullYear(), date.getMonth(), 1).toISOString();
-        const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59).toISOString();
+        const monthEnd = new Date(
+          date.getFullYear(),
+          date.getMonth() + 1,
+          0,
+          23,
+          59,
+          59
+        ).toISOString();
 
         const { data: monthSponsors } = await supabase
           .from('premium_sponsors')
@@ -145,14 +154,15 @@ export default function AdminAnalyticsPage() {
 
         revenueByMonth.push({
           month: date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-          revenue: monthSponsors?.reduce((sum: number, s: any) => sum + Number(s.total_price), 0) || 0
+          revenue:
+            monthSponsors?.reduce((sum: number, s: any) => sum + Number(s.total_price), 0) || 0,
         });
       }
 
       // Sponsors by position
       const positions = ['home_top', 'home_middle', 'home_bottom', 'visiting', 'living', 'moving'];
       const sponsorsByPosition = await Promise.all(
-        positions.map(async (position) => {
+        positions.map(async position => {
           const { data } = await supabase
             .from('premium_sponsors')
             .select('id')
@@ -160,7 +170,7 @@ export default function AdminAnalyticsPage() {
 
           return {
             position: position.replace('_', ' '),
-            count: data?.length || 0
+            count: data?.length || 0,
           };
         })
       );
@@ -177,10 +187,10 @@ export default function AdminAnalyticsPage() {
         usersByType: {
           visiting: visitingUsers?.length || 0,
           living: livingUsers?.length || 0,
-          moving: movingUsers?.length || 0
+          moving: movingUsers?.length || 0,
         },
         revenueByMonth,
-        sponsorsByPosition
+        sponsorsByPosition,
       });
     } catch (error) {
       console.error('Error fetching analytics:', error);
@@ -241,7 +251,10 @@ ${data.sponsorsByPosition.map(s => `${s.position}: ${s.count}`).join('\n')}
             <p className="text-gray-400">Platform metrics and insights</p>
           </div>
           <div className="flex gap-4">
-            <Link href="/admin" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">
+            <Link
+              href="/admin"
+              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
               ← Back to Admin
             </Link>
             <button
@@ -281,13 +294,17 @@ ${data.sponsorsByPosition.map(s => `${s.position}: ${s.count}`).join('\n')}
 
               <div className="bg-gradient-to-br from-yellow-500/20 to-yellow-500/5 rounded-xl p-6 border border-yellow-500/30">
                 <div className="text-sm text-gray-400 mb-2">Revenue (Month)</div>
-                <div className="text-3xl font-bold text-white mb-1">${data.revenueThisMonth.toFixed(0)}</div>
+                <div className="text-3xl font-bold text-white mb-1">
+                  ${data.revenueThisMonth.toFixed(0)}
+                </div>
                 <div className="text-xs text-yellow-400">CAD</div>
               </div>
 
               <div className="bg-gradient-to-br from-aurora-purple/20 to-aurora-purple/5 rounded-xl p-6 border border-aurora-purple/30">
                 <div className="text-sm text-gray-400 mb-2">Revenue (YTD)</div>
-                <div className="text-3xl font-bold text-white mb-1">${data.revenueYTD.toFixed(0)}</div>
+                <div className="text-3xl font-bold text-white mb-1">
+                  ${data.revenueYTD.toFixed(0)}
+                </div>
                 <div className="text-xs text-aurora-purple">CAD</div>
               </div>
             </div>
@@ -319,7 +336,9 @@ ${data.sponsorsByPosition.map(s => `${s.position}: ${s.count}`).join('\n')}
                       <div className="w-32 bg-gray-700 rounded-full h-2">
                         <div
                           className="bg-blue-500 h-2 rounded-full"
-                          style={{ width: `${(data.usersByType.visiting / data.totalUsers) * 100}%` }}
+                          style={{
+                            width: `${(data.usersByType.visiting / data.totalUsers) * 100}%`,
+                          }}
                         />
                       </div>
                       <span className="text-white font-semibold w-12 text-right">
@@ -392,10 +411,7 @@ ${data.sponsorsByPosition.map(s => `${s.position}: ${s.count}`).join('\n')}
               <h3 className="text-xl font-bold text-white mb-6">Sponsors by Position</h3>
               <div className="grid md:grid-cols-3 gap-4">
                 {data.sponsorsByPosition.map((item, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-900/50 rounded-lg p-4 border border-gray-700"
-                  >
+                  <div key={index} className="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
                     <div className="text-sm text-gray-400 mb-1 capitalize">{item.position}</div>
                     <div className="text-2xl font-bold text-white">{item.count}</div>
                   </div>

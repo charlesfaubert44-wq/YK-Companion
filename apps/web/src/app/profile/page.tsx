@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 /**
  * Profile Page
- * 
+ *
  * Displays and allows editing of user profile information.
  * Includes avatar upload, profile editing, and account management.
  */
@@ -26,7 +26,11 @@ export default function ProfilePage() {
   }, [user, loading, router]);
 
   const handleDeleteAccount = async () => {
-    if (!confirm('Are you absolutely sure? This action cannot be undone. All your data will be permanently deleted.')) {
+    if (
+      !confirm(
+        'Are you absolutely sure? This action cannot be undone. All your data will be permanently deleted.'
+      )
+    ) {
       setShowDeleteConfirm(false);
       return;
     }
@@ -69,7 +73,7 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight via-dark-800 to-gray-900">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Back Button */}
-        <Link 
+        <Link
           href="/"
           className="inline-flex items-center gap-2 text-gray-400 hover:text-aurora-green transition mb-6"
         >
@@ -78,12 +82,8 @@ export default function ProfilePage() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            My Profile
-          </h1>
-          <p className="text-gray-400">
-            Manage your account settings and preferences
-          </p>
+          <h1 className="text-4xl font-bold text-white mb-2">My Profile</h1>
+          <p className="text-gray-400">Manage your account settings and preferences</p>
         </div>
 
         {/* Profile Content */}
@@ -91,10 +91,7 @@ export default function ProfilePage() {
           {/* Sidebar - Avatar and Quick Info */}
           <div className="lg:col-span-1">
             <div className="bg-dark-900/50 backdrop-blur-lg border border-gray-700/50 rounded-2xl p-6">
-              <AvatarUpload 
-                userId={user.id}
-                currentAvatarUrl={profile.avatar_url}
-              />
+              <AvatarUpload userId={user.id} currentAvatarUrl={profile.avatar_url} />
 
               <div className="mt-6 space-y-3">
                 <div>
@@ -138,11 +135,9 @@ export default function ProfilePage() {
           {/* Main Content - Profile Form */}
           <div className="lg:col-span-2">
             <div className="bg-dark-900/50 backdrop-blur-lg border border-gray-700/50 rounded-2xl p-6 sm:p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">
-                Profile Information
-              </h2>
-              
-              <ProfileForm 
+              <h2 className="text-2xl font-bold text-white mb-6">Profile Information</h2>
+
+              <ProfileForm
                 userId={user.id}
                 initialData={{
                   full_name: profile.full_name || '',
@@ -154,11 +149,10 @@ export default function ProfilePage() {
 
             {/* Danger Zone */}
             <div className="mt-8 bg-red-900/20 backdrop-blur-lg border-2 border-red-500/30 rounded-2xl p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-2">
-                Danger Zone
-              </h3>
+              <h3 className="text-xl font-bold text-red-400 mb-2">Danger Zone</h3>
               <p className="text-gray-400 mb-4">
-                Once you delete your account, there is no going back. This will permanently delete all your data.
+                Once you delete your account, there is no going back. This will permanently delete
+                all your data.
               </p>
 
               {!showDeleteConfirm ? (
@@ -174,9 +168,7 @@ export default function ProfilePage() {
                     <p className="text-red-300 font-semibold">
                       ⚠️ Are you absolutely sure? This action cannot be undone.
                     </p>
-                    <p className="text-gray-400 text-sm mt-2">
-                      This will permanently delete:
-                    </p>
+                    <p className="text-gray-400 text-sm mt-2">This will permanently delete:</p>
                     <ul className="text-gray-400 text-sm mt-2 ml-4 list-disc">
                       <li>Your profile and account data</li>
                       <li>All your garage sale listings</li>

@@ -191,7 +191,7 @@ async function apiRequest<T = any>(
       }
 
       // Wait before retrying (exponential backoff)
-      await new Promise((resolve) => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
     }
   }
 
@@ -216,7 +216,7 @@ export function buildQueryString(params: Record<string, any>): string {
     if (value === undefined || value === null) return;
 
     if (Array.isArray(value)) {
-      value.forEach((item) => searchParams.append(key, String(item)));
+      value.forEach(item => searchParams.append(key, String(item)));
     } else {
       searchParams.append(key, String(value));
     }
@@ -293,7 +293,7 @@ export async function retryRequest<T>(
   } catch (error) {
     if (retries === 0) throw error;
 
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    await new Promise(resolve => setTimeout(resolve, delay));
     return retryRequest(fn, retries - 1, delay * 2);
   }
 }
@@ -309,7 +309,10 @@ export async function retryRequest<T>(
  * const page2 = await fetchPage(1); // Offset 20
  */
 export function createPaginatedFetcher<T = any>(baseUrl: string, limit: number = 20) {
-  return async (page: number, additionalParams: Record<string, any> = {}): Promise<ApiResponse<T>> => {
+  return async (
+    page: number,
+    additionalParams: Record<string, any> = {}
+  ): Promise<ApiResponse<T>> => {
     const offset = page * limit;
     const queryString = buildQueryString({ ...additionalParams, limit, offset });
     return apiGet<T>(`${baseUrl}${queryString}`);
@@ -349,13 +352,13 @@ export async function uploadFile(
   file: File,
   onProgress?: (progress: number) => void
 ): Promise<ApiResponse> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const xhr = new XMLHttpRequest();
     const formData = new FormData();
     formData.append('file', file);
 
     if (onProgress) {
-      xhr.upload.addEventListener('progress', (e) => {
+      xhr.upload.addEventListener('progress', e => {
         if (e.lengthComputable) {
           const progress = Math.round((e.loaded / e.total) * 100);
           onProgress(progress);

@@ -42,9 +42,8 @@ describe('PathwayCards (EnhancedPathwayCards)', () => {
     renderWithProviders(<EnhancedPathwayCards />);
 
     // Cards should be links or have click handlers
-    const cards = screen.queryAllByRole('link') || 
-                  screen.queryAllByRole('button');
-    
+    const cards = screen.queryAllByRole('link') || screen.queryAllByRole('button');
+
     expect(cards.length).toBeGreaterThanOrEqual(3);
   });
 
@@ -71,7 +70,7 @@ describe('PathwayCards (EnhancedPathwayCards)', () => {
     renderWithProviders(<EnhancedPathwayCards />);
 
     const allText = document.body.textContent || '';
-    
+
     // Visiting should come before Living, which should come before Moving
     const visitingIndex = allText.toLowerCase().indexOf('visiting');
     const livingIndex = allText.toLowerCase().indexOf('living');
@@ -94,4 +93,3 @@ describe('PathwayCards (EnhancedPathwayCards)', () => {
     expect(screen.getByText(/visiting|living|moving/i)).toBeInTheDocument();
   });
 });
-

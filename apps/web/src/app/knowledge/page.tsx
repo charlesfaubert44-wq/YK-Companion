@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import SubmissionForm from '@/components/knowledge/SubmissionForm';
-import type { KnowledgeSubmissionWithCategory, KnowledgeCategory, ContentType } from '@/types/knowledge.types';
+import type {
+  KnowledgeSubmissionWithCategory,
+  KnowledgeCategory,
+  ContentType,
+} from '@/types/knowledge.types';
 import LanguageSelector from '@/components/LanguageSelector';
 
 export default function KnowledgePage() {
@@ -99,7 +103,10 @@ export default function KnowledgePage() {
     <div className="min-h-screen bg-gradient-to-b from-northern-midnight to-dark-900">
       {/* Header */}
       <div className="fixed top-6 left-6 right-6 z-50 flex justify-between items-center">
-        <Link href="/" className="text-gray-400 hover:text-aurora-green transition-colors text-sm flex items-center gap-2">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-aurora-green transition-colors text-sm flex items-center gap-2"
+        >
           <span>←</span> Back to Home
         </Link>
         <LanguageSelector />
@@ -124,7 +131,9 @@ export default function KnowledgePage() {
 
         {/* Categories */}
         <div className="mb-8">
-          <h3 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">Browse by Category</h3>
+          <h3 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">
+            Browse by Category
+          </h3>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory('')}
@@ -136,7 +145,7 @@ export default function KnowledgePage() {
             >
               All
             </button>
-            {categories.map((cat) => (
+            {categories.map(cat => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
@@ -157,7 +166,7 @@ export default function KnowledgePage() {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             placeholder="🔍 Search knowledge..."
             className="w-full px-6 py-4 bg-gray-800/50 border-2 border-gray-700 rounded-xl text-white placeholder-gray-500 focus:border-aurora-blue focus:outline-none transition-all"
           />
@@ -173,7 +182,9 @@ export default function KnowledgePage() {
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🤔</div>
             <h3 className="text-2xl font-bold text-white mb-3">No results found</h3>
-            <p className="text-gray-400 mb-6">Try adjusting your filters or be the first to share!</p>
+            <p className="text-gray-400 mb-6">
+              Try adjusting your filters or be the first to share!
+            </p>
             <button
               onClick={() => setShowSubmitForm(true)}
               className="px-6 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all"
@@ -183,7 +194,7 @@ export default function KnowledgePage() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {submissions.map((submission) => (
+            {submissions.map(submission => (
               <div
                 key={submission.id}
                 className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg p-6 rounded-2xl border-2 border-gray-700/50 hover:border-aurora-blue/50 transition-all group cursor-pointer"
@@ -196,9 +207,7 @@ export default function KnowledgePage() {
                       {submission.content_type}
                     </span>
                   </div>
-                  {submission.is_featured && (
-                    <span className="text-xl">⭐</span>
-                  )}
+                  {submission.is_featured && <span className="text-xl">⭐</span>}
                 </div>
 
                 {/* Title */}
@@ -207,9 +216,7 @@ export default function KnowledgePage() {
                 </h3>
 
                 {/* Content Preview */}
-                <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                  {submission.content}
-                </p>
+                <p className="text-gray-400 text-sm mb-4 line-clamp-3">{submission.content}</p>
 
                 {/* Metadata */}
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -234,7 +241,10 @@ export default function KnowledgePage() {
                 {submission.tags && submission.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1 mb-4">
                     {submission.tags.slice(0, 3).map((tag, idx) => (
-                      <span key={idx} className="text-xs px-2 py-0.5 bg-aurora-green/10 text-aurora-green rounded">
+                      <span
+                        key={idx}
+                        className="text-xs px-2 py-0.5 bg-aurora-green/10 text-aurora-green rounded"
+                      >
                         #{tag}
                       </span>
                     ))}

@@ -45,7 +45,7 @@ export default function MovingPage() {
       title: 'First Month',
       timeframe: 'first month',
       items: [
-        { id: '10', text: 'Get NWT Driver\'s License (90 days to transfer)' },
+        { id: '10', text: "Get NWT Driver's License (90 days to transfer)" },
         { id: '11', text: 'Register kids for school/daycare' },
         { id: '12', text: 'Join community groups or sports leagues' },
         { id: '13', text: 'Find your favorite coffee shop (important!)' },
@@ -96,9 +96,7 @@ export default function MovingPage() {
             {/* Page Header */}
             <div className="text-center mb-12">
               <div className="text-6xl mb-4">📦</div>
-              <h1 className="text-5xl font-bold text-white mb-4">
-                Moving to Yellowknife
-              </h1>
+              <h1 className="text-5xl font-bold text-white mb-4">Moving to Yellowknife</h1>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
                 Everything you need to relocate successfully—from housing costs to climate prep.
               </p>
@@ -155,34 +153,58 @@ export default function MovingPage() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
-                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">Population</div>
-                    <div className="text-2xl font-bold text-white group-hover:text-aurora-purple transition-colors">~20,000</div>
+                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">
+                      Population
+                    </div>
+                    <div className="text-2xl font-bold text-white group-hover:text-aurora-purple transition-colors">
+                      ~20,000
+                    </div>
                   </div>
 
                   <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
-                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">Average 1BR Rent</div>
-                    <div className="text-2xl font-bold text-white group-hover:text-aurora-green transition-colors">$1,400-$1,800/mo</div>
+                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">
+                      Average 1BR Rent
+                    </div>
+                    <div className="text-2xl font-bold text-white group-hover:text-aurora-green transition-colors">
+                      $1,400-$1,800/mo
+                    </div>
                   </div>
 
                   <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
-                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">Average Home Price</div>
-                    <div className="text-2xl font-bold text-white group-hover:text-aurora-blue transition-colors">$450,000-$550,000</div>
+                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">
+                      Average Home Price
+                    </div>
+                    <div className="text-2xl font-bold text-white group-hover:text-aurora-blue transition-colors">
+                      $450,000-$550,000
+                    </div>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
-                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">Median Household Income</div>
-                    <div className="text-2xl font-bold text-white group-hover:text-aurora-purple transition-colors">~$130,000</div>
+                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">
+                      Median Household Income
+                    </div>
+                    <div className="text-2xl font-bold text-white group-hover:text-aurora-purple transition-colors">
+                      ~$130,000
+                    </div>
                   </div>
 
                   <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
-                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">Unemployment Rate</div>
-                    <div className="text-2xl font-bold text-white group-hover:text-aurora-green transition-colors">~8%</div>
+                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">
+                      Unemployment Rate
+                    </div>
+                    <div className="text-2xl font-bold text-white group-hover:text-aurora-green transition-colors">
+                      ~8%
+                    </div>
                   </div>
 
                   <div className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all group cursor-pointer transform hover:scale-[1.02]">
-                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">Major Industries</div>
-                    <div className="text-lg text-white group-hover:text-aurora-blue transition-colors">Mining, Government, Tourism</div>
+                    <div className="text-sm text-gray-400 mb-1 group-hover:text-gray-300 transition-colors">
+                      Major Industries
+                    </div>
+                    <div className="text-lg text-white group-hover:text-aurora-blue transition-colors">
+                      Mining, Government, Tourism
+                    </div>
                   </div>
                 </div>
               </div>
@@ -195,34 +217,54 @@ export default function MovingPage() {
                 The biggest adjustment for newcomers. Here's what you need to know:
               </p>
               <div className="grid md:grid-cols-2 gap-6">
-                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2 group-hover:text-aurora-blue transition-colors">
-                    ❄️ Winter (-25°C to -35°C)
-                  </h4>
-                  <ul className="space-y-2 text-gray-400 text-sm">
-                    <li className="hover:text-white transition-colors">• Budget $500-800 for proper winter gear</li>
-                    <li className="hover:text-white transition-colors">• Block heater is essential (not optional)</li>
-                    <li className="hover:text-white transition-colors">• Heating costs: $200-400/month</li>
-                    <li className="hover:text-white transition-colors">• Snow tires required by law (Oct 1 - Apr 30)</li>
-                    <li className="hover:text-white transition-colors">• Shorter days (4-5 hours of daylight in Dec)</li>
-                  </ul>
-                </div>
-                <div className="bg-gradient-to-br from-aurora-green/10 to-aurora-blue/10 p-6 rounded-lg border border-aurora-green/20 hover:border-aurora-green/40 transition-all group">
-                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2 group-hover:text-aurora-green transition-colors">
-                    ☀️ Summer (15°C to 25°C)
-                  </h4>
-                  <ul className="space-y-2 text-gray-400 text-sm">
-                    <li className="hover:text-white transition-colors">• 20+ hours of daylight in June</li>
-                    <li className="hover:text-white transition-colors">• Mosquitoes are intense (bring bug spray)</li>
-                    <li className="hover:text-white transition-colors">• Short but beautiful growing season</li>
-                    <li className="hover:text-white transition-colors">• Forest fire smoke can affect air quality</li>
-                    <li className="hover:text-white transition-colors">• Best weather for exploring outdoors</li>
-                  </ul>
-                </div>
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2 group-hover:text-aurora-blue transition-colors">
+                  ❄️ Winter (-25°C to -35°C)
+                </h4>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li className="hover:text-white transition-colors">
+                    • Budget $500-800 for proper winter gear
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Block heater is essential (not optional)
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Heating costs: $200-400/month
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Snow tires required by law (Oct 1 - Apr 30)
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Shorter days (4-5 hours of daylight in Dec)
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-gradient-to-br from-aurora-green/10 to-aurora-blue/10 p-6 rounded-lg border border-aurora-green/20 hover:border-aurora-green/40 transition-all group">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2 group-hover:text-aurora-green transition-colors">
+                  ☀️ Summer (15°C to 25°C)
+                </h4>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li className="hover:text-white transition-colors">
+                    • 20+ hours of daylight in June
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Mosquitoes are intense (bring bug spray)
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Short but beautiful growing season
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Forest fire smoke can affect air quality
+                  </li>
+                  <li className="hover:text-white transition-colors">
+                    • Best weather for exploring outdoors
+                  </li>
+                </ul>
               </div>
             </div>
+          </div>
 
-            {/* Interactive Relocation Checklist */}
-            <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/10 mb-12">
+          {/* Interactive Relocation Checklist */}
+          <div className="bg-white/5 backdrop-blur-lg p-8 rounded-2xl border border-white/10 mb-12">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-2xl font-bold text-white">Relocation Checklist</h3>
               <div className="text-right">
@@ -242,8 +284,10 @@ export default function MovingPage() {
             </div>
 
             <div className="space-y-4">
-              {checklistSections.map((section) => {
-                const sectionCheckedCount = section.items.filter(item => checkedItems.has(item.id)).length;
+              {checklistSections.map(section => {
+                const sectionCheckedCount = section.items.filter(item =>
+                  checkedItems.has(item.id)
+                ).length;
                 const sectionProgress = (sectionCheckedCount / section.items.length) * 100;
 
                 return (
@@ -279,17 +323,17 @@ export default function MovingPage() {
                     </button>
                     <div
                       className={`overflow-hidden transition-all duration-300 ${
-                        expandedSections.has(section.id) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                        expandedSections.has(section.id)
+                          ? 'max-h-96 opacity-100'
+                          : 'max-h-0 opacity-0'
                       }`}
                     >
                       <div className="px-4 pb-4 space-y-2">
-                        {section.items.map((item) => (
+                        {section.items.map(item => (
                           <div
                             key={item.id}
                             className={`flex items-center gap-2 p-2 rounded transition-all ${
-                              checkedItems.has(item.id)
-                                ? 'bg-aurora-purple/10'
-                                : 'hover:bg-white/5'
+                              checkedItems.has(item.id) ? 'bg-aurora-purple/10' : 'hover:bg-white/5'
                             }`}
                           >
                             <input
@@ -318,7 +362,9 @@ export default function MovingPage() {
 
             {completionPercentage === 100 && (
               <div className="mt-6 p-4 bg-aurora-purple/20 border border-aurora-purple/30 rounded-lg text-center animate-pulse">
-                <span className="text-aurora-purple font-semibold">🎉 Congratulations! You're all set for your move to Yellowknife!</span>
+                <span className="text-aurora-purple font-semibold">
+                  🎉 Congratulations! You're all set for your move to Yellowknife!
+                </span>
               </div>
             )}
           </div>
@@ -330,23 +376,47 @@ export default function MovingPage() {
               <div className="bg-gradient-to-br from-aurora-green/10 to-transparent p-6 rounded-lg border border-aurora-green/20 hover:border-aurora-green/40 transition-all">
                 <h4 className="text-aurora-green font-semibold mb-3 text-lg">The Pros</h4>
                 <ul className="space-y-2 text-gray-400 text-sm">
-                  <li className="hover:text-white transition-colors cursor-default">• No provincial sales tax (GST only)</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Higher salaries than southern Canada</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Tight-knit, friendly community</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Incredible natural beauty and aurora access</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Unique northern culture and lifestyle</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Low crime rate</li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • No provincial sales tax (GST only)
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Higher salaries than southern Canada
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Tight-knit, friendly community
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Incredible natural beauty and aurora access
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Unique northern culture and lifestyle
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Low crime rate
+                  </li>
                 </ul>
               </div>
               <div className="bg-gradient-to-br from-red-500/10 to-transparent p-6 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all">
                 <h4 className="text-red-400 font-semibold mb-3 text-lg">The Challenges</h4>
                 <ul className="space-y-2 text-gray-400 text-sm">
-                  <li className="hover:text-white transition-colors cursor-default">• High cost of living (especially food)</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Extreme winter temperatures</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Limited shopping and services</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Expensive to travel south</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Dark winters can affect mental health</li>
-                  <li className="hover:text-white transition-colors cursor-default">• Housing shortage</li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • High cost of living (especially food)
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Extreme winter temperatures
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Limited shopping and services
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Expensive to travel south
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Dark winters can affect mental health
+                  </li>
+                  <li className="hover:text-white transition-colors cursor-default">
+                    • Housing shortage
+                  </li>
                 </ul>
               </div>
             </div>

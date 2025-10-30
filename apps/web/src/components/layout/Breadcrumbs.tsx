@@ -22,13 +22,9 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
 
         return (
           <div key={index} className="flex items-center">
-            {index > 0 && (
-              <ChevronRight className="w-4 h-4 text-gray-600 mx-2" />
-            )}
+            {index > 0 && <ChevronRight className="w-4 h-4 text-gray-600 mx-2" />}
             {isLast ? (
-              <span className="text-gray-300 font-medium">
-                {item.label}
-              </span>
+              <span className="text-gray-300 font-medium">{item.label}</span>
             ) : item.href ? (
               <Link
                 href={item.href}
@@ -37,9 +33,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 {item.label}
               </Link>
             ) : (
-              <span className="text-gray-400">
-                {item.label}
-              </span>
+              <span className="text-gray-400">{item.label}</span>
             )}
           </div>
         );

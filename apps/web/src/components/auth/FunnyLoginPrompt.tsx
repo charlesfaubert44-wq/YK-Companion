@@ -8,59 +8,63 @@ interface FunnyLoginPromptProps {
   featureName?: string;
 }
 
-export default function FunnyLoginPrompt({ section = 'living', featureName }: FunnyLoginPromptProps) {
+export default function FunnyLoginPrompt({
+  section = 'living',
+  featureName,
+}: FunnyLoginPromptProps) {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const funnyMessages = {
     visiting: [
-      "Whoa there, Aurora chaser! 🌌",
-      "Hold up, future adventurer! 🧳",
-      "Not so fast, traveler! ✈️",
-      "Easy there, explorer! 🗺️",
+      'Whoa there, Aurora chaser! 🌌',
+      'Hold up, future adventurer! 🧳',
+      'Not so fast, traveler! ✈️',
+      'Easy there, explorer! 🗺️',
     ],
     living: [
-      "Hold your horses, neighbor! 🏠",
-      "Slow down there, Yellowknifer! 🛷",
-      "Whoa, local legend! 🦌",
-      "Easy there, community member! 🤝",
+      'Hold your horses, neighbor! 🏠',
+      'Slow down there, Yellowknifer! 🛷',
+      'Whoa, local legend! 🦌',
+      'Easy there, community member! 🤝',
     ],
     moving: [
-      "Pump the brakes, future resident! 📦",
-      "Not so fast, relocator! 🚚",
-      "Hold on, new neighbor! 🏡",
-      "Whoa there, mover! 🛣️",
-    ]
+      'Pump the brakes, future resident! 📦',
+      'Not so fast, relocator! 🚚',
+      'Hold on, new neighbor! 🏡',
+      'Whoa there, mover! 🛣️',
+    ],
   };
 
   const descriptions = {
-    visiting: "You need an account to access trip planning tools and save your favorite spots!",
-    living: "You need an account to access local features like garage sales and community events!",
-    moving: "You need an account to access relocation tools and housing insights!"
+    visiting: 'You need an account to access trip planning tools and save your favorite spots!',
+    living: 'You need an account to access local features like garage sales and community events!',
+    moving: 'You need an account to access relocation tools and housing insights!',
   };
 
   const benefits = {
     visiting: [
-      "🌌 Save your favorite aurora viewing spots",
-      "📅 Create custom itineraries",
-      "🗺️ Get personalized recommendations",
-      "📸 Track places you want to visit"
+      '🌌 Save your favorite aurora viewing spots',
+      '📅 Create custom itineraries',
+      '🗺️ Get personalized recommendations',
+      '📸 Track places you want to visit',
     ],
     living: [
-      "🛒 Save favorite garage sales",
-      "📍 Plan garage sale routes",
-      "📅 Get event reminders",
-      "🏠 Access community resources"
+      '🛒 Save favorite garage sales',
+      '📍 Plan garage sale routes',
+      '📅 Get event reminders',
+      '🏠 Access community resources',
     ],
     moving: [
-      "🏠 Save favorite neighborhoods",
-      "💼 Track job opportunities",
-      "📊 Use cost of living calculator",
-      "✅ Manage your moving checklist"
-    ]
+      '🏠 Save favorite neighborhoods',
+      '💼 Track job opportunities',
+      '📊 Use cost of living calculator',
+      '✅ Manage your moving checklist',
+    ],
   };
 
   // Pick a random funny message
-  const randomMessage = funnyMessages[section][Math.floor(Math.random() * funnyMessages[section].length)];
+  const randomMessage =
+    funnyMessages[section][Math.floor(Math.random() * funnyMessages[section].length)];
 
   return (
     <>
@@ -73,18 +77,15 @@ export default function FunnyLoginPrompt({ section = 'living', featureName }: Fu
             {/* Emoji Header */}
             <div className="text-center mb-6">
               <div className="text-7xl mb-4 animate-bounce">🛑</div>
-              <h1 className="text-3xl md:text-4xl font-black text-white mb-3">
-                {randomMessage}
-              </h1>
-              <p className="text-lg text-gray-300">
-                {descriptions[section]}
-              </p>
+              <h1 className="text-3xl md:text-4xl font-black text-white mb-3">{randomMessage}</h1>
+              <p className="text-lg text-gray-300">{descriptions[section]}</p>
             </div>
 
             {/* Funny Message Box */}
             <div className="bg-aurora-green/10 border border-aurora-green/30 rounded-xl p-6 mb-6">
               <p className="text-center text-gray-300 italic">
-                "It's -40°C outside, but this feature is even more locked down than Great Slave Lake in January! ❄️"
+                "It's -40°C outside, but this feature is even more locked down than Great Slave Lake
+                in January! ❄️"
               </p>
             </div>
 
@@ -125,7 +126,8 @@ export default function FunnyLoginPrompt({ section = 'living', featureName }: Fu
             {/* Extra Humor */}
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-500">
-                Pro tip: Creating an account is faster than explaining what a "sun dog" is to tourists. 🌞
+                Pro tip: Creating an account is faster than explaining what a "sun dog" is to
+                tourists. 🌞
               </p>
             </div>
           </div>

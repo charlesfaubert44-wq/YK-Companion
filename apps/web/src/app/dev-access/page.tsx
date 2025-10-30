@@ -42,8 +42,14 @@ export default function DevAccessPage() {
       {/* Animated Aurora Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-aurora-green/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-aurora-blue/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-aurora-purple/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div
+          className="absolute bottom-0 right-1/4 w-96 h-96 bg-aurora-blue/10 rounded-full blur-3xl animate-pulse-slow"
+          style={{ animationDelay: '1s' }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 w-96 h-96 bg-aurora-purple/10 rounded-full blur-3xl animate-pulse-slow"
+          style={{ animationDelay: '2s' }}
+        ></div>
       </div>
 
       {/* Floating Northern Lights particles */}
@@ -85,9 +91,7 @@ export default function DevAccessPage() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text text-transparent mb-2">
               YKBuddy Development
             </h1>
-            <p className="text-gray-400 text-sm">
-              Enter access code to continue
-            </p>
+            <p className="text-gray-400 text-sm">Enter access code to continue</p>
           </div>
 
           {/* Access Form */}
@@ -100,7 +104,7 @@ export default function DevAccessPage() {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 className={`w-full px-4 py-3 bg-dark-900/50 border ${
                   error ? 'border-red-500' : 'border-gray-700'
                 } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-aurora-blue focus:border-transparent transition-all ${
@@ -132,12 +136,8 @@ export default function DevAccessPage() {
 
           {/* Footer Info */}
           <div className="mt-8 pt-6 border-t border-gray-700/30 text-center">
-            <p className="text-xs text-gray-500">
-              🔒 Development Environment
-            </p>
-            <p className="text-xs text-gray-600 mt-1">
-              Yellowknife's Digital Companion Platform
-            </p>
+            <p className="text-xs text-gray-500">🔒 Development Environment</p>
+            <p className="text-xs text-gray-600 mt-1">Yellowknife's Digital Companion Platform</p>
           </div>
         </div>
 
@@ -147,7 +147,8 @@ export default function DevAccessPage() {
 
       <style jsx>{`
         @keyframes pulse-slow {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
             transform: scale(1);
           }
@@ -158,7 +159,8 @@ export default function DevAccessPage() {
         }
 
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0) translateX(0);
           }
           25% {
@@ -173,7 +175,8 @@ export default function DevAccessPage() {
         }
 
         @keyframes bounce-gentle {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {
@@ -182,9 +185,16 @@ export default function DevAccessPage() {
         }
 
         @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-10px); }
-          75% { transform: translateX(10px); }
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-10px);
+          }
+          75% {
+            transform: translateX(10px);
+          }
         }
 
         .animate-pulse-slow {

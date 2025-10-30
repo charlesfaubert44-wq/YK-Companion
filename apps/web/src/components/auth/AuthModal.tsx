@@ -34,7 +34,7 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
         console.log('AuthModal: Signup completed', {
           success: !error,
           userId: data?.user?.id,
-          errorMessage: error?.message
+          errorMessage: error?.message,
         });
 
         if (error) {
@@ -77,9 +77,7 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
     setLoading(true);
 
     try {
-      const { error } = provider === 'google'
-        ? await signInWithGoogle()
-        : await signInWithApple();
+      const { error } = provider === 'google' ? await signInWithGoogle() : await signInWithApple();
 
       if (error) {
         throw error;
@@ -171,7 +169,9 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
                 <div className="w-full border-t border-gray-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-northern-midnight text-gray-400">Or continue with email</span>
+                <span className="px-4 bg-northern-midnight text-gray-400">
+                  Or continue with email
+                </span>
               </div>
             </div>
           </>
@@ -182,7 +182,10 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
           {view === 'signup' && (
             <>
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2">
+                <label
+                  htmlFor="fullName"
+                  className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2"
+                >
                   Full Name
                 </label>
                 <input
@@ -190,7 +193,7 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
                   name="fullName"
                   type="text"
                   value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  onChange={e => setFullName(e.target.value)}
                   required
                   autoComplete="name"
                   inputMode="text"
@@ -200,7 +203,10 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
               </div>
 
               <div>
-                <label htmlFor="address" className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2">
+                <label
+                  htmlFor="address"
+                  className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2"
+                >
                   Address
                 </label>
                 <input
@@ -208,7 +214,7 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
                   name="address"
                   type="text"
                   value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  onChange={e => setAddress(e.target.value)}
                   autoComplete="street-address"
                   inputMode="text"
                   className="w-full px-3 sm:px-4 py-3 min-h-[48px] bg-dark-800 border border-gray-700 rounded-lg text-white text-base placeholder-gray-500 focus:outline-none focus:border-aurora-green focus:ring-2 focus:ring-aurora-green/20 transition-colors touch-manipulation"
@@ -219,7 +225,10 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
           )}
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2"
+            >
               Email
             </label>
             <input
@@ -227,7 +236,7 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
               name="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               autoComplete="email"
               inputMode="email"
@@ -237,7 +246,10 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-300 mb-1.5 sm:mb-2"
+            >
               Password
             </label>
             <input
@@ -245,7 +257,7 @@ export default function AuthModal({ isOpen, onClose, defaultView = 'signin' }: A
               name="password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
               minLength={6}
               autoComplete={view === 'signin' ? 'current-password' : 'new-password'}

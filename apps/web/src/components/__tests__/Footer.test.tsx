@@ -22,11 +22,11 @@ describe('Footer Component', () => {
     // Look for current year or copyright symbol
     const currentYear = new Date().getFullYear();
     const footerText = document.body.textContent || '';
-    
+
     expect(
-      footerText.includes(currentYear.toString()) || 
-      footerText.includes('©') ||
-      footerText.includes('Copyright')
+      footerText.includes(currentYear.toString()) ||
+        footerText.includes('©') ||
+        footerText.includes('Copyright')
     ).toBe(true);
   });
 
@@ -62,12 +62,9 @@ describe('Footer Component', () => {
 
     const footer = container.querySelector('footer');
     expect(footer).toBeTruthy();
-    
+
     // Should have semantic footer element or proper role
-    expect(
-      footer || 
-      container.querySelector('[role="contentinfo"]')
-    ).toBeTruthy();
+    expect(footer || container.querySelector('[role="contentinfo"]')).toBeTruthy();
   });
 
   it('should support multilingual content', async () => {
@@ -80,4 +77,3 @@ describe('Footer Component', () => {
     expect(footerContent!.length).toBeGreaterThan(0);
   });
 });
-

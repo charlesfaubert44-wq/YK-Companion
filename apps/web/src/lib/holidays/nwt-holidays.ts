@@ -7,7 +7,14 @@ export interface Holiday {
   date: string; // Format: "MM-DD" for fixed dates, or function for variable dates
   type: 'statutory' | 'cultural' | 'special';
   description: string;
-  bannerTheme?: 'halloween' | 'remembrance' | 'christmas' | 'newyear' | 'easter' | 'canada' | 'indigenous';
+  bannerTheme?:
+    | 'halloween'
+    | 'remembrance'
+    | 'christmas'
+    | 'newyear'
+    | 'easter'
+    | 'canada'
+    | 'indigenous';
   twoWeekWarning?: boolean; // Show special banner 2 weeks before
 }
 
@@ -209,14 +216,17 @@ export function getUpcomingHoliday(daysAhead: number = 14): Holiday | null {
   }
 
   // Check next year's holidays if near end of year
-  if (today.getMonth() === 11) { // December
+  if (today.getMonth() === 11) {
+    // December
     for (const holiday of NWT_HOLIDAYS) {
       if (!holiday.twoWeekWarning) continue;
 
       const holidayDate = getHolidayDate(currentYear + 1, holiday.date);
       if (!holidayDate) continue;
 
-      const daysUntil = Math.ceil((holidayDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      const daysUntil = Math.ceil(
+        (holidayDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+      );
 
       if (daysUntil >= 0 && daysUntil <= daysAhead) {
         return holiday;

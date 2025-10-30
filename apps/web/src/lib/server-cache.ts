@@ -1,13 +1,13 @@
 /**
  * Server-Side Caching Utility
- * 
+ *
  * Provides caching for server-side operations including:
  * - Database query results
  * - API responses
  * - Computed values
- * 
+ *
  * Uses Next.js unstable_cache and revalidation tags for optimal performance.
- * 
+ *
  * @module server-cache
  */
 
@@ -38,7 +38,7 @@ export const CacheTTL = {
 
 /**
  * Cached database query wrapper
- * 
+ *
  * @example
  * ```ts
  * const garageSales = await cachedQuery(
@@ -62,19 +62,15 @@ export function cachedQuery<T>(
     tags?: string[];
   } = {}
 ): Promise<T> {
-  return unstable_cache(
-    queryFn,
-    [key],
-    {
-      revalidate: options.revalidate || CacheTTL.MEDIUM,
-      tags: options.tags,
-    }
-  )();
+  return unstable_cache(queryFn, [key], {
+    revalidate: options.revalidate || CacheTTL.MEDIUM,
+    tags: options.tags,
+  })();
 }
 
 /**
  * Cached API fetch wrapper
- * 
+ *
  * @example
  * ```ts
  * const weather = await cachedFetch(
@@ -128,14 +124,14 @@ class ServerMemoryCache {
 
   get<T>(key: string): T | null {
     const entry = this.store.get(key);
-    
+
     if (!entry) return null;
-    
+
     if (Date.now() > entry.expiresAt) {
       this.store.delete(key);
       return null;
     }
-    
+
     return entry.data as T;
   }
 
@@ -152,7 +148,7 @@ export const serverMemoryCache = new ServerMemoryCache();
 
 /**
  * Memoization decorator for expensive computations
- * 
+ *
  * @example
  * ```ts
  * const expensiveCalc = memoize((a: number, b: number) => {
@@ -161,10 +157,7 @@ export const serverMemoryCache = new ServerMemoryCache();
  * }, 300); // Cache for 5 minutes
  * ```
  */
-export function memoize<T extends (...args: any[]) => any>(
-  fn: T,
-  ttlSeconds: number = 300
-): T {
+export function memoize<T extends (...args: any[]) => any>(fn: T, ttlSeconds: number = 300): T {
   const cache = new Map<string, { result: any; expiresAt: number }>();
 
   return ((...args: any[]) => {
@@ -184,4 +177,3 @@ export function memoize<T extends (...args: any[]) => any>(
     return result;
   }) as T;
 }
-

@@ -11,9 +11,7 @@ export default function AboutContent() {
         <p className="text-xl font-bold text-transparent bg-gradient-to-r from-aurora-green via-aurora-blue to-aurora-purple bg-clip-text mb-1">
           YK Buddy
         </p>
-        <p className="text-sm text-gray-400 italic">
-          Because Nobody Should Face -40° Alone
-        </p>
+        <p className="text-sm text-gray-400 italic">Because Nobody Should Face -40° Alone</p>
       </div>
 
       {/* What We Do */}
@@ -23,25 +21,29 @@ export default function AboutContent() {
           <span>What We Do</span>
         </h2>
         <p className="text-sm mb-3">
-          YK Buddy is your digital companion for all things Yellowknife. One place for scattered info, local knowledge, and helpful tips.
+          YK Buddy is your digital companion for all things Yellowknife. One place for scattered
+          info, local knowledge, and helpful tips.
         </p>
         <div className="space-y-2 text-xs">
           <div className="flex gap-2 p-2 rounded-lg bg-aurora-green/10 border border-aurora-green/20">
             <span className="text-lg flex-shrink-0">🧳</span>
             <div>
-              <strong className="text-aurora-green">Visitors:</strong> Aurora forecasts, seasonal guides, insider tips
+              <strong className="text-aurora-green">Visitors:</strong> Aurora forecasts, seasonal
+              guides, insider tips
             </div>
           </div>
           <div className="flex gap-2 p-2 rounded-lg bg-aurora-blue/10 border border-aurora-blue/20">
             <span className="text-lg flex-shrink-0">🏠</span>
             <div>
-              <strong className="text-aurora-blue">Residents:</strong> Garage sales, events, community intel
+              <strong className="text-aurora-blue">Residents:</strong> Garage sales, events,
+              community intel
             </div>
           </div>
           <div className="flex gap-2 p-2 rounded-lg bg-aurora-purple/10 border border-aurora-purple/20">
             <span className="text-lg flex-shrink-0">📦</span>
             <div>
-              <strong className="text-aurora-purple">Moving Here:</strong> Housing, jobs, cost of living info
+              <strong className="text-aurora-purple">Moving Here:</strong> Housing, jobs, cost of
+              living info
             </div>
           </div>
         </div>
@@ -72,9 +74,7 @@ export default function AboutContent() {
 
       {/* CTA Buttons - Fixed positioning removed */}
       <div className="text-center pt-2">
-        <h3 className="text-base font-bold text-white mb-3">
-          Ready to explore?
-        </h3>
+        <h3 className="text-base font-bold text-white mb-3">Ready to explore?</h3>
         <div className="flex flex-col sm:flex-row gap-2 justify-center">
           <Link href="/visiting" className="flex-1 sm:flex-initial">
             <button className="w-full px-4 py-2.5 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all text-sm">

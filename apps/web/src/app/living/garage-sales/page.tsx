@@ -29,7 +29,7 @@ type ViewMode = 'list' | 'map' | 'calendar';
 
 /**
  * Garage Sales Page
- * 
+ *
  * Complete garage sales marketplace with:
  * - Multiple view modes (list, map, calendar)
  * - Advanced filtering (search, date, distance, tags)
@@ -37,7 +37,7 @@ type ViewMode = 'list' | 'map' | 'calendar';
  * - Add/Edit/Delete sales (auth required)
  * - Favorite/save sales
  * - Responsive design
- * 
+ *
  * Features:
  * - Real-time filtering
  * - Distance calculations from user location
@@ -85,14 +85,14 @@ export default function GarageSalesPage() {
 
     setLocationLoading(true);
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      position => {
         setUserLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
         setLocationLoading(false);
       },
-      (error) => {
+      error => {
         console.error('Error getting location:', error);
         alert('Unable to get your location. Please check your browser permissions.');
         setLocationLoading(false);
@@ -138,7 +138,7 @@ export default function GarageSalesPage() {
 
   const handleDeleteSale = async (saleId: string) => {
     if (!user) return;
-    
+
     const success = await deleteSale(saleId, user.id);
     if (!success) {
       alert('Failed to delete garage sale');
@@ -163,7 +163,7 @@ export default function GarageSalesPage() {
     // Switch to list view and highlight the sale
     setHighlightedSaleId(sale.id);
     setViewMode('list');
-    
+
     // Scroll to sale card
     setTimeout(() => {
       const element = document.getElementById(`sale-${sale.id}`);
@@ -214,12 +214,8 @@ export default function GarageSalesPage() {
           {/* Page Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                Garage Sales
-              </h1>
-              <p className="text-gray-400">
-                Find great deals in your neighborhood
-              </p>
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Garage Sales</h1>
+              <p className="text-gray-400">Find great deals in your neighborhood</p>
             </div>
 
             <div className="flex gap-2">
@@ -242,7 +238,7 @@ export default function GarageSalesPage() {
                   )}
                 </button>
               )}
-              
+
               <button
                 onClick={handleAddSale}
                 className="px-4 py-2 bg-gradient-to-r from-aurora-green to-aurora-blue text-white font-semibold rounded-lg hover:shadow-aurora transition-all text-sm whitespace-nowrap flex items-center gap-2"
@@ -372,7 +368,10 @@ export default function GarageSalesPage() {
                           <p className="text-xs text-gray-400 mb-2">{sale.address}</p>
                           <div className="flex items-center justify-between text-xs">
                             <span className="text-aurora-green">
-                              {new Date(sale.sale_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                              {new Date(sale.sale_date).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                              })}
                               {' • '}
                               {sale.start_time}
                             </span>
@@ -394,10 +393,7 @@ export default function GarageSalesPage() {
 
             {/* Calendar View */}
             {viewMode === 'calendar' && (
-              <CalendarView
-                sales={sales}
-                onSaleClick={handleSaleClick}
-              />
+              <CalendarView sales={sales} onSaleClick={handleSaleClick} />
             )}
           </div>
         </div>

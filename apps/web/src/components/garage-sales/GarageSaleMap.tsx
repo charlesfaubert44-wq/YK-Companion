@@ -25,9 +25,7 @@ export default function GarageSaleMap({ sales, selectedSales, onToggleSelection 
             <div className="text-center">
               <div className="text-6xl mb-4">🗺️</div>
               <h3 className="text-xl font-bold text-white mb-2">Interactive Map</h3>
-              <p className="text-gray-400 mb-4">
-                Map integration with Google Maps or Mapbox
-              </p>
+              <p className="text-gray-400 mb-4">Map integration with Google Maps or Mapbox</p>
               <div className="inline-block px-4 py-2 bg-aurora-green/20 text-aurora-green rounded-lg text-sm">
                 Map API integration needed
               </div>

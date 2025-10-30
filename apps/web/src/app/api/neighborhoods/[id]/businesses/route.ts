@@ -35,13 +35,13 @@ const businessSchema = z.object({
 });
 
 // GET - Fetch neighborhood businesses
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -73,10 +73,12 @@ export async function GET(
     // Build query
     let query = supabase
       .from('neighborhood_businesses')
-      .select(`
+      .select(
+        `
         *,
         profiles:submitted_by(full_name, email)
-      `)
+      `
+      )
       .eq('neighborhood_id', neighborhoodId)
       .eq('is_approved', true)
       .eq('is_active', true);
@@ -103,30 +105,24 @@ export async function GET(
 
     if (error) {
       console.error('Error fetching businesses:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch businesses' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch businesses' }, { status: 500 });
     }
 
     return NextResponse.json({ businesses: businesses || [] });
   } catch (error: any) {
     console.error('Businesses GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST - Submit a new business
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -170,31 +166,27 @@ export async function POST(
         ...businessData,
         is_approved: false, // Requires approval
       })
-      .select(`
+      .select(
+        `
         *,
         profiles:submitted_by(full_name, email)
-      `)
+      `
+      )
       .single();
 
     if (error) {
       console.error('Error creating business:', error);
-      return NextResponse.json(
-        { error: 'Failed to submit business' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to submit business' }, { status: 500 });
     }
 
     // TODO: Notify moderators about new business submission
 
     return NextResponse.json({
       business,
-      message: 'Business submitted successfully and is pending approval'
+      message: 'Business submitted successfully and is pending approval',
     });
   } catch (error: any) {
     console.error('Business submission error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

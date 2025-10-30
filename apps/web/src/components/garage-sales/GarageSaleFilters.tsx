@@ -38,7 +38,7 @@ export default function GarageSaleFilters({ filters, onFiltersChange, resultsCou
           type="text"
           placeholder="🔍 Search garage sales..."
           value={filters.search || ''}
-          onChange={(e) => updateFilter('search', e.target.value || undefined)}
+          onChange={e => updateFilter('search', e.target.value || undefined)}
           className="w-full px-4 py-3 bg-dark-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-aurora-green transition-colors"
         />
       </div>
@@ -94,7 +94,7 @@ export default function GarageSaleFilters({ filters, onFiltersChange, resultsCou
               <input
                 type="date"
                 value={filters.date_from || ''}
-                onChange={(e) => updateFilter('date_from', e.target.value || undefined)}
+                onChange={e => updateFilter('date_from', e.target.value || undefined)}
                 className="w-full px-4 py-2 bg-dark-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-green transition-colors"
               />
             </div>
@@ -103,7 +103,7 @@ export default function GarageSaleFilters({ filters, onFiltersChange, resultsCou
               <input
                 type="date"
                 value={filters.date_to || ''}
-                onChange={(e) => updateFilter('date_to', e.target.value || undefined)}
+                onChange={e => updateFilter('date_to', e.target.value || undefined)}
                 className="w-full px-4 py-2 bg-dark-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-aurora-green transition-colors"
               />
             </div>

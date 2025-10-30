@@ -102,12 +102,10 @@ export default function NeighborhoodsPage() {
             {/* Page Header */}
             <div className="text-center mb-12">
               <div className="text-6xl mb-4">🏘️</div>
-              <h1 className="text-5xl font-bold text-white mb-4">
-                Your Neighborhood
-              </h1>
+              <h1 className="text-5xl font-bold text-white mb-4">Your Neighborhood</h1>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                Connect with your neighbors, stay informed about local events, share resources,
-                and build a stronger community together.
+                Connect with your neighbors, stay informed about local events, share resources, and
+                build a stronger community together.
               </p>
             </div>
 
@@ -122,7 +120,7 @@ export default function NeighborhoodsPage() {
                   type="text"
                   placeholder="Enter your street address..."
                   value={userAddress}
-                  onChange={(e) => setUserAddress(e.target.value)}
+                  onChange={e => setUserAddress(e.target.value)}
                   className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-aurora-green"
                 />
                 <button
@@ -136,7 +134,7 @@ export default function NeighborhoodsPage() {
               {suggestions.length > 0 && (
                 <div className="mt-4 space-y-2">
                   <p className="text-green-400 font-semibold">✓ Matching neighborhoods found:</p>
-                  {suggestions.map((suggestion) => (
+                  {suggestions.map(suggestion => (
                     <div
                       key={suggestion.neighborhood_id}
                       className="p-4 bg-green-500/20 border border-green-500/40 rounded-lg"
@@ -172,7 +170,7 @@ export default function NeighborhoodsPage() {
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 gap-6">
-                  {neighborhoods.map((neighborhood) => (
+                  {neighborhoods.map(neighborhood => (
                     <div
                       key={neighborhood.id}
                       className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl border border-white/20 hover:border-aurora-green transition-all"
@@ -205,7 +203,9 @@ export default function NeighborhoodsPage() {
 
             {/* Features Overview */}
             <div className="mb-12">
-              <h2 className="text-3xl font-bold text-white mb-6 text-center">Neighborhood Features</h2>
+              <h2 className="text-3xl font-bold text-white mb-6 text-center">
+                Neighborhood Features
+              </h2>
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20 text-center">
                   <MessageSquare className="w-12 h-12 text-aurora-blue mx-auto mb-3" />
@@ -219,7 +219,8 @@ export default function NeighborhoodsPage() {
                   <AlertTriangle className="w-12 h-12 text-orange-400 mx-auto mb-3" />
                   <h3 className="text-lg font-bold text-white mb-2">Security Alerts</h3>
                   <p className="text-gray-300 text-sm">
-                    Stay informed about suspicious activity, emergencies, and community safety issues.
+                    Stay informed about suspicious activity, emergencies, and community safety
+                    issues.
                   </p>
                 </div>
 

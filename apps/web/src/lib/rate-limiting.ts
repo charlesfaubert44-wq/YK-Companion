@@ -1,15 +1,15 @@
 /**
  * Rate Limiting Utility
- * 
+ *
  * Implements token bucket algorithm for API rate limiting.
  * Prevents abuse and ensures fair resource usage.
- * 
+ *
  * @module rate-limiting
  */
 
 interface RateLimitConfig {
-  maxRequests: number;  // Maximum requests allowed
-  windowMs: number;     // Time window in milliseconds
+  maxRequests: number; // Maximum requests allowed
+  windowMs: number; // Time window in milliseconds
 }
 
 interface RateLimitEntry {
@@ -34,12 +34,15 @@ class RateLimiter {
 
   /**
    * Check if a request should be allowed
-   * 
+   *
    * @param {string} identifier - Unique identifier (IP, user ID, etc.)
    * @param {RateLimitConfig} config - Rate limit configuration
    * @returns {{ allowed: boolean, remaining: number, resetTime: number }}
    */
-  check(identifier: string, config: RateLimitConfig): {
+  check(
+    identifier: string,
+    config: RateLimitConfig
+  ): {
     allowed: boolean;
     remaining: number;
     resetTime: number;
@@ -96,7 +99,7 @@ class RateLimiter {
 
   /**
    * Reset rate limit for a specific identifier
-   * 
+   *
    * @param {string} identifier - Identifier to reset
    */
   reset(identifier: string): void {
@@ -105,7 +108,7 @@ class RateLimiter {
 
   /**
    * Get current status for an identifier
-   * 
+   *
    * @param {string} identifier - Identifier to check
    * @returns {RateLimitEntry | null}
    */
@@ -134,25 +137,25 @@ export const rateLimitConfigs = {
     maxRequests: 5,
     windowMs: 15 * 60 * 1000, // 15 minutes
   },
-  
+
   // Moderate limits for API endpoints
   api: {
     maxRequests: 100,
     windowMs: 60 * 1000, // 1 minute
   },
-  
+
   // Generous limits for read operations
   read: {
     maxRequests: 200,
     windowMs: 60 * 1000, // 1 minute
   },
-  
+
   // Strict limits for write operations
   write: {
     maxRequests: 30,
     windowMs: 60 * 1000, // 1 minute
   },
-  
+
   // Very strict for sensitive operations
   sensitive: {
     maxRequests: 3,
@@ -163,7 +166,7 @@ export const rateLimitConfigs = {
 /**
  * Get client identifier from request
  * Uses IP address or user ID if available
- * 
+ *
  * @param {Request} request - The request object
  * @param {string} [userId] - Optional user ID
  * @returns {string} Unique identifier for rate limiting
@@ -177,13 +180,13 @@ export function getClientIdentifier(request: Request, userId?: string): string {
   const forwarded = request.headers.get('x-forwarded-for');
   const realIp = request.headers.get('x-real-ip');
   const ip = forwarded?.split(',')[0] || realIp || 'unknown';
-  
+
   return `ip:${ip}`;
 }
 
 /**
  * Middleware helper for Next.js API routes
- * 
+ *
  * @example
  * ```ts
  * export async function POST(request: NextRequest) {
@@ -191,7 +194,7 @@ export function getClientIdentifier(request: Request, userId?: string): string {
  *   if (!rateLimitResult.allowed) {
  *     return NextResponse.json(
  *       { error: 'Too many requests' },
- *       { 
+ *       {
  *         status: 429,
  *         headers: rateLimitResult.headers
  *       }
@@ -229,4 +232,3 @@ export function checkRateLimit(
     headers,
   };
 }
-

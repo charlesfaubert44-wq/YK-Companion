@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'next/client';
+import { useState, useEffect } from 'react';
 import { use } from 'react';
 import Link from 'next/link';
 import InteractiveHeader from '@/components/InteractiveHeader';
@@ -30,7 +30,9 @@ export default function NeighborhoodDashboardPage({ params }: PageProps) {
   const [dashboard, setDashboard] = useState<NeighborhoodDashboard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'bulletin' | 'alerts' | 'businesses' | 'politics'>('bulletin');
+  const [activeTab, setActiveTab] = useState<'bulletin' | 'alerts' | 'businesses' | 'politics'>(
+    'bulletin'
+  );
 
   useEffect(() => {
     fetchDashboard();
@@ -96,7 +98,8 @@ export default function NeighborhoodDashboardPage({ params }: PageProps) {
     );
   }
 
-  const { neighborhood, member, stats, recent_posts, active_alerts, featured_businesses } = dashboard;
+  const { neighborhood, member, stats, recent_posts, active_alerts, featured_businesses } =
+    dashboard;
 
   return (
     <>
@@ -115,7 +118,10 @@ export default function NeighborhoodDashboardPage({ params }: PageProps) {
                   Living
                 </Link>
                 <span>›</span>
-                <Link href="/living/neighborhoods" className="hover:text-aurora-green transition-colors">
+                <Link
+                  href="/living/neighborhoods"
+                  className="hover:text-aurora-green transition-colors"
+                >
                   Neighborhoods
                 </Link>
                 <span>›</span>
@@ -143,19 +149,26 @@ export default function NeighborhoodDashboardPage({ params }: PageProps) {
                 <div className="text-right">
                   <div className="inline-block px-4 py-2 bg-green-500/20 border border-green-500/40 rounded-lg">
                     <p className="text-green-400 font-semibold text-sm">
-                      {member.role === 'admin' ? '👑 Admin' : member.role === 'moderator' ? '⭐ Moderator' : '✓ Member'}
+                      {member.role === 'admin'
+                        ? '👑 Admin'
+                        : member.role === 'moderator'
+                          ? '⭐ Moderator'
+                          : '✓ Member'}
                     </p>
                   </div>
-                  {member.role !== 'member' && stats.pending_approvals && stats.pending_approvals > 0 && (
-                    <Link
-                      href={`/living/neighborhoods/${neighborhoodId}/admin`}
-                      className="block mt-2 px-4 py-2 bg-orange-500/20 border border-orange-500/40 rounded-lg hover:bg-orange-500/30 transition-colors"
-                    >
-                      <p className="text-orange-400 font-semibold text-sm">
-                        {stats.pending_approvals} pending approval{stats.pending_approvals > 1 ? 's' : ''}
-                      </p>
-                    </Link>
-                  )}
+                  {member.role !== 'member' &&
+                    stats.pending_approvals &&
+                    stats.pending_approvals > 0 && (
+                      <Link
+                        href={`/living/neighborhoods/${neighborhoodId}/admin`}
+                        className="block mt-2 px-4 py-2 bg-orange-500/20 border border-orange-500/40 rounded-lg hover:bg-orange-500/30 transition-colors"
+                      >
+                        <p className="text-orange-400 font-semibold text-sm">
+                          {stats.pending_approvals} pending approval
+                          {stats.pending_approvals > 1 ? 's' : ''}
+                        </p>
+                      </Link>
+                    )}
                 </div>
               </div>
             </div>
@@ -236,11 +249,16 @@ export default function NeighborhoodDashboardPage({ params }: PageProps) {
                 </div>
 
                 {recent_posts.length === 0 ? (
-                  <p className="text-gray-400 text-center py-8">No posts yet. Be the first to share!</p>
+                  <p className="text-gray-400 text-center py-8">
+                    No posts yet. Be the first to share!
+                  </p>
                 ) : (
                   <div className="space-y-4">
-                    {recent_posts.slice(0, 5).map((post) => (
-                      <div key={post.id} className="p-4 bg-white/5 rounded-lg border border-white/10 hover:border-aurora-green/50 transition-colors">
+                    {recent_posts.slice(0, 5).map(post => (
+                      <div
+                        key={post.id}
+                        className="p-4 bg-white/5 rounded-lg border border-white/10 hover:border-aurora-green/50 transition-colors"
+                      >
                         <div className="flex items-start justify-between mb-2">
                           <h3 className="text-white font-semibold">{post.title}</h3>
                           <span className="text-xs px-2 py-1 bg-aurora-green/20 text-aurora-green rounded">
@@ -271,14 +289,21 @@ export default function NeighborhoodDashboardPage({ params }: PageProps) {
                     <p className="text-gray-400 text-sm">No active alerts</p>
                   ) : (
                     <div className="space-y-3">
-                      {active_alerts.slice(0, 3).map((alert) => (
-                        <div key={alert.id} className={`p-3 rounded-lg border ${
-                          alert.severity === 'critical' ? 'bg-red-500/20 border-red-500/40' :
-                          alert.severity === 'high' ? 'bg-orange-500/20 border-orange-500/40' :
-                          'bg-yellow-500/20 border-yellow-500/40'
-                        }`}>
+                      {active_alerts.slice(0, 3).map(alert => (
+                        <div
+                          key={alert.id}
+                          className={`p-3 rounded-lg border ${
+                            alert.severity === 'critical'
+                              ? 'bg-red-500/20 border-red-500/40'
+                              : alert.severity === 'high'
+                                ? 'bg-orange-500/20 border-orange-500/40'
+                                : 'bg-yellow-500/20 border-yellow-500/40'
+                          }`}
+                        >
                           <p className="text-white font-semibold text-sm">{alert.title}</p>
-                          <p className="text-gray-300 text-xs mt-1 line-clamp-2">{alert.description}</p>
+                          <p className="text-gray-300 text-xs mt-1 line-clamp-2">
+                            {alert.description}
+                          </p>
                           <p className="text-xs text-gray-400 mt-1">
                             {new Date(alert.created_at).toLocaleDateString()}
                           </p>
@@ -306,10 +331,15 @@ export default function NeighborhoodDashboardPage({ params }: PageProps) {
                     <p className="text-gray-400 text-sm">No businesses listed yet</p>
                   ) : (
                     <div className="space-y-3">
-                      {featured_businesses.slice(0, 3).map((business) => (
-                        <div key={business.id} className="p-3 bg-white/5 rounded-lg border border-white/10">
+                      {featured_businesses.slice(0, 3).map(business => (
+                        <div
+                          key={business.id}
+                          className="p-3 bg-white/5 rounded-lg border border-white/10"
+                        >
                           <p className="text-white font-semibold text-sm">{business.name}</p>
-                          <p className="text-gray-400 text-xs">{business.category.replace('_', ' ')}</p>
+                          <p className="text-gray-400 text-xs">
+                            {business.category.replace('_', ' ')}
+                          </p>
                         </div>
                       ))}
                     </div>

@@ -58,17 +58,19 @@ export default function EnhancedPathwayCards() {
               ref={cardRefs.visiting}
               className="relative h-[420px] sm:h-[460px] md:h-[500px] rounded-3xl overflow-hidden border-2 border-emerald-400/50 transition-all duration-700 hover:border-emerald-300 hover:shadow-[0_0_80px_rgba(16,185,129,0.7)] transform-gpu perspective-1000 touch-manipulation cursor-pointer"
               style={{
-                transform: hoveredCard === 'visiting'
-                  ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.03)`
-                  : 'rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)',
-                transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), border 0.7s ease, box-shadow 0.7s ease',
+                transform:
+                  hoveredCard === 'visiting'
+                    ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.03)`
+                    : 'rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)',
+                transition:
+                  'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), border 0.7s ease, box-shadow 0.7s ease',
               }}
               onMouseEnter={() => setHoveredCard('visiting')}
               onMouseLeave={() => {
                 setHoveredCard(null);
                 handleMouseLeave();
               }}
-              onMouseMove={(e) => handleMouseMove(e, 'visiting')}
+              onMouseMove={e => handleMouseMove(e, 'visiting')}
               role="article"
               aria-label="Visiting pathway - Explore the North"
             >
@@ -92,7 +94,7 @@ export default function EnhancedPathwayCards() {
                       <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.6" />
                     </linearGradient>
                   </defs>
-                  
+
                   {/* Aurora Wave 1 - Bottom Layer */}
                   <path
                     d="M0,300 Q200,200 400,300 T800,300 L800,600 L0,600 Z"
@@ -108,7 +110,7 @@ export default function EnhancedPathwayCards() {
                       repeatCount="indefinite"
                     />
                   </path>
-                  
+
                   {/* Aurora Wave 2 - Middle Layer */}
                   <path
                     d="M0,150 Q200,50 400,150 T800,150 L800,600 L0,600 Z"
@@ -124,7 +126,7 @@ export default function EnhancedPathwayCards() {
                       repeatCount="indefinite"
                     />
                   </path>
-                  
+
                   {/* Aurora Wave 3 - Top Layer */}
                   <path
                     d="M0,80 Q200,20 400,80 T800,80 L800,600 L0,600 Z"
@@ -173,7 +175,9 @@ export default function EnhancedPathwayCards() {
                   <h3 className="text-6xl sm:text-7xl md:text-8xl font-black text-white mb-3 drop-shadow-[0_0_40px_rgba(16,185,129,1)] group-hover:scale-105 transition-transform duration-500 leading-none tracking-tight">
                     VISITING
                   </h3>
-                  <p className="text-xl sm:text-2xl text-emerald-100 font-bold drop-shadow-lg">Explore the North</p>
+                  <p className="text-xl sm:text-2xl text-emerald-100 font-bold drop-shadow-lg">
+                    Explore the North
+                  </p>
                 </div>
 
                 {/* Subtle Icon Accent */}
@@ -182,7 +186,7 @@ export default function EnhancedPathwayCards() {
                     <svg width="80" height="80" viewBox="0 0 80 80" className="drop-shadow-2xl">
                       <path d="M20 35 L40 20 L60 35 L40 25 Z" fill="rgba(255,255,255,0.6)" />
                       <rect x="38" y="25" width="4" height="20" fill="rgba(255,255,255,0.5)" />
-                  </svg>
+                    </svg>
                   </div>
                 </div>
 
@@ -204,23 +208,24 @@ export default function EnhancedPathwayCards() {
               ref={cardRefs.living}
               className="relative h-[420px] sm:h-[460px] md:h-[500px] rounded-3xl overflow-hidden border-2 border-blue-400/50 transition-all duration-700 hover:border-orange-300 hover:shadow-[0_0_80px_rgba(251,146,60,0.7)] transform-gpu perspective-1000 touch-manipulation cursor-pointer"
               style={{
-                transform: hoveredCard === 'living'
-                  ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.03)`
-                  : 'rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)',
-                transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), border 0.7s ease, box-shadow 0.7s ease',
+                transform:
+                  hoveredCard === 'living'
+                    ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.03)`
+                    : 'rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)',
+                transition:
+                  'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), border 0.7s ease, box-shadow 0.7s ease',
               }}
               onMouseEnter={() => setHoveredCard('living')}
               onMouseLeave={() => {
                 setHoveredCard(null);
                 handleMouseLeave();
               }}
-              onMouseMove={(e) => handleMouseMove(e, 'living')}
+              onMouseMove={e => handleMouseMove(e, 'living')}
               role="article"
               aria-label="Living pathway - Life in the Arctic"
             >
               {/* Full-Card Warm Sky Background - Fills Entire Card */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/50 via-orange-500/40 to-amber-600/50">
-
                 {/* Animated Warm Sky Gradient Layers - Filling The Card */}
                 <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
                   <defs>
@@ -239,7 +244,7 @@ export default function EnhancedPathwayCards() {
                       <stop offset="100%" stopColor="#fb923c" stopOpacity="0.3" />
                     </radialGradient>
                   </defs>
-                  
+
                   {/* Warm Gradient Wave 1 */}
                   <path
                     d="M0,250 Q200,180 400,250 T800,250 L800,600 L0,600 Z"
@@ -255,7 +260,7 @@ export default function EnhancedPathwayCards() {
                       repeatCount="indefinite"
                     />
                   </path>
-                  
+
                   {/* Warm Gradient Wave 2 */}
                   <path
                     d="M0,120 Q200,60 400,120 T800,120 L800,600 L0,600 Z"
@@ -271,10 +276,15 @@ export default function EnhancedPathwayCards() {
                       repeatCount="indefinite"
                     />
                   </path>
-                  
+
                   {/* Central Glow */}
                   <circle cx="400" cy="300" r="200" fill="url(#livingGlow)" opacity="0.4">
-                    <animate attributeName="r" values="200;250;200" dur="8s" repeatCount="indefinite" />
+                    <animate
+                      attributeName="r"
+                      values="200;250;200"
+                      dur="8s"
+                      repeatCount="indefinite"
+                    />
                   </circle>
                 </svg>
 
@@ -293,7 +303,10 @@ export default function EnhancedPathwayCards() {
                       top: `${Math.random() * 100}%`,
                       width: `${1 + Math.random() * 2.5}px`,
                       height: `${1 + Math.random() * 2.5}px`,
-                      background: Math.random() > 0.5 ? 'rgba(251, 191, 36, 0.8)' : 'rgba(255, 255, 255, 0.6)',
+                      background:
+                        Math.random() > 0.5
+                          ? 'rgba(251, 191, 36, 0.8)'
+                          : 'rgba(255, 255, 255, 0.6)',
                       animation: `float-particle ${10 + Math.random() * 10}s ease-in-out infinite`,
                       animationDelay: `${Math.random() * 5}s`,
                       opacity: 0.4 + Math.random() * 0.5,
@@ -310,7 +323,9 @@ export default function EnhancedPathwayCards() {
                   <h3 className="text-6xl sm:text-7xl md:text-8xl font-black text-white mb-3 drop-shadow-[0_0_40px_rgba(251,146,60,1)] group-hover:scale-105 transition-transform duration-500 leading-none tracking-tight">
                     LIVING
                   </h3>
-                  <p className="text-xl sm:text-2xl text-orange-100 font-bold drop-shadow-lg">Life in the Arctic</p>
+                  <p className="text-xl sm:text-2xl text-orange-100 font-bold drop-shadow-lg">
+                    Life in the Arctic
+                  </p>
                 </div>
 
                 {/* Subtle Icon Accent */}
@@ -320,7 +335,7 @@ export default function EnhancedPathwayCards() {
                       <path d="M20 50 L40 30 L60 50 Z" fill="rgba(255,255,255,0.5)" />
                       <rect x="30" y="50" width="20" height="20" fill="rgba(255,255,255,0.5)" />
                       <rect x="38" y="55" width="4" height="8" fill="rgba(251,191,36,0.8)" />
-                  </svg>
+                    </svg>
                   </div>
                 </div>
 
@@ -342,17 +357,19 @@ export default function EnhancedPathwayCards() {
               ref={cardRefs.moving}
               className="relative h-[420px] sm:h-[460px] md:h-[500px] rounded-3xl overflow-hidden border-2 border-purple-400/50 transition-all duration-700 hover:border-pink-300 hover:shadow-[0_0_80px_rgba(168,85,247,0.7)] transform-gpu perspective-1000 touch-manipulation cursor-pointer"
               style={{
-                transform: hoveredCard === 'moving'
-                  ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.03)`
-                  : 'rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)',
-                transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), border 0.7s ease, box-shadow 0.7s ease',
+                transform:
+                  hoveredCard === 'moving'
+                    ? `rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg) translateZ(10px) scale(1.03)`
+                    : 'rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)',
+                transition:
+                  'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), border 0.7s ease, box-shadow 0.7s ease',
               }}
               onMouseEnter={() => setHoveredCard('moving')}
               onMouseLeave={() => {
                 setHoveredCard(null);
                 handleMouseLeave();
               }}
-              onMouseMove={(e) => handleMouseMove(e, 'moving')}
+              onMouseMove={e => handleMouseMove(e, 'moving')}
               role="article"
               aria-label="Moving pathway - Journey Awaits"
             >
@@ -376,7 +393,7 @@ export default function EnhancedPathwayCards() {
                       <stop offset="100%" stopColor="#f9a8d4" stopOpacity="0.6" />
                     </linearGradient>
                   </defs>
-                  
+
                   {/* Aurora Wave 1 - Bottom Layer */}
                   <path
                     d="M0,280 Q200,200 400,280 T800,280 L800,600 L0,600 Z"
@@ -392,7 +409,7 @@ export default function EnhancedPathwayCards() {
                       repeatCount="indefinite"
                     />
                   </path>
-                  
+
                   {/* Aurora Wave 2 - Middle Layer */}
                   <path
                     d="M0,140 Q200,70 400,140 T800,140 L800,600 L0,600 Z"
@@ -408,7 +425,7 @@ export default function EnhancedPathwayCards() {
                       repeatCount="indefinite"
                     />
                   </path>
-                  
+
                   {/* Aurora Wave 3 - Top Layer */}
                   <path
                     d="M0,70 Q200,20 400,70 T800,70 L800,600 L0,600 Z"
@@ -457,15 +474,28 @@ export default function EnhancedPathwayCards() {
                   <h3 className="text-6xl sm:text-7xl md:text-8xl font-black text-white mb-3 drop-shadow-[0_0_40px_rgba(168,85,247,1)] group-hover:scale-105 transition-transform duration-500 leading-none tracking-tight">
                     MOVING
                   </h3>
-                  <p className="text-xl sm:text-2xl text-purple-100 font-bold drop-shadow-lg">Journey Awaits</p>
+                  <p className="text-xl sm:text-2xl text-purple-100 font-bold drop-shadow-lg">
+                    Journey Awaits
+                  </p>
                 </div>
 
                 {/* Subtle Icon Accent */}
                 <div className="flex justify-end items-end">
                   <div className="opacity-30 group-hover:opacity-50 transition-opacity duration-700">
                     <svg width="80" height="80" viewBox="0 0 80 80" className="drop-shadow-2xl">
-                      <circle cx="40" cy="40" r="25" stroke="rgba(255,255,255,0.5)" strokeWidth="3" fill="none" />
-                      <path d="M40 20 L40 25 M40 55 L40 60 M20 40 L25 40 M55 40 L60 40" stroke="rgba(255,255,255,0.6)" strokeWidth="2" />
+                      <circle
+                        cx="40"
+                        cy="40"
+                        r="25"
+                        stroke="rgba(255,255,255,0.5)"
+                        strokeWidth="3"
+                        fill="none"
+                      />
+                      <path
+                        d="M40 20 L40 25 M40 55 L40 60 M20 40 L25 40 M55 40 L60 40"
+                        stroke="rgba(255,255,255,0.6)"
+                        strokeWidth="2"
+                      />
                       <path d="M40 25 L35 40 L45 40 Z" fill="rgba(255,255,255,0.6)" />
                     </svg>
                   </div>
@@ -488,7 +518,8 @@ export default function EnhancedPathwayCards() {
       {/* Enhanced CSS Animations */}
       <style jsx>{`
         @keyframes float-particle {
-          0%, 100% {
+          0%,
+          100% {
             transform: translate(0, 0) scale(1);
             opacity: 0.3;
           }
@@ -507,7 +538,8 @@ export default function EnhancedPathwayCards() {
         }
 
         @keyframes pulse-slow {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
           }
           50% {

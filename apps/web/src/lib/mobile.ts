@@ -260,9 +260,7 @@ export function getOrientation(): Orientation {
 
   // Use Screen Orientation API if available
   if (window.screen?.orientation) {
-    return window.screen.orientation.type.includes('portrait')
-      ? 'portrait'
-      : 'landscape';
+    return window.screen.orientation.type.includes('portrait') ? 'portrait' : 'landscape';
   }
 
   // Fallback to window dimensions
@@ -311,9 +309,7 @@ export function isLandscape(): boolean {
  * // Later, cleanup
  * cleanup();
  */
-export function onOrientationChange(
-  callback: (orientation: Orientation) => void
-): () => void {
+export function onOrientationChange(callback: (orientation: Orientation) => void): () => void {
   if (typeof window === 'undefined') return () => {};
 
   const handler = () => {
@@ -437,10 +433,7 @@ export function hapticError(): void {
  * const modal = document.getElementById('modal');
  * preventScrollChaining(modal);
  */
-export function preventScrollChaining(
-  element: HTMLElement,
-  enabled: boolean = true
-): void {
+export function preventScrollChaining(element: HTMLElement, enabled: boolean = true): void {
   if (enabled) {
     element.style.overscrollBehavior = 'contain';
     (element.style as any).WebkitOverflowScrolling = 'touch';
@@ -633,9 +626,6 @@ export function enableUserZoom(): void {
   const viewport = document.querySelector('meta[name="viewport"]');
 
   if (viewport) {
-    viewport.setAttribute(
-      'content',
-      'width=device-width, initial-scale=1.0'
-    );
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
   }
 }

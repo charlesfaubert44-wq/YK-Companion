@@ -65,7 +65,8 @@ export default function PremiumSpotlight({ position }: PremiumSpotlightProps) {
         <div
           className="absolute inset-0 opacity-40 transition-opacity duration-700"
           style={{
-            background: 'radial-gradient(ellipse at 0% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 50%), radial-gradient(ellipse at 100% 50%, rgba(139, 92, 246, 0.4) 0%, transparent 50%)',
+            background:
+              'radial-gradient(ellipse at 0% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 50%), radial-gradient(ellipse at 100% 50%, rgba(139, 92, 246, 0.4) 0%, transparent 50%)',
             filter: 'blur(40px)',
             transform: isHovered ? 'scale(1.2)' : 'scale(1)',
             opacity: isHovered ? 0.6 : 0.4,
@@ -74,7 +75,8 @@ export default function PremiumSpotlight({ position }: PremiumSpotlightProps) {
         <div
           className="absolute inset-0 opacity-30 transition-all duration-1000"
           style={{
-            background: 'radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.3) 0%, transparent 60%)',
+            background:
+              'radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.3) 0%, transparent 60%)',
             filter: 'blur(30px)',
             transform: isHovered ? 'translateY(10px)' : 'translateY(0)',
           }}
@@ -90,7 +92,9 @@ export default function PremiumSpotlight({ position }: PremiumSpotlightProps) {
             className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center transition-all duration-300"
             style={{
               transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1)',
-              boxShadow: isHovered ? '0 0 30px rgba(251, 191, 36, 0.6)' : '0 0 10px rgba(251, 191, 36, 0.3)',
+              boxShadow: isHovered
+                ? '0 0 30px rgba(251, 191, 36, 0.6)'
+                : '0 0 10px rgba(251, 191, 36, 0.3)',
             }}
           >
             <span className="text-2xl">✨</span>
@@ -162,7 +166,8 @@ export default function PremiumSpotlight({ position }: PremiumSpotlightProps) {
         className="absolute inset-0 rounded-xl transition-opacity duration-300 pointer-events-none"
         style={{
           border: '2px solid transparent',
-          backgroundImage: 'linear-gradient(90deg, rgba(16, 185, 129, 0.5), rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.5))',
+          backgroundImage:
+            'linear-gradient(90deg, rgba(16, 185, 129, 0.5), rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.5))',
           backgroundClip: 'border-box',
           opacity: isHovered ? 0.8 : 0.3,
         }}
@@ -172,13 +177,10 @@ export default function PremiumSpotlight({ position }: PremiumSpotlightProps) {
 
   if (sponsor.link) {
     return (
-      <div className={`max-w-3xl mx-auto px-4 mt-8 py-2 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        <a
-          href={sponsor.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block"
-        >
+      <div
+        className={`max-w-3xl mx-auto px-4 mt-8 py-2 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+      >
+        <a href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block">
           <div className="relative bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md rounded-xl border border-gray-700/50 hover:border-emerald-500/50 transition-all cursor-pointer overflow-hidden">
             {content}
           </div>
@@ -186,8 +188,15 @@ export default function PremiumSpotlight({ position }: PremiumSpotlightProps) {
 
         <style jsx>{`
           @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1.5); }
+            0%,
+            100% {
+              opacity: 0;
+              transform: scale(0);
+            }
+            50% {
+              opacity: 1;
+              transform: scale(1.5);
+            }
           }
           .animate-sparkle {
             animation: sparkle 1.5s ease-in-out infinite;
@@ -198,15 +207,24 @@ export default function PremiumSpotlight({ position }: PremiumSpotlightProps) {
   }
 
   return (
-    <div className={`max-w-3xl mx-auto px-4 mt-8 py-2 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+    <div
+      className={`max-w-3xl mx-auto px-4 mt-8 py-2 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+    >
       <div className="relative bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md rounded-xl border border-gray-700/50 overflow-hidden">
         {content}
       </div>
 
       <style jsx>{`
         @keyframes sparkle {
-          0%, 100% { opacity: 0; transform: scale(0); }
-          50% { opacity: 1; transform: scale(1.5); }
+          0%,
+          100% {
+            opacity: 0;
+            transform: scale(0);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.5);
+          }
         }
         .animate-sparkle {
           animation: sparkle 1.5s ease-in-out infinite;
