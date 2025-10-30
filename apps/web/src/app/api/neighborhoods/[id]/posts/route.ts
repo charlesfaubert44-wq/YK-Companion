@@ -26,13 +26,13 @@ const postSchema = z.object({
 });
 
 // GET - Fetch neighborhood posts
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -63,10 +63,12 @@ export async function GET(
     // Build query
     let query = supabase
       .from('neighborhood_posts')
-      .select(`
+      .select(
+        `
         *,
         profiles:user_id(full_name, email)
-      `)
+      `
+      )
       .eq('neighborhood_id', neighborhoodId)
       .eq('is_archived', false)
       .eq('moderation_status', 'approved');
@@ -88,30 +90,24 @@ export async function GET(
 
     if (error) {
       console.error('Error fetching posts:', error);
-      return NextResponse.json(
-        { error: 'Failed to fetch posts' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
     }
 
     return NextResponse.json({ posts: posts || [] });
   } catch (error: any) {
     console.error('Posts GET error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST - Create a new post
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -132,7 +128,7 @@ export async function POST(
     // Check if user is an approved member
     const { data: membership } = await supabase
       .from('neighborhood_members')
-      .select('status')
+      .select('id, status')
       .eq('neighborhood_id', neighborhoodId)
       .eq('user_id', user.id)
       .single();
@@ -155,18 +151,17 @@ export async function POST(
         ...postData,
         moderation_status: 'approved', // Auto-approve for now, can add review later
       })
-      .select(`
+      .select(
+        `
         *,
         profiles:user_id(full_name, email)
-      `)
+      `
+      )
       .single();
 
     if (error) {
       console.error('Error creating post:', error);
-      return NextResponse.json(
-        { error: 'Failed to create post' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to create post' }, { status: 500 });
     }
 
     // Update member's post count
@@ -181,9 +176,6 @@ export async function POST(
     return NextResponse.json({ post });
   } catch (error: any) {
     console.error('Post creation error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
